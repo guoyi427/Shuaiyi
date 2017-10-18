@@ -1,0 +1,6 @@
+framework module UIButton_BackgroundColor {
+  umbrella header "UIButton+BackgroundColor-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,89 @@
+source 'https://github.com/CocoaPods/Specs.git'
+source 'http://git.cias.net.cn/ios_specs/Specs.git'
+platform :ios, '8.0'
+use_frameworks!
+
+def pods
+
+    pod 'Masonry'
+    pod 'UIView+JMFrame', '~> 0.1'
+    pod 'SVProgressHUD', '~> 2.0'
+    pod 'Mantle'
+    pod 'Reachability'
+    # StatusBar设置
+    pod 'UIViewController+ODStatusBar'
+    pod 'UIButton+BackgroundColor'
+
+    # NavigationBar相关配置
+    pod 'KMNavigationBarTransition'
+
+    pod 'CHTCollectionViewWaterfallLayout'
+    pod 'MJRefresh'
+    pod 'UIAlertView+Blocks', '~> 0.9'
+
+    pod 'AFNetworkActivityLogger', git: 'https://github.com/AFNetworking/AFNetworkActivityLogger.git', branch: '3_0_0'
+    pod 'SDWebImage'
+    pod 'BaiduMapKit'
+    pod 'Bugly'
+    # 无IDFA版SDK（请根据需要选择其中一个pod 'UMengAnalytics'）
+    pod 'UMengAnalytics-NO-IDFA'
+    
+    pod 'HallView_KKZ'
+    pod 'HallView_KKZ/SeatIndexView'
+    pod 'HallView_KKZ/NavigatorView'
+    pod 'HallView_KKZ/SeatHelper'
+    
+    # UIColor hex 换转（swift）
+    pod 'UIColor_Hex_Swift', '~> 3.0'
+    # Toast有swift版本
+    pod 'SnapKit'
+    pod 'Category_KKZ/NSDictionaryExtra'
+    pod 'Category_KKZ/NSStringExtra'
+    pod 'Category_KKZ/UIColor+Hex'
+    pod 'Category_KKZ/UIImage+Blur'
+    pod 'Category_KKZ/UIImage+ImageEffects'
+    pod 'Category_KKZ/UIImage+Resize'
+    pod 'Category_KKZ/UIBarButtonItem+GFItem'
+    pod 'NetCore_KKZ_Cache', '~> 0.1.0'
+    
+    pod 'DateEngine_KKZ' , '~> 1.0.5'
+    
+    pod 'NSURL+QueryDictionary', '~> 1.2'
+    
+    pod 'WechatOpenSDK'
+    
+end
+
+
+
+target 'CIASMovie' do
+    
+    pods
+    
+end
+
+target 'CIASMovieTests' do
+    pods
+
+end
+
+
+target 'ZhongDuMovie' do
+    
+    pods
+    
+end
+target 'BaoShan' do
+	pods
+    
+end
+
+target 'HuaChenMovie' do
+    
+    pods
+    
+end
+
+target 'HengDian' do
+    pods
+end

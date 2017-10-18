@@ -1,0 +1,6 @@
+framework module Pods_HuaChenMovie {
+  umbrella header "Pods-HuaChenMovie-umbrella.h"
+
+  export *
+  module * { export * }
+}

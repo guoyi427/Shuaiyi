@@ -1,0 +1,69 @@
+//
+//  HCPrefixHeader.pch
+//  CIASMovie
+//
+//  Created by avatar on 2017/5/25.
+//  Copyright © 2017年 cias. All rights reserved.
+//
+
+#ifndef HCPrefixHeader_pch
+#define HCPrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+
+
+#import <Masonry/Masonry.h>
+//#import <UIView_JMFrame/UIView+JMFrame.h>
+#import "UIConstants.h"
+#import "Macros.h"
+#import "UIViewController+NavAnim.h"
+//#import "CommonViewController.h"
+#import <UIButton_BackgroundColor/UIImage+Color.h>
+#import <Category_KKZ/UIColor+Hex.h>
+#import "UIViewController+Custom.h"
+#import "CPRefreshHeader.h"
+#import "CPRefreshFooter.h"
+#import "CIASPublicUtility.h"
+#import "UIView+GFFrame.h"
+//#import "UIBarButtonItem+GFItem.h"
+#import <Category_KKZ/NSDictionaryExtra.h>
+#import "KKZTextUtility.h"
+#import <AFNetworking/AFNetworkReachabilityManager.h>
+#import "ConstantHeader.h"
+#import "UMessage.h"
+#import <DateEngine_KKZ/DateEngine.h>
+
+#import "KKZBaseRequestParamsMD5.h"
+
+#import "HCConstants.h"
+#import "HuaChenMovie-Swift.h"
+
+#import "CIASAlertVIew.h"
+#import "CIASAlertImageView.h"
+#import "CIASAlertCancleView.h"
+#import "CIASAlertImageCancelView.h"
+
+#define MAS_SHORTHAND_GLOBALS
+#define MAS_SHORTHAND
+
+
+#ifdef DEBUG
+#define DLog(format, ...) NSLog(format, ## __VA_ARGS__)
+#define LOG_CURRENT_METHOD NSLog(@"%s", __func__)
+
+#else
+#define DLog(format, ...)
+#define LOG_CURRENT_METHOD ;
+
+#endif
+
+
+#define LERR(exception) DLog(@"exception throw: %@ %@", [exception name], [exception reason])
+
+
+
+
+
+#endif /* HCPrefixHeader_pch */

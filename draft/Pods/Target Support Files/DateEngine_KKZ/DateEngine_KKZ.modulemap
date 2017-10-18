@@ -1,0 +1,6 @@
+framework module DateEngine_KKZ {
+  umbrella header "DateEngine_KKZ-umbrella.h"
+
+  export *
+  module * { export * }
+}

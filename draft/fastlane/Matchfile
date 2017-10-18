@@ -1,0 +1,11 @@
+git_url "http://git.cias.net.cn/ios/ios_cert.git"
+git_branch "cms"
+
+type "adhoc" # The default type, can be: appstore, adhoc, enterprise or development
+
+app_identifier ["com.kokozu.xcecommerce", "com.kokozu.zhongduguoji", "com.kokozu.baoshan", "com.kokozu.huachen"] 
+username "zhangda@kokozu.net"
+team_id "9KMWVF27DM"
+
+# For all available options run `fastlane match --help`
+# Remove the # in the beginning of the line to enable the other options

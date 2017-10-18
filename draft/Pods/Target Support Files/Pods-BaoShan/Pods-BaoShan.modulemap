@@ -1,0 +1,6 @@
+framework module Pods_BaoShan {
+  umbrella header "Pods-BaoShan-umbrella.h"
+
+  export *
+  module * { export * }
+}

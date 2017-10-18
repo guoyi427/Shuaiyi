@@ -1,0 +1,178 @@
+# Customise this file, documentation can be found here:
+# https://github.com/fastlane/fastlane/tree/master/fastlane/docs
+# All available actions: https://docs.fastlane.tools/actions
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+# 文件名格式：{项目名}_{版本号}.ipa 例如：中都_3.2.0.ipa
+fastlane_version "2.28.3"
+
+default_platform :ios
+
+
+platform :ios do
+
+  buildDirectory = "./build"
+  
+
+  # get target version
+  def get_target_version
+
+	scheme = ENV["SCHEME"]
+	case scheme
+	when "CIASMovie"
+		path = "./CIASMovie/XinCheng-Info.plist"
+	when "ZhongDuMovie"
+		path = "./ZhongDuMovie/ZhongDu-Info.plist"
+    when "BaoShan"
+        path = "./BaoShan/BaoShan.plist"
+    when "HuaChenMovie"
+        path = "./HuaChenMovie/HuaChen-Info.plist"
+    when "HengDian"
+	path = "./HengDian/HengDian-Info.plist"
+	else
+		raise "未配置target的plist路径"
+	end
+	version_number = get_info_plist_value(path: path, key: "CFBundleShortVersionString")
+	return version_number
+
+  end
+
+  # 获取文件名
+  def get_file_name
+
+	nameHash = {"CIASMovie" => "星轶",
+		"ZhongDuMovie" => "中都",
+                "BaoShan" => "宝山",
+                "HuaChenMovie" => "华臣",
+		"HengDian"=> "横店"}
+	name = nameHash["#{ENV['SCHEME']}"]
+	raise "项目文件名匹配未找到" unless name != nil
+	version = get_target_version
+	raise "" unless version != nil
+
+	return name + "_" + version.to_s
+  end
+
+  ############
+  # All the lanes:
+  ############
+  before_all do
+
+	choseScheme()
+	cocoapods
+    
+  end
+
+  # scheme & app identifier
+  def choseScheme()
+  	scheme = UI.select("Select scheme:", ["CIASMovie", "ZhongDuMovie", "BaoShan", "HuaChenMovie", "HengDian"])
+
+	ENV["SCHEME"] = scheme
+	ENV["APP_ID"] = ENV["APP_ID_#{scheme}"]
+
+  end
+
+
+  def archivePath
+  	return "./build/#{Time.now.strftime('%m_%d_%H_%M')}_#{ENV['SCHEME']}"
+  end
+
+  desc "Runs all the tests"
+  lane :test do
+    scan
+  end
+
+  desc "Build ad-hoc ipa"
+  lane :adhoc_ipa do
+
+     match(
+    	app_identifier: ENV["APP_ID"],
+    	type: "adhoc",
+      )
+
+      gym(
+    	scheme: ENV["SCHEME"],
+    	archive_path: archivePath,
+    	build_path: buildDirectory,
+    	output_directory:  buildDirectory,
+    	output_name: get_file_name,
+     	export_method: "ad-hoc",
+    	silent: true,
+        clean: true,
+       )
+  end
+
+  desc "Build ad-hoc ipa then publice it to fir.im"
+  lane :fir do
+  	adhoc_ipa
+	  sh "fir p ../build/#{ENV['SCHEME']}.ipa"
+  end
+
+	
+  desc "Upload ad-hoc ipa to OSS"
+  lane :oss do
+  	adhoc_ipa
+    puts "开始上传"
+	  sh "php ./upload2oss/upload.php ../build/#{get_file_name}.ipa"
+    puts "上传成功"
+  end
+
+  desc "Submit a new Beta Build to Apple TestFlight"
+  desc "This will also make sure the profile is up to date"
+  lane :beta do
+    # pilot
+
+    # sh "your_script.sh"
+    # You can also use other beta testing services here (run `fastlane actions`)
+	puts(scheme)
+  end
+
+  desc "Deploy a new version to the App Store"
+  lane :release do
+    match(
+	   type: "appstore",
+		app_identifier: ENV["APP_ID"],
+	)
+    # snapshot
+	releaseDir = buildDirectory + "/relese"
+  	gym(
+		scheme: ENV["SCHEME"],
+		archive_path: releaseDir,
+		build_path: releaseDir,
+		output_name: get_file_name,
+		output_directory: releaseDir,
+        clean: true,
+  	)
+
+    deliver(force: true)
+    # frameit
+  end
+
+  # You can define as many lanes as you want
+
+  after_all do |lane|
+    # This block is called, only if the executed lane was successful
+
+    # slack(
+    #   message: "Successfully deployed new App Update."
+    # )
+  end
+
+  error do |lane, exception|
+    # slack(
+    #   message: exception.message,
+    #   success: false
+    # )
+  end
+
+
+end
+

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="CouponListCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="CouponListCell" rowHeight="110" id="KGk-i7-Jjw" customClass="CouponListCell" customModule="BaoShan" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="109.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coupon_bg1.png" translatesAutoresizingMaskIntoConstraints="NO" id="b33-Jl-wfU">
+                        <rect key="frame" x="15" y="10" width="345" height="109"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="345" id="5i2-3n-gNc"/>
+                            <constraint firstAttribute="height" constant="109" id="pEq-Vw-FUI"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥24" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OZK-kF-aEK">
+                        <rect key="frame" x="52" y="40" width="54" height="36"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                        <color key="textColor" red="0.49411764705882355" green="0.4823529411764706" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选座购票使用" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWV-q1-vBB">
+                        <rect key="frame" x="48" y="78" width="62" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" red="0.69803921568627447" green="0.69803921568627447" blue="0.69803921568627447" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="预售" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpZ-zs-XEH">
+                        <rect key="frame" x="49" y="47" width="61" height="36"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.80000000000000004" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="全国影院通用，不限影院、版本限25元以上长此世永" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HCx-tU-8ou">
+                        <rect key="frame" x="160" y="46" width="150" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="150" id="Wyk-am-BTB"/>
+                            <constraint firstAttribute="height" constant="24" id="ee9-nQ-7jr"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="有效期" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ex-Ge-ss5">
+                        <rect key="frame" x="160" y="75" width="31" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017-03-02 14:01至2017-03-29 00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOi-z2-R1O">
+                        <rect key="frame" x="160" y="88" width="187" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cb9-gG-20y">
+                        <rect key="frame" x="160" y="75" width="45" height="23"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="23" id="36U-NI-o1P"/>
+                            <constraint firstAttribute="width" constant="45" id="SKX-iM-CFp"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <state key="normal" title="已过期">
+                            <color key="titleColor" red="0.69803921570000005" green="0.69803921570000005" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5元代金劵" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y6Z-sd-c4Z">
+                        <rect key="frame" x="160" y="23" width="71" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="cOi-z2-R1O" firstAttribute="top" secondItem="0Ex-Ge-ss5" secondAttribute="bottom" constant="1" id="3En-NG-BwG"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="b33-Jl-wfU" secondAttribute="bottom" constant="-8" id="4zH-B1-3JT"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="b33-Jl-wfU" secondAttribute="trailing" constant="7" id="FoP-6y-Qlq"/>
+                    <constraint firstItem="mpZ-zs-XEH" firstAttribute="leading" secondItem="b33-Jl-wfU" secondAttribute="leading" constant="34" id="GLZ-DS-a1f"/>
+                    <constraint firstItem="Y6Z-sd-c4Z" firstAttribute="top" secondItem="b33-Jl-wfU" secondAttribute="top" constant="13" id="HX2-HF-pIV"/>
+                    <constraint firstItem="Y6Z-sd-c4Z" firstAttribute="leading" secondItem="mpZ-zs-XEH" secondAttribute="trailing" constant="50" id="M30-GU-Kew"/>
+                    <constraint firstItem="0Ex-Ge-ss5" firstAttribute="top" secondItem="HCx-tU-8ou" secondAttribute="bottom" constant="5" id="QAp-0X-TTy"/>
+                    <constraint firstItem="Cb9-gG-20y" firstAttribute="leading" secondItem="Y6Z-sd-c4Z" secondAttribute="leading" id="QKn-Cg-Aiw"/>
+                    <constraint firstItem="b33-Jl-wfU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="Ts8-xM-UXE"/>
+                    <constraint firstItem="fWV-q1-vBB" firstAttribute="centerX" secondItem="OZK-kF-aEK" secondAttribute="centerX" id="XWJ-MC-533"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="cOi-z2-R1O" secondAttribute="bottom" constant="1" id="ZWo-ID-S1d"/>
+                    <constraint firstItem="fWV-q1-vBB" firstAttribute="top" secondItem="OZK-kF-aEK" secondAttribute="bottom" constant="2" id="cn6-BO-sfS"/>
+                    <constraint firstItem="HCx-tU-8ou" firstAttribute="leading" secondItem="Y6Z-sd-c4Z" secondAttribute="leading" id="ech-XD-IwS"/>
+                    <constraint firstItem="HCx-tU-8ou" firstAttribute="top" secondItem="Y6Z-sd-c4Z" secondAttribute="bottom" constant="5" id="g0o-4G-AB7"/>
+                    <constraint firstItem="0Ex-Ge-ss5" firstAttribute="leading" secondItem="Y6Z-sd-c4Z" secondAttribute="leading" id="hSO-Bh-6GD"/>
+                    <constraint firstItem="OZK-kF-aEK" firstAttribute="leading" secondItem="b33-Jl-wfU" secondAttribute="leading" constant="37" id="iNt-Fu-OSN"/>
+                    <constraint firstItem="OZK-kF-aEK" firstAttribute="top" secondItem="b33-Jl-wfU" secondAttribute="top" constant="30" id="mia-AT-TCB"/>
+                    <constraint firstItem="Cb9-gG-20y" firstAttribute="top" secondItem="HCx-tU-8ou" secondAttribute="bottom" constant="5" id="ty9-2M-txC"/>
+                    <constraint firstItem="b33-Jl-wfU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="7" id="vkZ-sC-gzQ"/>
+                    <constraint firstItem="cOi-z2-R1O" firstAttribute="leading" secondItem="Y6Z-sd-c4Z" secondAttribute="leading" id="xcS-WA-zDN"/>
+                    <constraint firstItem="mpZ-zs-XEH" firstAttribute="top" secondItem="b33-Jl-wfU" secondAttribute="top" constant="37" id="yng-zc-THO"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.94901960784313721" green="0.95686274509803915" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="couponBackImage" destination="b33-Jl-wfU" id="6dH-Jz-MeK"/>
+                <outlet property="couponBackImageHeight" destination="pEq-Vw-FUI" id="o9m-pv-5aG"/>
+                <outlet property="couponBackimageWidth" destination="5i2-3n-gNc" id="FOa-9M-JUQ"/>
+                <outlet property="couponDescribeLabel" destination="HCx-tU-8ou" id="Dmx-mC-leQ"/>
+                <outlet property="couponDescribeLabelHeight" destination="ee9-nQ-7jr" id="Wr4-Dy-2Ni"/>
+                <outlet property="couponDescribeLabelTop" destination="g0o-4G-AB7" id="RHU-sc-yp0"/>
+                <outlet property="couponDescribeLabelWitdh" destination="Wyk-am-BTB" id="Hv6-cq-OCW"/>
+                <outlet property="couponExpireBtn" destination="Cb9-gG-20y" id="kgJ-id-EnN"/>
+                <outlet property="couponExpireBtnHeight" destination="36U-NI-o1P" id="EJS-pW-Lub"/>
+                <outlet property="couponExpireBtnWitdh" destination="SKX-iM-CFp" id="T9S-HH-YAc"/>
+                <outlet property="couponExpireTop" destination="ty9-2M-txC" id="yer-7l-ae1"/>
+                <outlet property="couponPriceLabel" destination="OZK-kF-aEK" id="wFt-93-olx"/>
+                <outlet property="couponPriceLeft" destination="iNt-Fu-OSN" id="JSY-9j-soz"/>
+                <outlet property="couponPriceTop" destination="mia-AT-TCB" id="BlN-Vh-8n5"/>
+                <outlet property="couponTipLabel" destination="fWV-q1-vBB" id="dn6-XS-XNe"/>
+                <outlet property="couponTipLabelTop" destination="cn6-BO-sfS" id="avc-uc-O7D"/>
+                <outlet property="couponTitleLabel" destination="Y6Z-sd-c4Z" id="UtN-9Y-TFP"/>
+                <outlet property="couponTitleLabelLeft" destination="M30-GU-Kew" id="tHG-ix-N0Y"/>
+                <outlet property="couponTitleLabelTop" destination="HX2-HF-pIV" id="uQP-6D-OCU"/>
+                <outlet property="couponTypeLabel" destination="mpZ-zs-XEH" id="ogs-aM-PTB"/>
+                <outlet property="couponTypeLeft" destination="GLZ-DS-a1f" id="aad-9G-Yj3"/>
+                <outlet property="couponTypeTop" destination="yng-zc-THO" id="bSP-DQ-0VI"/>
+                <outlet property="couponValidLabel" destination="0Ex-Ge-ss5" id="C3L-lJ-N6B"/>
+                <outlet property="couponValidLabelTop" destination="QAp-0X-TTy" id="UL9-qL-nii"/>
+                <outlet property="couponValidValueLabel" destination="cOi-z2-R1O" id="yQR-fx-B4q"/>
+                <outlet property="couponValidValueLabelTop" destination="3En-NG-BwG" id="RBd-2f-pj0"/>
+            </connections>
+            <point key="canvasLocation" x="-72.5" y="67"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="coupon_bg1.png" width="345" height="110"/>
+    </resources>
+</document>

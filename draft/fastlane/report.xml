@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="0: Verifying required fastlane version" time="0.001274">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: default_platform" time="0.000996">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2: cocoapods" time="6.777604">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: Switch to ios adhoc_ipa lane" time="0.000895">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: match" time="19.844475">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="5: get_info_plist_value" time="0.007951">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="6: gym" time="188.255228">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="7: get_info_plist_value" time="0.012565">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="8: php ./upload2oss/upload.php ../build/横店_3.7.ipa" time="28.917146">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>

@@ -1,0 +1,6 @@
+framework module HallView_KKZ {
+  umbrella header "HallView_KKZ-umbrella.h"
+
+  export *
+  module * { export * }
+}

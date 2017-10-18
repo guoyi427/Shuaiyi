@@ -1,0 +1,6 @@
+framework module CacheEngine {
+  umbrella header "CacheEngine-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+framework module NetCore_KKZ {
+  umbrella header "NetCore_KKZ-umbrella.h"
+
+  export *
+  module * { export * }
+}

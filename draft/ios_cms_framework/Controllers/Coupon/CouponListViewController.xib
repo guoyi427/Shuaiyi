@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CouponListViewController" customModule="BaoShan" customModuleProvider="target">
+            <connections>
+                <outlet property="bindingBGView" destination="jT6-Gk-rjS" id="ckq-c7-rdq"/>
+                <outlet property="couponBindBtn" destination="Uxd-nZ-9DM" id="bcP-WI-M27"/>
+                <outlet property="couponBindBtnHeight" destination="Iua-PM-vdT" id="fwy-QY-FQ1"/>
+                <outlet property="couponBindBtnRight" destination="JMD-GI-Fs8" id="TQg-gL-xDX"/>
+                <outlet property="couponBindBtnTop" destination="jFL-p2-srh" id="0ja-mr-7RG"/>
+                <outlet property="couponBindBtnWidth" destination="eO6-Z3-jed" id="aby-JG-nNJ"/>
+                <outlet property="couponFieldHeight" destination="NhL-m5-Z0v" id="cpN-kR-U5N"/>
+                <outlet property="couponFieldLeft" destination="CXd-Qu-UCE" id="tvL-Vs-OtL"/>
+                <outlet property="couponFieldTop" destination="IOY-gk-S7P" id="9PN-5n-eCN"/>
+                <outlet property="couponInputField" destination="o7S-Bi-lhU" id="OBO-Zh-ttA"/>
+                <outlet property="couponListTableView" destination="6M6-iF-CNo" id="B9G-zc-oJU"/>
+                <outlet property="couponListTableViewTop" destination="8km-mD-5KJ" id="djX-BN-NEK"/>
+                <outlet property="couponViewHeight" destination="JOV-LT-jqU" id="ezS-hO-hmh"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jT6-Gk-rjS">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="68"/>
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o7S-Bi-lhU">
+                            <rect key="frame" x="15" y="15" width="236" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="NhL-m5-Z0v"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="8SU-lf-CcY"/>
+                            </connections>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uxd-nZ-9DM">
+                            <rect key="frame" x="261" y="15" width="99" height="44"/>
+                            <color key="backgroundColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="Iua-PM-vdT"/>
+                                <constraint firstAttribute="width" constant="99" id="eO6-Z3-jed"/>
+                            </constraints>
+                            <state key="normal" title="立即绑定">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="couponBtnClick:" destination="-1" eventType="touchUpInside" id="yu9-eg-7ds"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.94901960784313721" green="0.95686274509803915" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="o7S-Bi-lhU" firstAttribute="leading" secondItem="jT6-Gk-rjS" secondAttribute="leading" constant="15" id="CXd-Qu-UCE"/>
+                        <constraint firstItem="Uxd-nZ-9DM" firstAttribute="leading" secondItem="o7S-Bi-lhU" secondAttribute="trailing" constant="10" id="FhS-GY-BwO"/>
+                        <constraint firstItem="o7S-Bi-lhU" firstAttribute="top" secondItem="jT6-Gk-rjS" secondAttribute="top" constant="15" id="IOY-gk-S7P"/>
+                        <constraint firstAttribute="trailing" secondItem="Uxd-nZ-9DM" secondAttribute="trailing" constant="15" id="JMD-GI-Fs8"/>
+                        <constraint firstAttribute="height" constant="68" id="JOV-LT-jqU"/>
+                        <constraint firstItem="Uxd-nZ-9DM" firstAttribute="top" secondItem="jT6-Gk-rjS" secondAttribute="top" constant="15" id="jFL-p2-srh"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6M6-iF-CNo">
+                    <rect key="frame" x="0.0" y="68" width="375" height="599"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="qqr-Q5-kXs"/>
+                        <outlet property="delegate" destination="-1" id="8ac-Rx-Vau"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="6M6-iF-CNo" firstAttribute="top" secondItem="jT6-Gk-rjS" secondAttribute="bottom" id="8km-mD-5KJ"/>
+                <constraint firstAttribute="trailing" secondItem="jT6-Gk-rjS" secondAttribute="trailing" id="DA4-Wd-npZ"/>
+                <constraint firstItem="6M6-iF-CNo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="DbW-M8-35V"/>
+                <constraint firstAttribute="bottom" secondItem="6M6-iF-CNo" secondAttribute="bottom" id="ONu-HV-dB1"/>
+                <constraint firstItem="jT6-Gk-rjS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="aRq-NK-2aK"/>
+                <constraint firstAttribute="trailing" secondItem="6M6-iF-CNo" secondAttribute="trailing" id="iMs-v9-zA8"/>
+                <constraint firstItem="jT6-Gk-rjS" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="sZw-37-GED"/>
+            </constraints>
+            <point key="canvasLocation" x="-158" y="-76"/>
+        </view>
+    </objects>
+</document>

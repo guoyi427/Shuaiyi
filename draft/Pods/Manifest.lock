@@ -1,0 +1,155 @@
+PODS:
+  - AFNetworkActivityLogger (3.0.0):
+    - AFNetworking/NSURLSession (~> 3.0)
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
+    - AFNetworking/NSURLSession
+  - BaiduMapKit (3.3.4)
+  - Bugly (2.4.8)
+  - CacheEngine (0.0.1):
+    - CacheEngine/arc (= 0.0.1)
+    - CacheEngine/no-arc (= 0.0.1)
+    - Reachability (~> 3.2)
+  - CacheEngine/arc (0.0.1):
+    - Reachability (~> 3.2)
+  - CacheEngine/no-arc (0.0.1):
+    - CacheEngine/arc
+    - Reachability (~> 3.2)
+  - Category_KKZ/NSDictionaryExtra (1.0.11):
+    - DateEngine_KKZ (~> 1.0.0)
+  - Category_KKZ/NSStringExtra (1.0.11)
+  - Category_KKZ/UIBarButtonItem+GFItem (1.0.11):
+    - Category_KKZ/UIColor+Hex
+  - Category_KKZ/UIColor+Hex (1.0.11)
+  - Category_KKZ/UIImage+Blur (1.0.11)
+  - Category_KKZ/UIImage+ImageEffects (1.0.11)
+  - Category_KKZ/UIImage+Resize (1.0.11)
+  - CHTCollectionViewWaterfallLayout (0.9.6):
+    - CHTCollectionViewWaterfallLayout/ObjC (= 0.9.6)
+  - CHTCollectionViewWaterfallLayout/ObjC (0.9.6)
+  - DateEngine_KKZ (1.0.9)
+  - HallView_KKZ (0.3.5):
+    - HallView_KKZ/Default (= 0.3.5)
+  - HallView_KKZ/Default (0.3.5)
+  - HallView_KKZ/NavigatorView (0.3.5)
+  - HallView_KKZ/SeatHelper (0.3.5):
+    - HallView_KKZ/Default
+  - HallView_KKZ/SeatIndexView (0.3.5)
+  - KMNavigationBarTransition (1.0.0)
+  - Mantle (2.1.0):
+    - Mantle/extobjc (= 2.1.0)
+  - Mantle/extobjc (2.1.0)
+  - Masonry (1.0.2)
+  - MJRefresh (3.1.12)
+  - NetCore_KKZ (0.1.20):
+    - AFNetworking (~> 3.1)
+    - Category_KKZ/NSStringExtra
+    - Mantle (~> 2.0)
+  - NetCore_KKZ_Cache (0.1.0):
+    - CacheEngine
+    - NetCore_KKZ
+    - NSURL+QueryDictionary (~> 1.2)
+  - NSURL+QueryDictionary (1.2.0)
+  - Reachability (3.2)
+  - SDWebImage (4.1.0):
+    - SDWebImage/Core (= 4.1.0)
+  - SDWebImage/Core (4.1.0)
+  - SnapKit (3.2.0)
+  - SVProgressHUD (2.1.2)
+  - UIAlertView+Blocks (0.9)
+  - UIButton+BackgroundColor (0.1)
+  - UIColor_Hex_Swift (3.0.2)
+  - UIView+JMFrame (0.1.2)
+  - UIViewController+ODStatusBar (0.1.5)
+  - UMengAnalytics-NO-IDFA (4.2.5)
+  - WechatOpenSDK (1.7.9)
+
+DEPENDENCIES:
+  - AFNetworkActivityLogger (from `https://github.com/AFNetworking/AFNetworkActivityLogger.git`, branch `3_0_0`)
+  - BaiduMapKit
+  - Bugly
+  - Category_KKZ/NSDictionaryExtra
+  - Category_KKZ/NSStringExtra
+  - Category_KKZ/UIBarButtonItem+GFItem
+  - Category_KKZ/UIColor+Hex
+  - Category_KKZ/UIImage+Blur
+  - Category_KKZ/UIImage+ImageEffects
+  - Category_KKZ/UIImage+Resize
+  - CHTCollectionViewWaterfallLayout
+  - DateEngine_KKZ (~> 1.0.5)
+  - HallView_KKZ
+  - HallView_KKZ/NavigatorView
+  - HallView_KKZ/SeatHelper
+  - HallView_KKZ/SeatIndexView
+  - KMNavigationBarTransition
+  - Mantle
+  - Masonry
+  - MJRefresh
+  - NetCore_KKZ_Cache (~> 0.1.0)
+  - NSURL+QueryDictionary (~> 1.2)
+  - Reachability
+  - SDWebImage
+  - SnapKit
+  - SVProgressHUD (~> 2.0)
+  - UIAlertView+Blocks (~> 0.9)
+  - UIButton+BackgroundColor
+  - UIColor_Hex_Swift (~> 3.0)
+  - UIView+JMFrame (~> 0.1)
+  - UIViewController+ODStatusBar
+  - UMengAnalytics-NO-IDFA
+  - WechatOpenSDK
+
+EXTERNAL SOURCES:
+  AFNetworkActivityLogger:
+    :branch: 3_0_0
+    :git: https://github.com/AFNetworking/AFNetworkActivityLogger.git
+
+CHECKOUT OPTIONS:
+  AFNetworkActivityLogger:
+    :commit: abc565fe804f210dfda3b028c9a64e7c32e44600
+    :git: https://github.com/AFNetworking/AFNetworkActivityLogger.git
+
+SPEC CHECKSUMS:
+  AFNetworkActivityLogger: e77f68d014becb33c4306a23f56a64906ff72670
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  BaiduMapKit: 6f2d76a04b72e9af938afb5ca0f97d4417bbf9c0
+  Bugly: da3c02408c14838d498429320545a8e439392978
+  CacheEngine: cf0c8981f1c80c3d18e4e77a9367f59f4b0622bf
+  Category_KKZ: 7a12b58acb59d22a0191bd021ed2dfd0d8aa6a77
+  CHTCollectionViewWaterfallLayout: f4dab06db57b36dcf29e802594175acc76c56615
+  DateEngine_KKZ: 0c9c7f8433f3190b7b6273baa6948ecd648f77d2
+  HallView_KKZ: 71621912dc02d0cf04493e093f7217e6a1db99f2
+  KMNavigationBarTransition: b3fb8337f7a1e4542add07fd6c45fb9980794d59
+  Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  NetCore_KKZ: a5c74569dbef9849d7ed810f83d0aec41b4cf26e
+  NetCore_KKZ_Cache: 086b486cd929d0e227d94b3cebfd2c5a05e1ad31
+  NSURL+QueryDictionary: bae616404e2adf6409d3d5c02a093cbf44c8a236
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SDWebImage: 0e435c14e402a6730315a0fb79f95e68654d55a4
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
+  UIAlertView+Blocks: a46c99c5144f6c5dbc7d62fd2a0678daceec89a3
+  UIButton+BackgroundColor: 86e9b059712698911b504fc1ab1d235627e28aed
+  UIColor_Hex_Swift: 95f718452092a3efc8a827dffd2c04d3237be02d
+  UIView+JMFrame: a907974c9d34b1c300aef85ae2a1a5af746f2b8a
+  UIViewController+ODStatusBar: 0c3d99045c5cf093c725f417e3644d7abd8e8f95
+  UMengAnalytics-NO-IDFA: 16666e32edce5be44ae5b14aaaa7f3582e09d6ab
+  WechatOpenSDK: 1fe7e3b07db860d6a936c3ff4a5aba6b890958d9
+
+PODFILE CHECKSUM: 3a32b890dbd63655c35a82c03bd91c70c4ac1154
+
+COCOAPODS: 1.3.1

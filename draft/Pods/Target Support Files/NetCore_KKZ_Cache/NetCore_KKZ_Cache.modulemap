@@ -1,0 +1,6 @@
+framework module NetCore_KKZ_Cache {
+  umbrella header "NetCore_KKZ_Cache-umbrella.h"
+
+  export *
+  module * { export * }
+}
