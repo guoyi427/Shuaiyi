@@ -24,7 +24,11 @@
                 forControlEvents:UIControlEventTouchUpInside];
         btnToolBar.titleLabel.font = [UIFont systemFontOfSize:15];
         [btnToolBar setTitle:@"完成" forState:UIControlStateNormal];
-        //        [btnToolBar setTitleColor:appDelegate.kkzBlue forState:UIControlStateNormal];
+        [btnToolBar setTitleColor:[UIColor colorWithRed:0
+                                                  green:140 / 255.0
+                                                   blue:255 / 255.0
+                                                  alpha:1]
+                         forState:UIControlStateNormal];
 
         UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithCustomView:btnToolBar];
         NSArray *buttonsArray = [NSArray arrayWithObjects:btnSpace, doneBtn, nil];
@@ -35,6 +39,10 @@
 
 - (void)dismissKeyBoard {
     [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
+    
+    if (self.keyboardDelegate && [self.keyboardDelegate respondsToSelector:@selector(KKZKeyboardDismissed)]) {
+        [self.keyboardDelegate KKZKeyboardDismissed];
+    }
 }
 
 @end

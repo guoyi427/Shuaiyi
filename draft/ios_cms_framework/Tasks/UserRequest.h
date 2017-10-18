@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class User;
+@class User, UserLogin;
 @interface UserRequest : NSObject
 
 //MARK: 判断用户是否注册过
@@ -91,4 +91,46 @@
                                   unionId:(NSString *_Nullable)unionId
                                   success:(nullable void (^)(User *_Nullable data))success
                                   failure:(nullable void (^)(NSError *_Nullable err))failure;
+
+
+//  kkz
+/**
+ 登录
+ 
+ @param userName 用户名 第三方登录传uid
+ @param password 密码(md5) 第三方登录传token
+ @param site     登录类型
+ @param success  成功回调
+ @param failure  失败回调
+ */
+- (void) login:(NSString * _Nonnull)userName
+      password:(NSString * _Nonnull)password
+          site:(SiteType )site
+       success:(nullable void (^)(UserLogin *_Nullable userLogin))success
+       failure:(nullable void (^)(NSError *_Nullable err))failure;
+
+/**
+ 退出登录
+ 
+ @param success 成功回调
+ @param failure 失败回调
+ */
+- (void) logout:(nullable void (^)())success
+        failure:(nullable void (^)(NSError *_Nullable err))failure;
+
+/**
+ 重置密码
+ 
+ @param mobile    手机号
+ @param password  新密码
+ @param validCode 验证码
+ @param success   成功回调
+ @param failure   失败回调
+ */
+- (void) resetPassword:(NSString *_Nonnull)mobile
+              password:(NSString *_Nonnull)password
+             validCode:(NSString *_Nonnull)validCode
+               success:(nullable void (^)())success
+               failure:(nullable void (^)(NSError *_Nullable err))failure;
+
 @end

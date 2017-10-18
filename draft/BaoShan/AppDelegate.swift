@@ -11,6 +11,7 @@ import Bugly
 import AFNetworking
 import UserNotifications
 import SDWebImage
+import NetCore_KKZ.KKZBaseRequestParams
 
 @UIApplicationMain
 @objc class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,7 +24,7 @@ import SDWebImage
     let publicObject = CIASPublicUtility.sharedEngine()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-        
+        K_REQUEST_ENC_SALT = NSMutableString(string: kKsspKey)
         Bugly.start(withAppId: BuglyAppId)
         
         AFNetworkReachabilityManager.shared().startMonitoring()
@@ -183,14 +184,18 @@ import SDWebImage
         guard Constants.isAuthorized == false else {
             return
         }
+        /*
         if (self.loginView != nil), ((self.loginView?.superview) != nil)  {
             self.loginView?.removeFromSuperview()
         }else {
             self.loginView = LoginCenterView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight), withIsCancelView: true, delegate: nil)
         }
-        
         UIApplication.shared.keyWindow?.addSubview(self.loginView!)
+         */
         
+        let vc = LoginViewController()
+        let naviC = NavigationController(rootViewController: vc)
+        UIApplication.shared.keyWindow?.rootViewController?.present(naviC, animated: true, completion: nil)
     }
     
     func signout() {

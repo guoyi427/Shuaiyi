@@ -1,12 +1,13 @@
 //
-//  KKZTextField.h
-//  Cinephile
+//  软键盘上带有完成ToolBar的UITextField
 //
-//  Created by wuzhen on 16/11/22.
-//  Copyright © 2016年 Kokozu. All rights reserved.
+//  Created by wuzhen on 16/8/19.
+//  Copyright © 2016年 Ariadne’s Thread Co., Ltd. All rights reserved.
 //
 
 @class KKZTextField;
+
+#import "KKZKeyboardTopView.h"
 
 typedef enum {
     KKZTextFieldNormal,
@@ -29,13 +30,6 @@ typedef enum {
  * KKZTextFieldType。
  */
 @property (nonatomic, assign) KKZTextFieldType fieldType;
-
-/**
- * 是否显示软键盘的TopView。
- */
-@property (nonatomic, assign) BOOL showKeyboardTopView;
-
-@property (nonatomic, assign) NSInteger rightViewHeight;
 
 /**
  * 最大输入字数。
@@ -71,5 +65,20 @@ typedef enum {
  * 获取到焦点时的背景色。
  */
 @property (nonatomic, strong) UIColor *focusedBackgroundColor;
+
+/**
+ 键盘TopView的delegate。
+ */
+@property (nonatomic, weak) id<KKZKeyboardTopViewDelegate> keyboardDelegate;
+
+/**
+ * 初始化。
+ *
+ * @param frame frame
+ * @param type  KKZTextFieldType
+ *
+ * @return KKZTextField
+ */
+- (id)initWithFrame:(CGRect)frame andFieldType:(KKZTextFieldType)fieldType;
 
 @end

@@ -76,7 +76,7 @@
 - (void)custom_viewWillAppear:(BOOL)animated {
     //default setup
 //    [self od_setStatusBarStyle:UIStatusBarStyleLightContent];
-    [self.navigationController setNavigationBarHidden:self.hideNavigationBar animated:YES];
+    [self.navigationController setNavigationBarHidden:self.hideNavigationBar animated:false];
     if (self.navigationController.viewControllers.count > 1 && self.hideNavigationBar==NO && self.hideBackBtn==NO) {
         self.navigationItem.leftBarButtonItem = [self customLeftBackButton];
     }

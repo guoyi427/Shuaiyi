@@ -18,6 +18,8 @@
 #import "UserRequest.h"
 #import "User.h"
 #import "DataEngine.h"
+#import "UserRequest.h"
+#import "UserLogin.h"
 
 @interface LoginCenterView ()  <UserLoginViewDelegate,UserRegisterPhoneViewDelegate,UserRegisterCodeViewDelegate,UserForgetPWPhoneViewDelegate,UserForgetPWCodeViewDelegate,UserForgetResetPWViewDelegate,UserRegisterSetPWViewDelegate>
 {
@@ -101,6 +103,7 @@
     UserRequest *request = [[UserRequest alloc] init];
     [[UIConstants sharedDataEngine] loadingAnimation];
     __weak __typeof(self) weakSelf = self;
+    /*
     [request requestLoginParams:params success:^(User * _Nullable data) {
         [weakSelf loginSuccessWithData:data isFromRegister:isFromRegister];
     } failure:^(NSError * _Nullable err) {
@@ -113,7 +116,24 @@
         weakSelf.loginView.wrongTipsView.hidden = NO;
         [CIASPublicUtility showMyAlertViewForTaskInfo:err];
     }];
-    
+    */
+    [request login:account password:pw site:SiteTypeKKZ success:^(UserLogin * _Nullable userLogin) {
+        User *data = [[User alloc] init];
+        data.nickName = userLogin.nickName;
+        data.phoneNumber = userLogin.userName;
+        data.accountToken = userLogin.lastSession;
+        
+        [weakSelf loginSuccessWithData:data isFromRegister:isFromRegister];
+    } failure:^(NSError * _Nullable err) {
+        [[UIConstants sharedDataEngine] stopLoadingAnimation];
+        weakSelf.loginView.wechatState = false;
+        [[UIApplication sharedApplication].keyWindow addSubview:weakSelf.loginView];
+        [self.loginView updateStateToBind:self.isWechatBind];
+        
+        weakSelf.blurEffectView.backgroundColor = [UIColor colorWithHex:@"#cc3300"];
+        weakSelf.loginView.wrongTipsView.hidden = NO;
+        [CIASPublicUtility showMyAlertViewForTaskInfo:err];
+    }];
 }
 
 /**

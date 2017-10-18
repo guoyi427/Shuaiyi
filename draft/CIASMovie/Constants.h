@@ -146,7 +146,7 @@ static NSString * _Nonnull const kHotLineForDisplay = @"400 000 9666";
     #define ciasSSPOrderBaseURL @"http://paytest.cias.net.cn/cias-order-web/"
 
     //  抠电影
-    #define kKSSBaseUrl @"http://newapi.komovie.cn"
+    #define kKSSBaseUrl @"http://47.95.148.114:8082"    //@"http://newapi.komovie.cn" ////
     #define USER_SERVE @"http://api.release.komovie.cn"
     #define KKSSMediaServerBase @"http://api.release.komovie.cn"
     #define KKSSClubSeverBase @"http://api.release.komovie.cn"
@@ -202,6 +202,28 @@ static NSString * _Nonnull const kHotLineForDisplay = @"400 000 9666";
 #define memberConfigNews  @"memberapi/"
 //卖品相关服务器地址后缀
 #define productConfigNews @"saleapi/"
+
+typedef enum {
+    SiteTypeKKZ = 1,
+    SiteTypeSina,
+    SiteTypeTaobao,
+    SiteTypeQQ,
+    SiteTypeAliPay = 9,
+    SiteTypeWX = 12,
+    SiteTypeQQSpace,
+    SiteTypeKKZValidcode = 26,
+} SiteType;
+
+//验证码类型：短信/语音
+typedef enum {
+    SMSValidcode = 0, //短信验证码
+    VoiceValidcode = 1, //语音验证码
+} ValidcodeType;
+
+//========加密的信息========
+#define kKsspKey @"123456"  //@"abcdYzx" //MD5的key
+#define kKDesKey @"jkh7887k" //DES的key
+#define kKDesLogKey @"koMovie1" //用户客户端错误日志DES加密的key
 
 #endif
 

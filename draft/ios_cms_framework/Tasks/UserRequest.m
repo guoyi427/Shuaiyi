@@ -15,7 +15,7 @@
 #import "DataEngine.h"
 #import "User.h"
 #import "KKZBaseRequestParamsMD5.h"
-
+#import "UserLogin.h"
 
 @implementation UserRequest
 
@@ -520,6 +520,106 @@
               }
           }
           failure:failure];
+}
+
+#pragma mark - kkz
+
+//  kkz
+/**
+ 登录
+ 
+ @param userName 用户名 第三方登录传uid
+ @param password 密码(md5) 第三方登录传token
+ @param site     登录类型
+ @param success  成功回调
+ @param failure  失败回调
+ */
+- (void) login:(NSString * _Nonnull)userName
+      password:(NSString * _Nonnull)password
+          site:(SiteType )site
+       success:(nullable void (^)(UserLogin *_Nullable userLogin))success
+       failure:(nullable void (^)(NSError *_Nullable err))failure {
+    
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    NSMutableDictionary *dicParams = [NSMutableDictionary dictionaryWithCapacity:1];
+    [dicParams setValue:userName forKey:@"user_name"];
+    if (site == SiteTypeKKZ) {
+        NSString *ms5 = [password MD5String];
+        [dicParams setValue:ms5 forKey:@"password"];
+    }else{
+        [dicParams setValue:password forKey:@"password"];
+    }
+    
+    [dicParams setValue:[NSNumber numberWithInt:site] forKey:@"site"];
+    NSDictionary *newParams = [KKZBaseRequestParams getDecryptParams:dicParams];
+    
+    [request GET:kKSSPServerPath(@"user_Login")
+      parameters:newParams
+    resultKeyMap:@{@"user": [UserLogin class]}
+         success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
+             if (success) {
+                 success([data objectForKey:@"user"]);
+             }
+             
+         } failure:failure];
+}
+
+/**
+ 退出登录
+ 
+ @param success 成功回调
+ @param failure 失败回调
+ */
+- (void) logout:(nullable void (^)())success
+        failure:(nullable void (^)(NSError *_Nullable err))failure {
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    NSMutableDictionary *dicParams = [NSMutableDictionary dictionaryWithCapacity:1];
+    [dicParams setValue:[DataEngine sharedDataEngine].sessionId forKey:@"session_id"];
+    NSDictionary *newParams = [KKZBaseRequestParams getDecryptParams:dicParams];
+    
+    [request GET:KKSSPKotaPath(@"exit_user.chtml")
+      parameters:newParams
+    resultKeyMap:nil
+         success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
+             if (success) {
+                 success();
+             }
+             
+         } failure:failure];
+}
+
+/**
+ 重置密码
+ 
+ @param mobile    手机号
+ @param password  新密码
+ @param validCode 验证码
+ @param success   成功回调
+ @param failure   失败回调
+ */
+- (void) resetPassword:(NSString *_Nonnull)mobile
+              password:(NSString *_Nonnull)password
+             validCode:(NSString *_Nonnull)validCode
+               success:(nullable void (^)())success
+               failure:(nullable void (^)(NSError *_Nullable err))failure {
+    
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    NSMutableDictionary *dicParams = [NSMutableDictionary dictionaryWithCapacity:4];
+    [dicParams setValue:@"user_Reset" forKey:@"action"];
+    [dicParams setValue:mobile forKey:@"mobile"];
+    [dicParams setValue:[password MD5String] forKey:@"new_password"];
+    [dicParams setValue:validCode forKey:@"valid_code"];
+    NSDictionary *newParams = [KKZBaseRequestParams getDecryptParams:dicParams];
+    
+    [request GET:kKSSPServer
+      parameters:newParams
+    resultKeyMap:nil
+         success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
+             if (success) {
+                 success();
+             }
+             
+         } failure:failure];
 }
 
 @end

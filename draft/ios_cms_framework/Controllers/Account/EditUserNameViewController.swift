@@ -57,8 +57,9 @@ class EditUserNameViewController: UIViewController {
         _nameTextField.text = userInfo.nickName//这个默认用户设置的昵称
         _nameTextField.clearImage = #imageLiteral(resourceName: "iconfont-shanchu")
         _nameTextField.fieldType = KKZTextFieldWithClear
-        _nameTextField.showKeyboardTopView = false
-        _nameTextField.rightViewHeight = 44
+//        _nameTextField.showKeyboardTopView = false
+//        _nameTextField.rightViewHeight = 44
+        
         whiteView.addSubview(_nameTextField)
         _nameTextField.snp.makeConstraints { (make) in
             make.left.equalTo(15)

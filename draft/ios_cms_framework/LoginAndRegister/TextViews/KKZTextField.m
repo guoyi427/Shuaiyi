@@ -1,9 +1,8 @@
 //
-//  KKZTextField.m
-//  Cinephile
+//  软键盘上带有完成ToolBar的UITextField
 //
-//  Created by wuzhen on 16/11/22.
-//  Copyright © 2016年 Kokozu. All rights reserved.
+//  Created by wuzhen on 16/8/19.
+//  Copyright © 2016年 Ariadne’s Thread Co., Ltd. All rights reserved.
 //
 
 #import "KKZTextField.h"
@@ -11,10 +10,12 @@
 #import "KKZKeyboardTopView.h"
 
 @interface KKZTextField () {
-
+    
     UIColor *beganBorderColor;
     UIColor *beganBackgroundColor;
 }
+
+@property (nonatomic, strong) KKZKeyboardTopView *keyboardTopView;
 
 @property (nonatomic, strong) UIView *fieldRightView;
 
@@ -34,17 +35,21 @@ static const CGFloat kButtonWidth = 40.f;
 
 #pragma mark - Lifecycle methods
 - (id)initWithFrame:(CGRect)frame {
+    return [self initWithFrame:frame andFieldType:KKZTextFieldNormal];
+}
+
+- (id)initWithFrame:(CGRect)frame andFieldType:(KKZTextFieldType)type {
     self = [super initWithFrame:frame];
     if (self) {
+        self.maxWordCount = -1;
+        self.fieldType = type;
         self.autocorrectionType = UITextAutocorrectionTypeNo;
-        _maxWordCount = -1;
-        _fieldType = KKZTextFieldNormal;
-        _showKeyboardTopView = NO;
-        _rightViewHeight = self.frame.size.height;
+        
+        [self setInputAccessoryView:self.keyboardTopView];
 
         [self addTarget:self
-                          action:@selector(textFieldChanged)
-                forControlEvents:UIControlEventEditingChanged];
+                 action:@selector(textFieldChanged)
+       forControlEvents:UIControlEventEditingChanged];
 
         __weak KKZTextField *weakSelf = self;
 
@@ -85,19 +90,21 @@ static const CGFloat kButtonWidth = 40.f;
     if (self.isSecureTextEntry) {
         [self settingButtonVisibility];
     }
-
+    
     if (self.focusedBorderColor) {
         CGColorRef cgColorRef = self.layer.borderColor;
         beganBorderColor = [UIColor colorWithCGColor:cgColorRef];
         self.layer.borderColor = self.focusedBorderColor.CGColor;
-    } else {
+    }
+    else {
         beganBorderColor = nil;
     }
-
+    
     if (self.focusedBackgroundColor) {
         beganBackgroundColor = self.backgroundColor;
         self.backgroundColor = self.focusedBackgroundColor;
-    } else {
+    }
+    else {
         beganBackgroundColor = nil;
     }
 }
@@ -105,15 +112,17 @@ static const CGFloat kButtonWidth = 40.f;
 - (void)handleEndEditing {
     if (self.secretButton && self.fieldType == KKZTextFieldWithClearAndSecret) {
         if (self.secretButton) {
-            self.secretButton.selected = NO;
-            self.secureTextEntry = YES;
+//            if (runningOniOS7) {
+//                self.secretButton.selected = NO;
+//                self.secureTextEntry = YES;
+//            }
             self.secretButton.hidden = YES;
         }
         if (self.clearButton) {
             self.clearButton.hidden = YES;
         }
     }
-
+    
     if (beganBorderColor) {
         self.layer.borderColor = beganBorderColor.CGColor;
     }
@@ -125,31 +134,43 @@ static const CGFloat kButtonWidth = 40.f;
 #pragma mark - Override methods
 - (void)deleteBackward {
     [super deleteBackward];
-
+    
     if (self.kkzDelegate && [self.kkzDelegate respondsToSelector:@selector(kkzTextFieldDeleteBackward:)]) {
         [self.kkzDelegate kkzTextFieldDeleteBackward:self];
     }
 }
 
 #pragma mark - Init views
+- (KKZKeyboardTopView *)keyboardTopView {
+    if (!_keyboardTopView) {
+        CGRect topFrame = CGRectMake(0, 0, self.frame.size.width, 38);
+        
+        _keyboardTopView = [[KKZKeyboardTopView alloc] initWithFrame:topFrame];
+    }
+    return _keyboardTopView;
+}
+
 - (UIView *)fieldRightView {
     if (!_fieldRightView) {
         _fieldRightView = [[UIView alloc] init];
     }
 
+    CGFloat left = 0;
     CGFloat width = 0;
     if (self.fieldType == KKZTextFieldWithClear) {
         width = kButtonWidth;
+        left = self.frame.size.width - width;
     } else if (self.fieldType == KKZTextFieldWithClearAndSecret) {
         width = kButtonWidth * 2;
+        left = self.frame.size.width - width;
     }
-    _fieldRightView.frame = CGRectMake(0, 0, width, _rightViewHeight);
+    _fieldRightView.frame = CGRectMake(left, 0, width, self.frame.size.height);
     return _fieldRightView;
 }
 
 - (UIButton *)secretButton {
     if (!_secretButton) {
-        _secretButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kButtonWidth, _rightViewHeight)];
+        _secretButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kButtonWidth, self.frame.size.height)];
         _secretButton.contentMode = UIViewContentModeScaleAspectFit;
         [_secretButton addTarget:self
                           action:@selector(changeSecretEnable)
@@ -182,24 +203,19 @@ static const CGFloat kButtonWidth = 40.f;
         }
     }
 
-    CGFloat left = (self.fieldType == KKZTextFieldWithClearAndSecret ? kButtonWidth : 0);
-    _clearButton.frame = CGRectMake(left, 0, kButtonWidth, _rightViewHeight);
+    CGFloat left = 0;
+    if (self.fieldType == KKZTextFieldWithClear) {
+        left = 0;
+    } else if (self.fieldType == KKZTextFieldWithClearAndSecret) {
+        left = kButtonWidth;
+    }
+    _clearButton.frame = CGRectMake(left, 0, kButtonWidth, self.frame.size.height);
     return _clearButton;
 }
 
 #pragma mark - Public methods
-- (void)setRightViewHeight:(NSInteger)rightViewHeight {
-    _rightViewHeight = rightViewHeight;
-    _fieldRightView.frame = CGRectMake(0, 0, _fieldRightView.frame.size.width, rightViewHeight);
-
-    if (_secretButton) {
-        _secretButton.frame = CGRectMake(0, 0, kButtonWidth, rightViewHeight);
-    }
-
-    if (_clearButton) {
-        CGFloat left = (self.fieldType == KKZTextFieldWithClearAndSecret ? kButtonWidth : 0);
-        _clearButton.frame = CGRectMake(left, 0, kButtonWidth, _rightViewHeight);
-    }
+- (void)setKeyboardDelegate:(id<KKZKeyboardTopViewDelegate>)keyboardDelegate {
+    self.keyboardTopView.keyboardDelegate = keyboardDelegate;
 }
 
 - (void)setText:(NSString *)text {
@@ -223,7 +239,11 @@ static const CGFloat kButtonWidth = 40.f;
         self.rightView = nil;
     }
 
-    self.rightViewMode = UITextFieldViewModeWhileEditing;
+//    if (runningOniOS7) {
+//        self.rightViewMode = UITextFieldViewModeWhileEditing;
+//    } else {
+        self.rightViewMode = UITextFieldViewModeAlways;
+//    }
 
     [self settingButtonVisibility];
 }
@@ -252,18 +272,6 @@ static const CGFloat kButtonWidth = 40.f;
     }
 }
 
-- (void)setShowKeyboardTopView:(BOOL)showKeyboardTopView {
-    _showKeyboardTopView = showKeyboardTopView;
-
-    if (showKeyboardTopView) {
-        CGRect topFrame = CGRectMake(0, 0, self.frame.size.width, 38);
-        KKZKeyboardTopView *topView = [[KKZKeyboardTopView alloc] initWithFrame:topFrame];
-        [self setInputAccessoryView:topView];
-    } else {
-        [self setInputAccessoryView:nil];
-    }
-}
-
 #pragma mark - Self methods
 - (void)settingButtonVisibility {
     if (_clearButton) {
@@ -279,18 +287,17 @@ static const CGFloat kButtonWidth = 40.f;
 
     if (self.maxWordCount > 0) {
         NSString *toBeString = self.text;
-        NSString *language = [self.textInputMode primaryLanguage]; //判断语言
-
-        if ([language isEqualToString:@"zh-Hans"]) { //是中文
+        NSString *language = [self.textInputMode primaryLanguage]; // 判断语言
+        if ([language isEqualToString:@"zh-Hans"]) { // 是中文
             UITextRange *range = [self markedTextRange];
-            //获取高亮的位置
+            // 获取高亮的位置
             UITextPosition *position = [self positionFromPosition:range.start offset:0];
-            if (!position) { //没有高亮选择的字体，则对一输入的文字进行统计和限制
+            if (!position) { // 没有高亮选择的字体，则对一输入的文字进行统计和限制
                 if (toBeString.length > self.maxWordCount) {
                     self.text = [self.text substringToIndex:self.maxWordCount];
                 }
             }
-        } else if (toBeString.length > self.maxWordCount) { //非中文
+        } else if (toBeString.length > self.maxWordCount) { // 非中文
             self.text = [self.text substringToIndex:self.maxWordCount];
         }
     }
@@ -300,25 +307,36 @@ static const CGFloat kButtonWidth = 40.f;
     if (_secretButton) {
         _secretButton.selected = !_secretButton.selected;
 
-        self.secureTextEntry = !_secretButton.selected;
-        BOOL isFirstResponder = self.isFirstResponder;
-        if (isFirstResponder) {
-            [self becomeFirstResponder];
-        }
-        self.text = self.text; //Fixed:字体不一致
+//        if (runningOniOS7) {
+//            self.secureTextEntry = !_secretButton.selected;
+//            BOOL isFirstResponder = self.isFirstResponder;
+//            if (isFirstResponder) {
+//                [self becomeFirstResponder];
+//            }
+//        } else {
+            BOOL isFirstResponder = self.isFirstResponder;
+            self.enabled = false; // iOS6.1Bug fix
+            self.secureTextEntry = !_secretButton.selected;
+            self.enabled = true;
+            if (isFirstResponder) {
+                [self becomeFirstResponder];
+            }
+//        }
+        self.text = self.text; // Fixed: 字体不一致
     }
 }
 
 - (void)clearText {
     self.text = @"";
     self.clearButton.hidden = YES;
+//    if (runningOniOS7) {
+//        if (self.fieldType == KKZTextFieldWithClearAndSecret) {
+//            self.secretButton.selected = NO;
+//            self.secureTextEntry = YES;
+//        }
+//    }
     self.secretButton.hidden = YES;
-
-    if (self.fieldType == KKZTextFieldWithClearAndSecret) {
-        self.secretButton.selected = NO;
-        self.secureTextEntry = YES;
-    }
-
+    
     if (self.kkzDelegate && [self.kkzDelegate respondsToSelector:@selector(kkzTextFieldClear:)]) {
         [self.kkzDelegate kkzTextFieldClear:self];
     }
