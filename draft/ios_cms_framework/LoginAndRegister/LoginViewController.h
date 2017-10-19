@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol LoginViewControllerDelegate <NSObject>
+@optional
+- (void)loginControllerLoginSucceed;
+- (void)loginControllerLoginCancelled;
+@end
+
 @interface LoginViewController : UIViewController
+
+/**
+ *  得到代理对象
+ */
+@property (nonatomic, weak) id<LoginViewControllerDelegate> delegate;
 
 @end

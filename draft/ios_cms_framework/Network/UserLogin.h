@@ -21,7 +21,7 @@
 @property (nonatomic, copy) NSString *alipayId;
 @property (nonatomic, copy) NSString *remark;
 @property (nonatomic, copy) NSString *headimg;
-@property (nonatomic, copy) NSString *vipAccount;
+//@property (nonatomic, copy) NSString *vipAccount;
 @property (nonatomic, copy) NSString *balance;
 @property (nonatomic, copy) NSString *nickName;
 @property (nonatomic, copy) NSString *huanxinPassword;

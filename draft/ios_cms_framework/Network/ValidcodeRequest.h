@@ -60,5 +60,17 @@
                 validcodeType:(ValidcodeType)type
                       success:(nullable void(^)())success
                       failure:(nullable void(^)(NSError *_Nullable err))failure;
+/**
+ 获取注册的验证码
+ 
+ @param mobile 手机号
+ @param type 验证码类型：短信/语音
+ @param success 成功回调
+ @param failure 失败回调
+ */
+- (void)requestRegisterValidcode:(NSString *_Nonnull)mobile
+                   validcodeType:(ValidcodeType)type
+                         success:(nullable void(^)())success
+                         failure:(nullable void(^)(NSError *_Nullable err))failure;
 
 @end

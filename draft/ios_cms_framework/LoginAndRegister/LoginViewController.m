@@ -10,6 +10,7 @@
 
 #import "UserRequest.h"
 #import "PasswordFindViewController.h"
+#import "RegisterValidCodeViewController.h"
 
 @interface LoginViewController () <UITextFieldDelegate>
 {
@@ -115,7 +116,8 @@
 }
 
 - (void)registerButtonAction {
-    
+    RegisterValidCodeViewController *vc = [[RegisterValidCodeViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:true];
 }
 
 - (void)forgetPasswordButtonAction {
@@ -131,8 +133,8 @@
         }];
         return;
     }
-    if (_passwordTextField.text.length < 6) {
-        [[CIASAlertCancleView new] show:@"温馨提示" message:@"密码不符合规则，请使用6-12位字母或数字" cancleTitle:@"重新填写" callback:^(BOOL confirm) {
+    if (_passwordTextField.text.length < 4) {
+        [[CIASAlertCancleView new] show:@"温馨提示" message:@"密码不符合规则，请使用4-12位字母或数字" cancleTitle:@"重新填写" callback:^(BOOL confirm) {
         }];
         return;
     }

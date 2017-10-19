@@ -225,6 +225,10 @@ typedef enum {
 #define kKDesKey @"jkh7887k" //DES的key
 #define kKDesLogKey @"koMovie1" //用户客户端错误日志DES加密的key
 
+//========渠道信息========
+#define kChannelId @"1" //渠道ID
+#define kChannelName @"App Store" //渠道名称，不同渠道的包，传相应的字符串
+
 #endif
 
 #endif /* Constants_h */

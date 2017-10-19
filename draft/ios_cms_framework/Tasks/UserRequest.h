@@ -133,4 +133,21 @@
                success:(nullable void (^)())success
                failure:(nullable void (^)(NSError *_Nullable err))failure;
 
+/**
+ 注册
+
+ @param phoneNumber 手机号
+ @param password 密码
+ @param nickName 昵称
+ @param validCode 验证码
+ */
+- (void)registerPhoneNumber:(NSString *_Nonnull)phoneNumber
+                   password:(NSString *_Nonnull)password
+                   nickName:(NSString *_Nonnull)nickName
+                  validCode:(NSString *_Nonnull)validCode
+                    success:(nullable void (^)(UserLogin *_Nullable user))success
+                    failure:(nullable void (^)(NSError *_Nullable err))failure;
+
+
+
 @end

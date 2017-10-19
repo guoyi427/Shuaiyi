@@ -14,6 +14,9 @@
 #import "SFHFKeychainUtils.h"
 #import "UserDefault.h"
 
+#import "UserLogin.h"
+#import "NewLoginViewModel.h"
+
 static DataEngine *_dataEngine = nil;
 
 @interface DataEngine ()
@@ -47,6 +50,10 @@ static DataEngine *_dataEngine = nil;
 - (id)init {
 	self = [super init];
 	if (self) {
+        //从数据库获取用户登录信息
+        UserLogin *model = [NewLoginViewModel selectLoginDataFromDataBase];
+        [self setUserDataModel:model];
+        /*
         self.sessionId = [SFHFKeychainUtils getPasswordForUsername:kKCSessionId
                                                     andServiceName:kKeyChainServiceName
                                                              error:nil];
@@ -62,7 +69,7 @@ static DataEngine *_dataEngine = nil;
                                                      andServiceName:kKeyChainServiceName
                                                               error:nil];
         }
-
+         */
 	}
 	return self;
 }
@@ -189,14 +196,18 @@ static DataEngine *_dataEngine = nil;
 }
 
 - (void)signout {
-    self.sessionId = nil;
+    
+    //清空所有的登录信息
     self.sessionTimeStamp = 0;
-
+    self.sessionId = nil;
     self.userName = nil;
     self.userId = nil;
+    self.vipBalance = 0;
+    
+    //删除用户登录信息
+    [NewLoginViewModel deleteLoginDataFromDataBase];
 
     //change Constants status at last!!!!!!
-
     Constants.isAuthorized = NO;
     
 }
@@ -218,6 +229,29 @@ static DataEngine *_dataEngine = nil;
 //        }
 //    }
     return kKeyChainServiceName;
+}
+
+- (void)setUserDataModel:(UserLogin *)model {
+    if (model) {
+        
+        //设置用户Id
+        if (model.userId == nil || [model.userId isEqual:[NSNull null]]) {
+            self.userId = @"0";
+        } else {
+            self.userId = [NSString stringWithFormat:@"%d", [model.userId intValue]];
+        }
+        self.sessionId = model.lastSession;
+        self.userName = model.nickName;
+        self.huanXinPwd = model.huanxinPassword;
+        self.headImg = model.headimg;
+        self.phoneNum = model.userName;
+        //设置用户的Vip等级
+//        if (model.vipAccount == nil || [model.vipAccount isEqual:[NSNull null]]) {
+//            self.vipBalance = 0.0f;
+//        } else {
+//            self.vipBalance = [model.vipAccount doubleValue];
+//        }
+    }
 }
 
 #pragma LoginViewControllerDelegate

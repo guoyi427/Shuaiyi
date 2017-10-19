@@ -16,6 +16,7 @@
 #import "User.h"
 #import "KKZBaseRequestParamsMD5.h"
 #import "UserLogin.h"
+#import "NewLoginViewModel.h"
 
 @implementation UserRequest
 
@@ -551,14 +552,20 @@
     }
     
     [dicParams setValue:[NSNumber numberWithInt:site] forKey:@"site"];
+    [dicParams setValue:@"user_Login" forKey:@"action"];
+    
     NSDictionary *newParams = [KKZBaseRequestParams getDecryptParams:dicParams];
     
-    [request GET:kKSSPServerPath(@"user_Login")
+    [request GET:kKSSPServer
       parameters:newParams
     resultKeyMap:@{@"user": [UserLogin class]}
          success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
              if (success) {
-                 success([data objectForKey:@"user"]);
+                 UserLogin *model = [data objectForKey:@"user"];
+                 success(model);
+                 [NewLoginViewModel deleteLoginDataFromDataBase];
+                 [NewLoginViewModel insertLoginDataIntoDataBase:model];
+                 [[DataEngine sharedDataEngine] setUserDataModel:model];
              }
              
          } failure:failure];
@@ -620,6 +627,42 @@
              }
              
          } failure:failure];
+}
+
+/**
+ 注册
+ 
+ @param phoneNumber 手机号
+ @param password 密码
+ @param nickName 昵称
+ @param validCode 验证码
+ */
+- (void)registerPhoneNumber:(NSString *_Nonnull)phoneNumber
+                   password:(NSString *_Nonnull)password
+                   nickName:(NSString *_Nonnull)nickName
+                  validCode:(NSString *_Nonnull)validCode
+                    success:(nullable void (^)(UserLogin * _Nullable))success
+                    failure:(nullable void (^)(NSError * _Nullable))failure {
+    if (!phoneNumber || !password || !nickName || !validCode) {
+        return;
+    }
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    NSDictionary *params = [KKZBaseRequestParams getDecryptParams:@{
+                                                                    @"user_name": phoneNumber,
+                                                                    @"nick_name": nickName,
+                                                                    @"password": [password MD5String],
+                                                                    @"valid_code": validCode,
+                                                                    @"action": @"user_Register"
+                                                                    }];
+    [request GET:kKSSPServer parameters:params resultKeyMap:@{@"user": [UserLogin class]} success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
+        if (success) {
+            UserLogin *model = [data objectForKey:@"user"];
+            success(model);
+            [NewLoginViewModel deleteLoginDataFromDataBase];
+            [NewLoginViewModel insertLoginDataIntoDataBase:model];
+            [[DataEngine sharedDataEngine] setUserDataModel:model];
+        }
+    } failure:failure];
 }
 
 @end

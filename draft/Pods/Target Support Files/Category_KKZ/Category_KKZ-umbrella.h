@@ -14,6 +14,7 @@
 #import "NSStringExtra.h"
 #import "UIBarButtonItem+GFItem.h"
 #import "UIColor+Hex.h"
+#import "UIDeviceExtra.h"
 #import "UIImage+Blur.h"
 #import "UIImage+ImageEffects.h"
 #import "UIImage+Resize.h"

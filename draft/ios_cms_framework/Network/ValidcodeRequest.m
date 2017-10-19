@@ -118,7 +118,7 @@
     [para setValue:mobile forKey:@"mobile"];
     [para setValue:@(type) forKey:@"validation_type"];
     [para setValue:@"4" forKey:@"size"];
-    [para setValue:@"12" forKey:@"valid_type"];
+    [para setValue:@"3" forKey:@"valid_type"];
     
     NSDictionary *newParams = [KKZBaseRequestParams getDecryptParams:para];
     
@@ -136,4 +136,39 @@
     
 }
 
+/**
+ 获取注册的验证码
+ 
+ @param mobile 手机号
+ @param type 验证码类型：短信/语音
+ @param success 成功回调
+ @param failure 失败回调
+ */
+- (void)requestRegisterValidcode:(NSString *_Nonnull)mobile
+                   validcodeType:(ValidcodeType)type
+                         success:(nullable void(^)())success
+                         failure:(nullable void(^)(NSError *_Nullable err))failure {
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    
+    NSMutableDictionary *para = [NSMutableDictionary dictionaryWithCapacity:1];
+    [para setValue:@"validcode_Query" forKey:@"action"];
+    [para setValue:mobile forKey:@"mobile"];
+    [para setValue:@(type) forKey:@"validation_type"];
+    [para setValue:@"4" forKey:@"size"];
+    [para setValue:@"1" forKey:@"valid_type"];
+    
+    NSDictionary *newParams = [KKZBaseRequestParams getDecryptParams:para];
+    
+    [request GET:kKSSPServer
+      parameters:newParams
+    resultKeyMap:nil
+         success:^(id _Nullable data, id _Nullable respomsObject) {
+             
+             if (success) {
+                 success(data);
+             }
+             
+         }
+         failure:failure];
+}
 @end

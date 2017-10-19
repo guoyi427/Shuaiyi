@@ -45,7 +45,8 @@ def pods
     pod 'Category_KKZ/UIImage+Resize'
     pod 'Category_KKZ/UIBarButtonItem+GFItem'
     pod 'NetCore_KKZ_Cache', '~> 0.1.0'
-    
+    pod 'Category_KKZ/UIDeviceExtra' 
+   
     pod 'DateEngine_KKZ' , '~> 1.0.5'
     
     pod 'NSURL+QueryDictionary', '~> 1.2'
