@@ -25,8 +25,8 @@
 
 //MARK: --项目正式/测试环境配置
 
-#define kIsXinchengFormal 0    //新城正式环境
-#define kIsXinchengTest   1    //新城测试环境
+#define kIsXinchengFormal 1    //新城正式环境
+#define kIsXinchengTest   0    //新城测试环境
 
 static NSString * _Nonnull const kIsFirstLaunch = @"cmsFirstShow_xc";// 新城第一次启动
 
@@ -187,6 +187,36 @@ static NSString * _Nonnull const kHotLineForDisplay = @"400 000 9666";
     #define ciasSSPServerBaseURL @"http://api.kokozu.net/webservice/"
     //订单、相关服务器地址
     #define ciasSSPOrderBaseURL @"http://order.kokozu.net/cias-order-web/"
+
+    //  抠电影
+    #define kKSSBaseUrl @"http://47.95.148.114:8082"    //@"http://newapi.komovie.cn" ////
+    #define USER_SERVE @"http://api.release.komovie.cn"
+    #define KKSSMediaServerBase @"http://api.release.komovie.cn"
+    #define KKSSClubSeverBase @"http://api.release.komovie.cn"
+    //数据服务器地址
+    #define kKSSPDataServer @"data/service"
+    //KOTA服务器地址
+    #define KKSSPKota @"kota/ajax"
+    #define KKSSPKotaPath(path) [NSString stringWithFormat:@"%@/%@",KKSSPKota,path]
+    //电影相关接口服务器地址
+    #define kKSSPServer @"movie/service"
+    #define kKSSPServerPath(path) [NSString stringWithFormat:@"%@/%@",kKSSPServer,path]
+    //红包服务器地址
+    #define KKSSPRED @"http://redenvelope.komovie.cn/movie/receiveredenvelop/"
+    //社区服务器地址
+    #define KKSSClubSeverPath(path) [NSString stringWithFormat:@"sns/%@",path]
+    //路径拼接好的 社区服务器地址，全部task请求重构后，删除KKSSClubSeverAPI
+    #define KKSSClubSeverAPI [NSString stringWithFormat:@"%@/sns/",KKSSClubSeverBase]
+    //媒体库服务器地址
+    #define KKSSMediaServerPath(path) [NSString stringWithFormat:@"data/%@",path]
+    //task请求重构后，删除KKSSMediaServerAPI
+    #define KKSSMediaServerAPI @"http://api.release.komovie.cn/data/"
+    //
+    #define USER_SERVE_API_PATH(path) [NSString stringWithFormat:@"user/%@", path]
+    //统计服务器地址
+    #define StatisticsSever @"http://api.release.komovie.cn/access-web/access/data/report"
+    //二维码服务器地址
+    #define kKSSPQRServer @"http://newapi.komovie.cn/movie/qr"
 #endif
 //MARK: -----------------新城使用-----------------------
 

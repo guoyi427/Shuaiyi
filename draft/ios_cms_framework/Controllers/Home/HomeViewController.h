@@ -17,7 +17,7 @@
     CPBannerView     *bannerView;
     UIButton         *reyingBtn, *incomingBtn;
     UIView           *btnBottomLine;
-    UICollectionView *movieCollectionView, *productCollectionView;
+    UICollectionView *movieCollectionView, *productCollectionView, *futureCollectionView;
     
     UIView      *cinemaNameView;
     UILabel     *cinemaNameLabel;

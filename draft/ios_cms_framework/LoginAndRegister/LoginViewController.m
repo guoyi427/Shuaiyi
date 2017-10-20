@@ -146,7 +146,10 @@
     [request login:_phoneNumberTextField.text password:_passwordTextField.text site:SiteTypeKKZ success:^(UserLogin * _Nullable userLogin) {
         [[UIConstants sharedDataEngine] stopLoadingAnimation];
         
-        [weakSelf dismissViewControllerAnimated:true completion:nil];
+        [weakSelf dismissViewControllerAnimated:true completion:^{
+            NSDictionary *dic = @{@"data":userLogin,@"isFromRegister":@"NO"};
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"handleLoginViewSuccess" object:nil userInfo:dic];
+        }];
     } failure:^(NSError * _Nullable err) {
         [[UIConstants sharedDataEngine] stopLoadingAnimation];
         [CIASPublicUtility showMyAlertViewForTaskInfo:err];

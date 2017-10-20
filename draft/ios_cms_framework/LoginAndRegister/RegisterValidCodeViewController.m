@@ -36,6 +36,7 @@
     _phoneNumberTextField.placeholder = @"请输入手机号";
     _phoneNumberTextField.font = [UIFont systemFontOfSize:15];
     _phoneNumberTextField.textColor = [UIColor blackColor];
+    _phoneNumberTextField.keyboardType = UIKeyboardTypeNumberPad;
     [self.view addSubview:_phoneNumberTextField];
     
     _validCodeTextField = [[UITextField alloc] initWithFrame:CGRectMake(Padding, CGRectGetMaxY(_phoneNumberTextField.frame), kCommonScreenWidth - Padding * 2 - 100, CGRectGetHeight(_phoneNumberTextField.frame))];
@@ -77,6 +78,12 @@
         make.centerY.equalTo(bottomLabel);
         make.size.mas_equalTo(CGSizeMake(50, 30));
     }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChangeNotification:) name:UITextFieldTextDidChangeNotification object:nil];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - UIButton - Action
@@ -123,5 +130,13 @@
 
 #pragma mark - UITextField - Delegate
 
+- (void)textFieldDidChangeNotification:(NSNotification *)notifi {
+    UITextField *currentTF = notifi.object;
+    if (currentTF == _phoneNumberTextField) {
+        if (currentTF.text.length > 11) {
+            _phoneNumberTextField.text = [_phoneNumberTextField.text substringToIndex:11];
+        }
+    }
+}
 
 @end

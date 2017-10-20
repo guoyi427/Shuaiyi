@@ -287,60 +287,6 @@
     [self.navigationController.view removeGestureRecognizer:self.navigationController.interactivePopGestureRecognizer];
     
     
-    /*
-     if (!USER_HASLAUNCHED) {
-     if ([USER_GPS_CITY length]) {
-     //APP第一次安装
-     //经纬度反编译城市成功
-     City *city = [[CityManager shareInstance]  getCityWithName:USER_GPS_CITY];
-     if (city) {
-     [self requestBannerList];
-     [self requestMovieList:1];
-     [self requestCinemaList];
-     USER_HASLAUNCHED_WRITE(YES);
-     
-     }else{
-     __weak __typeof(self) weakSelf = self;
-     
-     CityListViewController *ctr = [[CityListViewController alloc] init];
-     ctr.selectCityBlock = ^(NSString *cityId){
-     CinemaListViewController *ctr = [[CinemaListViewController alloc] init];
-     ctr.selectCinemaBlock = ^(NSString *cinemaId){
-     cinemaNameLabel.text = [NSString stringWithFormat:@"附近影院：%@", USER_CINEMA_NAME];
-     [weakSelf requestBannerList];
-     [weakSelf requestMovieList:1];
-     [weakSelf requestCinemaList];
-     };
-     [weakSelf.navigationController pushViewController:ctr animated:YES];
-     };
-     [weakSelf.navigationController pushViewController:ctr animated:YES];
-     
-     USER_HASLAUNCHED_WRITE(YES);
-     
-     }
-     
-     }else{
-     __weak __typeof(self) weakSelf = self;
-     
-     CityListViewController *ctr = [[CityListViewController alloc] init];
-     ctr.selectCityBlock = ^(NSString *cityId){
-     CinemaListViewController *ctr = [[CinemaListViewController alloc] init];
-     ctr.selectCinemaBlock = ^(NSString *cinemaId){
-     cinemaNameLabel.text = [NSString stringWithFormat:@"附近影院：%@", USER_CINEMA_NAME];
-     [weakSelf requestBannerList];
-     [weakSelf requestMovieList:1];
-     [weakSelf requestCinemaList];
-     };
-     [weakSelf.navigationController pushViewController:ctr animated:YES];
-     };
-     [weakSelf.navigationController pushViewController:ctr animated:YES];
-     
-     USER_HASLAUNCHED_WRITE(YES);
-     
-     }
-     }
-     */
-    
     NSString *cinemaStr = USER_CINEMA_NAME;
     cinemaNameLabel.text = [NSString stringWithFormat:@"%@", ([cinemaStr length]&&(![cinemaStr isEqualToString:@"(null)"])&&(![cinemaStr isEqualToString:@"null"]))?USER_CINEMA_NAME:@""];
     DLog(@"%@", cinemaStr);
@@ -383,37 +329,12 @@
 #endif
     
     if (isFirstInit) {
-        
         [self requestMovieList:1];
         [self requestCinemaList];
         [self requestAPPConfig];
-        //    [self requestAPPTemplate];//暂时没用到，屏蔽一下
-//        [self requestBannerList];
     }
-//    if (self.bannerList.count > 0) {
-//        
-//    } else {
-        [self requestBannerList];
-//    }
-    
 
-
-    
-    // 遍历获取字体名称
-    //    for(NSString *fontFamilyName in [UIFont familyNames])
-    //    {
-    //        NSLog(@"family:'%@'",fontFamilyName);
-    //        for(NSString *fontName in [UIFont fontNamesForFamilyName:fontFamilyName])
-    //        {
-    //            NSLog(@"\tfont:'%@'",fontName);
-    //        }
-    //        DLog(@"-------------");
-    //    }
-    
-    
-
-//    [self refreshPayOrderDetail];
-
+    [self requestBannerList];
 }
 
 
@@ -1151,7 +1072,7 @@
         make.height.equalTo(@(0));//105+40
     }];
 #endif
-    
+    /*
     UIView *cinemaSectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kCommonScreenWidth, 43)];
     cinemaSectionView.backgroundColor = [UIColor whiteColor];
     [headerTableView addSubview:cinemaSectionView];
@@ -1242,7 +1163,7 @@
 //        make.top.equalTo(productCollectionView.mas_bottom).offset(5);
         make.height.equalTo(@(40));
     }];
-    
+    */
 }
 
 - (void)requestBannerList {
@@ -1616,7 +1537,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _cinemaList.count;
+    return 0;//_cinemaList.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

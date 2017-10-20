@@ -29,6 +29,7 @@
 //#import "CouponListViewController.h"
 #import "KKZTextUtility.h"
 //#import "VipcardViewController.h"
+#import "UserLogin.h"
 
 @interface UserViewController ()
 
@@ -208,7 +209,7 @@
 
 - (void)handleUserLoginViewSuccessNotification:(NSNotification *)notification {
     NSString *isFromRegister = [[notification userInfo] kkz_stringForKey:@"isFromRegister"];
-    User *user = (User *)[[notification userInfo] objectForKey:@"data"];
+    UserLogin *user = (UserLogin *)[[notification userInfo] objectForKey:@"data"];
     //    DLog(@"接受通知的user:%@",user);
     //    DLog(@"%@", isFromRegister);
     self.loginBtn.hidden = YES;
@@ -216,8 +217,8 @@
     //MARK: 先隐藏，登录成功后，不隐藏
     self.userNickNameLabel.hidden = NO;
     
-    if ([user.headingUrl hasPrefix:@"http://"] || [user.headingUrl hasPrefix:@"https://"]) {
-        [self.userPhotoView sd_setImageWithURL:[NSURL URLWithString:user.headingUrl] placeholderImage:self.placeHolderImage];
+    if ([user.headimg hasPrefix:@"http://"] || [user.headimg hasPrefix:@"https://"]) {
+        [self.userPhotoView sd_setImageWithURL:[NSURL URLWithString:user.headimg] placeholderImage:self.placeHolderImage];
     } else {
         self.userPhotoView.image = [UIImage imageNamed:@"login_logo"];
     }
@@ -234,7 +235,7 @@
     } else {
         self.userNickNameImageView.hidden = YES;
     }
-    NSString *userNameStr = user.nickName.length>0?user.nickName:[user.phoneNumber stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
+    NSString *userNameStr = user.nickName.length>0?user.nickName:[user.userName stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
     self.userNickNameLabel.text = userNameStr;
     CGSize userNameStrSize = [KKZTextUtility measureText:userNameStr size:CGSizeMake(500, 500) font:[UIFont systemFontOfSize:15]];
     

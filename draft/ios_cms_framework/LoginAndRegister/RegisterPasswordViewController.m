@@ -83,7 +83,10 @@
     UserRequest *request = [[UserRequest alloc] init];
     [request registerPhoneNumber:_phoneNumber password:_passwordTextField.text nickName:_nickNameTextField.text validCode:_validCode success:^(UserLogin * _Nullable user) {
         NSLog(@"注册成功");
-        [weakSelf dismissViewControllerAnimated:true completion:nil];
+        [weakSelf dismissViewControllerAnimated:true completion:^{
+            NSDictionary *dic = @{@"data":user,@"isFromRegister":@"YES"};
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"handleLoginViewSuccess" object:nil userInfo:dic];
+        }];
     } failure:^(NSError * _Nullable err) {
         [CIASPublicUtility showMyAlertViewForTaskInfo:err];
     }];
