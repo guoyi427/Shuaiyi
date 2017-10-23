@@ -44,7 +44,7 @@ static NSString * _Nonnull const kIsFirstLaunch = @"cmsFirstShow_xc";// 新城�
 #define kIsCMSStandardPlanListStyle @"0"//CMS标准版排期列表 --高级
 
 #define kIsHaveOpenCardXinchengPlanList 1//新城排期列表中是否增加开卡引导（0 中都，华臣，1 新城）--高级
-#define kIsHaveGoodsInHome     1  //首页是否有卖品展现  （0-没有，中都，华臣 / 1-有，新城）--高级
+#define kIsHaveGoodsInHome     0  //首页是否有卖品展现  （0-没有，中都，华臣 / 1-有，新城）--高级
 #define kIsHaveGoodsInOrderDetail 1 //票根页是否有卖品展现（0-没有，华臣，1-有-新城）--高级
 
 

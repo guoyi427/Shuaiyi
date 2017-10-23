@@ -45,9 +45,14 @@
 #import "HCConstants.h"
 #import "DataEngine.h"
 #import "WebNewViewController.h"
+#import "KOKOLocationView.h"
+#import "CityListNewViewController.h"
+#import "AppRequest.h"
 
-@interface HomeViewController ()
-
+@interface HomeViewController () <KOKOLocationViewDelegate, CityListViewControllerDelegate>
+{
+    KOKOLocationView *_locationView;
+}
 @end
 
 @implementation HomeViewController
@@ -148,19 +153,23 @@
     if ([USER_CITY length] <= 0) {
         __weak __typeof(self) weakSelf = self;
         
-        CityListViewController *cityListCtr = [[CityListViewController alloc] init];
-        cityListCtr.selectCityBlock = ^(NSString *cityId){
-            CinemaListViewController *ctr = [[CinemaListViewController alloc] init];
-            ctr.selectCinemaBlock = ^(NSString *cinemaId){
-                NSString *cinemaStr = USER_CINEMA_NAME;
-                cinemaNameLabel.text = [NSString stringWithFormat:@"%@", ([cinemaStr length]&&(![cinemaStr isEqualToString:@"(null)"])&&(![cinemaStr isEqualToString:@"null"]))?USER_CINEMA_NAME:@""];
-                //                [weakSelf requestBannerList];
-                [weakSelf requestMovieList:1];
-                [weakSelf requestCinemaList];
-            };
-            [weakSelf.navigationController pushViewController:ctr animated:YES];
-        };
-        [self.navigationController pushViewController:cityListCtr animated:YES];
+//        CityListViewController *cityListCtr = [[CityListViewController alloc] init];
+//        cityListCtr.selectCityBlock = ^(NSString *cityId){
+//            CinemaListViewController *ctr = [[CinemaListViewController alloc] init];
+//            ctr.selectCinemaBlock = ^(NSString *cinemaId){
+//                NSString *cinemaStr = USER_CINEMA_NAME;
+//                cinemaNameLabel.text = [NSString stringWithFormat:@"%@", ([cinemaStr length]&&(![cinemaStr isEqualToString:@"(null)"])&&(![cinemaStr isEqualToString:@"null"]))?USER_CINEMA_NAME:@""];
+//                //                [weakSelf requestBannerList];
+//                [weakSelf requestMovieList:1];
+//                [weakSelf requestCinemaList];
+//            };
+//            [weakSelf.navigationController pushViewController:ctr animated:YES];
+//        };
+//        [self.navigationController pushViewController:cityListCtr animated:YES];
+        
+        CityListNewViewController *ctr = [[CityListNewViewController alloc] init];
+        ctr.delegate = self;
+        [self.navigationController pushViewController:ctr animated:true];
 
     }
     [[NSNotificationCenter defaultCenter]
@@ -192,10 +201,11 @@
                                                  name:CinemaChangeSucceededNotification
                                                object:nil];
     
-    self.hideNavigationBar = YES;
+    
     isFirstInit = YES;
     _bannerList = [[NSMutableArray alloc] initWithCapacity:0];
     _movieList = [[NSMutableArray alloc] initWithCapacity:0];
+    _futureMovieList = [[NSMutableArray alloc] initWithCapacity:0];
     _cinemaList = [[NSMutableArray alloc] initWithCapacity:0];
     _productList = [[NSMutableArray alloc] initWithCapacity:0];
     _homeOrderDic = [[NSMutableDictionary alloc] init];
@@ -203,6 +213,7 @@
     
     [self setUpUI];
     [self setUpNavBar];
+    [self updateLocationViewLayout];
     
     if (!USER_HASLAUNCHED) {
         USER_HASLAUNCHED_WRITE(YES);
@@ -302,7 +313,7 @@
             headerTableView.frame = CGRectMake(0, 0, kCommonScreenWidth, (K_BANNER_HEIGHT+125+158+20+105+40+43));
         }
     #else
-        headerTableView.frame = CGRectMake(0, 0, kCommonScreenWidth, (K_BANNER_HEIGHT+125+158+20));
+        headerTableView.frame = CGRectMake(0, 0, kCommonScreenWidth, (K_BANNER_HEIGHT+125+158+20 +158+73));
     #endif
         
         [gotoOrderDetailBtn mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -467,7 +478,7 @@
                     headerTableView.frame = CGRectMake(0, 0, kCommonScreenWidth, (K_BANNER_HEIGHT+125+158+20+105+40+43+55));
                 }
 #else
-                    headerTableView.frame = CGRectMake(0, 0, kCommonScreenWidth, (K_BANNER_HEIGHT+125+158+20+55));
+                    headerTableView.frame = CGRectMake(0, 0, kCommonScreenWidth, (K_BANNER_HEIGHT+125+158+20+55 +158+73));
 #endif
                 
                 
@@ -518,6 +529,11 @@
     }];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
@@ -531,13 +547,14 @@
 }
 
 - (void)setUpNavBar{
-    _navBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kCommonScreenWidth, 69)];
-    _navBar.backgroundColor = [UIColor whiteColor];
-    _navBar.alpha = 0.0;
-    UIView *barLine = [[UIView alloc]initWithFrame:CGRectMake(0, 68.5, kCommonScreenWidth, 0.5)];
+    self.hideNavigationBar = true;
+    
+    _navBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kCommonScreenWidth, 64)];
+    _navBar.backgroundColor = [UIColor colorWithHex:[UIConstants sharedDataEngine].navigationBarBackgroundColor];
+    UIView *barLine = [[UIView alloc]initWithFrame:CGRectMake(0, 63, kCommonScreenWidth, 1)];
     barLine.backgroundColor = [UIColor colorWithHex:@"#e0e0e0"];
     [_navBar addSubview:barLine];
-    
+    /*
     cinemaNameView = [[UIView alloc] initWithFrame:CGRectMake((kCommonScreenWidth-255)/2, 29, 255, 28)];
     cinemaNameView.backgroundColor = [UIColor blackColor];
     cinemaNameView.alpha = 0.5;
@@ -580,28 +597,38 @@
     selectCinemaBtn.backgroundColor = [UIColor clearColor];
     [selectCinemaBtn addTarget:self action:@selector(selectCinemaBtn) forControlEvents:UIControlEventTouchUpInside];
     [cinemaNameView addSubview:selectCinemaBtn];
-    
+     [self.view addSubview:cinemaNameView];
+    */
     [self.view addSubview:_navBar];
-    [self.view addSubview:cinemaNameView];
     
+    _locationView = [[KOKOLocationView alloc]
+                     initWithFrame:CGRectMake(0, 20, ((kCommonScreenWidth - 158) * 0.5 - 10), 44)];
+    _locationView.delegate = self;
+    [_navBar addSubview:_locationView];
+}
+
+- (void)updateLocationViewLayout {
+    City *city = [City getCityWithId:[USER_CITY intValue]];
+    
+    NSString *locationDesc = nil;
+    if (city) {
+        locationDesc = city.cityName;
+    } else {
+        locationDesc = @"北京";
+    }
+    
+    _locationView.cityText = locationDesc;
 }
 
 - (void)setUpUI{
-    homeTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kCommonScreenWidth, kCommonScreenHeight-49) style:UITableViewStylePlain];
+    homeTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kCommonScreenWidth, kCommonScreenHeight-49-64) style:UITableViewStylePlain];
     homeTableView.showsVerticalScrollIndicator = NO;
     homeTableView.backgroundColor = [UIColor colorWithHex:@"f2f5f5"];
     homeTableView.delegate = self;
     homeTableView.dataSource = self;
     homeTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:homeTableView];
-    
-    [homeTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(@0);
-        //        make.top.equalTo(self.view.mas_top).offset(64);
-        //        make.left.equalTo(self.view.mas_left);
-        //        make.right.equalTo(self.view.mas_right);
-        //        make.bottom.equalTo(self.view.mas_bottom);
-    }];
+   
     if (@available(iOS 11.0, *)) {
         homeTableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         homeTableView.contentInset = UIEdgeInsetsMake(0, 0, 49, 0);
@@ -611,22 +638,22 @@
     homeTableView.mj_header = [CPRefreshHeader headerWithRefreshingBlock:^{
 //        [weakSelf requestBannerList];
         [weakSelf requestMovieList:1];
-        [weakSelf requestCinemaList];
-        [self requestAPPConfig];
+//        [weakSelf requestCinemaList];
+        [weakSelf requestAPPConfig];
         //    [self requestAPPTemplate];//暂时没用到，屏蔽一下
 
         
-        [self requestBannerList];
+        [weakSelf requestBannerList];
 #if kIsHaveGoodsInHome
         if ([USER_CINEMAID intValue] > 0) {
-            [self requestProductList];
+            [weakSelf requestProductList];
         }
 #endif
     }];
 #if kIsHaveGoodsInHome
     headerTableView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kCommonScreenWidth, (K_BANNER_HEIGHT+125+158+20+105+40+43))];
 #else
-    headerTableView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kCommonScreenWidth, (K_BANNER_HEIGHT+125+158+20))];
+    headerTableView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kCommonScreenWidth, (K_BANNER_HEIGHT+125+158+20 +158+73))];
 #endif
     
     
@@ -901,7 +928,7 @@
         make.size.mas_equalTo(CGSizeMake(gotoOrderTipImage.size.width, 0));
     }];
     
-    
+    //  热映影片
     UIView *yellowView = [UIView new];
     yellowView.backgroundColor = [UIColor colorWithHex:[UIConstants sharedDataEngine].lumpColor];
     [headerTableView addSubview:yellowView];
@@ -972,7 +999,78 @@
         make.height.equalTo(@(158+20));
     }];
     
+    //  即将上映
+    UIView *yellowView2 = [UIView new];
+    yellowView2.backgroundColor = [UIColor colorWithHex:[UIConstants sharedDataEngine].lumpColor];
+    [headerTableView addSubview:yellowView2];
+    [yellowView2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@(15));
+        make.top.equalTo(movieCollectionView.mas_bottom).offset(25);
+        make.width.equalTo(@(4));
+        make.height.equalTo(@(13));
+    }];
+    UILabel *sectionLabel2 = [UILabel new];
+    sectionLabel2.text = @"即将上映";
+    sectionLabel2.backgroundColor = [UIColor clearColor];
+    sectionLabel2.textColor = [UIColor colorWithHex:@"333333"];
+    sectionLabel2.font = [UIFont systemFontOfSize:14];
+    [headerTableView addSubview:sectionLabel2];
+    [sectionLabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(yellowView2.mas_right).offset(5);
+        make.centerY.equalTo(yellowView2);
+        make.width.equalTo(@(80));
+        make.height.equalTo(@(14));
+    }];
     
+    //    gotoOrderTipImage
+    
+    UILabel *moreFilmLabel2 = [[UILabel alloc] init];
+    moreFilmLabel2.textColor = [UIColor colorWithHex:@"#333333"];
+    moreFilmLabel2.font = [UIFont systemFontOfSize:13];
+    moreFilmLabel2.text = @"更多";
+    [headerTableView addSubview:moreFilmLabel2];
+    [moreFilmLabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(headerTableView.mas_right).offset(-(5+15+gotoOrderTipImage.size.width));
+        make.size.mas_equalTo(CGSizeMake(28, 13));
+        make.centerY.equalTo(sectionLabel2.mas_centerY);
+    }];
+    
+    UIImageView *moreFilmImageView2 = [[UIImageView alloc] init];
+    moreFilmImageView2.image = gotoOrderTipImage;
+    [headerTableView addSubview:moreFilmImageView2];
+    [moreFilmImageView2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(headerTableView.mas_right).offset(-15);
+        make.size.mas_equalTo(CGSizeMake(gotoOrderTipImage.size.width, gotoOrderTipImage.size.height));
+        make.centerY.equalTo(sectionLabel2.mas_centerY);
+    }];
+    
+    UIButton *gotoMovieBtn2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    gotoMovieBtn2.backgroundColor = [UIColor clearColor];
+    [headerTableView addSubview:gotoMovieBtn2];
+    [gotoMovieBtn2 addTarget:self action:@selector(gotoMovieListBtn) forControlEvents:UIControlEventTouchUpInside];
+    [gotoMovieBtn2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(@(0));
+        make.centerY.equalTo(yellowView2);
+        make.height.equalTo(@(40));
+    }];
+    
+    UICollectionViewFlowLayout *movieFlowLayout2 = [[UICollectionViewFlowLayout alloc] init];
+    [movieFlowLayout2 setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    futureCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:movieFlowLayout2];
+    futureCollectionView.backgroundColor = [UIColor clearColor];
+    [headerTableView addSubview:futureCollectionView];
+    futureCollectionView.showsHorizontalScrollIndicator = NO;
+    futureCollectionView.delegate = self;
+    futureCollectionView.dataSource = self;
+    [futureCollectionView registerClass:[MovieListPosterCollectionViewCell class] forCellWithReuseIdentifier:@"FutureCollectionCell"];
+    [futureCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@(0));
+        make.top.equalTo(yellowView2.mas_bottom).offset(15);
+        make.width.equalTo(@(kCommonScreenWidth));
+        make.height.equalTo(@(158+20));
+    }];
+    
+/*
 #if kIsHaveGoodsInHome
     //MARK: 判断商品有无
     yellowView1 = [UIView new];
@@ -1072,6 +1170,7 @@
         make.height.equalTo(@(0));//105+40
     }];
 #endif
+ */
     /*
     UIView *cinemaSectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kCommonScreenWidth, 43)];
     cinemaSectionView.backgroundColor = [UIColor whiteColor];
@@ -1167,36 +1266,38 @@
 }
 
 - (void)requestBannerList {
-    AppConfigureRequest *request = [[AppConfigureRequest alloc] init];
     __weak __typeof(self) weakSelf = self;
-    NSDictionary *pagrams = [[NSDictionary alloc] init];
-    pagrams = [NSDictionary dictionaryWithObjectsAndKeys:USER_CINEMAID,@"cinemaId", nil];
-    [request requestQueryBannerParams:pagrams success:^(NSArray * _Nullable data) {
-
-        [weakSelf.bannerList removeAllObjects];
-        if (data.count > 0) {
-            [weakSelf.bannerList addObjectsFromArray:data];
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [bannerView loadContenWithArr:weakSelf.bannerList];
-            [homeTableView reloadData];
-        });
-    } failure:^(NSError * _Nullable err) {
-        NSLog(@"%@", err);
-    }];
-//    [request requestQueryBannerTemplateParams:nil success:^(NSArray * _Nullable data) {
+//    AppConfigureRequest *request = [[AppConfigureRequest alloc] init];
+//    NSDictionary *pagrams = [[NSDictionary alloc] init];
+//    pagrams = [NSDictionary dictionaryWithObjectsAndKeys:USER_CINEMAID,@"cinemaId", nil];
+//    [request requestQueryBannerParams:pagrams success:^(NSArray * _Nullable data) {
+//
+//        [weakSelf.bannerList removeAllObjects];
 //        if (data.count > 0) {
-//            [weakSelf.bannerList removeAllObjects];
 //            [weakSelf.bannerList addObjectsFromArray:data];
 //        }
 //        dispatch_async(dispatch_get_main_queue(), ^{
 //            [bannerView loadContenWithArr:weakSelf.bannerList];
 //            [homeTableView reloadData];
 //        });
-//                           
 //    } failure:^(NSError * _Nullable err) {
-//        
+//        NSLog(@"%@", err);
 //    }];
+
+    AppRequest *request = [[AppRequest alloc] init];
+    [request requestBanners:USER_CITY targetType:@(1) success:^(NSArray * _Nullable banners) {
+        [weakSelf.bannerList removeAllObjects];
+        if (banners.count > 0) {
+            [weakSelf.bannerList addObjectsFromArray:banners];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [bannerView loadContenWithArr:weakSelf.bannerList];
+            [homeTableView reloadData];
+        });
+    } failure:^(NSError * _Nullable err) {
+        
+    }];
+    
 }
 
 //MARK:-- 跳转票根页
@@ -1210,14 +1311,22 @@
 }
 //MARK: --请求影片列表
 - (void)requestMovieList:(NSUInteger)page {
-    MovieRequest *request = [[MovieRequest alloc] init];
     
     __weak __typeof(self) weakSelf = self;
-    NSDictionary *pagrams = [[NSDictionary alloc] init];
-    pagrams = [NSDictionary dictionaryWithObjectsAndKeys:USER_CINEMAID,@"cinemaId", USER_CITY, @"cityId", nil];
-    [request requestMovieListParams:pagrams success:^(NSArray * _Nullable movies) {
+    //    MovieRequest *request = [[MovieRequest alloc] init];
+//    NSDictionary *pagrams = [[NSDictionary alloc] init];
+//    pagrams = [NSDictionary dictionaryWithObjectsAndKeys:USER_CINEMAID,@"cinemaId", USER_CITY, @"cityId", nil];
+//    [request requestMovieListParams:pagrams success:^(NSArray * _Nullable movies) {
+//
+//    } failure:^(NSError * _Nullable err) {
+//
+//    }];
+    
+    //  正在热播
+    MovieRequest *hotRequest = [[MovieRequest alloc] init];
+    [hotRequest requestMoviesWithCityId:USER_CITY page:page success:^(NSArray * _Nullable movieList) {
         [weakSelf.movieList removeAllObjects];
-        [weakSelf.movieList addObjectsFromArray:movies];
+        [weakSelf.movieList addObjectsFromArray:movieList];
         if (weakSelf.movieList.count>0) {
             if (weakSelf.noMovieListAlertView.superview) {
                 [weakSelf.noMovieListAlertView removeFromSuperview];
@@ -1230,10 +1339,12 @@
         }
         //主线程刷新，防止闪烁
         dispatch_async(dispatch_get_main_queue(), ^{
+            [homeTableView.mj_header endRefreshing];
             [movieCollectionView reloadData];
             [homeTableView reloadData];
         });
     } failure:^(NSError * _Nullable err) {
+        [homeTableView.mj_header endRefreshing];
         if (weakSelf.movieList.count>0) {
             if (weakSelf.noMovieListAlertView.superview) {
                 [weakSelf.noMovieListAlertView removeFromSuperview];
@@ -1247,6 +1358,19 @@
         [CIASPublicUtility showAlertViewForTaskInfo:err];
     }];
     
+    //  即将上映
+    MovieRequest *futureRequest = [[MovieRequest alloc] init];
+    [futureRequest requestInCommingMoviesWithCityId:USER_CITY page:page success:^(NSArray * _Nullable movieList) {
+        [weakSelf.futureMovieList removeAllObjects];
+        [weakSelf.futureMovieList addObjectsFromArray:movieList];
+        //主线程刷新，防止闪烁
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [futureCollectionView reloadData];
+            [homeTableView reloadData];
+        });
+    } failure:^(NSError * _Nullable err) {
+        [CIASPublicUtility showAlertViewForTaskInfo:err];
+    }];
 }
 
 - (void)requestCinemaList{
@@ -1380,6 +1504,8 @@
         return self.productList.count;
     }else if (collectionView==movieCollectionView){
         return self.movieList.count;
+    } else if (collectionView == futureCollectionView) {
+        return self.futureMovieList.count;
     }
     return 0;
 }
@@ -1397,7 +1523,7 @@
 {
     if (collectionView==productCollectionView) {
         return UIEdgeInsetsMake(0, 15, 0, 0);
-    }else if (collectionView==movieCollectionView){
+    }else if (collectionView==movieCollectionView || collectionView == futureCollectionView){
         return UIEdgeInsetsMake(0, 15, 0, 0);
     }
     
@@ -1408,7 +1534,7 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
     if (collectionView==productCollectionView) {
         return 8;
-    }else if (collectionView==movieCollectionView) {
+    }else if (collectionView==movieCollectionView || collectionView == futureCollectionView) {
         return 8;
     }
     
@@ -1418,7 +1544,7 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     if (collectionView==productCollectionView) {
         return 0;
-    }else if (collectionView==movieCollectionView) {
+    }else if (collectionView==movieCollectionView || collectionView==futureCollectionView) {
         return 0;
     }
     return 0;
@@ -1428,14 +1554,14 @@
 {
     if (collectionView==productCollectionView) {
         return CGSizeMake(105, 105+40);
-    }else if (collectionView==movieCollectionView) {
+    }else if (collectionView==movieCollectionView || collectionView==futureCollectionView) {
         return CGSizeMake(105, 158+20);
     }
     return CGSizeZero;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    if (collectionView==productCollectionView) {
+    if (collectionView==productCollectionView) {    //  商品列表
         static NSString *identify = @"ProductCollectionViewCell";
         ProductCollectionViewCell *cell = (ProductCollectionViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:identify forIndexPath:indexPath];
         [cell sizeToFit];
@@ -1458,7 +1584,7 @@
         
         return cell;
         
-    }else if (collectionView==movieCollectionView) {
+    }else if (collectionView==movieCollectionView) {    //  正在上映 列表
         static NSString *identify = @"MovieListPosterCollectionViewCell";
         MovieListPosterCollectionViewCell *cell = (MovieListPosterCollectionViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:identify forIndexPath:indexPath];
         [cell sizeToFit];
@@ -1467,17 +1593,38 @@
         }
         cell.backgroundColor = [UIColor clearColor];
         cell.posterImageBackColor = @"ffffff";
-        Movie *movie = [self.movieList objectAtIndex:indexPath.row];
-        cell.movieName = movie.filmName;
-        cell.imageUrl = movie.filmPoster;
-        cell.point = movie.point;
-        cell.availableScreenType = movie.availableScreenType;
-        cell.isSale = [movie.isDiscount boolValue];
-        cell.isPresell = [movie.isPresell boolValue];
-        [cell updateLayout];
+        if (self.movieList.count > indexPath.row) {
+            Movie *movie = [self.movieList objectAtIndex:indexPath.row];
+            cell.movieName = movie.filmName;
+            cell.imageUrl = movie.filmPoster;
+            cell.point = movie.point;
+            cell.availableScreenType = movie.availableScreenType;
+            cell.isSale = [movie.isDiscount boolValue];
+            cell.isPresell = [movie.isPresell boolValue];
+            [cell updateLayout];
+        }
         
         return cell;
-        
+    } else if (collectionView == futureCollectionView) {    //  即将上映    列表
+        static NSString *identify = @"FutureCollectionCell";
+        MovieListPosterCollectionViewCell *cell = (MovieListPosterCollectionViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:identify forIndexPath:indexPath];
+        [cell sizeToFit];
+        if (!cell) {
+            NSLog(@"无法创建MovieListPosterCollectionViewCell时打印，自定义的cell就不可能进来了。");
+        }
+        cell.backgroundColor = [UIColor clearColor];
+        cell.posterImageBackColor = @"ffffff";
+        if (self.futureMovieList.count > indexPath.row) {
+            Movie *movie = [self.futureMovieList objectAtIndex:indexPath.row];
+            cell.movieName = movie.filmName;
+            cell.imageUrl = movie.filmPoster;
+            cell.point = movie.point;
+            cell.availableScreenType = movie.availableScreenType;
+            cell.isSale = [movie.isDiscount boolValue];
+            cell.isPresell = [movie.isPresell boolValue];
+            [cell updateLayout];
+        }
+        return cell;
     }
     
     return nil;
@@ -1493,6 +1640,14 @@
 
     }else if (collectionView==movieCollectionView) {
         Movie *movie = [self.movieList objectAtIndex:indexPath.row];
+        MovieDetailViewController *ctr = [[MovieDetailViewController alloc] init];
+        ctr.myMovie = movie;
+        ctr.isReying = YES;
+        MovieListPosterCollectionViewCell *cell = (MovieListPosterCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
+        self.sf_targetView = cell.moviePosterImage;
+        [self.navigationController pushViewController:ctr animated:YES];
+    }else if (collectionView == futureCollectionView) {
+        Movie *movie = [self.futureMovieList objectAtIndex:indexPath.row];
         MovieDetailViewController *ctr = [[MovieDetailViewController alloc] init];
         ctr.myMovie = movie;
         ctr.isReying = YES;
@@ -1648,7 +1803,7 @@
     return 1;
 }
 
-
+/*
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView.contentOffset.y <= 69) {
         CGFloat alpha = scrollView.contentOffset.y / 69;
@@ -1685,7 +1840,7 @@
         self.navBar.alpha = 0.8;
     }
 }
-
+*/
 
 /**
  *  结束刷新
@@ -1786,4 +1941,24 @@
     DLog(@"USER_HASLAUNCHED ==%d", USER_HASLAUNCHED);
 }
 
+#pragma mark - KOKOLocationView - Delegate
+
+/**
+ *  切换城市的代理方法
+ */
+- (void)changeCityBtnClicked:(KOKOLocationView *)locationView {
+    CityListNewViewController *ctr = [[CityListNewViewController alloc] init];
+    ctr.delegate = self;
+    [self.navigationController pushViewController:ctr animated:true];
+}
+
+#pragma mark CityListView controller delegate
+
+/**
+ *  切换城市的代理方法
+ */
+- (void)myCityDidChange {
+    [self requestMovieList:1];
+    [self updateLocationViewLayout];
+}
 @end

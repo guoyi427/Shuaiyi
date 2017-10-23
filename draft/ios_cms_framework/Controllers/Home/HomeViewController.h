@@ -34,7 +34,14 @@
 
 @property (nonatomic, strong) UIView        *navBar;
 @property (nonatomic, strong) NSMutableArray         *bannerList;
+/**
+ 热映电影列表
+ */
 @property (nonatomic, strong) NSMutableArray         *movieList;
+/**
+ 即将上映电影列表
+ */
+@property (nonatomic, strong) NSMutableArray         *futureMovieList;
 @property (nonatomic, strong) NSMutableArray         *cinemaList;
 @property (nonatomic, strong) NSMutableArray         *productList;
 @property (nonatomic, strong) NSMutableDictionary    *homeOrderDic;

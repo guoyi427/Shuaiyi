@@ -22,4 +22,13 @@
 
 @property (nonatomic, copy)NSString *nameFirst; //分类的索引，A，B，C等等
 
+
+//  ------------------  kkz
+@property (nonatomic, copy) NSNumber *cityId;
+@property (nonatomic, copy) NSString *cityName;
+@property (nonatomic, copy) NSString *cityPinYin;
+
++ (City *)getCityWithId:(int)cityId;
++ (City *)getCityWithName:(NSString *)cityName;
+
 @end

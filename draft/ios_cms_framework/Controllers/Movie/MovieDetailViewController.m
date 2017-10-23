@@ -184,15 +184,16 @@
     //添加返回按钮
     
     if (self.isReying) {
-        if ([self.myMovie.isDiscount integerValue] == 1) {
-            UIButton *buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            buyBtn.frame = CGRectMake(0, kCommonScreenHeight - 50*Constants.screenHeightRate, kCommonScreenWidth, 50*Constants.screenHeightRate);
-            buyBtn.backgroundColor = [UIColor colorWithHex:[UIConstants sharedDataEngine].btnColor];
-            [buyBtn setTitleColor:[UIColor colorWithHex:[UIConstants sharedDataEngine].btnCharacterColor] forState:UIControlStateNormal];
-            [buyBtn setTitle:@"特惠购票" forState:UIControlStateNormal];
-            [buyBtn addTarget:self action:@selector(buyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-            [self.view addSubview:buyBtn];
-        }else{
+//        if ([self.myMovie.isDiscount integerValue] == 1) {
+//            UIButton *buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//            buyBtn.frame = CGRectMake(0, kCommonScreenHeight - 50*Constants.screenHeightRate, kCommonScreenWidth, 50*Constants.screenHeightRate);
+//            buyBtn.backgroundColor = [UIColor colorWithHex:[UIConstants sharedDataEngine].btnColor];
+//            [buyBtn setTitleColor:[UIColor colorWithHex:[UIConstants sharedDataEngine].btnCharacterColor] forState:UIControlStateNormal];
+//            [buyBtn setTitle:@"特惠购票" forState:UIControlStateNormal];
+//            [buyBtn addTarget:self action:@selector(buyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//            [self.view addSubview:buyBtn];
+//        }else
+//        {
             UIButton *buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             buyBtn.frame = CGRectMake(0, kCommonScreenHeight - 50*Constants.screenHeightRate, kCommonScreenWidth, 50*Constants.screenHeightRate);
             buyBtn.backgroundColor = [UIColor colorWithHex:[UIConstants sharedDataEngine].btnColor];
@@ -200,8 +201,7 @@
             [buyBtn setTitle:@"立即购票" forState:UIControlStateNormal];
             [buyBtn addTarget:self action:@selector(buyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
             [self.view addSubview:buyBtn];
-        }
-   
+//        }
     } else {
         UIButton *buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         buyBtn.frame = CGRectMake(0, kCommonScreenHeight - 50*Constants.screenHeightRate, kCommonScreenWidth, 50*Constants.screenHeightRate);
@@ -482,7 +482,7 @@
     _topImageView.backgroundColor = [UIColor clearColor];
     _topImageView.contentMode = UIViewContentModeScaleAspectFill;
     UIImage *placeHolderImage = [UIImage centerResizeFrom:[UIImage imageNamed:@"movie_nopic"] newSize:_topImageView.frame.size bgColor:[UIColor colorWithHex:@"#333333"]];
-    [_topImageView sd_setImageWithURL:[CIASPublicUtility getUrlDeleteChineseWithString:self.myMovie.filmPosterHorizon] placeholderImage:placeHolderImage];
+    [_topImageView sd_setImageWithURL:[CIASPublicUtility getUrlDeleteChineseWithString:self.myMovie.pathVerticalS] placeholderImage:placeHolderImage];
     if ([videoUrlStr hasPrefix:@"http://"] || [videoUrlStr hasPrefix:@"https://"]) {
         UIImage *videoImage = [UIImage imageNamed:@"play_icon"];
         videoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -684,19 +684,38 @@
  *  MARK: 请求演员列表
  */
 - (void)requestMovieActorList {
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
-    [params setValue:self.myMovie.movieId forKey:@"filmId"];
+//    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
+//    [params setValue:self.myMovie.movieId forKey:@"filmId"];
     
     MovieRequest *request = [[MovieRequest alloc] init];
     __weak __typeof(self) weakSelf = self;
-    [request requestMovieActorListParams:params success:^(NSArray * _Nullable movieActors) {
-        
-        if (movieActors.count > 0) {
+//    [request requestMovieActorListParams:params success:^(NSArray * _Nullable movieActors) {
+//
+//        if (movieActors.count > 0) {
+//            [self setMovieActorView];
+//            [self reSetTableHeadViewHeight];
+//
+//            [weakSelf.movieActorList removeAllObjects];
+//            [weakSelf.movieActorList addObjectsFromArray:movieActors];
+//            //主线程刷新，防止闪烁
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [actorCollectionView reloadData];
+//            });
+//            actorCollectionView.mj_footer.state = MJRefreshStateIdle;
+//        }else{
+//            //没有更多
+//            [actorCollectionView.mj_footer endRefreshingWithNoMoreData];
+//        }
+//    } failure:^(NSError * _Nullable err) {
+//        DLog(@"err == %@", [err description]);
+//    }];
+    [request requestActorListForMovieWithMovieId:[self.myMovie.movieId integerValue] success:^(NSArray * _Nullable actorList) {
+        if (actorList.count > 0) {
             [self setMovieActorView];
             [self reSetTableHeadViewHeight];
-
+            
             [weakSelf.movieActorList removeAllObjects];
-            [weakSelf.movieActorList addObjectsFromArray:movieActors];
+            [weakSelf.movieActorList addObjectsFromArray:actorList];
             //主线程刷新，防止闪烁
             dispatch_async(dispatch_get_main_queue(), ^{
                 [actorCollectionView reloadData];
@@ -707,7 +726,7 @@
             [actorCollectionView.mj_footer endRefreshingWithNoMoreData];
         }
     } failure:^(NSError * _Nullable err) {
-        DLog(@"err == %@", [err description]);
+        
     }];
     
 }
@@ -928,7 +947,7 @@
 
 - (void) setFilmIntroduceView {
     //添加影片介绍的view，并加入控件
-    if (self.myMovie.introduction.length > 0) {
+    if (self.myMovie.movieIntro.length > 0) {
         [self.headBkView addSubview:self.filmIntroduceView];
 
 //        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTap:)];
@@ -1094,7 +1113,7 @@
     filmNameLabel.backgroundColor = [UIColor clearColor];
     filmNameLabel.textAlignment = NSTextAlignmentLeft;
     filmNameLabel.textColor = [UIColor colorWithHex:@"#ffffff"];
-    filmNameLabel.text = self.myMovie.filmName.length>0? self.myMovie.filmName:@"";
+    filmNameLabel.text = self.myMovie.movieName.length>0? self.myMovie.movieName:@"";
     [self.headBkView addSubview:filmNameLabel];
     
     //MARK: 添加电影英文名称
