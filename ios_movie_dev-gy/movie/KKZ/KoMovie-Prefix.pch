@@ -1,0 +1,121 @@
+//
+// Prefix header for all source files of the 'KKZ' target in the 'KKZ' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iPhone SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+    #import <QuartzCore/QuartzCore.h>
+
+    #import "KKZAppDelegate.h"
+
+    #import "SharedExtra.h"
+    #import "NetworkUtil.h"
+
+    //Constants
+    #import "Constants.h"
+    #import "UIConstants.h"
+
+    #import "ObjectiveSugar.h"
+    #import "UIImageVIew+WebURL.h"
+    #import "UserDefault.h"
+
+    // TODO 使用 StatisticsComponent 替代
+    #import "StatisticsComponent.h"
+
+    #import <Masonry/Masonry.h>
+    #import "DataEngine.h"
+
+#import "UIViewController+Hint.h"
+#import "NSString+Valid.h"
+
+//#import "EaseMob.h"
+
+
+//刷新
+#import "MJRefresh.h"
+#import "MJExtension.h"
+
+//图片相关
+#import "UIImageView+WebCache.h"
+
+//视图相关
+#import "NoDataViewY.h"
+#import "AlertViewY.h"
+
+#import "UIColorExtra.h"
+#import "UIColor+Hex.h"
+
+
+#pragma mark -Category
+#import "UIAlertView+Blocks.h"
+
+
+
+#import "MemContainer.h"
+#import "DateEngine.h"
+
+//网络
+#import "KKZBaseNetRequest.h"
+#import "KKZBaseRequestParams.h"
+#import "TaskQueue.h"
+
+#import "MovieRequest.h"
+#import "FavoriteRequest.h"
+#import "MovieRelatedRequest.h"
+#import "KotaRequest.h"
+#import "ClubRequest.h"
+
+#import "ViewController+PreviosViewController.h"
+
+#import "KoMovie-Swift.h"
+
+
+extern BOOL runningOniOS5;
+extern BOOL runningOniOS7;
+extern BOOL retinaDisplaySupported;
+extern BOOL isConnected;
+//extern BOOL launch3rdSDK;
+extern float screentHeight, screentContentHeight,screentWith;
+
+extern KKZAppDelegate *appDelegate;
+
+#endif
+
+
+#ifdef DEBUG
+    #define DLog(...) NSLog(@"%s\n %@\n\n", __func__, [NSString stringWithFormat:__VA_ARGS__])
+
+#else
+    #define DLog(...)
+
+#endif
+
+#define LERR(exception) DLog(@"exception throw: %@ %@", [exception name], [exception reason])
+
+// 颜色
+#define RGB(r, g, b) ARGB(1.f, r, g, b)
+#define ARGB(alpha, r, g, b) [UIColor colorWithRed:((r) / 255.f green:((g) / 255.f) blue:((b) / 255.f) alpha:alpha)]
+#define HEX(hex) [UIColor colorWithHex:hex]
+#define AHEX(alpha, hex) [UIColor colorWithHex:hex a:alpha]
+
+// 统计分析事件
+#define StatisEvent(eventId) [StatisticsComponent event:eventId]
+#define StatisEventWithAttributes(eventId, attrs) [StatisticsComponent event:eventId attributes:attrs]
+
+
+//弱引用
+#define WeakSelf  __weak __typeof(&*self)weakSelf = self;
+
+#import <SDWebImage/UIImageView+WebCache.h>
+
+
+

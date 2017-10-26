@@ -1,0 +1,113 @@
+source 'https://github.com/CocoaPods/Specs.git'
+source 'http://git.cias.net.cn/ios_specs/Specs.git'
+
+platform :ios, '8.0'
+use_frameworks!
+
+def pods_Share
+    #ShareSDK
+    pod 'ShareSDK_KKZ', '~> 2.12.2'
+    pod 'ShareSDK_KKZ/Connection/QQ'
+    pod 'ShareSDK_KKZ/Connection/QZone'
+    pod 'ShareSDK_KKZ/Connection/SinaWeibo'
+    pod 'ShareSDK_KKZ/Connection/WeChat'
+    pod 'ShareSDK_KKZ/Extend/QQConnectSDK'
+    pod 'ShareSDK_KKZ/Extend/WeChatSDK'
+    pod 'ShareSDK_KKZ/UI/Flat'
+    
+end
+
+def pods_Category
+    
+    pod 'Category_KKZ/MKMapViewExtra'
+    pod 'Category_KKZ/NSDictionaryExtra'
+    pod 'Category_KKZ/NSMutableDictionaryExtra'
+    pod 'Category_KKZ/NSNotificationExtra'
+    pod 'Category_KKZ/UIBarButtonItemExtra'
+    pod 'Category_KKZ/UIColor+Hex'
+    pod 'Category_KKZ/UIColorExtra'
+    pod 'Category_KKZ/UIDeviceExtra'
+    pod 'Category_KKZ/UIImage+ImageEffects'
+    pod 'Category_KKZ/UIImage+Resize'
+    pod 'Category_KKZ/UIImageExtra'
+    pod 'Category_KKZ/UINavigationBarExtra'
+    pod 'Category_KKZ/UIViewControllerExtra'
+    pod 'Category_KKZ/NSStringExtra'
+    pod 'DateEngine_KKZ' , '~> 1.0.5'
+
+end
+
+
+
+target 'KoMovie' do
+    pod 'AFNetworkActivityLogger', git: 'https://github.com/AFNetworking/AFNetworkActivityLogger.git', branch: '3_0_0'
+    pod 'NSURL+QueryDictionary', '~> 1.2'
+    pod 'EaseMobSDK'
+    pod 'ZipArchive', '~> 1.4.0'
+    pod 'MBProgressHUD', '~> 0.9.2'
+    pod 'ObjectiveSugar', '~> 1.1.0'
+    pod 'MWPhotoBrowser', '~> 2.1.2'
+    pod 'SDWebImage', '~> 3.8.1'
+    pod 'THProgressView', '~> 1.0'
+    pod 'V8HorizontalPickerView', '~> 1.0.0'
+    pod 'Reachability', '~> 3.2'
+	pod 'Masonry'
+    pod 'UIButton+BackgroundColor'
+    
+    #友盟统计标准SDK，含IDFA
+    pod 'UMengAnalytics'
+    
+    pods_Share
+    
+    pods_Category
+
+    #getui
+    pod 'GTSDK'
+    
+    pod 'Bugly', '~> 2.4.6'
+    
+    #kokozu
+    pod 'MJRefresh_KKZ', '~> 1.0.1'
+    
+    pod 'NetCore_KKZ_Cache', '~> 0.1.0'
+    
+    pod 'SwitchMovieView'
+    pod 'HallView_KKZ', '~> 0.2.6'
+    pod 'HallView_KKZ/SeatIndexView'
+	pod 'HallView_KKZ/NavigatorView'
+	pod 'HallView_KKZ/SeatHelper'
+    
+    pod 'KKZExtension/UIWindow'
+
+    #字典转模型
+    pod 'MJExtension'
+    
+    # Swift
+    pod 'SnapKit', '~>3.2.0'
+    pod 'UIColor_Hex_Swift', '~> 3.0'
+    pod 'Kingfisher', '~> 3.0'
+    
+end
+
+#Unit Test target
+target 'KoMovieTests' do
+    pod 'NSURL+QueryDictionary', '~> 1.2'
+    pod 'EaseMobSDK'
+    pod 'ZipArchive', '~> 1.4.0'
+    pod 'MBProgressHUD', '~> 0.9.2'
+    pod 'ObjectiveSugar', '~> 1.1.0'
+    pod 'MWPhotoBrowser', '~> 2.1.2'
+    pod 'SDWebImage', '~> 3.8.1'
+    pod 'THProgressView', '~> 1.0'
+    pod 'V8HorizontalPickerView', '~> 1.0.0'
+    pod 'Reachability', '~> 3.2'
+    pod 'Masonry'
+
+    pods_Category
+
+    pod 'NetCore_KKZ_Cache', '~> 0.1.0'
+    
+    pod 'SwitchMovieView'
+    pod 'KKZExtension/UIWindow'
+
+end

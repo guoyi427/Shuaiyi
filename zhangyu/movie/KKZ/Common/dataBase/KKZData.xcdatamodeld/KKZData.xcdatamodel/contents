@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="16A323" minimumToolsVersion="Xcode 7.0" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="User" representedClassName="" syncable="YES">
+        <attribute name="headimg" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="huanxinPassword" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastSession" optional="YES" attributeType="String" syncable="YES"/>
+            <attribute name="newUser" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="nickName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vipAccount" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="165"/>
+    </elements>
+</model>

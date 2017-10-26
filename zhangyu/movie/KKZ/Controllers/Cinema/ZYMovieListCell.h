@@ -1,0 +1,16 @@
+//
+//  ZYMovieListCell.h
+//  KoMovie
+//
+//  Created by kokozu on 25/10/2017.
+//  Copyright © 2017 Ariadne’s Thread Co., Ltd. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@class Movie;
+@interface ZYMovieListCell : UITableViewCell
+
+- (void)update:(Movie *)model;
+
+@end

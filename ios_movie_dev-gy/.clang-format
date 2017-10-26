@@ -1,0 +1,112 @@
+# document ref: http://clang.llvm.org/docs/ClangFormatStyleOptions.html
+
+# 基础样式
+BasedOnStyle: LLVM
+
+# 是否使用tab进行缩进
+UseTab: Never
+
+# tab的宽度
+TabWidth: 4
+
+# 缩进宽度
+IndentWidth: 4
+
+# 续行的缩进宽度
+ContinuationIndentWidth: 8
+
+
+#-----------------------file----------------------
+
+# 最大宽度，如果代码超过这个宽度会按语义折行
+ColumnLimit: 0
+
+# 允许最大连续空行数
+MaxEmptyLinesToKeep: 1
+
+
+#--------------------------code block------------------
+
+# 括号的断行模式
+BreakBeforeBraces: Attach
+
+# 是否在容器字面量(@[@"1",@"2"])中插入空格
+SpacesInContainerLiterals: true
+
+# case语句的位置总是在switch语句后缩进一级
+IndentCaseLabels: true
+
+# 是否把注释右对齐,下面为右对齐的效果
+AlignTrailingComments: false
+
+# 是否在括号前加上空格
+SpaceBeforeParens: ControlStatements
+
+# 在构造函数初始化时按逗号断行，并以冒号对齐
+BreakConstructorInitializersBeforeComma: false
+
+
+#----------------------statement----------------
+
+# 指针在类型那边还是在变量名那边还是在中间
+PointerAlignment: Right
+
+# 在=号前加空格
+SpaceBeforeAssignmentOperators: true
+
+# 括号后加空格
+SpaceAfterCStyleCast: true
+
+# 是否在空括号中加空格
+SpaceInEmptyParentheses: false
+
+# 是否在非空的括号中插入空格
+SpacesInParentheses: false
+
+# 不在中括号里加空格
+SpacesInSquareBrackets: false
+
+# 单行注释前的空格数
+SpacesBeforeTrailingComments: 1
+
+# 是否在<>中间插入空格
+SpacesInAngles: false
+
+# 在三元运算符前断行
+BreakBeforeTernaryOperators: true
+
+# 是否允许短代码块在一行写完
+AllowShortBlocksOnASingleLine: false
+
+# 是否允许短switch的case语句在一行写完
+AllowShortCaseLabelsOnASingleLine: false
+
+# 是否允许短的函数在一行写完
+AllowShortFunctionsOnASingleLine: false
+
+# 是否允许短的语句在一行写完
+AllowShortIfStatementsOnASingleLine: false
+
+# 是否允许短的循环在一行写完
+AllowShortLoopsOnASingleLine: true
+
+
+#-----------------------------OC only---------------------
+
+# block开始的正则
+MacroBlockBegin: ''
+
+# block开始的正则
+MacroBlockEnd: ''
+
+# 在block从空行开始
+KeepEmptyLinesAtTheStartOfBlocks: true
+
+# block内的缩进
+ObjCBlockIndentWidth: 4
+
+# 是否需要在"@property"后加上空格
+ObjCSpaceAfterProperty: true
+
+# 是否需要在协议名后加上空格
+ObjCSpaceBeforeProtocolList: true
