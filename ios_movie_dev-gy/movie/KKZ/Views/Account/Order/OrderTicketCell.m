@@ -208,7 +208,7 @@
     [CATransaction commit];
 
     cinemaLabel.text = self.cinemaName;
-    timeLabel.text = [NSString stringWithFormat:@"%@", movieTime];
+    timeLabel.text = [NSString stringWithFormat:@"%@ %@%@", movieTime, self.order.plan.language, self.order.plan.screenType];
 
     if ([self.orderStateY isEqual:@1]) {
         /*
@@ -249,7 +249,7 @@
         _stateImageView.image = [UIImage imageNamed:@"OrderList_gray"];
     }
     
-    _seatInfoLabel.text = self.order.plan.hallName;
+    _seatInfoLabel.text = [NSString stringWithFormat:@"%@ %@", self.order.plan.hallName, [self.order readableSeatInfos]];
 }
 
 //    OrderStateNormal = 1,//待支付，已经下完单。
