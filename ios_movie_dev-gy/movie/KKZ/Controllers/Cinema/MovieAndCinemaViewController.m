@@ -412,7 +412,7 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
     if (tableView == _currentMovieTableView) {
         return 137;
     } else if (tableView == _futureMovieTableView) {
-        return 185;
+        return 173;
     } else if (tableView == _cinemaTableView) {
         return 80.0;
     }

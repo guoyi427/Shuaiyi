@@ -30,6 +30,8 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         _posterImageView = [[UIImageView alloc] init];
+        _posterImageView.layer.cornerRadius = 5.0;
+        _posterImageView.layer.masksToBounds = true;
         [self.contentView addSubview:_posterImageView];
         [_posterImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(12);
@@ -42,7 +44,7 @@
         _movieNameLabel.textColor = [UIColor blackColor];
         [self.contentView addSubview:_movieNameLabel];
         [_movieNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_posterImageView.mas_right).offset(10);
+            make.left.equalTo(_posterImageView.mas_right).offset(20);
             make.top.equalTo(_posterImageView).offset(18);
         }];
         
@@ -52,7 +54,8 @@
         [self.contentView addSubview:_actorsLabel];
         [_actorsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_movieNameLabel);
-            make.top.equalTo(_movieNameLabel.mas_bottom).offset(5);
+            make.right.lessThanOrEqualTo(self.contentView).offset(-20);
+            make.top.equalTo(_movieNameLabel.mas_bottom).offset(10);
         }];
         
         _scoreTitleLabel = [[UILabel alloc] init];
@@ -88,6 +91,14 @@
             make.centerY.equalTo(_scoreTitleLabel);
             make.size.mas_equalTo(CGSizeMake(130, 20));
         }];
+        
+        UIView *bottomLine = [[UIView alloc] init];
+        bottomLine.backgroundColor = appDelegate.kkzLine;
+        [self.contentView addSubview:bottomLine];
+        [bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.left.right.equalTo(self.contentView);
+            make.height.mas_equalTo(0.5);
+        }];
     }
     return self;
 }
@@ -100,6 +111,7 @@
     [_posterImageView sd_setImageWithURL:[NSURL URLWithString:model[@"movie"][@"pathVerticalS"]]];
     
     _movieNameLabel.text = model[@"movie"][@"movieName"];
+    _actorsLabel.text = model[@"movie"][@"actor"];
     
     if (isScore) {
         [_scoreView displayRating:[model[@"movie"][@"score"] floatValue]/2.0];

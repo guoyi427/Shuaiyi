@@ -56,7 +56,7 @@ static CGFloat TopTimeLabelHeight = 48.0;
     [self.contentView addSubview:_postImageView];
     [_postImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(10);
-        make.top.equalTo(_publishTimeLabel.mas_bottom).offset(12);
+        make.top.equalTo(_publishTimeLabel.mas_bottom);//.offset(12);
         make.size.mas_equalTo(CGSizeMake(80, 110));
     }];
     
@@ -126,7 +126,7 @@ static CGFloat TopTimeLabelHeight = 48.0;
         [_publishTimeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(10);
             make.top.mas_equalTo(0);
-            make.height.mas_equalTo(0);
+            make.height.mas_equalTo(12);
             make.width.equalTo(self.contentView);
         }];
         
