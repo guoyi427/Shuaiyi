@@ -92,7 +92,8 @@
         preSellLabel.hidden = YES;
         [self addSubview:preSellLabel];
         [preSellLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self);
+            make.left.equalTo(movieNameLabel);
+            make.right.lessThanOrEqualTo(self).offset(-10);
             make.bottom.equalTo(self.mas_bottom).offset(-10);
             make.height.equalTo(@(13));
         }];
@@ -142,7 +143,7 @@
         preSellLabel.hidden = NO;
 //        CGSize movieNameSize = [KKZTextUtility measureText:self.movieName font:[UIFont systemFontOfSize:13]];
         CGSize movieNameSize = [KKZTextUtility measureText:self.movieName size:CGSizeMake(MAXFLOAT, 15) font:[UIFont systemFontOfSize:13]];
-        preSellLabel.text = [NSString stringWithFormat:@"%@上映", [[DateEngine sharedDateEngine] stringFromDate:self.model.publishTime withFormat:@"YYYY-MM-dd"]];
+        preSellLabel.text = [NSString stringWithFormat:@"%@上映", [[DateEngine sharedDateEngine] stringFromDate:self.model.publishTime withFormat:@"MM-dd"]];
         
     }else{
         movieNameLabel.textAlignment = NSTextAlignmentCenter;

@@ -153,7 +153,7 @@
     
     WeakSelf
     [_contentView addHeaderWithCallback:^{
-        [self loadNewData];
+        [weakSelf loadNewData];
     }];
     
     //  banner
@@ -164,17 +164,14 @@
     _movieListContentView.backgroundColor = [UIColor whiteColor];
     [_contentView addSubview:_movieListContentView];
     
-    UIImage *gotoOrderTipImage = [UIImage imageNamed:@"home_more"];
+    UIImage *gotoOrderTipImage = [UIImage imageNamed:@"arrowGray"];
     
     //  热映影片
-    UIView *yellowView = [UIView new];
-    yellowView.backgroundColor = appDelegate.kkzYellow;
+    UIImageView *yellowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Movie_current_selected"]];
     [_movieListContentView addSubview:yellowView];
     [yellowView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(15));
-        make.top.mas_equalTo(25);
-        make.width.equalTo(@(4));
-        make.height.equalTo(@(13));
+        make.top.mas_equalTo(15);
     }];
     UILabel *sectionLabel = [UILabel new];
     sectionLabel.text = @"热映影片";
@@ -184,7 +181,7 @@
     [_movieListContentView addSubview:sectionLabel];
     [sectionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(yellowView.mas_right).offset(5);
-        make.top.equalTo(yellowView);
+        make.centerY.equalTo(yellowView);
         make.width.equalTo(@(80));
         make.height.equalTo(@(14));
     }];
@@ -238,14 +235,11 @@
     }];
     
     //  即将上映
-    UIView *yellowView2 = [UIView new];
-    yellowView2.backgroundColor = yellowView.backgroundColor;
+    UIImageView *yellowView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Movie_Future_selected"]];
     [_movieListContentView addSubview:yellowView2];
     [yellowView2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(15));
-        make.top.equalTo(_currentMovieCollectionView.mas_bottom).offset(25);
-        make.width.equalTo(@(4));
-        make.height.equalTo(@(13));
+        make.top.equalTo(_currentMovieCollectionView.mas_bottom).offset(15);
     }];
     UILabel *sectionLabel2 = [UILabel new];
     sectionLabel2.text = @"即将上映";
