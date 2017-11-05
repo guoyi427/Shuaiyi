@@ -4,8 +4,8 @@
 *xcshareddata
 *xcuserdatad/
 *xcuserstate
-*.xcodeproj/
-*.xcodeproj
+#*.xcodeproj/
+#*.xcodeproj
 *.com
 *.class
 *.dll
