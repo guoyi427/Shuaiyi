@@ -89,6 +89,9 @@
 #import "UpgradeComponent.h"
 //// =============== 重构完成 End =============== ////
 
+//  百度sdk
+#import <BaiduMapAPI_Base/BMKMapManager.h>
+
 #define kSplashTag 8967
 #define kKoMovieTag 7874
 #define kTopViewHolderHeight 60
@@ -175,6 +178,14 @@ KKZAppDelegate *appDelegate;
     // Bugly
 //    [self configBugly];
     [self initializePlat];
+    
+    //  baidu sdk
+    BMKMapManager *mapManager = [[BMKMapManager alloc]init];
+    // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
+    BOOL ret = [mapManager start:@"j6qz0WONU7Q2PCcsZnCVGAATH73jPpxQ"  generalDelegate:nil];
+    if (!ret) {
+        NSLog(@"manager start failed!");
+    }
     
 //    [[ShuWeiLocation sharedInstance] startLocationWithAppId:@"2065dd06349e" andAppKey:@"e2e87836-2746-4b43-9b64-288048bc3b9b"];
     
@@ -938,6 +949,9 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 }
 
 - (void)login {
+    [[DataEngine sharedDataEngine] startLoginFinished:^(BOOL succeeded) {
+        
+    }];
 }
 
 - (void)signout {
@@ -1434,6 +1448,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
                selector:@selector(videoFinished:)
                    name:MoviePlayerControllerDidExitFullscreenNotification
                  object:nil]; // 播放器即将退出通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(login) name:KKZLoginFailNotificationName object:nil];
 }
 
 - (UIInterfaceOrientationMask)application:(UIApplication *)application

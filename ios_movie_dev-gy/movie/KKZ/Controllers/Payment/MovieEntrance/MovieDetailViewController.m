@@ -273,13 +273,44 @@
  *  添加购票按钮
  */
 - (void)addBuyTicketView {
-    UIButton *buyTicketBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, screentHeight - 50, screentWith, 50)];
+    UIButton *buyTicketBtn = [[UIButton alloc] initWithFrame:CGRectMake(150, screentHeight - 50, screentWith-150, 50)];
     [buyTicketBtn setBackgroundColor:appDelegate.kkzDarkYellow];
-    [buyTicketBtn setTitle:@"选座购票" forState:UIControlStateNormal];
+    if (_isCommingSoon) {
+        [buyTicketBtn setTitle:@"等待拍片" forState:UIControlStateNormal];
+        buyTicketBtn.enabled = false;
+        buyTicketBtn.frame = CGRectMake(150-75, screentHeight - 50, screentWith-150+75, 50);
+    } else {
+        [buyTicketBtn setTitle:@"选座购票" forState:UIControlStateNormal];
+        buyTicketBtn.enabled = true;
+    }
     [buyTicketBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     buyTicketBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [buyTicketBtn addTarget:self action:@selector(buyTicketBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buyTicketBtn];
+    
+    UIButton *relationButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    relationButton.frame = CGRectMake(0, screentHeight - 50, 75, 50);
+    [relationButton setTitle:@"想看" forState:UIControlStateNormal];
+    [relationButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    relationButton.titleLabel.font = [UIFont systemFontOfSize:10];
+    [relationButton setTitleEdgeInsets:UIEdgeInsetsMake(20, 0, 0, 20)];
+    [relationButton setImage:[UIImage imageNamed:@"MovieDetail_Relation"] forState:UIControlStateNormal];
+    [relationButton setImageEdgeInsets:UIEdgeInsetsMake(0, 20, 15, 0)];
+    [relationButton addTarget:self action:@selector(relationButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:relationButton];
+    
+    if (!_isCommingSoon) {
+        UIButton *scoreButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        scoreButton.frame = CGRectMake(75, screentHeight - 50, 75, 50);
+        [scoreButton setTitle:@"评分" forState:UIControlStateNormal];
+        [scoreButton setTitleColor:relationButton.currentTitleColor forState:UIControlStateNormal];
+        scoreButton.titleLabel.font = relationButton.titleLabel.font;
+        [scoreButton setTitleEdgeInsets:relationButton.titleEdgeInsets];
+        [scoreButton setImage:[UIImage imageNamed:@"MovieDetail_Score@2x"] forState:UIControlStateNormal];
+        [scoreButton setImageEdgeInsets:relationButton.imageEdgeInsets];
+        [scoreButton addTarget:self action:@selector(scoreButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:scoreButton];
+    }
 }
 
 - (void)buyTicketBtnClicked {
@@ -290,6 +321,20 @@
     ctr.movieId = self.movieId;
     ctr.movie = self.movie;
     [self pushViewController:ctr animation:CommonSwitchAnimationSwipeR2L];
+}
+
+- (void)relationButtonAction:(UIButton *)button {
+    button.selected = !button.isSelected;
+    MovieRequest *request = [[MovieRequest alloc] init];
+    [request addRelationMovieId:[NSString stringWithFormat:@"%@", _movieId] relation:[NSString stringWithFormat:@"%d", button.isSelected] success:^{
+        [UIAlertView showAlertView:button.isSelected?@"喜欢成功":@"取消喜欢成功" buttonText:@"确定"];
+    } failure:^(NSError * _Nullable err) {
+        
+    }];
+}
+
+- (void)scoreButtonAction {
+    
 }
 
 /**
@@ -338,7 +383,7 @@
  *  添加tableheadview
  */
 - (void)addTableHead {
-    movieDetailHeadView = [[MovieDetailHeadView alloc] initWithFrame:CGRectMake(0, 0, screentWith, headHeight-50)];
+    movieDetailHeadView = [[MovieDetailHeadView alloc] initWithFrame:CGRectMake(0, 0, screentWith, 245-64)];
     movieDetailTable.tableHeaderView = movieDetailHeadView;
     [movieDetailHeadView wantToWatch:^{
         KKZAnalyticsEvent *event = [KKZAnalyticsEvent new];
@@ -795,7 +840,7 @@
     } else if (section == 3 && [self mediaCount]) {
         return 1;
     } else if (section == 4) {
-        return 1;
+        return 0;
     } else if (section == 5) {
         return self.clubPosts.count;
     } else if (section == 6) {
@@ -893,12 +938,12 @@
     header.isBtmlineHidden = NO;
     if (section == 0 && self.movie.movieIntro.length > 0) {
     } else if (section == 1 && stars.count) {
-        header.isBtmlineHidden = YES;
-        header.image = [UIImage imageNamed:@"movie_actor_logo"];
-        header.titleStr = [NSString stringWithFormat:@"%lu位演职人员", (unsigned long) stars.count];
-        header.BtnHidden = NO;
-        [header updateLayout];
-        return header;
+//        header.isBtmlineHidden = YES;
+//        header.image = [UIImage imageNamed:@"movie_actor_logo"];
+//        header.titleStr = [NSString stringWithFormat:@"%lu位演职人员", (unsigned long) stars.count];
+//        header.BtnHidden = NO;
+//        [header updateLayout];
+//        return header;
     } else if (section == 3 && [self mediaCount]) {
         header.isBtmlineHidden = YES;
         header.image = [UIImage imageNamed:@"movie_still_logo"];
@@ -937,7 +982,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 1 && stars.count) {
-        return 45;
+//        return 45;
     } else if (section == 3 && [self mediaCount]) {
         return 45;
     } else if (section == 5 && self.clubPosts.count) {
@@ -960,7 +1005,7 @@
     } else if (section == 0 && self.movie.movieIntro.length > 0) {
         return 10;
     } else if (section == 1 && stars.count) {
-        return moreFooterView;
+//        return moreFooterView;
     } else if (section == 3 && [self mediaCount]) {
         return PictureMoreFooterView;
     } else if (section == 4) {
@@ -982,8 +1027,8 @@
     } else if (section == 0 && self.movie.movieIntro.length > 0) {
         return footV;
     } else if (section == 1 && stars.count) {
-        UIView *footVMore = [self addFooterViewWith:section andFooterHeight:moreFooterView];
-        return footVMore;
+//        UIView *footVMore = [self addFooterViewWith:section andFooterHeight:moreFooterView];
+//        return footVMore;
     } else if (section == 3 && [self mediaCount]) {
         UIView *footVMore = [self addFooterViewWith:section andFooterHeight:PictureMoreFooterView];
         return footVMore;
@@ -1017,8 +1062,7 @@
     [footVMore addSubview:footV1];
 
     if (section == 1) {
-
-        [self addCheckMoreBtnWithSection:1 andHeight:footerHeight andPareentView:footVMore andCount:stars.count];
+//        [self addCheckMoreBtnWithSection:1 andHeight:footerHeight andPareentView:footVMore andCount:stars.count];
     } else if (section == 3) {
 
         CGFloat videoBtnWidth = 0;
@@ -1594,8 +1638,8 @@
     if (scrollView.contentOffset.y >= headHeight) {
         [homeBgCover setBackgroundColor:[UIColor whiteColor]];
         //设置导航栏背景色
-        self.navBarView.backgroundColor = appDelegate.kkzBlue;
-        self.statusView.backgroundColor = appDelegate.kkzBlue;
+//        self.navBarView.backgroundColor = appDelegate.kkzBlue;
+//        self.statusView.backgroundColor = appDelegate.kkzBlue;
 
         self.kkzTitleLabel.hidden = NO;
     } else {
@@ -1629,8 +1673,8 @@
 - (void)refreshDetail {
     //加载数据
     [self loadMovieDetail]; //详情
-    [self loadMovieHobby]; //周边
-    [self loadMediaLibrary]; //媒体库
+//    [self loadMovieHobby]; //周边
+//    [self loadMediaLibrary]; //媒体库
     [self loadActorList]; //演员列表
 
     //热门吐槽

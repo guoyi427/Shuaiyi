@@ -452,8 +452,8 @@
         [homeBgCover setBackgroundColor:[UIColor whiteColor]];
 
         //设置导航栏背景色
-        self.navBarView.backgroundColor = appDelegate.kkzBlue;
-        self.statusView.backgroundColor = appDelegate.kkzBlue;
+//        self.navBarView.backgroundColor = appDelegate.kkzBlue;
+//        self.statusView.backgroundColor = appDelegate.kkzBlue;
 
         self.kkzTitleLabel.hidden = NO;
     } else {

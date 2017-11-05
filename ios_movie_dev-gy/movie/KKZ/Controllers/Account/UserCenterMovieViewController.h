@@ -8,6 +8,13 @@
 
 #import "CommonViewController.h"
 
+typedef enum : NSUInteger {
+    UserCenterMovieType_WantSee,
+    UserCenterMovieType_Score,
+} UserCenterMovieType;
+
 @interface UserCenterMovieViewController : CommonViewController
+
+@property (nonatomic, assign) UserCenterMovieType type;
 
 @end

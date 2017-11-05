@@ -403,8 +403,8 @@
         self.selectCinemaForCardBlock([NSString stringWithFormat:@"%d",cinemaCard.cinemaId.intValue],cinemaCard.cinemaName);
     } else {
         USER_CINEMAID_WRITE(cinema.cinemaId);
-        USER_CINEMA_NAME_WRITE(cinema.cinemaName);
         USER_CINEMA_SHORT_NAME_WRITE(cinema.cinemaShortName);
+        USER_CINEMA_NAME_WRITE(cinema.cinemaName);
         USER_CINEMA_ADDRESS_WRITE(cinema.address);
         CINEMA_LATITUDE_WRITE(cinema.lat);
         CINEMA_LONGITUDE_WRITE(cinema.lon);

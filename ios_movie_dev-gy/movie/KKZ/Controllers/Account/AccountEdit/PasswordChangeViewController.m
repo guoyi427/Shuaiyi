@@ -23,7 +23,7 @@ static const NSString *kPasswordLimit = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkl
 
 static const CGFloat kPageMargin = 15.f;
 static const CGFloat kInputHeight = 44.f;
-static const CGFloat kDividerHeight = 1.f;
+static const CGFloat kDividerHeight = .5f;
 
 @interface PasswordChangeViewController ()
 
@@ -60,7 +60,7 @@ static const CGFloat kDividerHeight = 1.f;
 /**
  * 确定按钮。
  */
-@property (nonatomic, strong) RoundCornersButton *doneButton;
+@property (nonatomic, strong) UIButton *doneButton;
 
 @end
 
@@ -69,27 +69,38 @@ static const CGFloat kDividerHeight = 1.f;
 #pragma mark - View lifecycle methods
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    self.kkzTitleLabel.text = @"修改登录密码";
-
+    
+    self.kkzTitleLabel.text = @"密码设置";
+    
     [self.view addSubview:self.content];
-
+    
+    // 添加背景试图
     [self.content addSubview:self.contentField];
-
-    [self.contentField addSubview:[self dividerWithLeft:0 andTop:0]];
+    // 添加原始密码
+    [self.contentField addSubview:[self createTitleLabel:@"原始密码" andTop:kPageMargin]];
     [self.contentField addSubview:self.oldPasswordField];
-    [self.contentField addSubview:[self dividerWithLeft:kPageMargin andTop:(kDividerHeight + kInputHeight)]];
+    [self.contentField addSubview:[self dividerWithLeft:0 andTop:(kDividerHeight + kInputHeight)]];
+    // 添加新密码
+    [self.contentField addSubview:[self createTitleLabel:@"新密码" andTop:kPageMargin + kInputHeight]];
+    [self.contentField addSubview:[self dividerWithLeft:0 andTop:(kDividerHeight + kInputHeight) * 2]];
     [self.contentField addSubview:self.newPasswordField];
-    [self.contentField addSubview:[self dividerWithLeft:kPageMargin andTop:(kDividerHeight + kInputHeight) * 2]];
+    // 添加验证码
+    [self.contentField addSubview:[self createTitleLabel:@"手机令牌" andTop:(kDividerHeight + kInputHeight) * 2 + kPageMargin]];
     [self.contentField addSubview:self.confirmPasswordField];
-    [self.contentField addSubview:[self dividerWithLeft:0 andTop:(kDividerHeight + kInputHeight) * 3]];
-
+    // 验证码按钮
+    UIButton *getCodeBtn = [[UIButton alloc] initWithFrame:CGRectMake(screentWith - kPageMargin - 80, (kDividerHeight + kInputHeight) * 2 + 5, 80, kInputHeight - 10)];
+    [getCodeBtn setBackgroundImage:[UIImage imageNamed:@"Login_TextField"] forState:UIControlStateNormal];
+    [getCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    [getCodeBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    getCodeBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    [self.contentField addSubview:getCodeBtn];
+    
     [self.content addSubview:self.doneButton];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-
+    
     [self.oldPasswordField becomeFirstResponder];
 }
 
@@ -97,7 +108,7 @@ static const CGFloat kDividerHeight = 1.f;
 - (UIScrollView *)content {
     if (!_content) {
         _content = [[UIScrollView alloc]
-                initWithFrame:CGRectMake(0, self.contentPositionY + 44, screentWith, screentContentHeight - 44)];
+                    initWithFrame:CGRectMake(0, self.contentPositionY + 44, screentWith, screentContentHeight - 44)];
         _content.backgroundColor = HEX(@"#F5F5F5");
         _content.alwaysBounceVertical = YES;
     }
@@ -107,7 +118,7 @@ static const CGFloat kDividerHeight = 1.f;
 - (UIView *)contentField {
     if (!_contentField) {
         CGFloat height = kInputHeight * 3 + kDividerHeight * 4;
-        _contentField = [[UIView alloc] initWithFrame:CGRectMake(0, 15, screentWith, height)];
+        _contentField = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screentWith, height)];
         [_contentField setBackgroundColor:[UIColor whiteColor]];
     }
     return _contentField;
@@ -119,21 +130,28 @@ static const CGFloat kDividerHeight = 1.f;
     return divider;
 }
 
+- (UILabel *)createTitleLabel:(NSString *)title andTop:(CGFloat)top {
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kPageMargin, top, 60, kInputHeight - kPageMargin * 2)];
+    titleLabel.text = title;
+    titleLabel.font = [UIFont boldSystemFontOfSize:13];
+    return titleLabel;
+}
+
 - (KKZTextField *)oldPasswordField {
     if (!_oldPasswordField) {
-        CGFloat width = screentWith - kPageMargin - 8;
-        CGRect frame = CGRectMake(kPageMargin, kDividerHeight, width, kInputHeight);
-
+        CGFloat width = kPageMargin * 2 + 60;
+        CGRect frame = CGRectMake(width, kDividerHeight, screentWith - width, kInputHeight);
+        
         _oldPasswordField = [[KKZTextField alloc] initWithFrame:frame
                                                    andFieldType:KKZTextFieldWithClearAndSecret];
-        _oldPasswordField.placeholder = @"当前登录密码";
+        _oldPasswordField.placeholder = @"请输入原始密码";
         _oldPasswordField.delegate = self;
         _oldPasswordField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _oldPasswordField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _oldPasswordField.autocorrectionType = UITextAutocorrectionTypeNo;
         _oldPasswordField.secureTextEntry = NO;
-        _oldPasswordField.font = [UIFont systemFontOfSize:14];
-        _oldPasswordField.textColor = [UIColor blackColor];
+        _oldPasswordField.font = [UIFont systemFontOfSize:10];
+        _oldPasswordField.textColor = [UIColor grayColor];
         _oldPasswordField.keyboardType = UIKeyboardTypeDefault;
         _oldPasswordField.returnKeyType = UIReturnKeyNext;
         _oldPasswordField.secureTextEntry = YES;
@@ -144,14 +162,14 @@ static const CGFloat kDividerHeight = 1.f;
 - (KKZTextField *)newPasswordField {
     if (!_newPasswordField) {
         CGFloat top = kDividerHeight * 2 + kInputHeight;
-        CGFloat width = screentWith - kPageMargin - 8;
-        CGRect frame = CGRectMake(kPageMargin, top, width, kInputHeight);
-
+        CGFloat width =  kPageMargin * 2 + 60;
+        CGRect frame = CGRectMake(width, top, screentWith - width, kInputHeight);
+        
         _newPasswordField = [[KKZTextField alloc] initWithFrame:frame
                                                    andFieldType:KKZTextFieldWithClearAndSecret];
-        _newPasswordField.placeholder = @"新密码（6-16位字母或数字）";
+        _newPasswordField.placeholder = @"请输入新密码";
         _newPasswordField.delegate = self;
-        _newPasswordField.font = [UIFont systemFontOfSize:14];
+        _newPasswordField.font = [UIFont systemFontOfSize:10];
         _newPasswordField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _newPasswordField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _newPasswordField.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -165,37 +183,34 @@ static const CGFloat kDividerHeight = 1.f;
 - (KKZTextField *)confirmPasswordField {
     if (!_confirmPasswordField) {
         CGFloat top = kDividerHeight * 3 + kInputHeight * 2;
-        CGFloat width = screentWith - kPageMargin - 8;
-        CGRect frame = CGRectMake(kPageMargin, top, width, kInputHeight);
-
+        CGFloat width = kPageMargin * 2 + 60;
+        CGRect frame = CGRectMake(width, top, screentWith - width - kPageMargin - 60, kInputHeight);
+        
         _confirmPasswordField = [[KKZTextField alloc]
-                initWithFrame:frame
-                 andFieldType:KKZTextFieldWithClearAndSecret];
-        _confirmPasswordField.placeholder = @"确认新密码";
+                                 initWithFrame:frame
+                                 andFieldType:KKZTextFieldNormal];
+        _confirmPasswordField.placeholder = @"";
         _confirmPasswordField.delegate = self;
-        _confirmPasswordField.font = [UIFont systemFontOfSize:14];
+        _confirmPasswordField.font = [UIFont systemFontOfSize:10];
         _confirmPasswordField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _confirmPasswordField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _confirmPasswordField.autocorrectionType = UITextAutocorrectionTypeNo;
         _confirmPasswordField.keyboardType = UIKeyboardTypeDefault;
         _confirmPasswordField.returnKeyType = UIReturnKeyDone;
-        _confirmPasswordField.secureTextEntry = YES;
     }
     return _confirmPasswordField;
 }
 
-- (RoundCornersButton *)doneButton {
+- (UIButton *)doneButton {
     if (!_doneButton) {
         CGFloat top = self.contentField.frame.origin.y + self.contentField.frame.size.height + 15;
-        _doneButton = [[RoundCornersButton alloc] initWithFrame:CGRectMake(0, top, screentWith, 45)];
-        _doneButton.enabled = YES;
-        _doneButton.selected = NO;
-        _doneButton.cornerNum = 0;
-        _doneButton.titleName = @"确定修改";
-        _doneButton.titleColor = [UIColor whiteColor];
-        _doneButton.titleFont = [UIFont systemFontOfSize:14];
-        _doneButton.backgroundColor = appDelegate.kkzBlue;
+        _doneButton = [[UIButton alloc] initWithFrame:CGRectMake((screentWith - 45 * 2.26) * 0.5, top, 45 * 2.26, 45)];
+        [_doneButton setBackgroundImage:[UIImage imageNamed:@"Login_ValidCode"] forState:UIControlStateNormal];
+        [_doneButton setTitle:@"确认修改" forState:UIControlStateNormal];
+        [_doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _doneButton.titleLabel.font = [UIFont systemFontOfSize:12];
         [_doneButton addTarget:self action:@selector(changePassword) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentField addSubview:_doneButton];
     }
     return _doneButton;
 }
@@ -218,23 +233,23 @@ static const CGFloat kDividerHeight = 1.f;
         [UIAlertView showAlertView:@"密码至少要6位哦～" buttonText:@"确定" buttonTapped:nil];
         return;
     }
-
+    
     NSString *newPassword = self.newPasswordField.text;
     NSString *confirmPassword = self.confirmPasswordField.text;
     if (![newPassword isEqualToString:confirmPassword]) {
         [UIAlertView showAlertView:@"两次输入的密码不一致" buttonText:@"确定" buttonTapped:nil];
         return;
     }
-
+    
     NSString *oldPassword = self.oldPasswordField.text;
     if ([oldPassword isEqualToString:newPassword]) {
         [UIAlertView showAlertView:@"您"
-                                   @"输入的新密码和当前登录密码一样，请重新输入"
+         @"输入的新密码和当前登录密码一样，请重新输入"
                         buttonText:@"确定"
                       buttonTapped:nil];
         return;
     }
-
+    
     [self dismissKeyBoard]; // 关闭键盘
     
     [KKZUtility showIndicatorWithTitle:@"正在修改密码" atView:self.view];
@@ -247,16 +262,16 @@ static const CGFloat kDividerHeight = 1.f;
                                   password:self.newPasswordField.text
                                       site:SiteTypeKKZ
                                    success:^(UserLogin * _Nullable userLogin) {
-            
-            weak_self.changePassSuccess = TRUE;
-            [weak_self showChangePwd];
-            
-        } failure:^(NSError * _Nullable err) {
-            
-            weak_self.changePassSuccess = FALSE;
-            [weak_self showChangePwd];
-            
-        }];
+                                       
+                                       weak_self.changePassSuccess = TRUE;
+                                       [weak_self showChangePwd];
+                                       
+                                   } failure:^(NSError * _Nullable err) {
+                                       
+                                       weak_self.changePassSuccess = FALSE;
+                                       [weak_self showChangePwd];
+                                       
+                                   }];
         
     } failure:^(NSError * _Nullable err) {
         [KKZUtility hidenIndicator];
@@ -269,11 +284,11 @@ static const CGFloat kDividerHeight = 1.f;
 
 - (void)showChangePwd {
     [KKZUtility hidenIndicator];
-
+    
     [UIAlertView showAlertView:@"密码修改成功"
                     buttonText:@"确定"
                   buttonTapped:^() {
-
+                      
                       if (self.changePassSuccess) {
                           [self popViewControllerAnimated:YES];
                       } else {
@@ -298,14 +313,14 @@ static const CGFloat kDividerHeight = 1.f;
 }
 
 - (BOOL)textField:(UITextField *)textField
-        shouldChangeCharactersInRange:(NSRange)range
-                    replacementString:(NSString *)string {
-
+shouldChangeCharactersInRange:(NSRange)range
+replacementString:(NSString *)string {
+    
     NSInteger length = textField.text.length;
     if (length >= kPasswordMaxLength && string.length > 0) {
         return NO;
     }
-
+    
     NSCharacterSet *cs;
     cs = [[NSCharacterSet characterSetWithCharactersInString:K_PASSWORD_LIMIT] invertedSet];
     NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
@@ -318,3 +333,4 @@ static const CGFloat kDividerHeight = 1.f;
 }
 
 @end
+

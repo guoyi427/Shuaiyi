@@ -14,7 +14,7 @@
 #import "MJRefresh.h"
 #import "Movie.h"
 #import "Order.h"
-#import "OrderDetailViewController.h"
+#import "ZYOrderDetailViewController.h"
 #import "OrderListViewController.h"
 #import "OrderTask.h"
 #import "PayViewController.h"
@@ -243,6 +243,7 @@ typedef void (^finishBlock)();
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     isDisapear = YES;
+    [self resetLoading];
 }
 
 #pragma mark utilities
@@ -277,15 +278,22 @@ typedef void (^finishBlock)();
 - (void) requestOrderList:(NSInteger) page
 {
     OrderRequest *request = [OrderRequest new];
-    
+    __weak typeof(self) weakSelf = self;
     [request requestOrderListAt:page success:^(NSArray * _Nullable orders, BOOL hasMore) {
         
-        [self resetLoading];
-        [self handleQueryOrderTicketsFinishedNotification:orders hasMorw:hasMore];
+        [weakSelf resetLoading];
+        [weakSelf handleQueryOrderTicketsFinishedNotification:orders hasMorw:hasMore];
         
     } failure:^(NSError * _Nullable err) {
         
-        [self resetLoading];
+        [weakSelf resetLoading];
+        
+        if (err.code == 2) {
+            //  找不到对应用户  重新登录
+            [[DataEngine sharedDataEngine] startLoginFinished:^(BOOL succeeded) {
+//                [weakSelf requestOrderList:ticketPage];
+            }];
+        }
         
         [appDelegate showAlertViewForTitle:nil message:err.userInfo[KKZRequestErrorMessageKey] cancelButton:@"确定"];
         
@@ -339,8 +347,6 @@ typedef void (^finishBlock)();
     if (cell == nil) {
         cell = [[OrderTicketCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ticketCell];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
-        cell.delegate = self;
     }
 
     [self configureTicketCell:cell atIndexPath:indexPath];
@@ -377,20 +383,15 @@ typedef void (^finishBlock)();
 
         if ([d second] < 0) {
 
-//            OrderDetailViewController *viewController = [[OrderDetailViewController alloc] init];
+            ZYOrderDetailViewController *viewController = [[ZYOrderDetailViewController alloc] init];
 //            DLog(@"%@", aOrder.orderId);
 //            viewController.isGotoOne = YES;
 //            viewController.orderNo = aOrder.orderId;
 //            viewController.myOrder = aOrder;
 //            viewController.cinemaId = aOrder.plan.cinema.cinemaId.stringValue;
-//
-//            [self.navigationController pushViewController:viewController animated:true];
+            viewController.currentOrder = aOrder;
+            [self.navigationController pushViewController:viewController animated:true];
 //            [self pushViewController:viewController animation:CommonSwitchAnimationBounce];
-            
-            CPOrderDetailViewController *vc = [[CPOrderDetailViewController alloc] init];
-            vc.orderModel = aOrder;
-            vc.isFromChooseSeatView = false;
-            [self.navigationController pushViewController:vc animated:true];
             
             self.indexPathY = indexPath;
             self.orderIdY = aOrder.orderId;
@@ -404,21 +405,17 @@ typedef void (^finishBlock)();
         }
 
     } else {
-//        OrderDetailViewController *viewController = [[OrderDetailViewController alloc] init];
+        ZYOrderDetailViewController *viewController = [[ZYOrderDetailViewController alloc] init];
 //        DLog(@"%@", aOrder.orderId);
 //        viewController.isGotoOne = YES;
 //        viewController.orderNo = aOrder.orderId;
 //        viewController.myOrder = aOrder;
 //        viewController.cinemaId =  aOrder.plan.cinema.cinemaId.stringValue;
-//        [self.navigationController pushViewController:viewController animated:true];
+        viewController.currentOrder = aOrder;
+        [self.navigationController pushViewController:viewController animated:true];
 //        [self pushViewController:viewController animation:CommonSwitchAnimationBounce];
         self.indexPathY = indexPath;
         self.orderIdY = aOrder.orderId;
-        
-        CPOrderDetailViewController *vc = [[CPOrderDetailViewController alloc] init];
-        vc.orderModel = aOrder;
-        vc.isFromChooseSeatView = false;
-        [self.navigationController pushViewController:vc animated:true];
     }
 }
 
@@ -453,6 +450,8 @@ typedef void (^finishBlock)();
     [appDelegate hideIndicator];
     ticketTableLocked = NO;
     [noAlertView removeFromSuperview];
+    [orderTableView headerEndRefreshing];
+    [orderTableView footerEndRefreshing];
 }
 
 - (void)handleQueryOrderTicketsFinishedNotification:(NSArray *)orderList hasMorw:(BOOL)hasMore

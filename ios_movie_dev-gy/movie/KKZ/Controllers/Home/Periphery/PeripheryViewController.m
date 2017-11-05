@@ -50,8 +50,8 @@
 }
 
 - (void)loadNavView {
-    self.navBarView.backgroundColor = appDelegate.kkzBlue;
-    self.statusView.backgroundColor = appDelegate.kkzBlue;
+//    self.navBarView.backgroundColor = appDelegate.kkzBlue;
+//    self.statusView.backgroundColor = appDelegate.kkzBlue;
 
     CGFloat height = peripheryTitleBarHeight;
     UILabel *peripheryTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 0.0, screentWith - 60 - 60, height)];

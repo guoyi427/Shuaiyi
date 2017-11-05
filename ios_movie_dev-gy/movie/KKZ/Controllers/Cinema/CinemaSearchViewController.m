@@ -193,6 +193,7 @@
     ticket.cinemaAddress = cinema.cinemaAddress;
     ticket.cinemaId = cinema.cinemaId;
     ticket.cinemaCloseTicketTime = cinema.closeTicketTime.stringValue;
+    ticket.cinemaDetail = cinema;
     [self pushViewController:ticket
                      animation:CommonSwitchAnimationBounce];
 }

@@ -12,7 +12,13 @@
 #import "UserCenterCell.h"
 
 //  Data
+#import "UserManager.h"
+#import "UserRequest.h"
 
+//  ViewController
+#import "UserCenterMovieViewController.h"
+#import "CouponViewController.h"
+#import "EditUserInfoViewController.h"
 
 @interface UserCenterViewController () <UITableViewDelegate, UITableViewDataSource>
 {
@@ -37,7 +43,7 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _menuTitleList = @[@[@"优惠券", @"兑换码"],@[@"资料修改", @"密码设置"],@[@"关于章鱼电影"]];
+    _menuTitleList = @[@[@"优惠券", @"兑换码"],@[@"资料修改"],@[@"关于章鱼电影", @"注销账号"]];
     
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableView.backgroundColor = appDelegate.kkzLine;
@@ -63,6 +69,8 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     _userImageView = [[UIImageView alloc] init];
     _userImageView.userInteractionEnabled = true;
     [_userImageView sd_setImageWithURL:[NSURL URLWithString:[DataEngine sharedDataEngine].headImg] placeholderImage:[UIImage imageNamed:@"avatarRImg"]];
+    _userImageView.layer.cornerRadius = 32.5;
+    _userImageView.layer.masksToBounds = true;
     [pinkView addSubview:_userImageView];
     [_userImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(15);
@@ -99,6 +107,9 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
         make.height.mas_equalTo(80);
     }];
     
+    UITapGestureRecognizer *tapLeftViewGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRelationViewAction)];
+    [leftBottomView addGestureRecognizer:tapLeftViewGR];
+    
     UIView *rightBottomView = [[UIView alloc] init];
     rightBottomView.backgroundColor = [UIColor whiteColor];
     [_headerView addSubview:rightBottomView];
@@ -107,6 +118,9 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
         make.left.equalTo(_headerView.mas_centerX);
         make.height.equalTo(leftBottomView);
     }];
+    
+    UITapGestureRecognizer *tapRightViewGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapScoreViewAction)];
+    [rightBottomView addGestureRecognizer:tapRightViewGR];
     
     _wantSeeCountLabel = [[UILabel alloc] init];
     _wantSeeCountLabel.textColor = appDelegate.kkzPink;
@@ -160,12 +174,45 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     }];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self loadUserinfo];
+}
+
 - (BOOL)showNavBar {
     return false;
 }
 
 - (BOOL)showBackButton {
     return false;
+}
+
+#pragma mark - Network - Request
+
+- (void)loadUserinfo {
+    UserRequest *request = [[UserRequest alloc] init];
+    [request requestUserDetail:^(User * _Nullable user) {
+        [_userImageView sd_setImageWithURL:[NSURL URLWithString:user.headImg] placeholderImage:[UIImage imageNamed:@"avatarRImg"]];
+        _nickNameLabel.text = user.nickName;
+        _wantSeeCountLabel.text = [NSString stringWithFormat:@"%@", user.loveMovieCount];
+        _scoreCountLabel.text = [NSString stringWithFormat:@"%@", user.pointMovieCount];
+    } failure:^(NSError * _Nullable err) {
+        
+    }];
+}
+
+#pragma mark - UIButton - Action
+
+- (void)tapRelationViewAction {
+    UserCenterMovieViewController *relationVC = [[UserCenterMovieViewController alloc] init];
+    relationVC.type = UserCenterMovieType_WantSee;
+    [self.navigationController pushViewController:relationVC animated:true];
+}
+
+- (void)tapScoreViewAction {
+    UserCenterMovieViewController *scoreVC = [[UserCenterMovieViewController alloc] init];
+    scoreVC.type = UserCenterMovieType_Score;
+    [self.navigationController pushViewController:scoreVC animated:true];
 }
 
 #pragma mark - UITableView - Delegate & Datasource
@@ -191,22 +238,50 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             //  优惠券
-            
+            CouponViewController *vc = [[CouponViewController alloc] init];
+            vc.type = CouponType_coupon;
+            [self.navigationController pushViewController:vc animated:true];
         } else {
             //  兑换码
-            
+            CouponViewController *vc = [[CouponViewController alloc] init];
+            vc.type = CouponType_Redeem;
+            [self.navigationController pushViewController:vc animated:true];
         }
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             //  资料修改
-            
+            EditUserInfoViewController *vc = [[EditUserInfoViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:true];
         } else {
             //  密码设置
             
         }
     } else if (indexPath.section == 2) {
-        //  关于章鱼
-        
+        if (indexPath.row == 0) {
+            //  关于章鱼
+            
+        } else {
+            //  注销账号
+            [UIAlertView showAlertView:@"是否确定注销账号" cancelText:@"取消" cancelTapped:^{
+                
+            } okText:@"确定" okTapped:^{
+                //统计事件：退出登录
+                StatisEvent(EVENT_USER_LOGOUT);
+                
+                [appDelegate signout];
+                
+                _userImageView.image = [UIImage imageNamed:@"avatarRImg"];
+                _nickNameLabel.text = @"";
+                _wantSeeCountLabel.text = @"0";
+                _scoreCountLabel.text = @"0";
+                __weak typeof(self) weakSelf = self;
+                [[UserManager shareInstance] logout:^{
+                } failure:^(NSError * _Nullable err) {
+                    
+                }];
+                [[UserManager shareInstance] gotoLoginControllerFrom:weakSelf];
+            }];
+        }
     }
 }
 

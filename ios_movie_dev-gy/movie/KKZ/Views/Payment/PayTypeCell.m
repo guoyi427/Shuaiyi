@@ -19,23 +19,31 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
 
-        memberCard = [[UIImageView alloc] initWithFrame:CGRectMake(kMarginX, (60 - kIconWith) * 0.5, kIconWith, kIconWith)];
+        memberCard = [[UIImageView alloc] init];
         memberCard.image = [UIImage imageNamed:@""];
         [self addSubview:memberCard];
+        [memberCard mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self);
+            make.left.mas_equalTo(15);
+        }];
 
-        memberTipLabel = [[UILabel alloc] initWithFrame:CGRectMake(kIconWith + kMarginX * 2, 14, screentWith - (kIconWith + kMarginX * 2 + 60), 15)];
+        memberTipLabel = [[UILabel alloc] init];
         memberTipLabel.backgroundColor = [UIColor clearColor];
         memberTipLabel.textColor = [UIColor blackColor];
         memberTipLabel.font = [UIFont systemFontOfSize:14];
         memberTipLabel.text = @"";
         [self addSubview:memberTipLabel];
+        [memberTipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(memberCard.mas_right).offset(15);
+            make.centerY.equalTo(self);
+        }];
 
-        memberSubTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kIconWith + kMarginX * 2, CGRectGetMaxY(memberTipLabel.frame) + 5, screentWith - (kIconWith + kMarginX * 2 + 60), 15)];
-        memberSubTitleLabel.backgroundColor = [UIColor clearColor];
-        memberSubTitleLabel.textColor = [UIColor r:153 g:153 b:153];
-        memberSubTitleLabel.font = [UIFont systemFontOfSize:12];
-        memberSubTitleLabel.text = @"";
-        [self addSubview:memberSubTitleLabel];
+//        memberSubTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kIconWith + kMarginX * 2, CGRectGetMaxY(memberTipLabel.frame) + 5, screentWith - (kIconWith + kMarginX * 2 + 60), 15)];
+//        memberSubTitleLabel.backgroundColor = [UIColor clearColor];
+//        memberSubTitleLabel.textColor = [UIColor r:153 g:153 b:153];
+//        memberSubTitleLabel.font = [UIFont systemFontOfSize:12];
+//        memberSubTitleLabel.text = @"";
+//        [self addSubview:memberSubTitleLabel];
 
         self.balanceNotice = [[UILabel alloc] initWithFrame:CGRectMake(150, CGRectGetMaxY(memberTipLabel.frame) + 5, screentWith - (kIconWith + kMarginX * 2 + 60), 15)];
         self.balanceNotice.backgroundColor = [UIColor clearColor];
@@ -45,9 +53,13 @@
         self.balanceNotice.textAlignment = NSTextAlignmentLeft;
         [self addSubview:self.balanceNotice];
 
-        UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(kMarginX, 60 - 1, screentWith - 15, 1)];
+        UIView *line1 = [[UIView alloc] init];
         line1.backgroundColor = [UIColor r:229 g:229 b:229 alpha:0.8];
         [self addSubview:line1];
+        [line1 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.equalTo(self);
+            make.height.mas_equalTo(0.5);
+        }];
     }
     return self;
 }

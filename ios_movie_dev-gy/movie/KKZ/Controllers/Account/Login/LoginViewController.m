@@ -87,6 +87,8 @@ typedef enum : NSUInteger {
     
     UIButton *_registerButton;
     UIButton *_forgetPassword;
+    
+    UIButton *_sendValidCodeButton;
 }
 
 //滚动条
@@ -191,7 +193,7 @@ typedef enum : NSUInteger {
     [self.view addSubview:self.contentView];
     
     //关闭按钮
-//    [self.contentView addSubview:self.closeButton];
+    [self.contentView addSubview:self.closeButton];
     
     //logo
     [self.contentView addSubview:self.logoImageView];
@@ -226,6 +228,7 @@ typedef enum : NSUInteger {
     
     //  background view
     UIImageView *validBgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Login_TextField"]];
+    validBgView.userInteractionEnabled = true;
     [self.inputContent addSubview:validBgView];
     [validBgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.inputContent);
@@ -245,8 +248,15 @@ typedef enum : NSUInteger {
     [self.validcodeInputField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(validIcon.mas_right).offset(10);
         make.centerY.equalTo(validBgView);
-        make.right.equalTo(validBgView).offset(-20);
+        make.right.equalTo(validBgView).offset(-120);
         make.height.mas_equalTo(44);
+    }];
+    
+    //  验证吗
+    [validBgView addSubview:self.queryValidcodeButton];
+    [self.queryValidcodeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(validBgView);
+        make.centerY.equalTo(validBgView);
     }];
     
     //登录按钮
@@ -256,8 +266,9 @@ typedef enum : NSUInteger {
         make.top.equalTo(validBgView.mas_bottom).offset(10);
     }];
     
-    CGFloat Padding = 30.0f;
+//    CGFloat Padding = 30.0f;
     
+    /*
     //  注册
     _registerButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _registerButton.frame = CGRectMake(Padding, CGRectGetMaxY(self.loginBtn.frame) + 20, 100, 30);
@@ -275,6 +286,7 @@ typedef enum : NSUInteger {
     _forgetPassword.titleLabel.font = _registerButton.titleLabel.font;
     [_forgetPassword addTarget:self action:@selector(forgetPasswordButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_forgetPassword];
+    */
     
     //获取语音验证码按钮
 //    [self.contentView addSubview:self.voiceValidcodeBtn];
@@ -393,13 +405,16 @@ typedef enum : NSUInteger {
         _queryValidcodeButton = [[RoundCornersButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.inputContent.frame) - 96, (mobileTitleHeight - 30) / 2.f + mobileTitleHeight, 96, 30)];
         _queryValidcodeButton.tag = validcodeButtonTag;
         _queryValidcodeButton.enabled = NO;
-        _queryValidcodeButton.backgroundColor = [UIColor clearColor];
-        _queryValidcodeButton.rimWidth = 1;
-        _queryValidcodeButton.rimColor = kValidcodeDisabled;
-        _queryValidcodeButton.cornerNum = 3;
-        _queryValidcodeButton.titleName = @"获取验证码";
-        _queryValidcodeButton.titleColor = kValidcodeDisabled;
-        _queryValidcodeButton.titleFont = [UIFont systemFontOfSize:kText36PX];
+//        _queryValidcodeButton.backgroundColor = [UIColor clearColor];
+//        _queryValidcodeButton.rimWidth = 1;
+//        _queryValidcodeButton.rimColor = kValidcodeDisabled;
+//        _queryValidcodeButton.cornerNum = 3;
+//        _queryValidcodeButton.titleName = @"获取验证码";
+//        _queryValidcodeButton.titleColor = kValidcodeDisabled;
+//        _queryValidcodeButton.titleFont = [UIFont systemFontOfSize:kText36PX];
+        [_queryValidcodeButton setBackgroundImage:[UIImage imageNamed:@"Login_ValidCode"] forState:UIControlStateNormal];
+        [_queryValidcodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+        _queryValidcodeButton.titleLabel.font = [UIFont systemFontOfSize:kText36PX];
         [_queryValidcodeButton addTarget:self
                                   action:@selector(loginMainBtnClick:)
                         forControlEvents:UIControlEventTouchUpInside];
@@ -434,7 +449,7 @@ typedef enum : NSUInteger {
         _validcodeInputField.keyboardDelegate = self;
 //        _validcodeInputField.keyboardType = UIKeyboardTypeNumberPad;
         _validcodeInputField.returnKeyType = UIReturnKeyGo;
-        _validcodeInputField.secureTextEntry = true;
+//        _validcodeInputField.secureTextEntry = true;
         [_validcodeInputField addTarget:self
                                  action:@selector(validcodeTextFieldChanged)
                        forControlEvents:UIControlEventEditingChanged];
@@ -701,7 +716,8 @@ typedef enum : NSUInteger {
 
 - (void)startValidcodeButtonCountdown {
     NSString *titleName = isQueriedSMSValidcode ? [NSString stringWithFormat:@"%d秒后重发", timeCount] : @"获取验证码";
-    self.queryValidcodeButton.titleName = titleName;
+//    self.queryValidcodeButton.titleName = titleName;
+    [self.queryValidcodeButton setTitle:titleName forState:UIControlStateNormal];
     [self.queryValidcodeButton setNeedsDisplay];
     
     NSMutableAttributedString *title = [self setupVoiceValidcodeBtnTitle:NO];
@@ -715,14 +731,18 @@ typedef enum : NSUInteger {
     if (timeCount <= 0) {
         self.queryValidcodeButton.enabled = YES;
         [self.queryValidcodeButton setNeedsDisplay];
-        self.queryValidcodeButton.titleName = @"获取验证码";
+//        self.queryValidcodeButton.titleName = @"获取验证码";
+        [self.queryValidcodeButton setTitle:@"获取验证码"
+                                   forState:UIControlStateNormal];
         [timer invalidate];
         timer = nil;
         [self checkValidcodeButtonEnable];
     }
     else { //倒计时显示
         NSString *titleName = isQueriedSMSValidcode ? [NSString stringWithFormat:@"%d秒后重发", timeCount] : @"获取验证码";
-        self.queryValidcodeButton.titleName = titleName;
+//        self.queryValidcodeButton.titleName = titleName;
+        [self.queryValidcodeButton setTitle:titleName
+                                   forState:UIControlStateNormal];
         [self.queryValidcodeButton setNeedsDisplay];
     }
 }
@@ -751,7 +771,7 @@ typedef enum : NSUInteger {
     NSString *validcodeText = self.validcodeInputField.text;
     [[UserManager shareInstance] login:[self mobile]
                               password:validcodeText
-                                  site:SiteTypeKKZ
+                                  site:SiteTypeKKZValidcode
                                success:^(UserLogin *_Nullable userLogin) {
 
                                    [weak_self handleLoginSucceed];

@@ -695,8 +695,8 @@
         [backBtn setImage:[UIImage imageNamed:@"white_back"] forState:UIControlStateNormal];
 
         //设置导航栏背景色
-        self.navBarView.backgroundColor = appDelegate.kkzBlue;
-        self.statusView.backgroundColor = appDelegate.kkzBlue;
+//        self.navBarView.backgroundColor = appDelegate.kkzBlue;
+//        self.statusView.backgroundColor = appDelegate.kkzBlue;
 
         frame.size.height = 0;
     }

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class Movie;
 @interface MovieListPosterCollectionViewCell : UICollectionViewCell
 
 {
@@ -27,7 +28,7 @@
 @property (nonatomic, assign) BOOL isSale;
 
 @property (nonatomic, copy) NSString *posterImageBackColor ;
-
+@property (nonatomic, strong) Movie *model;
 
 - (void)updateLayout;
 

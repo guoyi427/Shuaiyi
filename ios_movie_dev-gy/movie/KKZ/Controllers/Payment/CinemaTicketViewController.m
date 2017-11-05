@@ -33,6 +33,19 @@
 #import "ChooseSeatViewController.h"
 #import "KoMovie-Swift.h"
 #import "CinemaActivityDetailView.h"
+#import "CinemaDetail.h"
+
+#import <BaiduMapAPI_Base/BMKBaseComponent.h>//引入base相关所有的头文件
+#import <BaiduMapAPI_Map/BMKMapComponent.h>//引入地图功能所有的头文件
+//#import <BaiduMapAPI_Search/BMKSearchComponent.h>//引入检索功能所有的头文件
+//#import <BaiduMapAPI_Cloud/BMKCloudSearchComponent.h>//引入云检索功能所有的头文件
+#import <BaiduMapAPI_Location/BMKLocationComponent.h>//引入定位功能所有的头文件
+#import <BaiduMapAPI_Utils/BMKUtilsComponent.h>//引入计算工具所有的头文件
+//#import <BaiduMapAPI_Radar/BMKRadarComponent.h>//引入周边雷达功能所有的头文件
+#import <BaiduMapAPI_Map/BMKMapView.h>//只引入所需的单个头文件
+#import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
+
 
 /****************收藏按钮*************/
 static const CGFloat collectionButtonRight = 15.0f;
@@ -59,7 +72,12 @@ typedef enum : NSUInteger {
 @interface CinemaTicketViewController () <
         UITableViewDataSource, UITableViewDelegate, CinemHeaderDelegate,
         KKZHorizonTableViewDelegate, CinemaTableViewDelegate,
-        CinemaPlanTableFooterDelegate, CinemaDetailCommonModelDelegate>
+        CinemaPlanTableFooterDelegate, CinemaDetailCommonModelDelegate,BMKLocationServiceDelegate>
+{
+    BMKLocationService* _locService;
+    CLLocationCoordinate2D cc2d;
+    CLLocationCoordinate2D cc3d;
+}
 
 /**
  *  分享按钮
@@ -185,10 +203,6 @@ typedef enum : NSUInteger {
  *  影院特色
  */
 @property (nonatomic, strong) NSArray *features;
-/**
- *  影院详情
- */
-@property (nonatomic, strong) CinemaDetail *cinemaDetail;
 
 @property (nonatomic, strong) ShareContent *share;
 
@@ -242,6 +256,9 @@ typedef enum : NSUInteger {
 
     //请求电影详情
     [self requestCinemaDetail];
+    
+    _locService = [[BMKLocationService alloc]init];
+    _locService.delegate = self;
 }
 
 /**
@@ -275,7 +292,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)loadNavBar {
-    [self.navBarView addSubview:self.collectionButton];
+//    [self.navBarView addSubview:self.collectionButton];
     [self.navBarView addSubview:self.shareButton];
     self.titleLabel.text = self.cinemaName;
     [self.navBarView addSubview:self.titleLabel];
@@ -903,13 +920,63 @@ typedef enum : NSUInteger {
  *  MARK: 点击影院信息
  */
 - (void)didSelectCinemaTitleHeaderView {
+    /*
     NewCinemaDetailViewController *cinema =
             [[NewCinemaDetailViewController alloc] initWithCinema:self.cinemaId.integerValue];
     cinema.cinemaName = self.cinemaName;
     cinema.cinemaDetail = self.cinemaDetail;
     cinema.specilaInfoList = self.features;
     [self pushViewController:cinema animation:CommonSwitchAnimationFlipL];
+     */
+    if (!_cinemaDetail) {
+        return;
+    }
+    cc2d.latitude = [_cinemaDetail.latitude length] ? [_cinemaDetail.latitude doubleValue] : 0.0;
+    cc2d.longitude = [_cinemaDetail.longitude length] ? [_cinemaDetail.longitude doubleValue] : 0.0;
+    
+    BMKOpenPoiNearbyOption *opt = [[BMKOpenPoiNearbyOption alloc] init];
+    opt.appScheme = @"CIASMovie://mapsdk.baidu.com";
+    opt.location = cc2d;
+    opt.keyword = _cinemaDetail.cinemaName;
+    opt.radius = 1000;
+    BMKOpenErrorCode code = [BMKOpenPoi openBaiduMapPoiNearbySearch:opt];
+    DLog(@"BMKOpenErrorCode %d", code);
+    if (code==0 || code==1) {
+        
+    }else
+    {
+        [self showSelfMap];
+    }
 }
+
+- (void)showSelfMap{
+    // 直接调用ios自己带的apple map
+    CLGeocoder *clGeoCoder = [[CLGeocoder alloc] init];
+    [clGeoCoder geocodeAddressString:[_cinemaDetail.address length]?_cinemaDetail.address:_cinemaDetail.cinemaName
+                   completionHandler:^(NSArray *placemarks, NSError *error) {
+                       DLog(@"placemarks===%@", placemarks);
+                       DLog(@"error===%@", error);
+                       
+                       if ([placemarks count]) {
+                           CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                           
+                           CLLocationCoordinate2D coordinate = placemark.location.coordinate;
+                           NSDictionary *address = placemark.addressDictionary;
+                           
+                           // MKPlacemark是地图上的地标类，CLPlacemark是定位使用的地标类
+                           MKPlacemark *place = [[MKPlacemark alloc] initWithCoordinate:coordinate addressDictionary:address];
+                           
+                           MKMapItem *toLocation = [[MKMapItem alloc] initWithPlacemark:place];
+                           toLocation.name = _cinemaDetail.cinemaName;
+                           [toLocation openInMapsWithLaunchOptions:@{MKLaunchOptionsMapSpanKey:@YES}];
+                           
+                       }else{
+                           [UIAlertView showAlertView:@"位置获取错误" buttonText:@"知道了"];
+                       }
+                       
+                   }];
+}
+
 
 - (void)onClickTomorrowEventButton {
     [self.horizonTableView

@@ -140,11 +140,11 @@
     NSMutableDictionary *dicParams = [NSMutableDictionary dictionaryWithCapacity:1];
 
     [dicParams setValue:cityID forKey:@"city_id"];
-    [dicParams setValue:beginDate forKey:@"begin_date"];
-    [dicParams setValue:endDate forKey:@"end_date"];
+//    [dicParams setValue:beginDate forKey:@"begin_date"];
+//    [dicParams setValue:endDate forKey:@"end_date"];
     [dicParams setValue:movieID forKey:@"movie_id"];
 
-    [dicParams setObject:@"cinema_Selfquery" forKey:@"action"];
+    [dicParams setObject:@"cinema_Query" forKey:@"action"];
     NSDictionary *newParams = [KKZBaseRequestParams getDecryptParams:dicParams];
 
     [request GET:kKSSPServer

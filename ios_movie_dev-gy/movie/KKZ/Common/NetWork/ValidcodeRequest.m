@@ -118,7 +118,7 @@
     [para setValue:mobile forKey:@"mobile"];
     [para setValue:@(type) forKey:@"validation_type"];
     [para setValue:@"4" forKey:@"size"];
-    [para setValue:@"12" forKey:@"valid_type"];
+    [para setValue:@"3" forKey:@"valid_type"];  //1 注册，2重置密码，3登陆
     
     NSDictionary *newParams = [KKZBaseRequestParams getDecryptParams:para];
     

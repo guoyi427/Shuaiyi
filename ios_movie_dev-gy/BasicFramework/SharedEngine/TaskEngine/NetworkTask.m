@@ -766,7 +766,9 @@
                                    dictionaryWithObject:resultCurrent
                                                  forKey:kHttpLogicErrorKey]];
             [self finishWithError:tmpError];
-
+              [[DataEngine sharedDataEngine] startLoginFinished:^(BOOL succeeded) {
+                  
+              }];
           } else if (status == -89) {
 
             //                        DLog(@"需要调用图片验证码接口");

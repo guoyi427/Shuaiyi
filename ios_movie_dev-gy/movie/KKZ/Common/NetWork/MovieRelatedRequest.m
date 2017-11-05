@@ -58,11 +58,11 @@
     KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
     
     NSMutableDictionary *dicParams = [NSMutableDictionary dictionaryWithCapacity:0];
-    [dicParams setObject:@"movie_members"  forKey:@"action"];
+    [dicParams setObject:@"star_Query"  forKey:@"action"];
     [dicParams setObject:[NSString stringWithFormat:@"%tu",movieId]  forKey:@"movie_id"];
     NSDictionary *newParams = [KKZBaseRequestParams getDecryptParams:dicParams];
     
-    [request GET:kKSSPDataServer parameters:newParams success:^(id  _Nullable data, id  _Nullable responseObject) {
+    [request GET:kKSSPServer parameters:newParams success:^(id  _Nullable data, id  _Nullable responseObject) {
         if (success) {
             
             NSArray *actors = responseObject[@"members"];

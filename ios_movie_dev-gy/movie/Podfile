@@ -66,6 +66,9 @@ target 'KoMovie' do
     
     pod 'Bugly', '~> 2.4.6'
     
+    #baidu map
+    pod 'BaiduMapKit'
+    
     #kokozu
     pod 'MJRefresh_KKZ', '~> 1.0.1'
     

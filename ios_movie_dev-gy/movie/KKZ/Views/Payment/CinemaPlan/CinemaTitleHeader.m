@@ -72,6 +72,22 @@ static const CGFloat lineViewHeight = 0.3f;
 - (void)didMoveToSuperview {
     [self addSubview:self.titleLabel];
     [self addSubview:self.addressLabel];
+    //  icon
+    UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PlanList_CinemaAddress_icon"]];
+    [self addSubview:icon];
+    [icon mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(cinemaLabelLeft);
+        make.centerY.equalTo(self.addressLabel);
+    }];
+    
+    //  map
+    UIImageView *map = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PlanList_CinemaAddress_map"]];
+    [self addSubview:map];
+    [map mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-cinemaLabelLeft);
+        make.centerY.equalTo(self.addressLabel);
+    }];
+    
     [self addSubview:self.lineView];
 }
 
@@ -173,7 +189,7 @@ static const CGFloat lineViewHeight = 0.3f;
 - (UILabel *)addressLabel {
     if (!_addressLabel) {
         CGFloat titleWidth = kCommonScreenWidth - cinemaLabelLeft * 2;
-        _addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(cinemaLabelLeft, CGRectGetMaxY(self.titleLabel.frame) + addressLabelTop, titleWidth, addressLabelHeight)];
+        _addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(cinemaLabelLeft + 12, CGRectGetMaxY(self.titleLabel.frame) + addressLabelTop, titleWidth, addressLabelHeight)];
         _addressLabel.textColor = [UIColor colorWithHex:@"#999999"];
         _addressLabel.font = [UIFont systemFontOfSize:addressLabelFont];
         _addressLabel.textAlignment = NSTextAlignmentLeft;

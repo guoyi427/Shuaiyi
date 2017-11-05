@@ -208,4 +208,12 @@
                     success:(nullable void (^)(UserLogin *_Nullable user))success
                     failure:(nullable void (^)(NSError *_Nullable err))failure;
 
+- (void)editNickname:(NSString *_Nonnull)nickname
+             success:(nullable void (^)())success
+             failure:(nullable void (^)(NSError *_Nullable err))failure;
+
+- (void)editHeadImage:(UIImage *_Nonnull)image
+              success:(nullable void (^)())success
+              failure:(nullable void (^)(NSError *_Nullable err))failure;
+
 @end

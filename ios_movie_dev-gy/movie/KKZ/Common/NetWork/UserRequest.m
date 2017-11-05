@@ -309,10 +309,15 @@
       parameters:newParams
     resultKeyMap:@{@"user":[User class]}
          success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
-             if (success) {
-                 success([data objectForKey:@"user"]);
+             User *newUser = data[@"user"];
+             if (success && newUser) {
+                 success(newUser);
+                 [[UserManager shareInstance] setUser:newUser];
+                 [DataEngine sharedDataEngine].userName = newUser.nickName;
+                 [DataEngine sharedDataEngine].headImg = newUser.headImg;
+                 [NewLoginViewModel updateLoginModelKey:@"nickName" modelValue:newUser.nickName];
+                 [NewLoginViewModel updateLoginModelKey:@"headimg" modelValue:newUser.headImg];
              }
-             
          } failure:failure];
 
 }
@@ -519,6 +524,53 @@
             [NewLoginViewModel deleteLoginDataFromDataBase];
             [NewLoginViewModel insertLoginDataIntoDataBase:model];
             [[DataEngine sharedDataEngine] setUserDataModel:model];
+        }
+    } failure:failure];
+}
+
+- (void)editNickname:(NSString *_Nonnull)nickname
+             success:(nullable void (^)())success
+             failure:(nullable void (^)(NSError *_Nullable err))failure {
+    
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    NSDictionary *newParams = [KKZBaseRequestParams getDecryptParams:@{
+                                                                       @"action": @"user_Update",
+                                                                       @"nick_name": nickname
+                                                                       }];
+    [request POST:kKSSPServer parameters:newParams resultClass:nil success:^(id  _Nullable data, id  _Nullable responseObject) {
+        if (success) {
+            success();
+        }
+    } failure:failure];
+}
+
+- (void)editHeadImage:(UIImage *_Nonnull)image
+              success:(nullable void (^)())success
+              failure:(nullable void (^)(NSError *_Nullable err))failure {
+    
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.7);
+    if (imageData == nil) {
+        return;
+    }
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    NSMutableDictionary *dicParams = [NSMutableDictionary dictionaryWithCapacity:5];
+    [dicParams setValue:@"user_Update" forKey:@"action"];
+    [dicParams setValue:imageData forKey:@"head_image"];
+    NSDictionary *newParams = [KKZBaseRequestParams getDecryptParams:dicParams];
+    
+//    [request upload:kKSSPServer parameters:newParams fromData:^(id<AFMultipartFormData>  _Nonnull formData) {
+//        if (imageData) {
+//            [formData appendPartWithFileData:imageData name:@"head_img" fileName:@"file.jpg" mimeType:@"image/jpeg"];
+//        }
+//    } resultClass:nil success:^(id  _Nullable data, id  _Nullable responseObject) {
+//        if (success) {
+//            success();
+//        }
+//    } failure:failure];
+    
+    [request POST:kKSSPServer parameters:newParams resultClass:nil success:^(id  _Nullable data, id  _Nullable responseObject) {
+        if (success) {
+            success();
         }
     } failure:failure];
 }

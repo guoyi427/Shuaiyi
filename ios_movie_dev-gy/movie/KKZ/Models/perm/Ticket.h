@@ -63,7 +63,6 @@ PlatForm KKZPlateform(NSNumber *);
 @property (nonatomic, copy) NSNumber * vipPrice;   // 抠电影价格
 
 
-
 @property (nonatomic, copy) NSString * seatUrl;//html跳转界面的选座，根据platform
 @property (nonatomic, copy) NSNumber * promotionId;
 @property (nonatomic, copy) NSString * promotionPrice;

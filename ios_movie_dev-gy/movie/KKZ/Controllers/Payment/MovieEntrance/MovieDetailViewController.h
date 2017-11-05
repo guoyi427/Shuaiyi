@@ -130,9 +130,12 @@
 @property (nonatomic, copy) NSString *urlStr;
 
 
-@property (nonatomic,assign) BOOL has3D;
+@property (nonatomic, assign) BOOL has3D;
 @property (nonatomic, assign) BOOL hasImax;//IMAX
-
+/**
+ 是否为 即将上映
+ */
+@property (nonatomic, assign) BOOL isCommingSoon;
 
 - (id)initCinemaListForMovie:(NSNumber *)movieId;
 

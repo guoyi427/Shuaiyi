@@ -211,10 +211,11 @@
     timeLabel.text = [NSString stringWithFormat:@"%@", movieTime];
 
     if ([self.orderStateY isEqual:@1]) {
+        /*
         timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(beforeActivityMethod:) userInfo:nil repeats:YES];
         timeCountdownLabel.hidden = NO;
         timeTipLabel.hidden = NO;
-
+         */
         
         _stateLabel.text = @"待支付";
         _stateImageView.image = [UIImage imageNamed:@"OrderList_gray"];

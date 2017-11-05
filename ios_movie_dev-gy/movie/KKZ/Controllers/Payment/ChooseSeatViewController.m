@@ -1068,7 +1068,7 @@ const int K_MAX_SELECTED_SEAT = 4;
                                 andAutoHide:NO];
         
         OrderRequest *request = [OrderRequest new];
-        [request addTicketOrder:nil seatNO:[self selectedSeatIds]
+        [request addTicketOrder:[DataEngine sharedDataEngine].phoneNum seatNO:[self selectedSeatIds]
                        seatInfo:[self selectedSeatInfos]
                          planID:self.plan.planId
                      activityID:self.activityId
@@ -1272,7 +1272,7 @@ const int K_MAX_SELECTED_SEAT = 4;
 
 // 配置导航栏
 - (void)settingNavView {
-    [self.navBarView setBackgroundColor:navBackgroundColor];
+//    [self.navBarView setBackgroundColor:navBackgroundColor];
     [self.kkzBackBtn setImage:[UIImage imageNamed:@"backButtonImg"] forState:UIControlStateNormal];
     self.kkzTitleLabel.textColor = [UIColor whiteColor];
 }

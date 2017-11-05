@@ -34,7 +34,7 @@
 #import <MJRefresh_KKZ/UIScrollView+MJExtension.h>
 
 /****************影院排期列表的高度********************/
-const static CGFloat cinemaPlanHeight = 47.0f;
+const static CGFloat cinemaPlanHeight = 0;//47.0f;
 
 @interface MovieCinemaListController () <
         KKZHorizonTableViewDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
@@ -225,8 +225,8 @@ const static CGFloat cinemaPlanHeight = 47.0f;
  */
 - (void)addNavView {
     //设置导航栏背景色
-    self.navBarView.backgroundColor = appDelegate.kkzBlue;
-    self.statusView.backgroundColor = appDelegate.kkzBlue;
+//    self.navBarView.backgroundColor = appDelegate.kkzBlue;
+//    self.statusView.backgroundColor = appDelegate.kkzBlue;
 
     //标题
     self.kkzTitleLabel.text = self.movie.movieName;
@@ -854,6 +854,7 @@ const static CGFloat cinemaPlanHeight = 47.0f;
     ticket.movieId = self.movieId;
     ticket.initialSelectedDate = [NSString stringWithFormat:@"%@", self.planDate];
     ticket.cinemaCloseTicketTime = cinema.closeTicketTime.stringValue;
+    ticket.cinemaDetail = cinema;
     [parentCtr pushViewController:ticket animation:CommonSwitchAnimationBounce];
 }
 

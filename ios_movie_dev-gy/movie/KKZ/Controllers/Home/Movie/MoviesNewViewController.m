@@ -285,7 +285,7 @@
     UIButton *gotoMovieBtn2 = [UIButton buttonWithType:UIButtonTypeCustom];
     gotoMovieBtn2.backgroundColor = [UIColor clearColor];
     [_movieListContentView addSubview:gotoMovieBtn2];
-    [gotoMovieBtn2 addTarget:self action:@selector(gotoMovieListBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [gotoMovieBtn2 addTarget:self action:@selector(gotoMovieListBtnAction2) forControlEvents:UIControlEventTouchUpInside];
     [gotoMovieBtn2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(@(0));
         make.centerY.equalTo(yellowView2);
@@ -485,17 +485,17 @@
  */
 - (void)loadNavBar {
     //设置导航栏背景色
-    self.navBarView.backgroundColor = appDelegate.kkzBlack;
-    self.statusView.backgroundColor = appDelegate.kkzBlack;
+//    self.navBarView.backgroundColor = appDelegate.kkzBlack;
+//    self.statusView.backgroundColor = appDelegate.kkzBlack;
 
     //左边定位城市的展示
     [self.navBarView addSubview:self.locationView];
-
+    self.kkzTitleLabel.text = @"章鱼";
     // 搜索View
-    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.locationView.frame), 5, kAppScreenWidth - CGRectGetMaxX(self.locationView.frame) - 44, CGRectGetHeight(self.navBarView.frame) - 10)];
-    searchView.backgroundColor = [UIColor whiteColor];
-
-    [self.navBarView addSubview:searchView];
+//    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.locationView.frame), 5, kAppScreenWidth - CGRectGetMaxX(self.locationView.frame) - 44, CGRectGetHeight(self.navBarView.frame) - 10)];
+//    searchView.backgroundColor = [UIColor whiteColor];
+//
+//    [self.navBarView addSubview:searchView];
 }
 
 - (void)showAlertView {
@@ -667,7 +667,7 @@
 }
 
 - (BOOL)showTitleBar {
-    return NO;
+    return true;
 }
 
 - (BOOL)showBackButton {
@@ -705,8 +705,20 @@
     return _ticketRemindBtn;
 }
 
+/**
+ 跳转到热映列表
+ */
 - (void)gotoMovieListBtnAction {
-    
+    [appDelegate setSelectedPage:1 tabBar:true];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateHomeNotifi" object:nil userInfo:@{@"index":@0}];
+}
+
+/**
+ 跳转到即将上映列表
+ */
+- (void)gotoMovieListBtnAction2 {
+    [appDelegate setSelectedPage:1 tabBar:true];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateHomeNotifi" object:nil userInfo:@{@"index":@1}];
 }
 
 #pragma mark - UICollectionView Delegate & Datasource
@@ -757,9 +769,10 @@
             cell.movieName = movie.movieName;
             cell.imageUrl = movie.pathVerticalS;
             cell.point = movie.score;
-            cell.availableScreenType = movie.movieType;
+            cell.availableScreenType = [NSString stringWithFormat:@" %@ %@", movie.hasImax?@"IMAX":@"", movie.has3D?@"3D ":@""];
             cell.isSale = true;
             cell.isPresell = false;
+            cell.model = movie;
             [cell updateLayout];
         }
         
@@ -778,9 +791,10 @@
             cell.movieName = movie.movieName;
             cell.imageUrl = movie.pathVerticalS;
             cell.point = movie.score;
-            cell.availableScreenType = movie.movieType;
+            cell.availableScreenType = [NSString stringWithFormat:@" %@ %@", movie.hasImax?@"IMAX":@"", movie.has3D?@"3D ":@""];
             cell.isSale = false;
-            cell.isPresell = true;
+            cell.isPresell = true;//movie.hasPlan;
+            cell.model = movie;
             [cell updateLayout];
         }
         return cell;
@@ -793,12 +807,14 @@
     if (collectionView == _currentMovieCollectionView) {
         Movie *movie = [_currentMovieList objectAtIndex:indexPath.row];
         MovieDetailViewController *ctr = [[MovieDetailViewController alloc] initCinemaListForMovie:movie.movieId];
+        ctr.isCommingSoon = false;
         MovieListPosterCollectionViewCell *cell = (MovieListPosterCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
         self.sf_targetView = cell.moviePosterImage;
         [self.navigationController pushViewController:ctr animated:YES];
     } else if (collectionView == _futureMovieCollectionView) {
         Movie *movie = [_futureMovieList objectAtIndex:indexPath.row];
         MovieDetailViewController *ctr = [[MovieDetailViewController alloc] initCinemaListForMovie:movie.movieId];
+        ctr.isCommingSoon = true;
         MovieListPosterCollectionViewCell *cell = (MovieListPosterCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
         self.sf_targetView = cell.moviePosterImage;
         [self.navigationController pushViewController:ctr animated:YES];

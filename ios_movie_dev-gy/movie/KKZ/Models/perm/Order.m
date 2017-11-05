@@ -111,6 +111,36 @@
     return nil;
 }
 
+- (NSString *)readableSeatInfosZY {
+    if ([self.seatInfo length]) {
+        NSArray *seats = [self.seatInfo componentsSeparatedByString:@","];
+        NSMutableString *seatDesc = [[NSMutableString alloc] init];
+        NSInteger index = 0;
+        for (NSString *seatStr in seats) {
+            if (index == 2) {
+                [seatDesc appendString:@"\n"];
+            }
+            NSArray *seatInfo = [seatStr componentsSeparatedByString:@"_"];
+            if ([seatInfo count] == 3) {
+                [seatDesc appendString:[seatInfo objectAtIndex:1]];
+                [seatDesc appendString:@"排"];
+                [seatDesc appendString:[seatInfo objectAtIndex:2]];
+                [seatDesc appendString:@"座"];
+                [seatDesc appendString:@" "];
+            } else if ([seatInfo count] == 2) {
+                [seatDesc appendString:[seatInfo objectAtIndex:0]];
+                [seatDesc appendString:@"排"];
+                [seatDesc appendString:[seatInfo objectAtIndex:1]];
+                [seatDesc appendString:@"座"];
+                [seatDesc appendString:@" "];
+            }
+            index ++;
+        }
+        return seatDesc;
+    }
+    return nil;
+}
+
 - (NSString *)orderStateDesc {
     OrderState state = (OrderState)[self.orderStatus intValue];
     switch (state) {
@@ -130,6 +160,10 @@
 
 - (NSString *)movieTimeDesc {
     return [[DateEngine sharedDateEngine] stringFromDate:self.plan.movieTime withFormat:@"yyyy年M月d日 HH:mm"];
+}
+
+- (NSString *)movieTimeDescWithFormat:(NSString *)format {
+    return [[DateEngine sharedDateEngine] stringFromDate:self.plan.movieTime withFormat:format];
 }
 
 - (CGFloat)moneyToPay {

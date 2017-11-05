@@ -39,7 +39,7 @@
     UIButton *seatBtn;
     float sliderH;
 
-    UITextField *telephoneField;
+//    UITextField *telephoneField;
 
     UIView *backgroundView;
     UILabel *moneyNeedPayLabel;

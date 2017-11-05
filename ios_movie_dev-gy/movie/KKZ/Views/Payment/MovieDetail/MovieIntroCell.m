@@ -45,6 +45,10 @@ static const CGFloat kMarginX = 15;
         unfoldLbl.textColor = appDelegate.kkzBlue;
         [self addSubview:unfoldLbl];
 
+        UIView *topline = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kAppScreenWidth, 5)];
+        topline.backgroundColor = [UIColor r:229 g:229 b:229 alpha:0.8];
+        [self addSubview:topline];
+        
         line = [[UIView alloc] initWithFrame:CGRectZero];
         line.backgroundColor = [UIColor r:229 g:229 b:229 alpha:0.8];
         [self addSubview:line];

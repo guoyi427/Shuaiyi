@@ -13,6 +13,7 @@
 #import "OrderTask.h"
 #import "PayTask.h"
 #import "TaskQueue.h"
+#import "MovieRequest.h"
 
 #import "Cinema.h"
 #import "Coupon.h"
@@ -33,6 +34,9 @@
 #import "WXApi.h"
 #import <AlipaySDK/AlipaySDK.h>
 
+#import "PaySecondViewController.h"
+#import "CouponViewController.h"
+
 //锁座有效时间
 #define kLockSeatLastTime 480
 #define kLockSeatWarningTime 60
@@ -43,7 +47,14 @@
 #define kTextSizeTicketInfo 13 // 影票其他信息的字体大小
 
 @interface PayViewController ()
-
+{
+    UILabel *_couponCountLabel;
+    UILabel *_couponCountLabel2;
+    UILabel *_couponNullLabel;
+    UILabel *_couponNullLabel2;
+    UIImageView *_couponArrowView;
+    UIImageView *_couponArrowView2;
+}
 - (void)updateLayout;
 - (void)cancelViewController;
 
@@ -100,19 +111,17 @@
     Movie *movie = self.myOrder.plan.movie;
 
     //支付剩余时间的现实
+    UIView *timerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screentWith, 44)];
 
-    UIView *timerView = [[UIView alloc] initWithFrame:CGRectMake(0, 44 + self.contentPositionY, screentWith, 30)];
-    [timerView setBackgroundColor:[UIColor r:255 g:248 b:208]];
-
-    UILabel *timerTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screentWith * 0.5 + 10, 30)];
-    timerTitle.text = @"支付剩余时间";
-    timerTitle.textColor = [UIColor r:153 g:153 b:153];
+    UILabel *timerTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screentWith * 0.5 + 10, 44)];
+    timerTitle.text = @"距离完成支付还有";
+    timerTitle.textColor = [UIColor r:242 g:101 b:34];
     timerTitle.font = [UIFont systemFontOfSize:13];
     timerTitle.textAlignment = NSTextAlignmentRight;
     [timerTitle setBackgroundColor:[UIColor clearColor]];
     [timerView addSubview:timerTitle];
 
-    timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(screentWith * 0.5 + 20, 0.0, screentWith * 0.5 - 20, 30)];
+    timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(screentWith * 0.5 + 20, 0.0, screentWith * 0.5 - 20, 44)];
     timerLabel.font = [UIFont systemFontOfSize:14];
     timerLabel.textColor = [UIColor r:242 g:101 b:34];
     timerLabel.backgroundColor = [UIColor clearColor];
@@ -120,23 +129,22 @@
     timerLabel.text = @"";
     [timerView addSubview:timerLabel];
 
-    [self.view addSubview:timerView];
+    [holder addSubview:timerView];
 
     /*Ticket详情*/
     sliderH = 126;
     Ticket *plan = self.myOrder.plan;
 
-    UIView *infoView = [[UIView alloc] initWithFrame:CGRectMake(0, 30, screentWith, 116)];
-
-    infoView.backgroundColor = [UIColor whiteColor];
+    UIImageView *infoView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 44, screentWith-30, 275)];
+    infoView.image = [[UIImage imageNamed:@"Pay_TickBackground"] resizableImageWithCapInsets:UIEdgeInsetsMake(200, 30, 30, 30)];
     [holder addSubview:infoView];
 
-    UIImage *imgTicketBottom = [UIImage imageNamed:@"ticketPageBottom"];
-    UIImageView *imgTicketBottomV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 116 - 20 + CGRectGetMaxY(timerLabel.frame), screentWith, 30)];
-    imgTicketBottomV.image = imgTicketBottom;
-    [holder insertSubview:imgTicketBottomV belowSubview:infoView];
+//    UIImage *imgTicketBottom = [UIImage imageNamed:@"ticketPageBottom"];
+//    UIImageView *imgTicketBottomV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 116 - 20 + CGRectGetMaxY(timerLabel.frame), screentWith, 30)];
+//    imgTicketBottomV.image = imgTicketBottom;
+//    [holder insertSubview:imgTicketBottomV belowSubview:infoView];
 
-    CGFloat positY = 15;
+    CGFloat positY = 20;
 
     movieNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, positY, screentWith - 15 * 2, kTextSizeMovieName)];
     movieNameLabel.backgroundColor = [UIColor clearColor];
@@ -144,119 +152,173 @@
     movieNameLabel.font = [UIFont systemFontOfSize:kTextSizeMovieName];
     movieNameLabel.text = [NSString stringWithFormat:@"%@", movie.movieName];
     [infoView addSubview:movieNameLabel];
+    
+    //  电影类型
+    UILabel *screenTypeAndLanguageLabel = [[UILabel alloc] init];
+    screenTypeAndLanguageLabel.font = [UIFont systemFontOfSize:kTextSizeTicketInfo];
+    screenTypeAndLanguageLabel.textColor = appDelegate.kkzGray;
+    screenTypeAndLanguageLabel.text = [NSString stringWithFormat:@"%@ %@",
+                                       self.myOrder.plan.screenType ? plan.screenType : @"",
+                                       plan.language ? plan.language : @""];
+    [infoView addSubview:screenTypeAndLanguageLabel];
+    [screenTypeAndLanguageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-15);
+        make.centerY.equalTo(movieNameLabel);
+    }];
 
     positY += 13 + kTextSizeMovieName;
 
-    UILabel *startTime = [[UILabel alloc] initWithFrame:CGRectMake(15, positY, 35, kTextSizeTicketInfo)];
-    startTime.backgroundColor = [UIColor clearColor];
+    //  时间
+    UILabel *startTime = [[UILabel alloc] init];
     startTime.textAlignment = NSTextAlignmentLeft;
     startTime.textColor = [UIColor lightGrayColor];
     startTime.font = [UIFont systemFontOfSize:kTextSizeTicketInfo];
-    startTime.text = @"场次  ";
+    startTime.text = @"时间";
     [infoView addSubview:startTime];
+    [startTime mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(15);
+        make.top.mas_equalTo(67);
+    }];
 
-    startTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(52, positY, screentWith - 15 * 2, kTextSizeTicketInfo)];
+    startTimeLabel = [[UILabel alloc] init];
     startTimeLabel.backgroundColor = [UIColor clearColor];
     startTimeLabel.textColor = [UIColor blackColor];
     startTimeLabel.font = [UIFont systemFontOfSize:kTextSizeTicketInfo];
-    startTimeLabel.text = [NSString stringWithFormat:@"%@ %@%@", [self.myOrder movieTimeDesc], plan.language ? plan.language : @"", self.myOrder.plan.screenType ? plan.screenType : @""];
+    startTimeLabel.numberOfLines = 2;
+    startTimeLabel.text = [NSString stringWithFormat:@"%@\n%@",
+                           [self.myOrder movieTimeDescWithFormat:@"M月d日"],
+                           [self.myOrder movieTimeDescWithFormat:@"HH:mm"]];
     [infoView addSubview:startTimeLabel];
+    [startTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(startTime);
+        make.top.equalTo(startTime.mas_bottom).offset(8);
+    }];
 
     positY += 10 + kTextSizeTicketInfo;
-
-    UILabel *cinemaName = [[UILabel alloc] initWithFrame:CGRectMake(15, positY, 35, kTextSizeTicketInfo)];
+    // 影厅
+    UILabel *cinemaName = [[UILabel alloc] init];
     cinemaName.backgroundColor = [UIColor clearColor];
     cinemaName.textAlignment = NSTextAlignmentLeft;
     cinemaName.textColor = [UIColor lightGrayColor];
     cinemaName.font = [UIFont systemFontOfSize:kTextSizeTicketInfo];
-    cinemaName.text = @"影院  ";
+    cinemaName.text = @"影厅";
     [infoView addSubview:cinemaName];
 
-    cinemaNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(52, positY, screentWith - 25 - cinemaName.frame.size.width, kTextSizeTicketInfo)];
+    cinemaNameLabel = [[UILabel alloc] init];
     cinemaNameLabel.backgroundColor = [UIColor clearColor];
     cinemaNameLabel.textColor = [UIColor blackColor];
     cinemaNameLabel.font = [UIFont systemFontOfSize:kTextSizeTicketInfo];
-    cinemaNameLabel.text = [NSString stringWithFormat:@"%@ %@", cinema.cinemaName, plan.hallName];
+    cinemaNameLabel.text = [NSString stringWithFormat:@"%@", plan.hallName];
     [infoView addSubview:cinemaNameLabel];
 
     positY += 10 + kTextSizeTicketInfo;
-
-    UILabel *seatLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, positY, 80, kTextSizeTicketInfo)];
+    //  座位
+    UILabel *seatLabel = [[UILabel alloc] init];
     seatLabel.backgroundColor = [UIColor clearColor];
     seatLabel.textColor = [UIColor lightGrayColor];
     seatLabel.font = [UIFont systemFontOfSize:kTextSizeTicketInfo];
-    seatLabel.text = @"座位  ";
+    seatLabel.text = @"座位";
     [infoView addSubview:seatLabel];
 
-    seatInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(52, positY, screentWith - 52 - 15, kTextSizeTicketInfo)];
+    seatInfoLabel = [[UILabel alloc] init];
     seatInfoLabel.backgroundColor = [UIColor clearColor];
     seatInfoLabel.textColor = [UIColor blackColor];
-    seatInfoLabel.numberOfLines = 0;
+    seatInfoLabel.numberOfLines = 2;
     seatInfoLabel.font = [UIFont systemFontOfSize:kTextSizeTicketInfo];
-    seatInfoLabel.text = [NSString stringWithFormat:@"%@", [self.myOrder readableSeatInfos]];
+    seatInfoLabel.text = [NSString stringWithFormat:@"%@", [self.myOrder readableSeatInfosZY]];
     [infoView addSubview:seatInfoLabel];
+    [seatInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-15);
+        make.width.mas_lessThanOrEqualTo(120);
+        make.top.equalTo(cinemaNameLabel);
+    }];
+    
+    [seatLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(seatInfoLabel);
+        make.centerY.equalTo(cinemaName);
+    }];
+    
+    [cinemaNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(seatInfoLabel.mas_left).offset(-30);
+        make.top.equalTo(startTimeLabel);
+    }];
+    
+    [cinemaName mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(cinemaNameLabel);
+        make.centerY.equalTo(startTime);
+    }];
+    
+    //  影院名称
+    UILabel *cinemaAllNameLabel = [[UILabel alloc] init];
+    cinemaAllNameLabel.font = [UIFont systemFontOfSize:kTextSizeMovieName];
+    cinemaAllNameLabel.textColor = [UIColor blackColor];
+    cinemaAllNameLabel.text = plan.cinema.cinemaName;
+    [infoView addSubview:cinemaAllNameLabel];
+    [cinemaAllNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(162);
+        make.left.mas_equalTo(15);
+    }];
+    
+    //  地址
+    UILabel *addressLabel = [[UILabel alloc] init];
+    addressLabel.font = [UIFont systemFontOfSize:kTextSizeTicketInfo];
+    addressLabel.textColor = [UIColor lightGrayColor];
+    addressLabel.text = plan.cinema.cinemaAddress;
+    [infoView addSubview:addressLabel];
+    [addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(cinemaAllNameLabel);
+        make.right.mas_equalTo(-80);
+        make.top.equalTo(cinemaAllNameLabel.mas_bottom).offset(10);
+    }];
+    
+    //  距离
+    UILabel *locationLabel = [[UILabel alloc] init];
+    locationLabel.font = [UIFont systemFontOfSize:kTextSizeTicketInfo];
+    locationLabel.textColor = [UIColor lightGrayColor];
+    if (plan.cinema.distanceMetres.integerValue < 1000) {
+        locationLabel.text = [NSString stringWithFormat:@"%ldm", plan.cinema.distanceMetres.integerValue];
+    } else {
+        locationLabel.text = [NSString stringWithFormat:@"%.1fkm", plan.cinema.distanceMetres.integerValue / 1000.f];
+    }
+    [infoView addSubview:locationLabel];
+    [locationLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-15);
+        make.centerY.equalTo(addressLabel);
+    }];
+    
+    UIImageView *locationIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"OrderDetail_location"]];
+    [infoView addSubview:locationIcon];
+    [locationIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(locationLabel);
+        make.right.equalTo(locationLabel.mas_left).offset(-5);
+    }];
+    
+    //  手机号
+    phoneView = [[UIView alloc] init];
+    phoneView.backgroundColor = appDelegate.kkzLine;
+    phoneView.layer.cornerRadius = 5;
+    phoneView.layer.masksToBounds = true;
+    [infoView addSubview:phoneView];
+    [phoneView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(-20);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
+        make.height.mas_equalTo(33);
+    }];
 
-    phoneView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(infoView.frame) + 10, screentWith, 88)];
-    phoneView.backgroundColor = [UIColor clearColor];
-    [holder addSubview:phoneView];
-
-    telephoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 5, 100, 33)];
+    telephoneLabel = [[UILabel alloc] init];
     telephoneLabel.backgroundColor = [UIColor clearColor];
-    telephoneLabel.textColor = [UIColor r:153 g:153 b:153];
+    telephoneLabel.textColor = [UIColor lightGrayColor];
     telephoneLabel.font = [UIFont systemFontOfSize:14];
-    telephoneLabel.text = [NSString stringWithFormat:@"购票手机号码："];
+    telephoneLabel.text = [DataEngine sharedDataEngine].phoneNum;
     [phoneView addSubview:telephoneLabel];
-
-    UIView *telephoneBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 38, screentWith, 50)];
-    telephoneBgView.backgroundColor = [UIColor whiteColor];
-    [phoneView addSubview:telephoneBgView];
-
-    telephoneField = [[UITextField alloc] initWithFrame:CGRectMake(15, 38, screentWith - 15 * 2, 50)];
-    telephoneField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    telephoneField.backgroundColor = [UIColor clearColor];
-    telephoneField.placeholder = @"请输入手机号";
-    telephoneField.textColor = [UIColor blackColor];
-//    telephoneField.enabled = NO;
-
-    telephoneField.delegate = self;
-    telephoneField.keyboardType = UIKeyboardTypeNumberPad;
-    telephoneField.font = [UIFont systemFontOfSize:13];
+    [telephoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(phoneView);
+    }];
     
-    UIToolbar *topView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, screentWith, 30)];
-    
-    [topView setBarStyle:UIBarStyleDefault];
-    
-    UIBarButtonItem *btnSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    
-    UIButton *btnToolBar = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    btnToolBar.frame = CGRectMake(2, 5, 50, 30);
-    
-    [btnToolBar addTarget:self action:@selector(dismissKeyBoard) forControlEvents:UIControlEventTouchUpInside];
-    
-    [btnToolBar setTitle:@"完成" forState:UIControlStateNormal];
-    
-    [btnToolBar setTitleColor:appDelegate.kkzBlue forState:UIControlStateNormal];
-    
-    UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithCustomView:btnToolBar];
-    
-    NSArray *buttonsArray = [NSArray arrayWithObjects:btnSpace, doneBtn, nil];
-    
-    [topView setItems:buttonsArray];
-    
-    [telephoneField setInputAccessoryView:topView];
-
-    [phoneView addSubview:telephoneField];
-
-    UIImage *img = [UIImage imageNamed:@"editPhoneNum"];
-    UIImageView *editMobileV = [[UIImageView alloc] initWithFrame:CGRectMake(screentWith - 16 - 15 * 2, (50 - 17) * 0.5, 16, 17)];
-    editMobileV.image = img;
-    editMobileV.userInteractionEnabled = NO;
-    [telephoneField addSubview:editMobileV];
     
     //支付方式列表
     payView = [[PayView alloc] init];
-    payView.frame = CGRectMake(0, CGRectGetMaxY(phoneView.frame), screentWith, 500);
     payView.delegate = self;
     payView.orderNo = self.orderNo;
     payView.hasOrderExpired = NO;
@@ -265,8 +327,12 @@
     [payView doRedCouponTask];
     [payView doRedAccountsTask];
     [payView doPayTypeTask];
-
-    [holder addSubview:payView];
+//    [holder addSubview:payView];
+//    [payView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.right.equalTo(holder);
+//        make.top.equalTo(infoView.mas_bottom).offset(5);
+//        make.height.mas_equalTo(500);
+//    }];
 
     __weak typeof(self) weakSelf = self;
 
@@ -313,7 +379,201 @@
         }
 
     };
-
+    
+    //  影票
+    UIView *ticketPriceView = [[UIView alloc] init];
+    ticketPriceView.backgroundColor = [UIColor whiteColor];
+    [holder addSubview:ticketPriceView];
+    [ticketPriceView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.width.equalTo(holder);
+        make.height.mas_equalTo(72);
+        make.top.equalTo(infoView.mas_bottom).offset(5);
+    }];
+    
+    UILabel *ticketTitleLabel = [[UILabel alloc] init];
+    ticketTitleLabel.text = @"影票";
+    ticketTitleLabel.font = [UIFont systemFontOfSize:14];
+    ticketTitleLabel.textColor = appDelegate.kkzGray;
+    [ticketPriceView addSubview:ticketTitleLabel];
+    [ticketTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(15);
+        make.top.mas_equalTo(20);
+    }];
+    
+    UILabel *priceLabel = [[UILabel alloc] init];
+    priceLabel.textColor = [UIColor blackColor];
+    priceLabel.text = [NSString stringWithFormat:@"￥%.2fx%ld",
+                       [self.myOrder.unitPrice floatValue], self.myOrder.count.integerValue];
+    priceLabel.font = [UIFont systemFontOfSize:16];
+    [ticketPriceView addSubview:priceLabel];
+    [priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(100);
+        make.centerY.equalTo(ticketTitleLabel);
+    }];
+    
+    UILabel *sumPriceLabel = [[UILabel alloc] init];
+    sumPriceLabel.textColor = [UIColor blackColor];
+    sumPriceLabel.text = [NSString stringWithFormat:@"小计：￥%.2f",
+                          [self.myOrder.unitPrice floatValue] * self.myOrder.count.integerValue];
+    sumPriceLabel.font = [UIFont systemFontOfSize:16];
+    [ticketPriceView addSubview:sumPriceLabel];
+    [sumPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-15);
+        make.centerY.equalTo(ticketTitleLabel);
+    }];
+    
+    UILabel *priceAlertLabel = [[UILabel alloc] init];
+    priceAlertLabel.textColor = appDelegate.kkzGray;
+    priceAlertLabel.font = [UIFont systemFontOfSize:10];
+    priceAlertLabel.text = @"已包含服务费";
+    [ticketPriceView addSubview:priceAlertLabel];
+    [priceAlertLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(sumPriceLabel);
+        make.top.equalTo(sumPriceLabel.mas_bottom).offset(3);
+    }];
+    
+    UIView *priceBottomLine = [[UIView alloc] init];
+    priceBottomLine.backgroundColor = appDelegate.kkzLine;
+    [ticketPriceView addSubview:priceBottomLine];
+    [priceBottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.bottom.right.equalTo(ticketPriceView);
+        make.height.mas_equalTo(0.5);
+    }];
+    
+    //  优惠
+    UIView *couponView = [[UIView alloc] init];
+    couponView.backgroundColor = [UIColor whiteColor];
+    [holder addSubview:couponView];
+    [couponView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.width.equalTo(holder);
+        make.top.equalTo(ticketPriceView.mas_bottom);
+        make.height.mas_equalTo(55);
+    }];
+    
+    UILabel *couponTitleLabel = [[UILabel alloc] init];
+    couponTitleLabel.text = @"优惠";
+    couponTitleLabel.font = [UIFont systemFontOfSize:14];
+    couponTitleLabel.textColor = appDelegate.kkzGray;
+    [couponView addSubview:couponTitleLabel];
+    [couponTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(15);
+        make.centerY.equalTo(couponView);
+    }];
+    
+    _couponNullLabel = [[UILabel alloc] init];
+    _couponNullLabel.text = @"不可使用";
+    _couponNullLabel.textColor = appDelegate.kkzGray;
+    _couponNullLabel.font = [UIFont systemFontOfSize:14];
+    _couponNullLabel.hidden = true;
+    [couponView addSubview:_couponNullLabel];
+    [_couponNullLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(110);
+        make.centerY.equalTo(couponView);
+    }];
+    
+    _couponArrowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowRightGray"]];
+    _couponArrowView.hidden = true;
+    [couponView addSubview:_couponArrowView];
+    [_couponArrowView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-15);
+        make.centerY.equalTo(couponView);
+    }];
+    
+    _couponCountLabel = [[UILabel alloc] init];
+    _couponCountLabel.textColor = appDelegate.kkzPink;
+    _couponCountLabel.font = [UIFont systemFontOfSize:12];
+    [couponView addSubview:_couponCountLabel];
+    [_couponCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_couponArrowView.mas_left).offset(-10);
+        make.centerY.equalTo(couponView);
+    }];
+    
+    UIView *couponBottomLine = [[UIView alloc] init];
+    couponBottomLine.backgroundColor = appDelegate.kkzLine;
+    [couponView addSubview:couponBottomLine];
+    [couponBottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.bottom.right.equalTo(couponView);
+        make.height.mas_equalTo(0.5);
+    }];
+    
+    UITapGestureRecognizer *tapCouponView1GR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCouponViewAction)];
+    [couponView addGestureRecognizer:tapCouponView1GR];
+    
+    //  劵码
+    UIView *couponView2 = [[UIView alloc] init];
+    couponView2.backgroundColor = [UIColor whiteColor];
+    [holder addSubview:couponView2];
+    [couponView2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.width.equalTo(holder);
+        make.top.equalTo(couponView.mas_bottom);
+        make.height.equalTo(couponView);
+    }];
+    
+    UILabel *coupon2TitleLabel = [[UILabel alloc] init];
+    coupon2TitleLabel.text = @"劵码";
+    coupon2TitleLabel.font = [UIFont systemFontOfSize:14];
+    coupon2TitleLabel.textColor = appDelegate.kkzGray;
+    [couponView2 addSubview:coupon2TitleLabel];
+    [coupon2TitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(15);
+        make.centerY.equalTo(couponView2);
+    }];
+    
+    _couponNullLabel2 = [[UILabel alloc] init];
+    _couponNullLabel2.text = @"不可使用";
+    _couponNullLabel2.textColor = appDelegate.kkzGray;
+    _couponNullLabel2.font = [UIFont systemFontOfSize:14];
+    _couponNullLabel2.hidden = true;
+    [couponView2 addSubview:_couponNullLabel2];
+    [_couponNullLabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(110);
+        make.centerY.equalTo(couponView2);
+    }];
+    
+    _couponArrowView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowRightGray"]];
+    _couponArrowView2.hidden = true;
+    [couponView2 addSubview:_couponArrowView2];
+    [_couponArrowView2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-15);
+        make.centerY.equalTo(couponView2);
+    }];
+    
+    _couponCountLabel2 = [[UILabel alloc] init];
+    _couponCountLabel2.textColor = appDelegate.kkzPink;
+    _couponCountLabel2.font = [UIFont systemFontOfSize:12];
+    [couponView2 addSubview:_couponCountLabel2];
+    [_couponCountLabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_couponArrowView2.mas_left).offset(-10);
+        make.centerY.equalTo(couponView2);
+    }];
+    
+    UITapGestureRecognizer *tapCouponView2GR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCouponView2Action)];
+    [couponView2 addGestureRecognizer:tapCouponView2GR];
+    
+    //  客服电话
+    UILabel *telphoneLabel = [[UILabel alloc] init];
+    telphoneLabel.text = @"客服电话 4006-888-888";
+    telphoneLabel.textColor = appDelegate.kkzPink;
+    telphoneLabel.font = [UIFont systemFontOfSize:15];
+    [holder addSubview:telphoneLabel];
+    [telphoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(holder);
+        make.top.equalTo(couponView2.mas_bottom).offset(10);
+    }];
+    
+    //  工作时间
+    UILabel *workTimeLabel = [[UILabel alloc] init];
+    workTimeLabel.text = @"工作时间：早9:00-晚22:00";
+    workTimeLabel.textColor = appDelegate.kkzGray;
+    workTimeLabel.font = [UIFont systemFontOfSize:15];
+    [holder addSubview:workTimeLabel];
+    [workTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(holder);
+        make.top.equalTo(telphoneLabel.mas_bottom).offset(3);
+    }];
+    
+    //  底部按钮
+    
     CGFloat bottomY = 0;
     if (runningOniOS7) {
         bottomY = 0;
@@ -324,30 +584,39 @@
     [payBtnView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:payBtnView];
 
-    UILabel *moneyNeedPayLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screentWith - 155 - 90, 50)];
+    UILabel *moneyNeedPayLbl = [[UILabel alloc] init];
     moneyNeedPayLbl.backgroundColor = [UIColor clearColor];
     moneyNeedPayLbl.textColor = [UIColor blackColor];
     moneyNeedPayLbl.textAlignment = NSTextAlignmentRight;
     moneyNeedPayLbl.text = @"实付款：";
     moneyNeedPayLbl.font = [UIFont systemFontOfSize:15];
     [payBtnView addSubview:moneyNeedPayLbl];
+    [moneyNeedPayLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(15);
+        make.centerY.equalTo(payBtnView);
+    }];
 
-    moneyNeedPayLabel = [[UILabel alloc] initWithFrame:CGRectMake(screentWith - 155 - 90, 0, 90, 50)];
+    moneyNeedPayLabel = [[UILabel alloc] init];
     moneyNeedPayLabel.backgroundColor = [UIColor clearColor];
     moneyNeedPayLabel.textAlignment = NSTextAlignmentLeft;
     moneyNeedPayLabel.textColor = appDelegate.kkzDarkYellow;
     moneyNeedPayLabel.text = @"";
     moneyNeedPayLabel.font = [UIFont systemFontOfSize:20];
-
     [payBtnView addSubview:moneyNeedPayLabel];
+    [moneyNeedPayLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(moneyNeedPayLbl.mas_right).offset(2);
+        make.centerY.equalTo(payBtnView);
+    }];
+
 
     self.moneyNeedPayLabelY = moneyNeedPayLabel;
 
     seatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    seatBtn = [[UIButton alloc] initWithFrame:CGRectMake(screentWith - 155, 0, 155, 50)];
+    seatBtn = [[UIButton alloc] initWithFrame:CGRectMake(160, 0, screentWith-160, 50)];
     [seatBtn setTitle:@"确认支付" forState:UIControlStateNormal];
     [seatBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    seatBtn.backgroundColor = [UIColor r:208 g:208 b:208];
+    seatBtn.backgroundColor = [UIColor r:208 g:208 b:208];//Pay_paybutton@2x
+    [seatBtn setBackgroundImage:[UIImage imageNamed:@"Pay_paybutton"] forState:UIControlStateNormal];
     seatBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     seatBtn.titleLabel.textColor = [UIColor whiteColor];
     [seatBtn addTarget:self action:@selector(payOrderClick) forControlEvents:UIControlEventTouchUpInside];
@@ -359,6 +628,8 @@
 
         [[UserManager shareInstance] updateBalance:nil failure:nil];
     }
+    
+    [self loadCouponList];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -390,7 +661,7 @@
 }
 
 - (void)sliderTotop {
-    [holder setContentOffset:CGPointMake(0, sliderH) animated:YES];
+//    [holder setContentOffset:CGPointMake(0, sliderH) animated:YES];
 }
 
 - (void)beforeActivityMethod:(NSTimer *)time {
@@ -490,29 +761,29 @@
 #pragma mark utility
 - (void)payOrderClick {
 
-    if (telephoneField.text.length < 11 || ![[telephoneField.text substringToIndex:1] isEqualToString:@"1"]) {
-        [appDelegate showAlertViewForTitle:@""
-                                   message:@"请输入正确的手机号码"
-                              cancelButton:@"好的"];
-        return;
-    } else {
-        BOOKING_PHONE_WRITE(telephoneField.text);
-    }
+//    NSString *mobileStr = [DataEngine sharedDataEngine].phoneNum;
+//
+//    BOOKING_PHONE_WRITE(mobileStr);
+//
+//
+//    backBtn.userInteractionEnabled = NO;
+//    seatBtn.userInteractionEnabled = NO;
+//
+//    [self.view.window addSubview:backgroundView];
+//
+//    //统计事件：支付订单
+//    StatisEvent(EVENT_BUY_PAY_ORDER);
+//    if (appDelegate.selectedTab == 0) { //电影入口
+//        StatisEvent(EVENT_BUY_PAY_ORDER_SOURCE_MOVIE);
+//    } else if (appDelegate.selectedTab == 1) { //影院入口
+//        StatisEvent(EVENT_BUY_PAY_ORDER_SOURCE_CINEMA);
+//    }
 
-    backBtn.userInteractionEnabled = NO;
-    seatBtn.userInteractionEnabled = NO;
-
-    [self.view.window addSubview:backgroundView];
-
-    //统计事件：支付订单
-    StatisEvent(EVENT_BUY_PAY_ORDER);
-    if (appDelegate.selectedTab == 0) { //电影入口
-        StatisEvent(EVENT_BUY_PAY_ORDER_SOURCE_MOVIE);
-    } else if (appDelegate.selectedTab == 1) { //影院入口
-        StatisEvent(EVENT_BUY_PAY_ORDER_SOURCE_CINEMA);
-    }
-
-    [payView payOrder];
+    PaySecondViewController *vc = [[PaySecondViewController alloc] init];
+    vc.payView = payView;
+    vc.myOrder = self.myOrder;
+    vc.isFromCoupon = self.isFromCoupon;
+    [self.navigationController pushViewController:vc animated:true];
 }
 
 - (void)payOrderBtnEnable:(BOOL)isEnable {
@@ -558,11 +829,11 @@
     [request requestOrderMobile:^(NSString *_Nullable mobile) {
         DLog(@"BOOKING_PHONE ====  %@", BOOKING_PHONE);
         if (mobile.length) {
-            telephoneField.text = [NSString stringWithFormat:@"%@", mobile]; //BOOKING_PHONE
+            [DataEngine sharedDataEngine].phoneNum = [NSString stringWithFormat:@"%@", mobile]; //BOOKING_PHONE
         } else if (BOOKING_PHONE) {
-            telephoneField.text = BOOKING_PHONE;
+//            telephoneField.text = BOOKING_PHONE;
         } else if (BINDING_PHONE) {
-            telephoneField.text = BINDING_PHONE;
+//            telephoneField.text = BINDING_PHONE;
         }
     }
             failure:^(NSError *_Nullable err){
@@ -674,9 +945,6 @@
         order.scheme = @"KoMovie";
         [BestpaySDK payWithOrder:order fromViewController:self];
     }
-    
-
-    
 }
 
 //支付宝
@@ -815,41 +1083,6 @@
     [holder setContentSize:CGSizeMake(screentWith, CGRectGetMaxY(payView.frame) + 90)];
 }
 
-#pragma mark uitextfield delegate
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if (textField == telephoneField) {
-
-        if ([string isEqualToString:@""]) { //按下return键
-            return YES;
-        }
-        if (telephoneField.text.length >= 11) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
-                                                                message:@"亲，输入字数不能超过11位噢~"
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"好的"
-                                                      otherButtonTitles:nil, nil];
-            [alertView show];
-
-            return NO;
-        }
-    }
-    return YES;
-}
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    [self sliderTotop];
-    return YES;
-}
-
-- (void)handleTap:(UITapGestureRecognizer *)gesture {
-    CGPoint point = [gesture locationInView:phoneViewTap];
-    if (!CGRectContainsPoint(phoneView.frame, point)) {
-        [telephoneField resignFirstResponder];
-        return;
-    }
-}
-
 + (NSDictionary *)paramsFromString:(NSString *)urlStr {
     urlStr = [urlStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     if (urlStr == nil || [urlStr isEqualToString:@""] || ![urlStr hasPrefix:@"KoMovie"]) {
@@ -906,14 +1139,51 @@
     return dic;
 }
 
-- (void)dismissKeyBoard {
-    [telephoneField resignFirstResponder];
+#pragma mark - Network - Request
+
+- (void)loadCouponList {
+    MovieRequest *request = [[MovieRequest alloc] init];
+    [request queryCouponListWithGroupId:4 success:^(NSArray * _Nullable couponList) {
+        NSInteger count = couponList.count;
+        _couponArrowView.hidden = count == 0;
+        _couponNullLabel.hidden = count > 0;
+        _couponCountLabel.hidden = count == 0;
+        _couponCountLabel.text = [NSString stringWithFormat:@"%ld个可用", count];
+    } failure:^(NSError * _Nullable err) {
+        
+    }];
+    
+    MovieRequest *request2 = [[MovieRequest alloc] init];
+    [request2 queryCouponListWithGroupId:3 success:^(NSArray * _Nullable couponList) {
+        NSInteger count = couponList.count;
+        _couponArrowView2.hidden = count == 0;
+        _couponNullLabel2.hidden = count > 0;
+        _couponCountLabel2.hidden = count == 0;
+        _couponCountLabel2.text = [NSString stringWithFormat:@"%ld个可用", count];
+    } failure:^(NSError * _Nullable err) {
+        
+    }];
+}
+
+#pragma mark - TapGestureRecognizer - Action
+
+/**
+ 优惠券
+ */
+- (void)tapCouponViewAction {
+    CouponViewController *vc = [[CouponViewController alloc] init];
+    vc.type = CouponType_coupon;
+    [self.navigationController pushViewController:vc animated:true];
 }
 
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:NO];
-    [telephoneField resignFirstResponder];
+/**
+ 券码
+ */
+- (void)tapCouponView2Action {
+    CouponViewController *vc = [[CouponViewController alloc] init];
+    vc.type = CouponType_Redeem;
+    [self.navigationController pushViewController:vc animated:true];
 }
 
 #pragma mark override from CommonViewController

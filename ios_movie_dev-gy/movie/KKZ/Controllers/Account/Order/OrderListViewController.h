@@ -16,7 +16,7 @@
 @class NoDataViewY;
 @class AlertViewY;
 
-@interface OrderListViewController : CommonViewController <UITableViewDelegate, UITableViewDataSource, OrderTicketCellDelegate, HandleUrlProtocol> {
+@interface OrderListViewController : CommonViewController <UITableViewDelegate, UITableViewDataSource> {
 
     UILabel *noOrderAlertLabel, *noCouponAlertLabel;
     UIView *noOrderAlertView, *noCouponAlertView;

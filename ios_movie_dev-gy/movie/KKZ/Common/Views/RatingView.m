@@ -175,7 +175,9 @@
 
     starRating = rating;
     lastRating = rating;
-    [self.viewDelegate ratingChanged:rating];
+    if (self.viewDelegate) {
+        [self.viewDelegate ratingChanged:rating];
+    }
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

@@ -186,7 +186,7 @@ static const CGFloat lineHeight = 0.3f;
         bottom = self.promotionLabel;
     }else{
         // 没活动
-        self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f", [model.vipPrice floatValue]];
+        self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f", [model.dealPrice floatValue]];
         
         if (model.vipPrice.integerValue  >= model.standardPrice.integerValue) {
             // 抠电影价 大于等于水牌价 只显示抠电影价
@@ -285,7 +285,7 @@ static const CGFloat lineHeight = 0.3f;
 
 - (void)setBuyButtonStyle {
     //是否是推广
-    UIColor *color = [UIColor colorWithHex:@"#008cff"];
+    UIColor *color = appDelegate.kkzPink;//[UIColor colorWithHex:@"#008cff"];
     NSString *title = @"购票";
     if (!_model.supportBuy) {
         title = @"即将开放";
@@ -370,14 +370,15 @@ static const CGFloat lineHeight = 0.3f;
     if (!_buyButton) {
         _buyButton = [ACustomButton buttonWithType:0];
         _buyButton.frame = CGRectMake(kCommonScreenWidth - buyButtonRight - buyButtonWidth, buyButtonTop, buyButtonWidth, buyButtonHeight);
+        _buyButton.backgroundColor = [UIColor whiteColor];
         [_buyButton.titleLabel setFont:[UIFont systemFontOfSize:buyButtonFont]];
         [_buyButton setTitle:@"购票"
                     forState:UIControlStateNormal];
-        [_buyButton setTitleColor:[UIColor colorWithHex:@"#008cff"]
+        [_buyButton setTitleColor:appDelegate.kkzPink//[UIColor colorWithHex:@"#008cff"]
                          forState:UIControlStateNormal];
-        _buyButton.layer.borderColor = [UIColor colorWithHex:@"#008cff"].CGColor;
+        _buyButton.layer.borderColor = appDelegate.kkzPink.CGColor;//[UIColor colorWithHex:@"#008cff"].CGColor;
         _buyButton.layer.borderWidth = K_ONE_PIXEL;
-        _buyButton.layer.cornerRadius = 2.0f;
+        _buyButton.layer.cornerRadius = buyButtonHeight/2.0;
         _buyButton.layer.masksToBounds = YES;
         [_buyButton addTarget:self
                           action:@selector(commonBtnClick:)
@@ -390,7 +391,7 @@ static const CGFloat lineHeight = 0.3f;
     if (!_priceLabel) {
         _priceLabel = [UILabel new];
         _priceLabel.font = [UIFont systemFontOfSize:priceLabelFont];
-        _priceLabel.textColor = [UIColor colorWithHex:@"#ff6900"];
+        _priceLabel.textColor = appDelegate.kkzPink;//[UIColor colorWithHex:@"#ff6900"];
         _priceLabel.backgroundColor = [UIColor clearColor];
     }
     return _priceLabel;

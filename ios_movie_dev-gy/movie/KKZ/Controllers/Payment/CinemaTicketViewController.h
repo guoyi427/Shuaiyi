@@ -7,6 +7,7 @@
 
 #import "CommonViewController.h"
 
+@class CinemaDetail;
 @interface CinemaTicketViewController : CommonViewController
 
 /**
@@ -38,5 +39,10 @@
  *  初始化的日期时间
  */
 @property (nonatomic, strong) NSString *initialSelectedDate;
+
+/**
+ *  影院详情
+ */
+@property (nonatomic, strong) CinemaDetail *cinemaDetail;
 
 @end

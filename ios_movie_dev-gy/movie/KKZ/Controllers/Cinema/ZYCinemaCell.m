@@ -85,7 +85,9 @@
 - (void)update:(CinemaDetail *)model {
     _cinemaNameLabel.text = model.cinemaName;
     _cinemaAddressLabel.text = model.cinemaAddress;
-    _priceLabel.text = [NSString stringWithFormat:@"￥ %@起", model.minPrice];
+    if (model.minPrice && model.minPrice.length > 0) {
+        _priceLabel.text = [NSString stringWithFormat:@"￥ %@起", model.minPrice];
+    }
     _distanceLabel.text = [NSString stringWithFormat:@"%.1fkm", model.distanceMetres.floatValue / 1000.0f];
 }
 

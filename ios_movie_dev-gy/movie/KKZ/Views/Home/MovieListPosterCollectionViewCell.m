@@ -13,7 +13,14 @@
 #import <Category_KKZ/UIColor+Hex.h>
 #import "UIConstants.h"
 #import "KKZTextUtility.h"
+#import "RatingView.h"
+#import "Movie.h"
 
+@interface MovieListPosterCollectionViewCell ()
+{
+    RatingView *_startView;
+}
+@end
 @implementation MovieListPosterCollectionViewCell
 
 
@@ -42,47 +49,60 @@
             make.left.top.equalTo(_moviePosterImage);
             make.width.height.equalTo(@(34));
         }];
+        
+        UIView *grayView = [[UIView alloc] init];
+        grayView.backgroundColor = appDelegate.kkzLine;
+        [self addSubview:grayView];
+        [grayView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.equalTo(self);
+            make.height.mas_equalTo(50);
+        }];
 
 //        self.movieName = @"神奇动物在哪里";
         movieNameLabel = [UILabel new];
         movieNameLabel.font = [UIFont systemFontOfSize:13];
-        movieNameLabel.textColor = [UIColor colorWithHex:@"#b2b2b2"];
-        movieNameLabel.backgroundColor = [UIColor clearColor];
-        movieNameLabel.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:movieNameLabel];
+        movieNameLabel.textColor = [UIColor blackColor];//[UIColor colorWithHex:@"#b2b2b2"];
+        [grayView addSubview:movieNameLabel];
         movieNameLabel.text = self.movieName;
-//        movieNameLabel.frame = CGRectMake(0, 220, 105, 15);
         [movieNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.width.equalTo(self);
-            make.top.equalTo(self.mas_bottom).offset(-14);
-            make.height.equalTo(@(14));
+            make.left.mas_equalTo(10);
+            make.right.mas_lessThanOrEqualTo(-10);
+            make.top.equalTo(grayView).offset(5);
         }];
-        preSellLabel = [self getFlagLabelWithFont:10 withBgColor:@"#00cc99" withTextColor:@"#FFFFFF"];
-        preSellLabel.text = @"预售";
+        
+        _startView = [[RatingView alloc] initWithFrame:CGRectMake(10, 25, CGRectGetWidth(self.frame) * 0.6, 20)];
+        [_startView setImagesDeselected:@"fav_star_no_yellow_match"
+                       partlySelected:@"fav_star_half_yellow"
+                         fullSelected:@"fav_star_full_yellow"
+                             iconSize:CGSizeMake(10, 10)
+                          andDelegate:nil];
+        _startView.userInteractionEnabled = NO;
+        [_startView displayRating:0];
+        [grayView addSubview:_startView];
+
+        scoreLabel = [self getFlagLabelWithFont:10 withBgColor:@"#EEEEEE" withTextColor:@"#999999"];
+        [grayView addSubview:scoreLabel];
+        [scoreLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_startView.mas_right).offset(5);
+            make.right.mas_lessThanOrEqualTo(-5);
+            make.centerY.equalTo(_startView);
+        }];
+        
+        preSellLabel = [self getFlagLabelWithFont:10 withBgColor:@"#EEEEEE" withTextColor:@"#999999"];
         preSellLabel.hidden = YES;
         [self addSubview:preSellLabel];
         [preSellLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.mas_right);
-            make.width.equalTo(@(26));
-            make.top.equalTo(self.mas_bottom).offset(-15);
+            make.centerX.equalTo(self);
+            make.bottom.equalTo(self.mas_bottom).offset(-10);
             make.height.equalTo(@(13));
         }];
-
-        scoreLabel = [self getFlagLabelWithFont:10 withBgColor:@"#FFCC00" withTextColor:@"#000000"];
-        [_moviePosterImage addSubview:scoreLabel];
-        [scoreLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(_moviePosterImage.mas_right).offset(-6);
-            make.bottom.equalTo(_moviePosterImage.mas_bottom).offset(-6);
-            make.width.equalTo(@(25));
-            make.height.equalTo(@(15));
-        }];
+        
         screenTypeLabel = [self getFlagLabelWithFont:10 withBgColor:@"#000000" withTextColor:@"#FFFFFF"];
-        [_moviePosterImage addSubview:screenTypeLabel];
+        [self addSubview:screenTypeLabel];
         [screenTypeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(scoreLabel.mas_left).offset(-3);
-            make.bottom.equalTo(_moviePosterImage.mas_bottom).offset(-6);
-            make.width.equalTo(@(25));
-            make.height.equalTo(@(15));
+            make.bottom.equalTo(grayView.mas_top);
+            make.left.mas_equalTo(2);
+            make.height.mas_equalTo(20);
         }];
 
     }
@@ -108,61 +128,35 @@
                              placeholderImage:placeHolderImage];
     movieNameLabel.text = self.movieName;
     [self setNeedsUpdateConstraints];
-
 //    self.isPreSell = YES;
     if (self.isSale) {
         huiLogoImage.hidden = NO;
     }else{
         huiLogoImage.hidden = YES;
     }
+    _startView.hidden = !self.isSale;
+
     if (self.isPresell) {
         movieNameLabel.textAlignment = NSTextAlignmentLeft;
 
         preSellLabel.hidden = NO;
 //        CGSize movieNameSize = [KKZTextUtility measureText:self.movieName font:[UIFont systemFontOfSize:13]];
         CGSize movieNameSize = [KKZTextUtility measureText:self.movieName size:CGSizeMake(MAXFLOAT, 15) font:[UIFont systemFontOfSize:13]];
-
-        float movieNameL = movieNameSize.width>=(self.frame.size.width-31)?(self.frame.size.width-31):movieNameSize.width;
-//        [movieNameLabel setFrame:CGRectMake(0, 181-20, movieNameSize.width, 15)];
-
-        [movieNameLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(@((self.frame.size.width-movieNameL-31)/2));
-            make.top.equalTo(self.mas_bottom).offset(-14);
-            make.height.equalTo(@(14));
-            make.width.equalTo(@(movieNameL+5));
-        }];
-        [preSellLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(movieNameLabel.mas_right);
-            //            make.right.equalTo(self.mas_right);
-            make.width.equalTo(@(26));
-            make.top.equalTo(self.mas_bottom).offset(-15);
-            make.height.equalTo(@(13));
-        }];
+        preSellLabel.text = [NSString stringWithFormat:@"%@上映", [[DateEngine sharedDateEngine] stringFromDate:self.model.publishTime withFormat:@"YYYY-MM-dd"]];
+        
     }else{
         movieNameLabel.textAlignment = NSTextAlignmentCenter;
 
         preSellLabel.hidden = YES;
-        [movieNameLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.width.equalTo(self);
-            make.top.equalTo(self.mas_bottom).offset(-14);
-            make.height.equalTo(@(14));
-            make.width.equalTo(self);
-            
-        }];
-        
     }
     
     if (self.point.length) {
+        
+        [_startView displayRating:self.point.floatValue / 2.0];
+
         scoreLabel.hidden = NO;
         CGSize scoreSize = [KKZTextUtility measureText:self.point size:CGSizeMake(MAXFLOAT, 13) font:[UIFont systemFontOfSize:10]];
         scoreLabel.text = self.point;
-        [scoreLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.moviePosterImage.mas_right).offset(-6);
-            make.bottom.equalTo(self.moviePosterImage.mas_bottom).offset(-6);
-            make.width.equalTo(@(scoreSize.width+6));
-            make.height.equalTo(@(15));
-        }];
-        
     }else{
         scoreLabel.hidden = YES;
     }
@@ -170,16 +164,10 @@
         screenTypeLabel.hidden = NO;
         CGSize screenTypeSize = [KKZTextUtility measureText:self.availableScreenType size:CGSizeMake(MAXFLOAT, 13) font:[UIFont systemFontOfSize:10]];
         screenTypeLabel.text = self.availableScreenType;
-        [screenTypeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(scoreLabel.mas_left).offset(-3);
-            make.bottom.equalTo(self.moviePosterImage.mas_bottom).offset(-6);
-            make.width.equalTo(@(screenTypeSize.width+6));
-            make.height.equalTo(@(15));
-        }];
     }else{
         screenTypeLabel.hidden = YES;
     }
-
+    scoreLabel.hidden = !self.isSale;
 }
 
 - (void)updateConstraints {

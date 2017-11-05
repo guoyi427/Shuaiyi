@@ -9,6 +9,8 @@
 #import "MovieRequest.h"
 #import "Movie.h"
 #import "DataEngine.h"
+#import <NetCore_KKZ/KKZBaseNetRequest.h>
+#import <NetCore_KKZ/KKZBaseRequestParams.h>
 
 @implementation MovieRequest
 
@@ -239,6 +241,83 @@
                  failure:failure];
 }
 
+- (void)requestScoreList:(nullable void (^)(NSArray *_Nullable movieList))success
+                 failure:(nullable void (^)(NSError *_Nullable err))failure {
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    NSDictionary *params = [KKZBaseRequestParams getDecryptParams:@{
+                                                                    @"action": @"point_Query"
+                                                                    }];
+    [request GET:kKSSPServer
+      parameters:params
+    resultKeyMap:@{ @"points" : [Movie class] }
+         success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
+        success(responseObject[@"points"]);
+    } failure:failure];
+}
 
+- (void)requestWantList:(nullable void (^)(NSArray *_Nullable movieList))success
+                failure:(nullable void (^)(NSError *_Nullable err))failure {
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    NSDictionary *params = [KKZBaseRequestParams getDecryptParams:@{
+                                                                    @"action": @"relation_Query"
+                                                                    }];
+    [request GET:kKSSPServer
+      parameters:params
+    resultKeyMap:@{ @"relations" : [Movie class] }
+         success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
+        success(responseObject[@"relations"]);
+    } failure:failure];
+}
 
+- (void)addScoreMovieId:(nullable NSString *)movieId
+                  point:(nullable NSString *)point
+                success:(nullable void (^)())success
+                failure:(nullable void (^)(NSError *_Nullable err))failure {
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    NSDictionary *params = [KKZBaseRequestParams
+                            getDecryptParams:@{
+                                               @"action": @"point_Add",
+                                               @"movie_id": movieId,
+                                               @"point": point
+                                               }];
+    [request GET:kKSSPServer parameters:params success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
+        success();
+    } failure:failure];
+}
+
+- (void)addRelationMovieId:(nullable NSString *)movieId
+                  relation:(nullable NSString *)relation
+                   success:(nullable void (^)())success
+                   failure:(nullable void (^)(NSError *_Nullable err))failure {
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    NSDictionary *params = [KKZBaseRequestParams
+                            getDecryptParams:@{
+                                               @"action": @"relation_Add",
+                                               @"movie_id": movieId,
+                                               @"relation": relation
+                                               }];
+    [request GET:kKSSPServer parameters:params success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
+        success();
+    } failure:failure];
+}
+
+/*
+ coupon_Query   group_id 传3是 兑换码
+ coupon_Query   group_id 传4是 优惠券
+ coupon_Query   group_id 传1是 现金码
+ */
+- (void)queryCouponListWithGroupId:(NSInteger)groupId
+                           success:(nullable void (^)(NSArray *_Nullable couponList))success
+                           failure:(nullable void (^)(NSError *_Nullable err))failure {
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    NSDictionary *params = [KKZBaseRequestParams
+                            getDecryptParams:@{
+                                               @"action": @"coupon_Query",
+                                               @"group_id": @(groupId),
+                                               }];
+    [request GET:kKSSPServer parameters:params success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
+        NSLog(@"%@", responseObject);
+        success(responseObject[@"coupons"]);
+    } failure:failure];
+}
 @end

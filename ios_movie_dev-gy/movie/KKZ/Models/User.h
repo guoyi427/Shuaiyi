@@ -24,5 +24,8 @@
 @property (nonatomic, copy) NSString *nickName;
 @property (nonatomic, copy) NSNumber *sex;
 
+@property (nonatomic, strong) NSNumber *loveMovieCount;
+@property (nonatomic, strong) NSNumber *pointMovieCount;
+@property (nonatomic, copy) NSString *headImg;
 
 @end

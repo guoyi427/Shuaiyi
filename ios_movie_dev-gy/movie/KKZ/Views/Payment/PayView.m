@@ -55,7 +55,9 @@ BOOL KShowRedBalance = NO;
 - (CGFloat)moneyToPay {
 
     float moneyToPay = self.orderTotalFee - [self discountMoney];
-    self.moneyToPayChanged(floor(moneyToPay * 1000) / 1000, selectedMethod);
+    if (self.moneyToPayChanged) {
+        self.moneyToPayChanged(floor(moneyToPay * 1000) / 1000, selectedMethod);
+    }
 
     return floor(moneyToPay * 1000) / 1000;
 }
@@ -135,27 +137,61 @@ BOOL KShowRedBalance = NO;
     if (self) {
         self.isFirstLoad = YES;
 
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = appDelegate.kkzLine;//[UIColor clearColor];
         // 1 - 10
         selectedMethod = PayMethodNone;
         self.selectedIndex = -1;
 
         //选择支付方式
-        payMethodViewTip = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screentWith, 40)];
-        payMethodViewTip.backgroundColor = [UIColor r:245 g:245 b:245];
-        [self addSubview:payMethodViewTip];
+//        payMethodViewTip = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screentWith, 40)];
+//        payMethodViewTip.backgroundColor = [UIColor r:245 g:245 b:245];
+//        [self addSubview:payMethodViewTip];
 
-        UILabel *tipLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(kMarginX, 5, 145, 35)];
-        tipLabel1.backgroundColor = [UIColor clearColor];
-        tipLabel1.textColor = [UIColor r:153 g:153 b:153];
-        tipLabel1.font = [UIFont systemFontOfSize:14];
-        tipLabel1.hidden = NO;
-        tipLabel1.text = @"选择支付方式：";
-        [payMethodViewTip addSubview:tipLabel1];
+//        UILabel *tipLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(kMarginX, 5, 145, 35)];
+//        tipLabel1.backgroundColor = [UIColor clearColor];
+//        tipLabel1.textColor = [UIColor r:153 g:153 b:153];
+//        tipLabel1.font = [UIFont systemFontOfSize:14];
+//        tipLabel1.hidden = NO;
+//        tipLabel1.text = @"选择支付方式：";
+//        [payMethodViewTip addSubview:tipLabel1];
+        
+        UIView *moneyView = [[UIView alloc] init];
+        moneyView.backgroundColor = [UIColor whiteColor];
+        [self addSubview:moneyView];
+        [moneyView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(self);
+            make.top.mas_equalTo(0);
+            make.height.mas_equalTo(70);
+        }];
+        
+        UILabel *totalMaoneyLbl = [[UILabel alloc] init];
+        totalMaoneyLbl.backgroundColor = [UIColor clearColor];
+        totalMaoneyLbl.textColor = [UIColor r:153 g:153 b:153];
+        totalMaoneyLbl.textAlignment = NSTextAlignmentLeft;
+        totalMaoneyLbl.text = @"总价";
+        totalMaoneyLbl.font = [UIFont systemFontOfSize:14];
+        [moneyView addSubview:totalMaoneyLbl];
+        [totalMaoneyLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(20);
+            make.centerY.equalTo(moneyView);
+        }];
+        
+        totalMaoneyLabel = [[UILabel alloc] init];
+        totalMaoneyLabel.backgroundColor = [UIColor clearColor];
+        totalMaoneyLabel.textColor = appDelegate.kkzPink;//[UIColor r:102 g:102 b:102];
+        totalMaoneyLabel.textAlignment = NSTextAlignmentRight;
+        totalMaoneyLabel.font = [UIFont systemFontOfSize:24];
+        totalMaoneyLabel.hidden = NO;
+        totalMaoneyLabel.text = @"";
+        [moneyView addSubview:totalMaoneyLabel];
+        [totalMaoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(moneyView);
+        }];
+        
 
         //支付方式列表
         self.payTypeTableViewY = [[UITableView alloc]
-                initWithFrame:CGRectMake(0, CGRectGetMaxY(payMethodViewTip.frame), screentWith, 1)];
+                initWithFrame:CGRectMake(0, 90, screentWith, 1)];
         self.payTypeTableViewY.backgroundColor = [UIColor clearColor];
         self.payTypeTableViewY.delegate = self;
         self.payTypeTableViewY.dataSource = self;
@@ -164,6 +200,7 @@ BOOL KShowRedBalance = NO;
         [self addSubview:self.payTypeTableViewY];
         self.payTypeTableViewY = self.payTypeTableViewY;
 
+        /*
         //选择优惠方式
         discountViewTip = [[UIView alloc]
                 initWithFrame:CGRectMake(0, CGRectGetMaxY(self.payTypeTableViewY.frame), screentWith, 40)];
@@ -421,7 +458,7 @@ BOOL KShowRedBalance = NO;
         self.noticeLab = noticeLabY;
 
         [noticeLabView addSubview:noticeLabY];
-
+*/
         payMethodList = [[NSMutableArray alloc] init];
         _ecardNoList = [[NSMutableArray alloc] initWithCapacity:0];
 
@@ -452,6 +489,33 @@ BOOL KShowRedBalance = NO;
 }
 
 - (void)doPayTypeTask {
+    
+    self.totalPrice = [self.myOrder.unitPrice floatValue] * [self.myOrder.count floatValue];
+    totalMaoneyLabel.text = [NSString
+                             stringWithFormat:@"￥%.2f", [self.myOrder.money floatValue]]; //self.totalPrice];
+    activityLabel.text = [NSString stringWithFormat:@"-￥%.2f", [self.myOrder.discountAmount floatValue]];
+    
+    PaymentModel *wechatModel = [[PaymentModel alloc] init];
+    wechatModel.intro = @"wx";
+    wechatModel.payMethod = PayMethodWeiXin;
+    wechatModel.desc = @"wx";
+    [payMethodList addObject:wechatModel];
+    
+    PaymentModel *alpayModel = [[PaymentModel alloc] init];
+    alpayModel.intro = @"ali";
+    alpayModel.payMethod = PayMethodAliMoblie;
+    alpayModel.desc = @"ali";
+    [payMethodList addObject:alpayModel];
+    
+    self.selectedIndex = 1;
+    
+    [self updateLayout];
+    
+    if (self.selectedIndex != -1) {
+        NSIndexPath *p = [NSIndexPath indexPathForRow:self.selectedIndex inSection:0];
+        [self tableView:self.payTypeTableViewY didSelectRowAtIndexPath:p];
+    }
+    /*
     PayTask *task = [[PayTask alloc] initGetPayType:_orderNo
                                            finished:^(BOOL succeeded, NSDictionary *userInfo) {
                                                if (succeeded) {
@@ -459,6 +523,7 @@ BOOL KShowRedBalance = NO;
                                                }
                                            }];
     [[TaskQueue sharedTaskQueue] addTaskToQueue:task];
+     */
 }
 
 - (void)doRedCouponTask {
@@ -535,7 +600,7 @@ BOOL KShowRedBalance = NO;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
+    return 70;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -586,7 +651,7 @@ BOOL KShowRedBalance = NO;
     totalMoneyLabel.text = [NSString stringWithFormat:@"订单金额：%.2f元", [self.myOrder moneyToPay]];
 
     self.payTypeTableViewY.frame =
-            CGRectMake(0, CGRectGetMaxY(payMethodViewTip.frame), screentWith, 60 * payMethodList.count);
+            CGRectMake(0, 90, screentWith, 70 * payMethodList.count);
     [self.payTypeTableViewY reloadData];
 
     discountViewTip.frame = CGRectMake(0, CGRectGetMaxY(self.payTypeTableViewY.frame), screentWith, 40);

@@ -156,6 +156,9 @@
 #define kBgColor \
     [UIColor clearColor]
 
+//  地图信息
+
+
 // task run in other thread
 typedef enum {
     TaskTypeDefault = 0,
@@ -642,14 +645,16 @@ typedef enum {
 } TargetType;
 
 typedef enum {
+    /// password
     SiteTypeKKZ = 1,
-    SiteTypeSina,
-    SiteTypeTaobao,
+    /// valid code
+    SiteTypeKKZValidcode,// = 26,
     SiteTypeQQ,
+    SiteTypeWX,// = 12,
+    SiteTypeTaobao,
     SiteTypeAliPay = 9,
-    SiteTypeWX = 12,
     SiteTypeQQSpace,
-    SiteTypeKKZValidcode = 26,
+    SiteTypeSina,
 } SiteType;
 
 typedef enum {

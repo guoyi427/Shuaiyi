@@ -100,8 +100,10 @@ typedef enum {
 - (NSString *)qrCodePath;
 - (NSString *)orderStateDesc;
 - (NSString *)movieTimeDesc;
+- (NSString *)movieTimeDescWithFormat:(NSString *)format;
 - (NSInteger)seatCount;
 - (NSString *)readableSeatInfos;
+- (NSString *)readableSeatInfosZY;
 - (CGFloat)moneyToPay;
 - (OrderPayInfo *)payInfo;
 

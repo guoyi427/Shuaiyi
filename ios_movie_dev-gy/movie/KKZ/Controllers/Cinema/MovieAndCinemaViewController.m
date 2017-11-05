@@ -69,11 +69,17 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
     [self loadCurrentMovieData];
     [self loadFutureMovieData];
     [self loadCinemaData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateWithHomeNotification:) name:@"updateHomeNotifi" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self updateLocationViewLayout];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Prepare
@@ -109,7 +115,7 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
     [self.navBarView addSubview:searchButton];
     
     _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"电影", @"影院"]];
-    _segmentedControl.frame = CGRectMake((kAppScreenWidth - segmentedControlWidth)/2.0, 2, segmentedControlWidth, 40);
+    _segmentedControl.frame = CGRectMake((kAppScreenWidth - segmentedControlWidth)/2.0, 10, segmentedControlWidth, 44-20);
     _segmentedControl.tintColor = [UIColor grayColor];
     _segmentedControl.selectedSegmentIndex = 0;
     [_segmentedControl setTitleTextAttributes:@{
@@ -137,7 +143,8 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
     [_currentMovieButton setTitle:@"正在热映" forState:UIControlStateNormal];
     [_currentMovieButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [_currentMovieButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-    _currentMovieButton.titleLabel.font = [UIFont systemFontOfSize:15];
+    _currentMovieButton.titleLabel.font = [UIFont systemFontOfSize:12];
+    [_currentMovieButton  setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
     [_currentMovieButton setImage:[UIImage imageNamed:@"Movie_current_normal"] forState:UIControlStateNormal];
     [_currentMovieButton setImage:[UIImage imageNamed:@"Movie_current_selected"] forState:UIControlStateSelected];
     [_currentMovieButton addTarget:self action:@selector(currentMovieButtonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -151,6 +158,7 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
     [_futureMovieButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [_futureMovieButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     _futureMovieButton.titleLabel.font = _currentMovieButton.titleLabel.font;
+    [_futureMovieButton setTitleEdgeInsets:_currentMovieButton.titleEdgeInsets];
     [_futureMovieButton setImage:[UIImage imageNamed:@"Movie_Future_normal"] forState:UIControlStateNormal];
     [_futureMovieButton setImage:[UIImage imageNamed:@"Movie_Future_selected"] forState:UIControlStateSelected];
     [_futureMovieButton addTarget:self action:@selector(futureMovieButtonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -244,8 +252,15 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
                            success:^(NSArray *_Nullable cinemas, NSArray *_Nullable favedCinemas,
                                      NSArray *_Nullable favorCinemas) {
                                [_cinemaTableView headerEndRefreshing];
+                               //   排序 按照距离
+                               NSArray *sortedCinemas = [cinemas sortedArrayUsingComparator:^NSComparisonResult(CinemaDetail *  _Nonnull obj1, CinemaDetail * _Nonnull obj2) {
+                                   NSInteger distance1 = obj1.distanceMetres.integerValue;
+                                   NSInteger distance2 = obj2.distanceMetres.integerValue;
+                                   return distance1 < distance2 ? NSOrderedAscending : NSOrderedDescending;
+                               }];
+                               
                                [_cinemaList removeAllObjects];
-                               [_cinemaList addObjectsFromArray:cinemas];
+                               [_cinemaList addObjectsFromArray:sortedCinemas];
                                [_cinemaTableView reloadData];
                            }
                            failure:^(NSError *_Nullable err) {
@@ -425,9 +440,22 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
             ticket.cinemaAddress = model.cinemaAddress;
             ticket.cinemaId = model.cinemaId;
             ticket.cinemaCloseTicketTime = model.closeTicketTime.stringValue;
+            ticket.cinemaDetail = model;
             [self pushViewController:ticket animation:CommonSwitchAnimationBounce];
         }
     }
 }
 
+#pragma mark - NSNotification Center - Action
+
+- (void)updateWithHomeNotification:(NSNotification *)notifi {
+    NSInteger index = [notifi.userInfo[@"index"] integerValue];
+    _segmentedControl.selectedSegmentIndex = 0;
+    [self segmentedControlAction:_segmentedControl];
+    if (index == 0) {
+        [self currentMovieButtonAction:_currentMovieButton];
+    } else {
+        [self futureMovieButtonAction:_futureMovieButton];
+    }
+}
 @end

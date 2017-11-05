@@ -90,4 +90,32 @@
                    success:(nullable void (^)(NSArray *_Nullable movieList))success
                    failure:(nullable void (^)(NSError *_Nullable err))failure;
 
+- (void)requestScoreList:(nullable void (^)(NSArray *_Nullable movieList))success
+                 failure:(nullable void (^)(NSError *_Nullable err))failure;
+
+- (void)requestWantList:(nullable void (^)(NSArray *_Nullable movieList))success
+                failure:(nullable void (^)(NSError *_Nullable err))failure;
+
+/// point 分数  1~10
+- (void)addScoreMovieId:(nullable NSString *)movieId
+                  point:(nullable NSString *)point
+                success:(nullable void (^)())success
+                failure:(nullable void (^)(NSError *_Nullable err))failure;
+
+/// relation 1: 喜欢
+- (void)addRelationMovieId:(nullable NSString *)movieId
+                  relation:(nullable NSString *)relation
+                   success:(nullable void (^)())success
+                   failure:(nullable void (^)(NSError *_Nullable err))failure;
+
+/*
+ coupon_Query   group_id 传3是 兑换码
+ coupon_Query   group_id 传4是 优惠券
+ coupon_Query   group_id 传1是 现金码
+ */
+- (void)queryCouponListWithGroupId:(NSInteger)groupId
+                           success:(nullable void (^)(NSArray *_Nullable couponList))success
+                           failure:(nullable void (^)(NSError *_Nullable err))failure;
+
+
 @end

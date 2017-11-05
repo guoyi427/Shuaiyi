@@ -185,8 +185,8 @@ const static CGFloat selectDistrictBtnHeight = 44.0f;
  */
 - (void)loadNavBar {
     //设置导航栏背景色
-    self.navBarView.backgroundColor = appDelegate.kkzBlue;
-    self.statusView.backgroundColor = appDelegate.kkzBlue;
+//    self.navBarView.backgroundColor = appDelegate.kkzBlue;
+//    self.statusView.backgroundColor = appDelegate.kkzBlue;
 
 
     //加载导航栏上定位区域
@@ -718,6 +718,7 @@ const static CGFloat selectDistrictBtnHeight = 44.0f;
     ticket.cinemaAddress = cinema.cinemaAddress;
     ticket.cinemaId = cinema.cinemaId;
     ticket.cinemaCloseTicketTime = cinema.closeTicketTime.stringValue;
+    ticket.cinemaDetail = cinema;
     [self pushViewController:ticket animation:CommonSwitchAnimationBounce];
 }
 

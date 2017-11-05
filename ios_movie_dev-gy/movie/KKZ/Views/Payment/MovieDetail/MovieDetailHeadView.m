@@ -18,8 +18,8 @@
 #define marginX 15
 #define marginY 15
 
-#define postImageViewWidth 107
-#define postImageViewHeight 149
+#define postImageViewWidth 100
+#define postImageViewHeight 135
 
 #define marginTitleToTop 12
 #define marginImgToTitle 15
@@ -43,6 +43,9 @@
 #define headHeight 215
 
 @interface MovieDetailHeadView()
+{
+    
+}
 @property (nonatomic, copy) void (^wantToWatchBlock)();
 @end
 
@@ -52,24 +55,27 @@
     if (self) {
 
         [self setBackgroundColor:[UIColor clearColor]];
-
-        self.postImageView = [[UIImageView alloc] initWithFrame:CGRectMake(marginX, 0, postImageViewWidth, postImageViewHeight)];
+        self.clipsToBounds = true;
+        UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, 150-64, kAppScreenWidth, 100)];
+        whiteView.backgroundColor = [UIColor whiteColor];
+        [self addSubview:whiteView];
+        
+        self.postImageView = [[UIImageView alloc] initWithFrame:CGRectMake(marginX, 32, postImageViewWidth, postImageViewHeight)];
         self.postImageView.backgroundColor = [UIColor clearColor];
         self.postImageView.contentMode = UIViewContentModeScaleAspectFill;
         self.postImageView.clipsToBounds = YES;
         self.postImageView.image = nil;
         self.postImageView.layer.borderColor = [UIColor whiteColor].CGColor;
         self.postImageView.layer.borderWidth = 1;
-
         [self addSubview:self.postImageView];
 
-        movieTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.postImageView.frame) + marginImgToTitle, marginTitleToTop, screentWith - (CGRectGetMaxX(self.postImageView.frame) + marginImgToTitle), movieTitleFont)];
+        movieTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.postImageView.frame) + marginImgToTitle, CGRectGetMinY(self.postImageView.frame) + marginY, screentWith - (CGRectGetMaxX(self.postImageView.frame) + marginImgToTitle), movieTitleFont)];
         movieTitleLabel.font = [UIFont systemFontOfSize:movieTitleFont];
-        movieTitleLabel.textColor = [UIColor whiteColor];
+        movieTitleLabel.textColor = [UIColor blackColor];
         movieTitleLabel.backgroundColor = [UIColor clearColor];
         movieTitleLabel.textAlignment = NSTextAlignmentLeft;
         [self addSubview:movieTitleLabel];
-
+        
         threeDImg = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMinX(movieTitleLabel.frame), marginTitleToTop, screentWith - CGRectGetMaxX(movieTitleLabel.frame) - marginX, movieTitleFont)];
         threeDImg.userInteractionEnabled = YES;
         threeDImg.image = [UIImage imageNamed:@"3D_screentype_logo"];
@@ -81,8 +87,9 @@
         imaxImg.image = [UIImage imageNamed:@"imax_screenType_logo"];
         imaxImg.hidden = YES;
         [self addSubview:imaxImg];
-
+        
         //评分星星
+        /*
         starView = [[RatingView alloc] initWithFrame:CGRectMake(CGRectGetMinX(movieTitleLabel.frame), CGRectGetMaxY(movieTitleLabel.frame) + marginTitleToTop, 83, starHeight)];
         [starView setImagesDeselected:@"fav_star_no_yellow_match"
                        partlySelected:@"fav_star_half_yellow"
@@ -92,7 +99,8 @@
         starView.userInteractionEnabled = NO;
         [starView displayRating:0];
         [self addSubview:starView];
-
+         */
+        /*
         totleScoreLalel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(starView.frame) + marginStarToScore, CGRectGetMinY(starView.frame), 80, scoreFont)];
         totleScoreLalel.font = [UIFont systemFontOfSize:scoreFont];
         totleScoreLalel.textAlignment = NSTextAlignmentLeft;
@@ -100,32 +108,47 @@
         totleScoreLalel.textColor = appDelegate.kkzYellow;
         totleScoreLalel.text = @"0";
         [self addSubview:totleScoreLalel];
-
-        movieDetailInfo = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(movieTitleLabel.frame), CGRectGetMaxY(totleScoreLalel.frame) + marginSubTitle, screentWith - CGRectGetMinX(movieTitleLabel.frame) - marginX, subTitleFont)];
-        movieDetailInfo.font = [UIFont systemFontOfSize:subTitleFont];
-        movieDetailInfo.textAlignment = NSTextAlignmentLeft;
-        movieDetailInfo.backgroundColor = [UIColor clearColor];
-        movieDetailInfo.textColor = [UIColor whiteColor];
-        movieDetailInfo.text = @"";
-        [movieDetailInfo setBackgroundColor:[UIColor clearColor]];
-        [self addSubview:movieDetailInfo];
-
-        movieType = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(movieTitleLabel.frame), CGRectGetMaxY(movieDetailInfo.frame) + marginSubTitle, screentWith - CGRectGetMinX(movieTitleLabel.frame) - marginX, subTitleFont)];
+         */
+        //  类型
+        movieType = [[UILabel alloc] init];
         movieType.font = [UIFont systemFontOfSize:subTitleFont];
         movieType.textAlignment = NSTextAlignmentLeft;
         movieType.backgroundColor = [UIColor clearColor];
-        movieType.textColor = [UIColor whiteColor];
+        movieType.textColor = [UIColor grayColor];
         movieType.text = @"";
         [movieType setBackgroundColor:[UIColor clearColor]];
-        [self addSubview:movieType];
+        [whiteView addSubview:movieType];
+        [movieType mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(movieTitleLabel);
+            make.top.mas_equalTo(12);
+        }];
+        
+        //  语种 和 时长
+        movieDetailInfo = [[UILabel alloc] init];
+        movieDetailInfo.font = [UIFont systemFontOfSize:subTitleFont];
+        movieDetailInfo.textAlignment = NSTextAlignmentLeft;
+        movieDetailInfo.backgroundColor = [UIColor clearColor];
+        movieDetailInfo.textColor = [UIColor grayColor];
+        movieDetailInfo.text = @"";
+        [movieDetailInfo setBackgroundColor:[UIColor clearColor]];
+        [whiteView addSubview:movieDetailInfo];
+        [movieDetailInfo mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(movieType.mas_right).offset(30);
+            make.centerY.equalTo(movieType);
+        }];
 
-        moviePlayerTime = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(movieTitleLabel.frame), CGRectGetMaxY(movieType.frame) + marginSubTitle, screentWith - CGRectGetMinX(movieTitleLabel.frame) - marginX, subTitleFont)];
+        //  上映时间
+        moviePlayerTime = [[UILabel alloc] init];
         moviePlayerTime.font = [UIFont systemFontOfSize:subTitleFont];
         moviePlayerTime.textAlignment = NSTextAlignmentLeft;
         moviePlayerTime.backgroundColor = [UIColor clearColor];
-        moviePlayerTime.textColor = [UIColor whiteColor];
+        moviePlayerTime.textColor = [UIColor blackColor];
         moviePlayerTime.text = @"";
-        [self addSubview:moviePlayerTime];
+        [whiteView addSubview:moviePlayerTime];
+        [moviePlayerTime mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(movieTitleLabel);
+            make.top.equalTo(movieDetailInfo.mas_bottom).offset(5);
+        }];
 
         //添加评论想看按钮
 //        [self addCommentAndwantSeeView];

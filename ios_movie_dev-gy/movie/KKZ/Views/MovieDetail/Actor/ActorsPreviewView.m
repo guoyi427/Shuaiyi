@@ -49,10 +49,12 @@
     if (self) {
         self.backgroundColor = [UIColor clearColor];
 
-        previewImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, previewImageWidth, previewImageHeight)];
+        previewImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 30, previewImageWidth, previewImageWidth)];
         previewImage.clipsToBounds = YES;
         previewImage.contentMode = UIViewContentModeScaleAspectFill;
         [previewImage setBackgroundColor:[UIColor whiteColor]];
+        previewImage.layer.cornerRadius = 5.0;
+        previewImage.layer.masksToBounds = true;
         [self addSubview:previewImage];
 
         actorNameLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(previewImage.frame), previewImageWidth, actorNameLblHeight)];
@@ -155,7 +157,7 @@
 }
 
 - (void)horizonTableView:(HorizonTableView *)tableView didSelectRowAtIndex:(int)index {
-
+    return;
     ActorImagePageYN *cell = [tableView cellAtIndex:index];
 
     @try {
