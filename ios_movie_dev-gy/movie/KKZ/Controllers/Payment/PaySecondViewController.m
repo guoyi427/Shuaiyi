@@ -46,6 +46,7 @@
     [timerTitle setBackgroundColor:[UIColor clearColor]];
     [timerView addSubview:timerTitle];
     
+    
     timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(screentWith * 0.5 + 20, 0.0, screentWith * 0.5 - 20, 44)];
     timerLabel.font = [UIFont systemFontOfSize:14];
     timerLabel.textColor = [UIColor r:242 g:101 b:34];

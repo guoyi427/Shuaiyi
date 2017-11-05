@@ -31,11 +31,13 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string></string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>KoMovie</string>
+				<string>ZhangYu</string>
 				<string>QQ05FCC15D</string>
 				<string>sinaweibosso.1767451078</string>
 				<string>wx74c15f9950ca03b1</string>

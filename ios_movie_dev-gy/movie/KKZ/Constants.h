@@ -71,7 +71,7 @@
 #define UPPayMode @"00" //银联
 
 //==========支付宝的Scheme==========
-#define kAlipayScheme @"KoMovie"
+#define kAlipayScheme @"ZhangYu"
 
 //==========测试环境==========
 /*
