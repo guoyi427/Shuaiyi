@@ -177,7 +177,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   AFNetworkActivityLogger:
-    :branch: 3_0_0
+    :branch: '3_0_0'
     :git: https://github.com/AFNetworking/AFNetworkActivityLogger.git
 
 CHECKOUT OPTIONS:
@@ -206,11 +206,11 @@ SPEC CHECKSUMS:
   MJRefresh_KKZ: c7e35e33824bf64dd96085f9fc4419e82f73b556
   MWPhotoBrowser: 5836d7aa041dc05a13de380c246826578adc5ea5
   NetCore_KKZ: 8ea6c46cad25b74132b6c47ae832d7b86aeb69ad
-  NetCore_KKZ_Cache: 086b486cd929d0e227d94b3cebfd2c5a05e1ad31
+  NetCore_KKZ_Cache: '086b486cd929d0e227d94b3cebfd2c5a05e1ad31'
   NSURL+QueryDictionary: bae616404e2adf6409d3d5c02a093cbf44c8a236
   ObjectiveSugar: a6a25f23d657c19df0a0b972466d5b5ca9f5295c
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  SDWebImage: '098e97e6176540799c27e804c96653ee0833d13c'
   ShareSDK_KKZ: bdf927bf7d15939c6a0f00369907290dc30da0b3
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   SwitchMovieView: dd0e9b715df9fd042724b1397f4f0433c8f2924a
@@ -223,4 +223,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: d58f8a68fdf17fd7afa5f7e67bbcbb526d734a0a
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.2.0

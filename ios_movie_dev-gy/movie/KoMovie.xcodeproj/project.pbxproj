@@ -303,7 +303,7 @@
 		298CA527183B580E008975B4 /* UIButton+PPiAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 298CA526183B580E008975B4 /* UIButton+PPiAwesome.m */; };
 		298CA529183CB981008975B4 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298CA528183CB981008975B4 /* AdSupport.framework */; };
 		298F48DC169D0B840063B829 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298F48DB169D0B840063B829 /* AddressBook.framework */; };
-		2991212A17B0CD0000899941 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		2991212A17B0CD0000899941 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		2991213117B0FB3800899941 /* MovieDBTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 2991213017B0FB3800899941 /* MovieDBTask.m */; };
 		2992ECF717374E15005A3832 /* MediaTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 2992ECF617374E15005A3832 /* MediaTask.m */; };
 		29940481171D494300CB329E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29940480171D494200CB329E /* CFNetwork.framework */; };
@@ -9894,7 +9894,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		F9A557B08E8A7357742AB4C1 /* [CP] Check Pods Manifest.lock */ = {
@@ -9912,7 +9912,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -10452,7 +10452,7 @@
 				29BA62E81D6DCC250070AB1C /* EditTitleCell.m in Sources */,
 				29BA61BD1D6743DD0070AB1C /* MovieCommentSuccessViewController.m in Sources */,
 				29AA5A221D70498B00092894 /* RecommendLayout.m in Sources */,
-				2991212A17B0CD0000899941 /* (null) in Sources */,
+				2991212A17B0CD0000899941 /* BuildFile in Sources */,
 				29AA59F71D70346900092894 /* UIScrollView+RefreshExtension.m in Sources */,
 				5DCF10561A6752BD009C52F5 /* KotaMovieListsViewController.m in Sources */,
 				2991213117B0FB3800899941 /* MovieDBTask.m in Sources */,

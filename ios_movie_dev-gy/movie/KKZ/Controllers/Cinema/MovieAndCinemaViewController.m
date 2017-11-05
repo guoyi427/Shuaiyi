@@ -385,7 +385,7 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
         ZYMovieListCell *c_cell = (ZYMovieListCell *)[tableView dequeueReusableCellWithIdentifier:CurrentMovieCellIdentifier];
         if (_currentMovieList.count > indexPath.row) {
             Movie *model = _currentMovieList[indexPath.row];
-            [c_cell update:model];
+            [c_cell update:model type:ZYMovieListCellType_Current];
             cell = c_cell;
         }
         
@@ -393,7 +393,7 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
         ZYMovieListCell *f_cell = (ZYMovieListCell *)[tableView dequeueReusableCellWithIdentifier:FutureMovieCellIdentifier];
         if (_futureMovieList.count > indexPath.row) {
             Movie *model = _futureMovieList[indexPath.row];
-            [f_cell update:model];
+            [f_cell update:model type:ZYMovieListCellType_Future];
             cell = f_cell;
         }
     } else if (tableView == _cinemaTableView) {
@@ -412,7 +412,7 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
     if (tableView == _currentMovieTableView) {
         return 137;
     } else if (tableView == _futureMovieTableView) {
-        return 137;
+        return 185;
     } else if (tableView == _cinemaTableView) {
         return 80.0;
     }

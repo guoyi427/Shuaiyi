@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum : NSUInteger {
+    ZYMovieListCellType_Current,
+    ZYMovieListCellType_Future,
+} ZYMovieListCellType;
+
 @class Movie;
 @interface ZYMovieListCell : UITableViewCell
 
-- (void)update:(Movie *)model;
+- (void)update:(Movie *)model type:(ZYMovieListCellType)type;
 
 @end
