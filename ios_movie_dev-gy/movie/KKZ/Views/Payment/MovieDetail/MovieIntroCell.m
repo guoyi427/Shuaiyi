@@ -38,12 +38,13 @@ static const CGFloat kMarginX = 15;
         introLabel.numberOfLines = 0;
         [self addSubview:introLabel];
 
-        unfoldLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(introLabel.frame), screentWith, 35)];
-        unfoldLbl.font = [UIFont systemFontOfSize:14];
-        unfoldLbl.textAlignment = NSTextAlignmentCenter;
-        unfoldLbl.text = @"展开";
-        unfoldLbl.textColor = appDelegate.kkzBlue;
+        unfoldLbl = [[UIImageView alloc] init];
+        unfoldLbl.image = [UIImage imageNamed:@"cinemaDetail_arrow"];
         [self addSubview:unfoldLbl];
+        [unfoldLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self);
+            make.bottom.equalTo(self).offset(-10);
+        }];
 
         UIView *topline = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kAppScreenWidth, 5)];
         topline.backgroundColor = [UIColor r:229 g:229 b:229 alpha:0.8];
@@ -75,7 +76,7 @@ static const CGFloat kMarginX = 15;
                        font:[UIFont systemFontOfSize:kFontSize]];
 
         introLabel.frame = CGRectMake(kMarginX, 12, screentWith - kMarginX * 2, introSizeMin.height);
-        unfoldLbl.frame = CGRectMake(0, CGRectGetMaxY(introLabel.frame), screentWith, 35);
+//        unfoldLbl.frame = CGRectMake(0, CGRectGetMaxY(introLabel.frame), screentWith, 35);
         line.frame = CGRectMake(0, 12 + introSizeMin.height + 35 - 1, screentWith, 1);
         whiteBg.frame = CGRectMake(0, 0, screentWith, 12 + introSizeMin.height + 35);
     } else {
@@ -96,7 +97,7 @@ static const CGFloat kMarginX = 15;
                        font:[UIFont systemFontOfSize:kFontSize]];
 
         introLabel.frame = CGRectMake(kMarginX, 12, screentWith - kMarginX * 2, introSizeMax.height);
-        unfoldLbl.frame = CGRectMake(0, CGRectGetMaxY(introLabel.frame), screentWith, 35);
+//        unfoldLbl.frame = CGRectMake(0, CGRectGetMaxY(introLabel.frame), screentWith, 35);
         line.frame = CGRectMake(0, 12 + introSizeMax.height + 35 - 1, screentWith, 1);
         whiteBg.frame = CGRectMake(0, 0, screentWith, 12 + introSizeMax.height + 35);
     }
@@ -124,7 +125,7 @@ static const CGFloat kMarginX = 15;
                        font:[UIFont systemFontOfSize:kFontSize]];
 
         positionY += introSizeMin.height;
-        unfoldLbl.text = @"展开";
+        unfoldLbl.transform = CGAffineTransformMakeRotation(0);
     } else {
         //        CGSize introSizeMax = [self.movieIntro sizeWithFont:[UIFont systemFontOfSize:kFontSize]
         //                                          constrainedToSize:CGSizeMake(screentWith - Margin * 2, MAXFLOAT)
@@ -143,7 +144,7 @@ static const CGFloat kMarginX = 15;
                        font:[UIFont systemFontOfSize:kFontSize]];
 
         positionY += introSizeMax.height;
-        unfoldLbl.text = @"收起";
+        unfoldLbl.transform = CGAffineTransformMakeRotation(M_PI);
     }
     return positionY + 35;
 }

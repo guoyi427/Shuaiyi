@@ -274,7 +274,7 @@
  */
 - (void)addBuyTicketView {
     UIButton *buyTicketBtn = [[UIButton alloc] initWithFrame:CGRectMake(150, screentHeight - 50, screentWith-150, 50)];
-    [buyTicketBtn setBackgroundColor:appDelegate.kkzDarkYellow];
+    [buyTicketBtn setBackgroundImage:[UIImage imageNamed:@"Pay_paybutton"] forState:UIControlStateNormal];
     if (_isCommingSoon) {
         [buyTicketBtn setTitle:@"等待拍片" forState:UIControlStateNormal];
         buyTicketBtn.enabled = false;

@@ -83,7 +83,7 @@
     cell.iconLbel.textColor = self.labelColor;
     cell.showBottomView = FALSE;
     if (self.currentIndex == indexPath.row) {
-        cell.iconLbel.textColor = self.clickLabelColor;
+        cell.iconLbel.textColor = appDelegate.kkzPink;//self.clickLabelColor;
         if (self.needLargeLabel) {
             cell.iconLbel.font = self.bigLabelFont;
         } else if (self.needShowBottom) {

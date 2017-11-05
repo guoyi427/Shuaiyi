@@ -32,6 +32,8 @@
     
     //  Data
     NSArray<NSArray *> *_menuTitleList;
+    NSInteger _couponCount;
+    NSInteger _coupon2Count;
 }
 @end
 
@@ -199,6 +201,24 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     } failure:^(NSError * _Nullable err) {
         
     }];
+    
+    MovieRequest *request2 = [[MovieRequest alloc] init];
+    [request2 queryCouponListWithGroupId:4 success:^(NSArray * _Nullable couponList) {
+        NSInteger count = couponList.count;
+        _couponCount = count;
+        [_tableView reloadData];
+    } failure:^(NSError * _Nullable err) {
+        
+    }];
+    
+    MovieRequest *request3 = [[MovieRequest alloc] init];
+    [request3 queryCouponListWithGroupId:3 success:^(NSArray * _Nullable couponList) {
+        NSInteger count = couponList.count;
+        _coupon2Count = count;
+        [_tableView reloadData];
+    } failure:^(NSError * _Nullable err) {
+        
+    }];
 }
 
 #pragma mark - UIButton - Action
@@ -229,7 +249,13 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     UserCenterCell *cell = [tableView dequeueReusableCellWithIdentifier:UserCenterCell_Identifier];
     
     [cell updateTitle:_menuTitleList[indexPath.section][indexPath.row]];
-    [cell updateRightTitle:@""];
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            [cell updateRightTitle:[NSString stringWithFormat:@"%ld", _couponCount]];
+        } else if (indexPath.row == 1) {
+            [cell updateRightTitle:[NSString stringWithFormat:@"%ld", _coupon2Count]];
+        }
+    }
     
     return cell;
 }

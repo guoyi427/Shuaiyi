@@ -222,7 +222,7 @@ static const CGFloat movieDetailVHeight = 60.0f;
     if (!_moviePointLabel) {
         _moviePointLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, moviePointTop + CGRectGetMaxY(self.switchMovieView.frame), 0, moviePointHeight)];
         _moviePointLabel.font = [UIFont systemFontOfSize:moviePointTop];
-        _moviePointLabel.textColor = [UIColor colorWithHex:@"#ff6900"];
+        _moviePointLabel.textColor = appDelegate.kkzPink;//[UIColor colorWithHex:@"#ff6900"];
         _moviePointLabel.userInteractionEnabled = NO;
     }
     return _moviePointLabel;

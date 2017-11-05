@@ -146,7 +146,7 @@ static const CGFloat minPriceFontY = 14.0f;
     }
 
     if (_cinema.platformType == PlatFormTicket) { // 在线选座
-      [self.flags insertObject:@"座" atIndex:0];
+//      [self.flags insertObject:@"座" atIndex:0];
     }
 
     if (_cinema.flag.length > 0) {

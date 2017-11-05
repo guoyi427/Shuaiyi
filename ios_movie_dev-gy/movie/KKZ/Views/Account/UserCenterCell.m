@@ -25,21 +25,12 @@
         
         CGFloat Padding = 15;
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.textColor = appDelegate.kkzTextColor;
-        _titleLabel.font = [UIFont systemFontOfSize:18];
+        _titleLabel.textColor = appDelegate.kkzGray;
+        _titleLabel.font = [UIFont systemFontOfSize:14];
         [self.contentView addSubview:_titleLabel];
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.contentView);
             make.left.mas_equalTo(Padding);
-        }];
-        
-        _rightLabel = [[UILabel alloc] init];
-        _rightLabel.textColor = appDelegate.kkzTextColor;
-        _rightLabel.font = [UIFont systemFontOfSize:15];
-        [self.contentView addSubview:_rightLabel];
-        [_rightLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(Padding);
-            make.centerY.equalTo(self.contentView);
         }];
         
         UIImageView *arrowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowGray"]];
@@ -47,6 +38,15 @@
         [arrowView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.contentView);
             make.right.mas_equalTo(-Padding);
+        }];
+        
+        _rightLabel = [[UILabel alloc] init];
+        _rightLabel.textColor = appDelegate.kkzGray;
+        _rightLabel.font = [UIFont systemFontOfSize:14];
+        [self.contentView addSubview:_rightLabel];
+        [_rightLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(arrowView.mas_left).offset(-Padding);
+            make.centerY.equalTo(self.contentView);
         }];
         
         UIView *bottomLine = [[UIView alloc] init];

@@ -12,7 +12,7 @@
     UILabel *introLabel;
     UIView *line;
     UIView *whiteBg;
-    UILabel *unfoldLbl;
+    UIImageView *unfoldLbl;
 }
 
 @property (nonatomic, strong) NSString *movieIntro;
