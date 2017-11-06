@@ -60,12 +60,13 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
     
-    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kAppScreenWidth, 220)];
+    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kAppScreenWidth, kAppScreenWidth/375.0*145 + 80)];
     _headerView.backgroundColor = [UIColor whiteColor];
     _tableView.tableHeaderView = _headerView;
     
-    UIImageView *pinkView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screentWith, 140)];
-    pinkView.backgroundColor = appDelegate.kkzPink;
+    UIImageView *pinkView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screentWith, kAppScreenWidth/375.0*145)];
+    pinkView.image = [UIImage imageNamed:@"UserCenter_headerView@2x.jpg"];
+    pinkView.contentMode = UIViewContentModeScaleAspectFill;
     [_headerView addSubview:pinkView];
     
     _userImageView = [[UIImageView alloc] init];
@@ -98,6 +99,13 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     [vipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_nickNameLabel);
         make.top.equalTo(_nickNameLabel.mas_bottom).offset(2);
+    }];
+    
+    UIImageView *vipIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"UserCenter_vipIcon"]];
+    [pinkView addSubview:vipIconView];
+    [vipIconView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(vipLabel.mas_right).offset(5);
+        make.centerY.equalTo(vipLabel);
     }];
     
     UIView *leftBottomView = [[UIView alloc] init];

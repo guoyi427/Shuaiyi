@@ -115,7 +115,7 @@
 
     UILabel *timerTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screentWith * 0.5 + 10, 44)];
     timerTitle.text = @"距离完成支付还有";
-    timerTitle.textColor = [UIColor r:242 g:101 b:34];
+    timerTitle.textColor = appDelegate.kkzPink;
     timerTitle.font = [UIFont systemFontOfSize:13];
     timerTitle.textAlignment = NSTextAlignmentRight;
     [timerTitle setBackgroundColor:[UIColor clearColor]];
@@ -123,7 +123,7 @@
 
     timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(screentWith * 0.5 + 20, 0.0, screentWith * 0.5 - 20, 44)];
     timerLabel.font = [UIFont systemFontOfSize:14];
-    timerLabel.textColor = [UIColor r:242 g:101 b:34];
+    timerLabel.textColor = appDelegate.kkzPink;
     timerLabel.backgroundColor = [UIColor clearColor];
     timerLabel.textAlignment = NSTextAlignmentLeft;
     timerLabel.text = @"";
@@ -316,7 +316,6 @@
         make.center.equalTo(phoneView);
     }];
     
-    
     //支付方式列表
     payView = [[PayView alloc] init];
     payView.delegate = self;
@@ -451,7 +450,7 @@
     }];
     
     UILabel *couponTitleLabel = [[UILabel alloc] init];
-    couponTitleLabel.text = @"优惠";
+    couponTitleLabel.text = @"优惠券";
     couponTitleLabel.font = [UIFont systemFontOfSize:14];
     couponTitleLabel.textColor = appDelegate.kkzGray;
     [couponView addSubview:couponTitleLabel];
@@ -510,7 +509,7 @@
     }];
     
     UILabel *coupon2TitleLabel = [[UILabel alloc] init];
-    coupon2TitleLabel.text = @"劵码";
+    coupon2TitleLabel.text = @"兑换码";
     coupon2TitleLabel.font = [UIFont systemFontOfSize:14];
     coupon2TitleLabel.textColor = appDelegate.kkzGray;
     [couponView2 addSubview:coupon2TitleLabel];
@@ -550,6 +549,36 @@
     UITapGestureRecognizer *tapCouponView2GR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCouponView2Action)];
     [couponView2 addGestureRecognizer:tapCouponView2GR];
     
+    //  储值卡
+    UIView *cardView = [[UIView alloc] init];
+    cardView.backgroundColor = [UIColor whiteColor];
+    [holder addSubview:cardView];
+    [cardView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.width.equalTo(holder);
+        make.top.equalTo(couponView2.mas_bottom).offset(10);
+        make.height.equalTo(couponView2);
+    }];
+    
+    UILabel *cardTitleLabel = [[UILabel alloc] init];
+    cardTitleLabel.text = @"储值卡";
+    cardTitleLabel.font = [UIFont systemFontOfSize:14];
+    cardTitleLabel.textColor = appDelegate.kkzGray;
+    [cardView addSubview:cardTitleLabel];
+    [cardTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(15);
+        make.centerY.equalTo(cardView);
+    }];
+    
+    UIImageView *cardArrowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowRightGray"]];
+    [cardView addSubview:cardArrowView];
+    [cardArrowView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-15);
+        make.centerY.equalTo(cardView);
+    }];
+    
+    UITapGestureRecognizer *tapCardViewGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCardViewAction)];
+    [cardView addGestureRecognizer:tapCardViewGR];
+    
     //  客服电话
     UILabel *telphoneLabel = [[UILabel alloc] init];
     telphoneLabel.text = @"客服电话 4006-888-888";
@@ -558,7 +587,7 @@
     [holder addSubview:telphoneLabel];
     [telphoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(holder);
-        make.top.equalTo(couponView2.mas_bottom).offset(10);
+        make.top.equalTo(cardView.mas_bottom).offset(10);
     }];
     
     //  工作时间
@@ -600,11 +629,11 @@
     moneyNeedPayLabel.backgroundColor = [UIColor clearColor];
     moneyNeedPayLabel.textAlignment = NSTextAlignmentLeft;
     moneyNeedPayLabel.textColor = appDelegate.kkzDarkYellow;
-    moneyNeedPayLabel.text = @"";
+    moneyNeedPayLabel.text = [NSString stringWithFormat:@"￥%.2f", [self.myOrder moneyToPay]];
     moneyNeedPayLabel.font = [UIFont systemFontOfSize:20];
     [payBtnView addSubview:moneyNeedPayLabel];
     [moneyNeedPayLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(moneyNeedPayLbl.mas_right).offset(2);
+        make.left.equalTo(moneyNeedPayLbl.mas_right).offset(-5);
         make.centerY.equalTo(payBtnView);
     }];
 
@@ -907,31 +936,7 @@
             sysProvide:(NSString *)sysProvide {
 
     if (selectedMethod == PayMethodAliMoblie) {
-
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9) {
-
-            RIButtonItem *cancel = [RIButtonItem itemWithLabel:@"确定"];
-            cancel.action = ^{
-
-                [self alipayWithUrl:payUrl andSign:sign];
-            };
-
-            RIButtonItem *done = [RIButtonItem itemWithLabel:@"取消"];
-            done.action = ^{
-
-            };
-
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息"
-                                                            message:@"如果您的支付宝是旧版可能与IOS9系统不兼容。请将支付宝升级到最新版。（支付宝已是最新版请忽略此提示信息）"
-                                                   cancelButtonItem:cancel
-                                                   otherButtonItems:done, nil];
-            [alert show];
-
-        } else {
-
-            [self alipayWithUrl:payUrl andSign:sign];
-        }
-
+        [self alipayWithUrl:payUrl andSign:sign];
     } else if (selectedMethod == PayMethodUnionpay) {
         if (![self unionPayWithSign:sign spId:spId sysProvide:sysProvide]) {
         }
@@ -1183,6 +1188,15 @@
 - (void)tapCouponView2Action {
     CouponViewController *vc = [[CouponViewController alloc] init];
     vc.type = CouponType_Redeem;
+    [self.navigationController pushViewController:vc animated:true];
+}
+
+/**
+ 储蓄卡
+ */
+- (void)tapCardViewAction {
+    CouponViewController *vc = [[CouponViewController alloc] init];
+    vc.type = CouponType_Stored;
     [self.navigationController pushViewController:vc animated:true];
 }
 

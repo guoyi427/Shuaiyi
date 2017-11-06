@@ -12,4 +12,6 @@
 
 - (void)updateWithDic:(NSDictionary *)dic;
 
+- (void)updateCardWithDic:(NSDictionary *)dic;
+
 @end

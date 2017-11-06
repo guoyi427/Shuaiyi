@@ -13,7 +13,7 @@ typedef enum : NSUInteger {
     CouponType_coupon = 4,
     /// 兑换码
     CouponType_Redeem = 3,
-    /// 储值
+    /// 储值卡
     CouponType_Stored = 1,
 } CouponType;
 

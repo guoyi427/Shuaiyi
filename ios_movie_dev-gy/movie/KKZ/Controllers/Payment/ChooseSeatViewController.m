@@ -380,8 +380,8 @@ const int K_MAX_SELECTED_SEAT = 4;
     confirmBtn.titleLabel.font = [UIFont systemFontOfSize:17];
     [confirmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [confirmBtn setTitle:@"确认订单" forState:UIControlStateNormal];
+    [confirmBtn setBackgroundImage:[UIImage imageNamed:@"Pay_paybutton"] forState:UIControlStateNormal];
     [confirmBtn addTarget:self action:@selector(confirmOrderClick) forControlEvents:UIControlEventTouchUpInside];
-    [confirmBtn setBackgroundColor:[UIColor colorWithHex:@"0xff6901"] forState:UIControlStateNormal];
     self.btnCheckOrder = confirmBtn;
     [self.ticketView addSubview:confirmBtn];
     [confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -34,7 +34,14 @@ static NSString *RedeemCellId = @"redeemcell";
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     _modelList = [[NSMutableArray alloc] init];
-    self.kkzTitleLabel.text = _type == CouponType_coupon ? @"优惠券" : @"兑换码";
+    
+    if (_type == CouponType_coupon) {
+        self.kkzTitleLabel.text = @"优惠券";
+    } else if (_type == CouponType_Redeem) {
+        self.kkzTitleLabel.text = @"兑换码";
+    } else {
+        self.kkzTitleLabel.text = @"储蓄卡";
+    }
     
     [self prepareTableView];
     
@@ -96,11 +103,18 @@ static NSString *RedeemCellId = @"redeemcell";
             [cell updateName:dic[@"info"][@"name"] time:dic[@"expireDate"] price:dic[@"info"][@"price"] canBuy:dic[@"remainCount"]];
         }
         tempCell = cell;
-    } else {
+    } else if (_type == CouponType_Redeem) {
         CouponRedeemCell *cell = [tableView dequeueReusableCellWithIdentifier:RedeemCellId];
         if (_modelList.count > indexPath.row) {
             NSDictionary *dic = _modelList[indexPath.row];
             [cell updateWithDic:dic];
+        }
+        tempCell = cell;
+    } else {
+        CouponRedeemCell *cell = [tableView dequeueReusableCellWithIdentifier:RedeemCellId];
+        if (_modelList.count > indexPath.row) {
+            NSDictionary *dic = _modelList[indexPath.row];
+            [cell updateCardWithDic:dic];
         }
         tempCell = cell;
     }

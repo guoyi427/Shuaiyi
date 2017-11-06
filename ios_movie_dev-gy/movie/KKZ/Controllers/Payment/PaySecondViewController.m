@@ -40,7 +40,7 @@
     
     UILabel *timerTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screentWith * 0.5 + 10, 44)];
     timerTitle.text = @"距离完成支付还有";
-    timerTitle.textColor = [UIColor r:242 g:101 b:34];
+    timerTitle.textColor = appDelegate.kkzPink;
     timerTitle.font = [UIFont systemFontOfSize:13];
     timerTitle.textAlignment = NSTextAlignmentRight;
     [timerTitle setBackgroundColor:[UIColor clearColor]];
@@ -49,7 +49,7 @@
     
     timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(screentWith * 0.5 + 20, 0.0, screentWith * 0.5 - 20, 44)];
     timerLabel.font = [UIFont systemFontOfSize:14];
-    timerLabel.textColor = [UIColor r:242 g:101 b:34];
+    timerLabel.textColor = appDelegate.kkzPink;
     timerLabel.backgroundColor = [UIColor clearColor];
     timerLabel.textAlignment = NSTextAlignmentLeft;
     timerLabel.text = @"";

@@ -273,12 +273,12 @@
  *  添加购票按钮
  */
 - (void)addBuyTicketView {
-    UIButton *buyTicketBtn = [[UIButton alloc] initWithFrame:CGRectMake(150, screentHeight - 50, screentWith-150, 50)];
+    UIButton *buyTicketBtn = [[UIButton alloc] initWithFrame:CGRectMake(150-75, screentHeight - 50, screentWith-150+75, 50)];//CGRectMake(150, screentHeight - 50, screentWith-150, 50)];
     [buyTicketBtn setBackgroundImage:[UIImage imageNamed:@"Pay_paybutton"] forState:UIControlStateNormal];
     if (_isCommingSoon) {
         [buyTicketBtn setTitle:@"等待拍片" forState:UIControlStateNormal];
         buyTicketBtn.enabled = false;
-        buyTicketBtn.frame = CGRectMake(150-75, screentHeight - 50, screentWith-150+75, 50);
+//        buyTicketBtn.frame = CGRectMake(150-75, screentHeight - 50, screentWith-150+75, 50);
     } else {
         [buyTicketBtn setTitle:@"选座购票" forState:UIControlStateNormal];
         buyTicketBtn.enabled = true;
@@ -299,6 +299,7 @@
     [relationButton addTarget:self action:@selector(relationButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:relationButton];
     
+    /*
     if (!_isCommingSoon) {
         UIButton *scoreButton = [UIButton buttonWithType:UIButtonTypeCustom];
         scoreButton.frame = CGRectMake(75, screentHeight - 50, 75, 50);
@@ -311,6 +312,7 @@
         [scoreButton addTarget:self action:@selector(scoreButtonAction) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:scoreButton];
     }
+     */
 }
 
 - (void)buyTicketBtnClicked {

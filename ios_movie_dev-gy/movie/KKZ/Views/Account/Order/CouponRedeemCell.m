@@ -16,6 +16,12 @@
     UILabel *_timeLabel;
     UILabel *_stateLabel;
     UILabel *_subStateLabel;
+    
+    UIImageView *_selectedStateView;
+    
+    //  储蓄卡
+    UILabel *_cardValueLabel;
+    UILabel *_remainValueLabel;
 }
 @end
 
@@ -77,6 +83,14 @@
             make.centerY.equalTo(_stateBgView).offset(25);
             make.centerX.equalTo(_stateLabel);
         }];
+        
+        _selectedStateView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CouponList_normal"]];
+        _selectedStateView.hidden = true;
+        [_stateBgView addSubview:_selectedStateView];
+        [_selectedStateView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(_stateBgView).offset(-20);
+            make.bottom.equalTo(_stateBgView).offset(-20);
+        }];
     }
     return self;
 }
@@ -93,6 +107,30 @@
     _detailLabel.text = dic[@"info"][@"description"];
     _timeLabel.text = dic[@"expireDate"];
     _stateLabel.text = dic[@"info"][@"name"];
+    
+    //  判断是否选中
+    if (1) {
+        _selectedStateView.image = [UIImage imageNamed:@"CouponList_selected"];
+    } else {
+        _selectedStateView.image = [UIImage imageNamed:@"CouponList_normal"];
+    }
+}
+
+- (void)updateCardWithDic:(NSDictionary *)dic {
+    
+    BOOL canUse = [dic[@"remainCount"] boolValue];
+    if (canUse) {
+        _stateBgView.image = [UIImage imageNamed:@"CouponList_pink"];
+    } else {
+        _stateBgView.image = [UIImage imageNamed:@"CouponList_gray"];
+    }
+    
+//    _nameLabel.text = dic[@"info"][@"name"];
+    _detailLabel.text = dic[@"info"][@"description"];
+    _timeLabel.text = dic[@"expireDate"];
+    _stateLabel.text = dic[@"info"][@"name"];
+    
+    _nameLabel.text = [NSString stringWithFormat:@"%@元 剩余：%@元", dic[@"cardValue"], dic[@"remainValue"]];
     
 }
 
