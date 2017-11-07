@@ -8,12 +8,15 @@
 
 #import "CouponCell.h"
 
+#import "CouponViewController.h"
+
 @interface CouponCell ()
 {
     UIImageView *_stateBgView;
     UILabel *_nameLabel;
     UILabel *_timeLabel;
     UILabel *_priceLabel;
+    UIImageView *_selectedStateView;
 }
 @end
 
@@ -22,6 +25,8 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         _stateBgView = [[UIImageView alloc] init];
         [self.contentView addSubview:_stateBgView];
         [_stateBgView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -57,24 +62,36 @@
             make.centerY.equalTo(_stateBgView);
             make.right.mas_equalTo(-30);
         }];
+        
+        _selectedStateView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CouponList_normal"]];
+        _selectedStateView.hidden = true;
+        [_stateBgView addSubview:_selectedStateView];
+        [_selectedStateView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(_stateBgView).offset(-10);
+            make.bottom.equalTo(_stateBgView).offset(-10);
+        }];
     }
     return self;
 }
 
-- (void)updateName:(NSString *)name
-              time:(NSString *)time
-             price:(NSString *)price
-            canBuy:(NSNumber *)canBuy {
-    
-    if (canBuy.boolValue) {
+- (void)updateWithDic:(NSDictionary *)dic comefromPay:(BOOL)pay {
+    if ([dic[@"remainCount"] boolValue]) {
         _stateBgView.image = [UIImage imageNamed:@"CouponList_pink"];
     } else {
         _stateBgView.image = [UIImage imageNamed:@"CouponList_gray"];
     }
     
-    _nameLabel.text = name;
-    _timeLabel.text = time;
-    _priceLabel.text = price;
+    _nameLabel.text = dic[@"info"][@"name"];
+    _timeLabel.text = dic[@"expireDate"];
+    _priceLabel.text = dic[@"info"][@"price"];
+    
+    _selectedStateView.hidden = !pay;
+    //  判断是否选中
+    if ([dic[CellSelectedKey] boolValue]) {
+        _selectedStateView.image = [UIImage imageNamed:@"CouponList_selected"];
+    } else {
+        _selectedStateView.image = [UIImage imageNamed:@"CouponList_normal"];
+    }
 }
 
 @end

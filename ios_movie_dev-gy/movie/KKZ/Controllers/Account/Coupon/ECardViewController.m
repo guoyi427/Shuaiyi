@@ -228,15 +228,15 @@
         return;
     }
 
-    PayTask *task = [[PayTask alloc]
-            initBindingCouponforUser:[eCardNo.text
-                                             stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]
-                            finished:^(BOOL succeeded, NSDictionary *userInfo) {
-                                [self eCardChecked:userInfo status:succeeded];
-                            }];
-    if ([[TaskQueue sharedTaskQueue] addTaskToQueue:task]) {
-        [appDelegate showIndicatorWithTitle:@"请稍候..." animated:YES fullScreen:NO overKeyboard:NO andAutoHide:NO];
-    }
+//    PayTask *task = [[PayTask alloc]
+//            initBindingCouponforUser:[eCardNo.text
+//                                             stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]
+//                            finished:^(BOOL succeeded, NSDictionary *userInfo) {
+//                                [self eCardChecked:userInfo status:succeeded];
+//                            }];
+//    if ([[TaskQueue sharedTaskQueue] addTaskToQueue:task]) {
+//        [appDelegate showIndicatorWithTitle:@"请稍候..." animated:YES fullScreen:NO overKeyboard:NO andAutoHide:NO];
+//    }
 }
 
 #pragma mark - Override from CommonViewController

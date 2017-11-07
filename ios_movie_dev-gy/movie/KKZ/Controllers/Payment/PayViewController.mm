@@ -46,8 +46,14 @@
 #define kTextSizeMovieName 16 // 电影名称的字体大小
 #define kTextSizeTicketInfo 13 // 影票其他信息的字体大小
 
-@interface PayViewController ()
+@interface PayViewController () <CouponViewControllerDelegate>
 {
+    //  Data
+    NSString *_couponString;
+    /// 是否为储蓄卡支付
+    BOOL _isCardPay;
+    
+    //  UI
     UILabel *_couponCountLabel;
     UILabel *_couponCountLabel2;
     UILabel *_couponNullLabel;
@@ -99,7 +105,8 @@
     [self.view addSubview:holder];
     holder.backgroundColor = [UIColor r:245 g:245 b:245];
     holder.showsVerticalScrollIndicator = NO;
-
+    holder.contentSize = CGSizeMake(0, 750);
+    
     [self queryUserMobile];
     [self queryOrderDetail];
     [self queryOrderWarning];
@@ -690,7 +697,7 @@
 }
 
 - (void)sliderTotop {
-//    [holder setContentOffset:CGPointMake(0, sliderH) animated:YES];
+
 }
 
 - (void)beforeActivityMethod:(NSTimer *)time {
@@ -807,12 +814,17 @@
 //    } else if (appDelegate.selectedTab == 1) { //影院入口
 //        StatisEvent(EVENT_BUY_PAY_ORDER_SOURCE_CINEMA);
 //    }
-
-    PaySecondViewController *vc = [[PaySecondViewController alloc] init];
-    vc.payView = payView;
-    vc.myOrder = self.myOrder;
-    vc.isFromCoupon = self.isFromCoupon;
-    [self.navigationController pushViewController:vc animated:true];
+    if (_isCardPay) {
+        payView.ecardListStr = _couponString;
+        payView.selectedMethod = PayMethodNone;
+        [payView payOrder];
+    } else {
+        PaySecondViewController *vc = [[PaySecondViewController alloc] init];
+        vc.payView = payView;
+        vc.myOrder = self.myOrder;
+        vc.isFromCoupon = self.isFromCoupon;
+        [self.navigationController pushViewController:vc animated:true];
+    }
 }
 
 - (void)payOrderBtnEnable:(BOOL)isEnable {
@@ -1085,7 +1097,7 @@
 
 #pragma mark PayView delegate
 - (void)heightDidChange {
-    [holder setContentSize:CGSizeMake(screentWith, CGRectGetMaxY(payView.frame) + 90)];
+//    [holder setContentSize:CGSizeMake(screentWith, CGRectGetMaxY(payView.frame) + 90)];
 }
 
 + (NSDictionary *)paramsFromString:(NSString *)urlStr {
@@ -1178,6 +1190,8 @@
 - (void)tapCouponViewAction {
     CouponViewController *vc = [[CouponViewController alloc] init];
     vc.type = CouponType_coupon;
+    vc.comefromPay = true;
+    vc.delegate = self;
     [self.navigationController pushViewController:vc animated:true];
 }
 
@@ -1188,6 +1202,8 @@
 - (void)tapCouponView2Action {
     CouponViewController *vc = [[CouponViewController alloc] init];
     vc.type = CouponType_Redeem;
+    vc.comefromPay = true;
+    vc.delegate = self;
     [self.navigationController pushViewController:vc animated:true];
 }
 
@@ -1197,6 +1213,8 @@
 - (void)tapCardViewAction {
     CouponViewController *vc = [[CouponViewController alloc] init];
     vc.type = CouponType_Stored;
+    vc.comefromPay = true;
+    vc.delegate = self;
     [self.navigationController pushViewController:vc animated:true];
 }
 
@@ -1211,6 +1229,62 @@
 
 - (BOOL)showTitleBar {
     return TRUE;
+}
+
+#pragma mark - CouponViewController - Delegate
+
+/// 选中券
+- (void)couponViewController:(CouponViewController *)viewController didSelectedCouponList:(NSArray *)list type:(CouponType)type {
+    NSLog(@"selected coupon list = %@", list);
+    
+    NSMutableString *couponString = [[NSMutableString alloc] initWithString:@"["];
+    for (NSDictionary *dic in list) {
+        if (dic[@"couponId"]) {
+            [couponString appendString:[NSString stringWithFormat:@"{couponid: %@},", dic[@"couponId"]]];
+        }
+    }
+    couponString = [NSMutableString stringWithString: [couponString substringToIndex:couponString.length-1]];
+    [couponString appendString:@"]"];
+    
+    payView.ecardListStr = couponString;
+    _couponString = couponString;
+    
+    if (type == CouponType_Stored) {
+        _isCardPay = true;
+    }
+    
+    //  更新价格状态
+    PayTask *task = [[PayTask alloc] initCheckECard:couponString
+                                           forOrder:self.orderNo
+                                           groupbuy:nil
+                                           finished:^(BOOL succeeded, NSDictionary *userInfo) {
+                                               
+                                               [appDelegate hideIndicator];
+                                               
+                                               if (succeeded) {
+                                                   [payView setOrderTotalFee:[userInfo[@"agio"] floatValue]];
+                                                   moneyNeedPayLabel.text = [NSString stringWithFormat:@"￥%.2f", [userInfo[@"agio"] floatValue]];
+                                                   NSArray *couponList = userInfo[@"coupons"];
+                                                   if (couponList.count > 0) {
+                                                       if (type == CouponType_coupon) {
+                                                           _couponCountLabel.text = [NSString stringWithFormat:@"已使用%lu张", couponList.count];
+                                                       } else if (type == CouponType_Redeem) {
+                                                           _couponCountLabel2.text = [NSString stringWithFormat:@"已使用%lu张", couponList.count];
+                                                       }
+                                                   }
+                                               } else {
+                                                   [appDelegate showAlertViewForTaskInfo:userInfo];
+                                               }
+                                               
+                                           }];
+    
+    if ([[TaskQueue sharedTaskQueue] addTaskToQueue:task]) {
+        [appDelegate showIndicatorWithTitle:@"请稍候..."
+                                   animated:YES
+                                 fullScreen:NO
+                               overKeyboard:NO
+                                andAutoHide:NO];
+    }
 }
 
 @end

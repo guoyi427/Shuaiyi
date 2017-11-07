@@ -10,9 +10,6 @@
 
 @interface CouponCell : UITableViewCell
 
-- (void)updateName:(NSString *)name
-              time:(NSString *)time
-             price:(NSString *)price
-            canBuy:(NSNumber *)canBuy;
+- (void)updateWithDic:(NSDictionary *)dic comefromPay:(BOOL)pay;
 
 @end

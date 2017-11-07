@@ -56,7 +56,7 @@ BOOL KShowRedBalance = NO;
 
     float moneyToPay = self.orderTotalFee - [self discountMoney];
     if (self.moneyToPayChanged) {
-        self.moneyToPayChanged(floor(moneyToPay * 1000) / 1000, selectedMethod);
+        self.moneyToPayChanged(floor(moneyToPay * 1000) / 1000, self.selectedMethod);
     }
 
     return floor(moneyToPay * 1000) / 1000;
@@ -106,7 +106,7 @@ BOOL KShowRedBalance = NO;
     }
     //如果启用了新的优惠方式，导致不需要余额支付，则清空支付方式
     if ([self moneyToPay] <= 0) {
-        selectedMethod = PayMethodNone;
+        self.selectedMethod = PayMethodNone;
         [self.payTypeTableViewY reloadData];
     }
 
@@ -119,7 +119,7 @@ BOOL KShowRedBalance = NO;
 
 - (void)showbalancenotice {
     PayTypeCell *cell = (PayTypeCell *) [self.payTypeTableViewY cellForRowAtIndexPath:self.indexPathY];
-    if (selectedMethod == PayMethodVip) {
+    if (self.selectedMethod == PayMethodVip) {
 
         if ([self moneyToPay] - [DataEngine sharedDataEngine].vipBalance > 0.0001) {
             cell.isbalanotHid = NO;
@@ -139,7 +139,7 @@ BOOL KShowRedBalance = NO;
 
         self.backgroundColor = appDelegate.kkzLine;//[UIColor clearColor];
         // 1 - 10
-        selectedMethod = PayMethodNone;
+        self.selectedMethod = PayMethodNone;
         self.selectedIndex = -1;
 
         //选择支付方式
@@ -486,13 +486,13 @@ BOOL KShowRedBalance = NO;
 - (void)setOrderTotalFee:(CGFloat)orderTotalFee {
     self.payMethodLabelY.text = [NSString stringWithFormat:@"￥%.2f", orderTotalFee];
     _orderTotalFee = orderTotalFee;
+    totalMaoneyLabel.text = [NSString stringWithFormat:@"￥%.2f", orderTotalFee];
 }
 
 - (void)doPayTypeTask {
     
     self.totalPrice = [self.myOrder.unitPrice floatValue] * [self.myOrder.count floatValue];
-    totalMaoneyLabel.text = [NSString
-                             stringWithFormat:@"￥%.2f", [self.myOrder.money floatValue]]; //self.totalPrice];
+    totalMaoneyLabel.text = [NSString stringWithFormat:@"￥%.2f", [self moneyToPay]]; //self.totalPrice];
     activityLabel.text = [NSString stringWithFormat:@"-￥%.2f", [self.myOrder.discountAmount floatValue]];
     
     PaymentModel *wechatModel = [[PaymentModel alloc] init];
@@ -564,7 +564,7 @@ BOOL KShowRedBalance = NO;
     PaymentModel *model = [payMethodList objectAtIndex:indexPath.row];
     PayMethod method = model.payMethod;
 
-    if (selectedMethod == method) {
+    if (self.selectedMethod == method) {
         imageView.image = [UIImage imageNamed:@"select_method_icon"];
     } else {
         imageView.image = [UIImage imageNamed:@"unselect_method_icon"];
@@ -610,14 +610,14 @@ BOOL KShowRedBalance = NO;
     PaymentModel *model = [payMethodList objectAtIndex:indexPath.row];
     PayMethod method = model.payMethod;
 
-    if (selectedMethod == method) {
+    if (self.selectedMethod == method) {
         // unselect
-        selectedMethod = PayMethodNone;
+        self.selectedMethod = PayMethodNone;
     } else {
         if ([self moneyToPay] <= 0) {
             return;
         }
-        selectedMethod = method;
+        self.selectedMethod = method;
     }
 
     [self.payTypeTableViewY reloadData];
@@ -782,7 +782,7 @@ BOOL KShowRedBalance = NO;
     }
 
     //钱不够，并且没有选择支付方式
-    if ([self moneyToPay] > 0 && selectedMethod == PayMethodNone) {
+    if ([self moneyToPay] > 0 && self.selectedMethod == PayMethodNone) {
         if ([self discountMoney] > 0) {
             [appDelegate showAlertViewForTitle:nil
                                        message:@"请选择补齐差额的支付方式"
@@ -796,9 +796,9 @@ BOOL KShowRedBalance = NO;
         }
     }
 
-    if (selectedMethod == PayMethodVip) {
+    if (self.selectedMethod == PayMethodVip) {
         CGFloat balance = [DataEngine sharedDataEngine].vipBalance;
-        if (selectedMethod == PayMethodVip && [self moneyToPay] - balance > 0.0001) {
+        if (self.selectedMethod == PayMethodVip && [self moneyToPay] - balance > 0.0001) {
             //在这里跳转充值界面 弹出窗口提示
             [self.delegate payOrderBtnEnable:YES];
 
@@ -821,7 +821,7 @@ BOOL KShowRedBalance = NO;
     
     KKZAnalyticsEvent *event = [[KKZAnalyticsEvent alloc] initWithOrder:self.myOrder];
     NSString *payMethod = @"";
-    switch (selectedMethod) {
+    switch (self.selectedMethod) {
         case PayMethodAliMoblie:
             payMethod = @"alipay-only";
             break;
@@ -853,7 +853,7 @@ BOOL KShowRedBalance = NO;
                                  useMoney:_balanceToUse
                                    eCards:_ecardListStr
                              useRedCoupon:(self.selectedPromotion == PromotionTypeRedCoupon ? [self discountMoney] : 0)
-                                  payType:selectedMethod
+                                  payType:self.selectedMethod
                                  finished:^(BOOL succeeded, NSDictionary *userInfo) {
 
                                      [self payOrderFinished:userInfo status:succeeded];
@@ -871,8 +871,7 @@ BOOL KShowRedBalance = NO;
     if (succeeded) {
         DLog(@"pay type succeeded");
         self.totalPrice = [self.myOrder.unitPrice floatValue] * [self.myOrder.count floatValue];
-        totalMaoneyLabel.text = [NSString
-                stringWithFormat:@"￥%.2f", self.totalPrice];
+        totalMaoneyLabel.text = [NSString stringWithFormat:@"￥%.2f", [self moneyToPay]];
         activityLabel.text = [NSString stringWithFormat:@"-￥%.2f", [self.myOrder.discountAmount floatValue]];
 
         NSMutableArray *payMethodArr = [userInfo objectForKey:@"payModels"];
@@ -971,9 +970,9 @@ BOOL KShowRedBalance = NO;
 
     if (succeeded) {
         DLog(@"payurl succeeded");
-        if (selectedMethod == PayMethodAliMoblie || selectedMethod == PayMethodWeiXin ||
-            selectedMethod == PayMethodUnionpay || selectedMethod == PayMethodYiZhiFu ||
-            selectedMethod == PayMethodJingDong || selectedMethod == PayMethodPuFa) {
+        if (self.selectedMethod == PayMethodAliMoblie || self.selectedMethod == PayMethodWeiXin ||
+            self.selectedMethod == PayMethodUnionpay || self.selectedMethod == PayMethodYiZhiFu ||
+            self.selectedMethod == PayMethodJingDong || self.selectedMethod == PayMethodPuFa) {
             NSString *payUrl = [userInfo objectForKey:@"payUrl"];
             NSString *sign = [userInfo objectForKey:@"sign"];
             NSString *oNo = [userInfo objectForKey:@"orderNo"];
@@ -982,7 +981,7 @@ BOOL KShowRedBalance = NO;
 
             if ([oNo isEqualToString:_orderNo]) {
                 //微信支付
-                if (selectedMethod == PayMethodWeiXin) {
+                if (self.selectedMethod == PayMethodWeiXin) {
 
                     if ([WXApi isWXAppInstalled]) {
                         //判断是否有微信
@@ -1020,7 +1019,7 @@ BOOL KShowRedBalance = NO;
                         [alertView show];
                     }
 
-                } else if (selectedMethod == PayMethodJingDong) {
+                } else if (self.selectedMethod == PayMethodJingDong) {
 
                     NSString *payUrl = [userInfo objectForKey:@"payUrl"];
                     NSString *key = [userInfo objectForKey:@"key"];
@@ -1035,7 +1034,7 @@ BOOL KShowRedBalance = NO;
                         [parentCtr pushViewController:jdctr animation:CommonSwitchAnimationSwipeR2L];
                     }
 
-                } else if (selectedMethod == PayMethodPuFa) {
+                } else if (self.selectedMethod == PayMethodPuFa) {
                     NSString *payUrl = [userInfo objectForKey:@"payUrl"];
                     NSMutableDictionary *dic = [payUrl getParams];
                     CommonViewController *controller = [KKZUtility getRootNavagationLastTopController];
@@ -1048,7 +1047,7 @@ BOOL KShowRedBalance = NO;
                 } else if (_delegate &&
                            [_delegate respondsToSelector:@selector(payOrderMethod:payUrl:sign:spId:sysProvide:)]) {
                     //调用第三方支付控件
-                    [_delegate payOrderMethod:selectedMethod payUrl:payUrl sign:sign spId:spId sysProvide:sysProvide];
+                    [_delegate payOrderMethod:self.selectedMethod payUrl:payUrl sign:sign spId:spId sysProvide:sysProvide];
                 }
             }
         } else {

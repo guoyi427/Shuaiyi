@@ -342,37 +342,37 @@
     }
 
     self.bindingCardNo = bindingNoStr;
-
-    PayTask *task = [[PayTask alloc]
-            initBindingCouponforUser:bindingNoStr
-                            finished:^(BOOL succeeded, NSDictionary *userInfo) {
-
-                                [appDelegate hideIndicator];
-                                if (succeeded) {
-                                    couponTextField.text = nil;
-
-                                    //只要用户第一次进入  或者 用户新绑定了兑换券  就以后台返回的默认值为准  其他情况下 以用户的选择为准
-                                    //清除以前的兑换券选择情况
-                                    [selectedEcardList removeAllObjects];
-                                    _ecardValue = 0;
-                                    self.CouponAmountBlock(_ecardValue, selectedEcardList);
-
-                                    NSArray *coupons = (NSArray *) [userInfo kkz_objForKey:@"myCouponList"];
-                                    if (coupons.count > 0) {
-                                        [self updateEcardList];
-                                    }
-                                } else {
-                                    [appDelegate showAlertViewForTaskInfo:userInfo];
-                                }
-
-                            }];
-    if ([[TaskQueue sharedTaskQueue] addTaskToQueue:task]) {
-        [appDelegate showIndicatorWithTitle:@"请稍候..."
-                                   animated:YES
-                                 fullScreen:NO
-                               overKeyboard:NO
-                                andAutoHide:NO];
-    }
+//
+//    PayTask *task = [[PayTask alloc]
+//            initBindingCouponforUser:bindingNoStr
+//                            finished:^(BOOL succeeded, NSDictionary *userInfo) {
+//
+//                                [appDelegate hideIndicator];
+//                                if (succeeded) {
+//                                    couponTextField.text = nil;
+//
+//                                    //只要用户第一次进入  或者 用户新绑定了兑换券  就以后台返回的默认值为准  其他情况下 以用户的选择为准
+//                                    //清除以前的兑换券选择情况
+//                                    [selectedEcardList removeAllObjects];
+//                                    _ecardValue = 0;
+//                                    self.CouponAmountBlock(_ecardValue, selectedEcardList);
+//
+//                                    NSArray *coupons = (NSArray *) [userInfo kkz_objForKey:@"myCouponList"];
+//                                    if (coupons.count > 0) {
+//                                        [self updateEcardList];
+//                                    }
+//                                } else {
+//                                    [appDelegate showAlertViewForTaskInfo:userInfo];
+//                                }
+//
+//                            }];
+//    if ([[TaskQueue sharedTaskQueue] addTaskToQueue:task]) {
+//        [appDelegate showIndicatorWithTitle:@"请稍候..."
+//                                   animated:YES
+//                                 fullScreen:NO
+//                               overKeyboard:NO
+//                                andAutoHide:NO];
+//    }
 }
 
 - (void)finishSelectCoupon {

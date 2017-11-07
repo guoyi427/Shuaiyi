@@ -10,8 +10,8 @@
 
 @interface CouponRedeemCell : UITableViewCell
 
-- (void)updateWithDic:(NSDictionary *)dic;
+- (void)updateWithDic:(NSDictionary *)dic comefromPay:(BOOL)pay;
 
-- (void)updateCardWithDic:(NSDictionary *)dic;
+- (void)updateCardWithDic:(NSDictionary *)dic comfromPay:(BOOL)pay;
 
 @end

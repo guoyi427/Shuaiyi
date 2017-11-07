@@ -90,11 +90,15 @@
 }
 
 - (id)initBindingCouponforUser:(NSString *)couponsId
+                       groupId:(NSString *)groupId
+                      password:(NSString *)password
                       finished:(FinishDownLoadBlock)block {
     self = [super init];
     if (self) {
         self.ecardIds = couponsId;
         self.taskType = TaskTypeBindingECard;
+        self.groupId = groupId;
+        self.cardPassword = password;
         self.finishBlock = block;
     }
     return self;
@@ -150,8 +154,12 @@
         [self setRequestURL:[NSString stringWithFormat:@"%@/%@",kKSSBaseUrl,kKSSPServer]];
 
         [self addParametersWithValue:@"coupon_Binding" forKey:@"action"];
-
+        [self addParametersWithValue:self.groupId forKey:@"group_id"];
         [self addParametersWithValue:self.ecardIds forKey:@"coupon_id"];
+        if (self.cardPassword.length > 0) {
+            [self addParametersWithValue:self.cardPassword forKey:@"password"];
+        }
+        [self addParametersWithValue:@true forKey:@"to_bind"];
 
         [self setRequestMethod:@"GET"];
     }

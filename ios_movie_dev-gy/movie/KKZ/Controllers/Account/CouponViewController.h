@@ -17,8 +17,19 @@ typedef enum : NSUInteger {
     CouponType_Stored = 1,
 } CouponType;
 
+static NSString *CellSelectedKey = @"selected";
+
+@class CouponViewController;
+@protocol CouponViewControllerDelegate <NSObject>
+
+- (void)couponViewController:(CouponViewController *)viewController didSelectedCouponList:(NSArray *)list type:(CouponType)type;
+
+@end
+
 @interface CouponViewController : CommonViewController
 
 @property (nonatomic, assign) CouponType type;
+@property (nonatomic, assign) BOOL comefromPay;
+@property (nonatomic, weak) id<CouponViewControllerDelegate> delegate;
 
 @end

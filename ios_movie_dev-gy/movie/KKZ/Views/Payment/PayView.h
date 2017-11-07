@@ -34,7 +34,6 @@ typedef enum {
 
 @interface PayView : UIView <UITableViewDataSource, UITableViewDelegate, WXApiDelegate> {
     NSMutableArray *ecardList, *payMethodList;
-    PayMethod selectedMethod;
 
     UILabel *balanceLabel, *useBalanceLabel, *tipLabel, *totalMoneyLabel, *couponMoneyLabel, *totalMaoneyLabel, *activityLabel, *redPacketLabel, *preferentialcardLabel;
     UILabel *noticeLabY;
@@ -98,6 +97,7 @@ typedef enum {
 @property (nonatomic, strong) NSMutableArray *detailTitleArray;
 @property (nonatomic, assign) NSInteger selectedIndex;
 @property (nonatomic, assign) BOOL isFirstLoad;
+@property (nonatomic, assign) PayMethod selectedMethod;
 
 @property (nonatomic, copy) void (^moneyToPayChanged)(CGFloat moneyToPay, PayMethod paymethod);
 

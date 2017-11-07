@@ -8,6 +8,8 @@
 
 #import "CouponRedeemCell.h"
 
+#import "CouponViewController.h"
+
 @interface CouponRedeemCell ()
 {
     UIImageView *_stateBgView;
@@ -30,6 +32,8 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         _stateBgView = [[UIImageView alloc] init];
         [self.contentView addSubview:_stateBgView];
         [_stateBgView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -88,14 +92,14 @@
         _selectedStateView.hidden = true;
         [_stateBgView addSubview:_selectedStateView];
         [_selectedStateView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(_stateBgView).offset(-20);
-            make.bottom.equalTo(_stateBgView).offset(-20);
+            make.right.equalTo(_stateBgView).offset(-10);
+            make.bottom.equalTo(_stateBgView).offset(-10);
         }];
     }
     return self;
 }
 
-- (void)updateWithDic:(NSDictionary *)dic {
+- (void)updateWithDic:(NSDictionary *)dic comefromPay:(BOOL)pay {
     BOOL canUse = [dic[@"remainCount"] boolValue];
     if (canUse) {
         _stateBgView.image = [UIImage imageNamed:@"CouponList_pink"];
@@ -108,15 +112,16 @@
     _timeLabel.text = dic[@"expireDate"];
     _stateLabel.text = dic[@"info"][@"name"];
     
+    _selectedStateView.hidden = !pay;
     //  判断是否选中
-    if (1) {
+    if ([dic[CellSelectedKey] boolValue]) {
         _selectedStateView.image = [UIImage imageNamed:@"CouponList_selected"];
     } else {
         _selectedStateView.image = [UIImage imageNamed:@"CouponList_normal"];
     }
 }
 
-- (void)updateCardWithDic:(NSDictionary *)dic {
+- (void)updateCardWithDic:(NSDictionary *)dic comfromPay:(BOOL)pay {
     
     BOOL canUse = [dic[@"remainCount"] boolValue];
     if (canUse) {
@@ -132,6 +137,13 @@
     
     _nameLabel.text = [NSString stringWithFormat:@"%@元 剩余：%@元", dic[@"cardValue"], dic[@"remainValue"]];
     
+    _selectedStateView.hidden = !pay;
+    //  判断是否选中
+    if ([dic[CellSelectedKey] boolValue]) {
+        _selectedStateView.image = [UIImage imageNamed:@"CouponList_selected"];
+    } else {
+        _selectedStateView.image = [UIImage imageNamed:@"CouponList_normal"];
+    }
 }
 
 @end

@@ -20,7 +20,9 @@
 }
 
 @property(nonatomic, strong) NSString *ecardIds;
+@property(nonatomic, strong) NSString *cardPassword;
 @property(nonatomic, strong) NSString *groupbuyId;
+@property(nonatomic, strong) NSString *groupId;
 @property(nonatomic, strong) NSString *orderNo;
 @property(nonatomic, strong) NSString *accountType;
 @property(nonatomic, assign) PayMethod payMethod;
@@ -106,6 +108,8 @@
  * @return <#return value description#>
  */
 - (id)initBindingCouponforUser:(NSString *)couponsId
+                       groupId:(NSString *)groupId
+                      password:(NSString *)password
                       finished:(FinishDownLoadBlock)block;
 
 /**
