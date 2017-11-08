@@ -41,7 +41,7 @@
 #define KOKOLOCATIONVIEWWIDTH ((screentWith - 158) * 0.5 - 10)
 #define KOKOLOCATIONVIEWHEIGHT 44.0f
 
-#define Banner_Height (75 * (screentWith / 320))
+#define Banner_Height (110 * (screentWith / 320))
 
 @interface MoviesNewViewController () <KOKOLocationViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 {
