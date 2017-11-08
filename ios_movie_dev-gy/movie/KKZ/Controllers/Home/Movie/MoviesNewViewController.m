@@ -37,6 +37,7 @@
 #import "UIViewController+SFTrainsitionExtension.h"
 #import "MJRefresh.h"
 #import "KoMovie-Swift.h"
+#import "CinemaSearchViewController.h"
 
 #define KOKOLOCATIONVIEWWIDTH ((screentWith - 158) * 0.5 - 10)
 #define KOKOLOCATIONVIEWHEIGHT 44.0f
@@ -478,18 +479,36 @@
  2. middleItem segment显示
  */
 - (void)loadNavBar {
-    //设置导航栏背景色
-//    self.navBarView.backgroundColor = appDelegate.kkzBlack;
-//    self.statusView.backgroundColor = appDelegate.kkzBlack;
-
     //左边定位城市的展示
     [self.navBarView addSubview:self.locationView];
-    self.kkzTitleLabel.text = @"章鱼";
+//    self.kkzTitleLabel.text = @"章鱼";
     // 搜索View
-//    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.locationView.frame), 5, kAppScreenWidth - CGRectGetMaxX(self.locationView.frame) - 44, CGRectGetHeight(self.navBarView.frame) - 10)];
-//    searchView.backgroundColor = [UIColor whiteColor];
-//
-//    [self.navBarView addSubview:searchView];
+    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.locationView.frame), 5, kAppScreenWidth - CGRectGetMaxX(self.locationView.frame) - 44, CGRectGetHeight(self.navBarView.frame) - 10)];
+    searchView.backgroundColor = [UIColor whiteColor];
+    searchView.layer.cornerRadius = 10.0;
+    searchView.layer.masksToBounds = true;
+    [self.navBarView addSubview:searchView];
+    
+    UILabel *searchLabel = [[UILabel alloc] init];
+    searchLabel.text = @"搜索电影";
+    searchLabel.textColor = appDelegate.kkzGray;
+    searchLabel.font = [UIFont systemFontOfSize:14];
+    [searchView addSubview:searchLabel];
+    [searchLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(searchView);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-40);
+    }];
+    
+    UIImageView *searchIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"searchIcon"]];
+    [searchView addSubview:searchIconView];
+    [searchIconView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(searchView);
+        make.right.mas_equalTo(-15);
+    }];
+    
+    UITapGestureRecognizer *tapSearchGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(searchButtonAction)];
+    [searchView addGestureRecognizer:tapSearchGR];
 }
 
 - (void)showAlertView {
@@ -661,12 +680,14 @@
 }
 
 - (BOOL)showTitleBar {
-    return true;
+    return false;
 }
 
 - (BOOL)showBackButton {
     return NO;
 }
+
+#pragma mark - UIButton - Action
 
 /**
  *  定位区域View
@@ -713,6 +734,11 @@
 - (void)gotoMovieListBtnAction2 {
     [appDelegate setSelectedPage:1 tabBar:true];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"updateHomeNotifi" object:nil userInfo:@{@"index":@1}];
+}
+
+- (void)searchButtonAction {
+    CinemaSearchViewController *vc = [[CinemaSearchViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:true];
 }
 
 #pragma mark - UICollectionView Delegate & Datasource

@@ -21,6 +21,7 @@
 #import "MovieDetailViewController.h"
 #import "CinemaTicketViewController.h"
 #import "CityListNewViewController.h"
+#import "CinemaSearchViewController.h"
 
 static CGFloat segmentedControlWidth = 150.0f;
 static CGFloat topBarHeight = 35.0f;
@@ -303,7 +304,8 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
 }
 
 - (void)searchButtonAction:(UIButton *)button {
-    
+    CinemaSearchViewController *vc = [[CinemaSearchViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:true];
 }
 
 /// 正在热映按钮

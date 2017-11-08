@@ -31,5 +31,6 @@ static NSString *CellSelectedKey = @"selected";
 @property (nonatomic, assign) CouponType type;
 @property (nonatomic, assign) BOOL comefromPay;
 @property (nonatomic, weak) id<CouponViewControllerDelegate> delegate;
+@property (nonatomic, strong) NSArray *selectedList;
 
 @end

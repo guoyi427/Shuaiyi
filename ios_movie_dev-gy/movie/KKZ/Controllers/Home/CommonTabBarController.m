@@ -148,7 +148,7 @@
     appDelegate.selectedTab = value;
 
     //统计事件：首页切换底部标签
-    NSArray *tabsName = @[ @"电影", @"影院", @"订单", @"我的" ];
+    NSArray *tabsName = @[ @"首页", @"电影", @"订单", @"我的" ];
     NSString *tabName = tabsName[value];
     NSDictionary *attrs = @{
         @"tabIndex" : [NSString stringWithFormat:@"%d", value],

@@ -52,6 +52,9 @@
     NSString *_couponString;
     /// 是否为储蓄卡支付
     BOOL _isCardPay;
+    NSArray *_selectedCouponList;
+    NSInteger _coupon1Count;
+    NSInteger _coupon2Count;
     
     //  UI
     UILabel *_couponCountLabel;
@@ -1148,6 +1151,7 @@
         _couponNullLabel.hidden = count > 0;
         _couponCountLabel.hidden = count == 0;
         _couponCountLabel.text = [NSString stringWithFormat:@"%ld个可用", count];
+        _coupon1Count = count;
     } failure:^(NSError * _Nullable err) {
         
     }];
@@ -1159,9 +1163,23 @@
         _couponNullLabel2.hidden = count > 0;
         _couponCountLabel2.hidden = count == 0;
         _couponCountLabel2.text = [NSString stringWithFormat:@"%ld个可用", count];
+        _coupon2Count = count;
     } failure:^(NSError * _Nullable err) {
         
     }];
+}
+
+- (void)uploadCouponCountView {
+    _couponCountLabel.text = [NSString stringWithFormat:@"%ld个可用", _coupon1Count];
+    _couponCountLabel2.text = [NSString stringWithFormat:@"%ld个可用", _coupon2Count];
+}
+
+- (BOOL)judgeCouponState {
+    if (_selectedCouponList && _selectedCouponList.count) {
+        [UIAlertView showAlertView:@"优惠券、兑换券、储值卡不能同时使用" buttonText:@"确定"];
+        return true;
+    }
+    return false;
 }
 
 #pragma mark - TapGestureRecognizer - Action
@@ -1170,11 +1188,16 @@
  优惠券
  */
 - (void)tapCouponViewAction {
+    [self judgeCouponState];
+    
     CouponViewController *vc = [[CouponViewController alloc] init];
     vc.type = CouponType_coupon;
     vc.comefromPay = true;
     vc.delegate = self;
+    vc.selectedList = _selectedCouponList;
     [self.navigationController pushViewController:vc animated:true];
+    
+    [self uploadCouponCountView];
 }
 
 
@@ -1182,22 +1205,32 @@
  券码
  */
 - (void)tapCouponView2Action {
+     [self judgeCouponState];
+    
     CouponViewController *vc = [[CouponViewController alloc] init];
     vc.type = CouponType_Redeem;
     vc.comefromPay = true;
     vc.delegate = self;
+    vc.selectedList = _selectedCouponList;
     [self.navigationController pushViewController:vc animated:true];
+    
+    [self uploadCouponCountView];
 }
 
 /**
  储蓄卡
  */
 - (void)tapCardViewAction {
+    [self judgeCouponState];
+    
     CouponViewController *vc = [[CouponViewController alloc] init];
     vc.type = CouponType_Stored;
     vc.comefromPay = true;
     vc.delegate = self;
+    vc.selectedList = _selectedCouponList;
     [self.navigationController pushViewController:vc animated:true];
+    
+    [self uploadCouponCountView];
 }
 
 #pragma mark override from CommonViewController
@@ -1230,6 +1263,7 @@
     
     payView.ecardListStr = couponString;
     _couponString = couponString;
+    _selectedCouponList = list;
     
     if (type == CouponType_Stored) {
         _isCardPay = true;
@@ -1255,7 +1289,13 @@
                                                        }
                                                    }
                                                } else {
+                                                   [self uploadCouponCountView];
                                                    [appDelegate showAlertViewForTaskInfo:userInfo];
+                                                   _selectedCouponList = nil;
+                                                   payView.ecardListStr = @"";
+                                                   _couponString = @"";
+                                                   [payView setOrderTotalFee:self.myOrder.money.floatValue];
+                                                   moneyNeedPayLabel.text = [NSString stringWithFormat:@"￥%.2f", self.myOrder.money.floatValue];
                                                }
                                                
                                            }];

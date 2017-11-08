@@ -149,8 +149,7 @@ static NSString *RedeemCellId = @"redeemcell";
         }
     }
     
-    if (selectedList.count > 0 &&
-        _delegate &&
+    if (_delegate &&
         [_delegate respondsToSelector:@selector(couponViewController:didSelectedCouponList:type:)]) {
         [_delegate couponViewController:self didSelectedCouponList:selectedList type:_type];
     }
@@ -209,6 +208,20 @@ static NSString *RedeemCellId = @"redeemcell";
         [_tableView headerEndRefreshing];
         [_modelList removeAllObjects];
         [_modelList addObjectsFromArray:couponList];
+
+        //  标记已经选中的券
+        if (_selectedList && _selectedList.count) {
+            for (int i = 0; i < _modelList.count; i ++) {
+                NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_modelList[i]];
+                for (NSDictionary *selectedDic in _selectedList) {
+                    if ([selectedDic[@"couponId"] isEqualToString:dic[@"couponId"]]) {
+                        [dic setObject:@true forKey:CellSelectedKey];
+                        [_modelList replaceObjectAtIndex:i withObject:dic];
+                    }
+                }
+            }
+        }
+        
         [_tableView reloadData];
     } failure:^(NSError * _Nullable err) {
         [_tableView headerEndRefreshing];
