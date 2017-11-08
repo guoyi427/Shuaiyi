@@ -45,7 +45,7 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _menuTitleList = @[@[@"优惠券", @"兑换码"],@[@"资料修改"],@[@"关于章鱼电影", @"注销账号"]];
+    _menuTitleList = @[@[@"储值卡", @"优惠券", @"兑换码"],@[@"资料修改"],@[@"关于章鱼电影", @"注销账号"]];
     
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableView.backgroundColor = appDelegate.kkzLine;
@@ -209,7 +209,7 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     } failure:^(NSError * _Nullable err) {
         
     }];
-    
+    /*
     MovieRequest *request2 = [[MovieRequest alloc] init];
     [request2 queryCouponListWithGroupId:4 success:^(NSArray * _Nullable couponList) {
         NSInteger count = couponList.count;
@@ -227,6 +227,7 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     } failure:^(NSError * _Nullable err) {
         
     }];
+     */
 }
 
 #pragma mark - UIButton - Action
@@ -257,13 +258,13 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     UserCenterCell *cell = [tableView dequeueReusableCellWithIdentifier:UserCenterCell_Identifier];
     
     [cell updateTitle:_menuTitleList[indexPath.section][indexPath.row]];
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            [cell updateRightTitle:[NSString stringWithFormat:@"%ld", _couponCount]];
-        } else if (indexPath.row == 1) {
-            [cell updateRightTitle:[NSString stringWithFormat:@"%ld", _coupon2Count]];
-        }
-    }
+//    if (indexPath.section == 0) {
+//        if (indexPath.row == 0) {
+//            [cell updateRightTitle:[NSString stringWithFormat:@"%ld", _couponCount]];
+//        } else if (indexPath.row == 1) {
+//            [cell updateRightTitle:[NSString stringWithFormat:@"%ld", _coupon2Count]];
+//        }
+//    }
     
     return cell;
 }
@@ -271,11 +272,16 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
+            //  储值卡
+            CouponViewController *vc = [[CouponViewController alloc] init];
+            vc.type = CouponType_Stored;
+            [self.navigationController pushViewController:vc animated:true];
+        } else if (indexPath.row == 1) {
             //  优惠券
             CouponViewController *vc = [[CouponViewController alloc] init];
             vc.type = CouponType_coupon;
             [self.navigationController pushViewController:vc animated:true];
-        } else {
+        } else if (indexPath.row == 2) {
             //  兑换码
             CouponViewController *vc = [[CouponViewController alloc] init];
             vc.type = CouponType_Redeem;

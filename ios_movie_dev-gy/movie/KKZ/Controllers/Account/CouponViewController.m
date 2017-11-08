@@ -52,7 +52,7 @@ static NSString *RedeemCellId = @"redeemcell";
     
     [self loadCouponList];
     
-    if (_comefromPay) {
+//    if (_comefromPay) {
         UIButton *rightBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
         rightBarButton.frame = CGRectMake(screentWith-44, 0, 44, 44);
         [rightBarButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -60,7 +60,7 @@ static NSString *RedeemCellId = @"redeemcell";
         rightBarButton.titleLabel.font = [UIFont systemFontOfSize:16];
         [rightBarButton addTarget:self action:@selector(commonBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.navBarView addSubview:rightBarButton];
-    }
+//    }
     
     [self prepareBindView];
 }
@@ -81,22 +81,29 @@ static NSString *RedeemCellId = @"redeemcell";
 }
 
 - (void)prepareBindView {
-    if (!_comefromPay) {
-        return;
-    }
-    _bindView = [[UIView alloc] initWithFrame:CGRectMake(50, 150, kAppScreenWidth-100, 160)];
-    _bindView.backgroundColor = appDelegate.kkzLine;
-    _bindView.layer.cornerRadius = 5.0;
-    _bindView.layer.masksToBounds = true;
+//    if (!_comefromPay) {
+//        return;
+//    }
+    _bindView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kAppScreenWidth, CGRectGetHeight(self.view.frame) - 64)];
+    _bindView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
     _bindView.hidden = true;
     [self.view addSubview:_bindView];
+    
+    UITapGestureRecognizer *tapBindViewGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBindViewGRAction)];
+    [_bindView addGestureRecognizer:tapBindViewGR];
+    
+    UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(50, 150, kAppScreenWidth-100, 160)];
+    whiteView.backgroundColor = appDelegate.kkzLine;
+    whiteView.layer.cornerRadius = 5.0;
+    whiteView.layer.masksToBounds = true;
+    [_bindView addSubview:whiteView];
     
     _couponCodeTextField = [[UITextField alloc] init];
     _couponCodeTextField.backgroundColor = [UIColor whiteColor];
     _couponCodeTextField.textColor = appDelegate.kkzTextColor;
     _couponCodeTextField.font = [UIFont systemFontOfSize:14];
     _couponCodeTextField.placeholder = @"请输入券码";
-    [_bindView addSubview:_couponCodeTextField];
+    [whiteView addSubview:_couponCodeTextField];
     [_couponCodeTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(20);
         make.right.mas_equalTo(-20);
@@ -110,7 +117,7 @@ static NSString *RedeemCellId = @"redeemcell";
         _cardPasswordTextField.textColor = appDelegate.kkzTextColor;
         _cardPasswordTextField.font = [UIFont systemFontOfSize:14];
         _cardPasswordTextField.placeholder = @"请输入券码";
-        [_bindView addSubview:_cardPasswordTextField];
+        [whiteView addSubview:_cardPasswordTextField];
         [_cardPasswordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_couponCodeTextField);
             make.right.equalTo(_couponCodeTextField);
@@ -125,10 +132,10 @@ static NSString *RedeemCellId = @"redeemcell";
     [doneButton setTitleColor:appDelegate.kkzTextColor forState:UIControlStateNormal];
     doneButton.titleLabel.font = [UIFont systemFontOfSize:20];
     [doneButton addTarget:self action:@selector(bindViewButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [_bindView addSubview:doneButton];
+    [whiteView addSubview:doneButton];
     [doneButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(_couponCodeTextField);
-        make.bottom.equalTo(_bindView).offset(-20);
+        make.bottom.equalTo(whiteView).offset(-20);
         make.height.mas_equalTo(40);
     }];
 }
@@ -189,6 +196,10 @@ static NSString *RedeemCellId = @"redeemcell";
     if ([[TaskQueue sharedTaskQueue] addTaskToQueue:task]) {
         [appDelegate showIndicatorWithTitle:@"请稍候..." animated:YES fullScreen:NO overKeyboard:NO andAutoHide:NO];
     }
+}
+
+- (void)tapBindViewGRAction {
+    _bindView.hidden = true;
 }
 
 #pragma mark - Network - Request
