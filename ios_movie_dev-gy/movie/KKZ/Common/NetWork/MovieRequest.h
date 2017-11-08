@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class Movie;
 @interface MovieRequest : NSObject
 
 /**
@@ -93,12 +94,16 @@
 - (void)requestScoreList:(nullable void (^)(NSArray *_Nullable movieList))success
                  failure:(nullable void (^)(NSError *_Nullable err))failure;
 
+- (void)requestScoreWithMovieId:(NSNumber *_Nonnull)movieId
+                        success:(nullable void (^)(NSDictionary *_Nullable response))success
+                        failure:(nullable void (^)(NSError *_Nullable err))failure;
+
 - (void)requestWantList:(nullable void (^)(NSArray *_Nullable movieList))success
                 failure:(nullable void (^)(NSError *_Nullable err))failure;
 
 /// point 分数  1~10
-- (void)addScoreMovieId:(nullable NSString *)movieId
-                  point:(nullable NSString *)point
+- (void)addScoreMovieId:(nullable NSNumber *)movieId
+                  point:(nullable NSNumber *)point
                 success:(nullable void (^)())success
                 failure:(nullable void (^)(NSError *_Nullable err))failure;
 

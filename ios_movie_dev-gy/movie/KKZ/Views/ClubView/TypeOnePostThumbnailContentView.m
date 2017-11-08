@@ -348,7 +348,7 @@
     UIImage *img = [UIImage imageWithData:data];
     CGSize finalSize = CGSizeMake(postImgHeight, postImgHeight);
     UIImage *newImg = [KKZUtility resibleImage:img toSize:finalSize];
-    UIImage *blureImg = [self blureImage:newImg withInputRadius:1.0f];
+    UIImage *blureImg = [self blureImage:newImg withInputRadius:0.2f];
     postImgViewAudio.image = blureImg;
 
     NSString *url =

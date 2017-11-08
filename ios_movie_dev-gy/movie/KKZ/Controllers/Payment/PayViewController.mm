@@ -796,24 +796,6 @@
 
 #pragma mark utility
 - (void)payOrderClick {
-
-//    NSString *mobileStr = [DataEngine sharedDataEngine].phoneNum;
-//
-//    BOOKING_PHONE_WRITE(mobileStr);
-//
-//
-//    backBtn.userInteractionEnabled = NO;
-//    seatBtn.userInteractionEnabled = NO;
-//
-//    [self.view.window addSubview:backgroundView];
-//
-//    //统计事件：支付订单
-//    StatisEvent(EVENT_BUY_PAY_ORDER);
-//    if (appDelegate.selectedTab == 0) { //电影入口
-//        StatisEvent(EVENT_BUY_PAY_ORDER_SOURCE_MOVIE);
-//    } else if (appDelegate.selectedTab == 1) { //影院入口
-//        StatisEvent(EVENT_BUY_PAY_ORDER_SOURCE_CINEMA);
-//    }
     if (_isCardPay) {
         payView.ecardListStr = _couponString;
         payView.selectedMethod = PayMethodNone;

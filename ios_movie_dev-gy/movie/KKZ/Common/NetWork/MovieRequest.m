@@ -255,6 +255,27 @@
     } failure:failure];
 }
 
+- (void)requestScoreWithMovieId:(NSNumber *)movieId
+                        success:(nullable void (^)(NSDictionary * _Nullable))success
+                        failure:(void (^)(NSError * _Nullable))failure {
+    
+    if (!movieId) {
+        return;
+    }
+    
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    NSDictionary *params = [KKZBaseRequestParams getDecryptParams:@{
+                                                                    @"action": @"point_Query",
+                                                                    @"movie_id": movieId
+                                                                    }];
+    [request GET:kKSSPServer
+      parameters:params
+    resultKeyMap:@{ @"point" : [Movie class] }
+         success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
+             success(responseObject[@"point"]);
+         } failure:failure];
+}
+
 - (void)requestWantList:(nullable void (^)(NSArray *_Nullable movieList))success
                 failure:(nullable void (^)(NSError *_Nullable err))failure {
     KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
@@ -269,8 +290,8 @@
     } failure:failure];
 }
 
-- (void)addScoreMovieId:(nullable NSString *)movieId
-                  point:(nullable NSString *)point
+- (void)addScoreMovieId:(nullable NSNumber *)movieId
+                  point:(nullable NSNumber *)point
                 success:(nullable void (^)())success
                 failure:(nullable void (^)(NSError *_Nullable err))failure {
     KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];

@@ -60,6 +60,7 @@
 
 #import "KKZUtility.h"
 #import "KoMovie-Swift.h"
+#import "UserScoreMovieViewController.h"
 
 #define marginX 15
 
@@ -93,6 +94,10 @@
     EGORefreshTableHeaderView *refreshHeaderView;
     
     UIButton *_moreHotCommentButton;
+    UILabel *_tableFooterNullLabel;
+    UIView *_tableFooterScoreView;
+    UIImageView *_tableFooterPostImageView;
+    RatingView *_scoreRatingView;
 }
 
 /**
@@ -208,6 +213,8 @@
 {
     [super viewDidAppear:animated];
     [KKZAnalytics postActionWithEvent:[[KKZAnalyticsEvent alloc]initWithMovie:self.movie] action:AnalyticsActionFilm_details];
+    //  用户评分
+    [self loadUserScore];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -298,21 +305,6 @@
     [relationButton setImageEdgeInsets:UIEdgeInsetsMake(0, 20, 15, 0)];
     [relationButton addTarget:self action:@selector(relationButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:relationButton];
-    
-    /*
-    if (!_isCommingSoon) {
-        UIButton *scoreButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        scoreButton.frame = CGRectMake(75, screentHeight - 50, 75, 50);
-        [scoreButton setTitle:@"评分" forState:UIControlStateNormal];
-        [scoreButton setTitleColor:relationButton.currentTitleColor forState:UIControlStateNormal];
-        scoreButton.titleLabel.font = relationButton.titleLabel.font;
-        [scoreButton setTitleEdgeInsets:relationButton.titleEdgeInsets];
-        [scoreButton setImage:[UIImage imageNamed:@"MovieDetail_Score@2x"] forState:UIControlStateNormal];
-        [scoreButton setImageEdgeInsets:relationButton.imageEdgeInsets];
-        [scoreButton addTarget:self action:@selector(scoreButtonAction) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:scoreButton];
-    }
-     */
 }
 
 - (void)buyTicketBtnClicked {
@@ -355,7 +347,8 @@
     self.movieDetailTableY = movieDetailTable;
 
     [self addTableHead];
-
+    [self addTableFooter];
+    
     refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f,
                                                                                     0.0f - movieDetailTable.bounds.size.height,
                                                                                     screentWith,
@@ -392,6 +385,72 @@
         event.movie_id = self.movie.movieId.stringValue;
         event.movie_name = self.movie.movieName;
         [KKZAnalytics postActionWithEvent:event action:AnalyticsActionAttention_film];
+    }];
+}
+
+- (void)addTableFooter {
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kAppScreenWidth, 100)];
+    footerView.backgroundColor = [UIColor whiteColor];
+    movieDetailTable.tableFooterView = footerView;
+    
+    _tableFooterNullLabel = [[UILabel alloc] init];
+    _tableFooterNullLabel.text = @"还没有评分\n快去评分吧 >";
+    _tableFooterNullLabel.textColor = appDelegate.kkzGray;
+    _tableFooterNullLabel.font = [UIFont systemFontOfSize:15];
+    _tableFooterNullLabel.numberOfLines = 0;
+    _tableFooterNullLabel.hidden = true;
+    _tableFooterNullLabel.userInteractionEnabled = true;
+    [footerView addSubview:_tableFooterNullLabel];
+    [_tableFooterNullLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(footerView);
+    }];
+    
+    UITapGestureRecognizer *tapScoreLabelGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userScoreButtonAction)];
+    [_tableFooterNullLabel addGestureRecognizer:tapScoreLabelGR];
+    
+    _tableFooterScoreView = [[UILabel alloc] init];
+    _tableFooterScoreView.backgroundColor = [UIColor whiteColor];
+    _tableFooterScoreView.hidden = true;
+    [footerView addSubview:_tableFooterScoreView];
+    [_tableFooterScoreView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(footerView);
+    }];
+    
+    _tableFooterPostImageView = [[UIImageView alloc] init];
+    _tableFooterPostImageView.layer.cornerRadius = 5.0;
+    _tableFooterPostImageView.layer.masksToBounds = true;
+    _tableFooterPostImageView.contentMode = UIViewContentModeScaleAspectFill;
+    [_tableFooterPostImageView sd_setImageWithURL:[NSURL URLWithString:self.movie.pathVerticalS]];
+    [_tableFooterScoreView addSubview:_tableFooterPostImageView];
+    [_tableFooterPostImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(15);
+        make.centerY.equalTo(_tableFooterScoreView);
+        make.size.mas_equalTo(CGSizeMake(60, 60));
+    }];
+    
+    UILabel *scoreLabel = [[UILabel alloc] init];
+    scoreLabel.text = @"评分:";
+    scoreLabel.textColor = [UIColor blackColor];
+    scoreLabel.font = [UIFont systemFontOfSize:12];
+    [_tableFooterScoreView addSubview:scoreLabel];
+    [scoreLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_tableFooterPostImageView.mas_right).offset(15);
+        make.centerY.equalTo(_tableFooterPostImageView);
+    }];
+    
+    _scoreRatingView = [[RatingView alloc] init];
+    [_scoreRatingView setImagesDeselected:@"fav_star_no_yellow_match"
+                     partlySelected:@"fav_star_half_yellow"
+                       fullSelected:@"fav_star_full_yellow"
+                           iconSize:CGSizeMake(30, 30)
+                        andDelegate:nil];
+    _scoreRatingView.userInteractionEnabled = false;
+    [_tableFooterScoreView addSubview:_scoreRatingView];
+    [_scoreRatingView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(scoreLabel.mas_right).offset(5);
+        make.centerY.equalTo(_tableFooterPostImageView);
+        make.height.mas_equalTo(30);
+        make.width.equalTo(footerView).offset(-80);
     }];
 }
 
@@ -479,6 +538,16 @@
 //返回
 - (void)cancelViewController {
     [self popViewControllerAnimated:YES];
+}
+
+#pragma mark - UIButton - Action
+
+- (void)userScoreButtonAction {
+    if (self.movie) {
+        UserScoreMovieViewController *vc = [[UserScoreMovieViewController alloc] init];
+        vc.model = self.movie;
+        [self.navigationController pushViewController:vc animated:true];
+    }
 }
 
 #pragma mark - 加载影片详情数据
@@ -1502,6 +1571,25 @@
             }];
 }
 
+- (void)loadUserScore {
+    MovieRequest *req = [[MovieRequest alloc] init];
+    [req requestScoreWithMovieId:self.movieId success:^(NSDictionary * _Nullable response) {
+        if (response) {
+            //
+            _tableFooterNullLabel.hidden = true;
+            _tableFooterScoreView.hidden = false;
+            [_scoreRatingView displayRating:[response[@"movie"][@"score"] floatValue]/2.0];
+            [_tableFooterPostImageView sd_setImageWithURL:[NSURL URLWithString:response[@"movie"][@"pathVerticalS"]]];
+        } else {
+            //
+            _tableFooterNullLabel.hidden = false;
+            _tableFooterScoreView.hidden = true;
+        }
+    } failure:^(NSError * _Nullable err) {
+        
+    }];
+}
+
 - (void)callMoviePostApiDidSucceed:(id)responseData total:(NSInteger)total hasMore:(BOOL)hasMore {
     self.clubBestPosts = responseData;
 
@@ -1590,19 +1678,21 @@
 
     UIImage *newImg = [KKZUtility croppedImage:img withFrame:CGRectMake((img.size.width - width) * 0.5, (img.size.height - height) * 0.5, width, height)];
 
-    UIImage *blureImg = [self blureImage:newImg withInputRadius:5.0f];
+    UIImage *blureImg = [self blureImage:newImg withInputRadius:0.2f];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIImage *newImgLast = [KKZUtility resibleImage:blureImg toSize:homeBackgroundView.frame.size];
+        
+        UIImage *newnewImgLast = [KKZUtility croppedImage:newImgLast withFrame:CGRectMake(0, 20, 107, 107 / screentWith * headHeight + 20)];
+        
+        homeBackgroundView.image = newnewImgLast;
+        
+        NSString *url = [NSString stringWithFormat:@"movieDetail%@", self.urlStr];
+        
+        [[ImageEngineNew sharedImageEngineNew] saveImage:newnewImgLast forURL:[url MD5String] andSize:ImageSizeOrign sync:NO fromCache:YES];
+        
+        homeBgCover.image = nil;
+    });
 
-    UIImage *newImgLast = [KKZUtility resibleImage:blureImg toSize:homeBackgroundView.frame.size];
-
-    UIImage *newnewImgLast = [KKZUtility croppedImage:newImgLast withFrame:CGRectMake(0, 20, 107, 107 / screentWith * headHeight + 20)];
-
-    homeBackgroundView.image = newnewImgLast;
-
-    NSString *url = [NSString stringWithFormat:@"movieDetail%@", self.urlStr];
-
-    [[ImageEngineNew sharedImageEngineNew] saveImage:newnewImgLast forURL:[url MD5String] andSize:ImageSizeOrign sync:NO fromCache:YES];
-
-    homeBgCover.image = nil;
 }
 
 //拖动（释放手指）停止的时候执行

@@ -713,6 +713,7 @@
 		5D19FAFF1C8BF1B200CF077C /* VideoPostInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D19FAFE1C8BF1B200CF077C /* VideoPostInfoView.m */; };
 		5D19FB051C8C45A500CF077C /* downArrow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D19FB031C8C45A500CF077C /* downArrow@3x.png */; };
 		5D19FB061C8C45A500CF077C /* downArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D19FB041C8C45A500CF077C /* downArrow@2x.png */; };
+		5D1B89D01FB2E22C00352B44 /* UserScoreMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B89CF1FB2E22C00352B44 /* UserScoreMovieViewController.m */; };
 		5D1CC4AB1C16DA3C00835AB2 /* arrowDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D1CC4A81C16DA3C00835AB2 /* arrowDown@2x.png */; };
 		5D1CC4AC1C16DA3C00835AB2 /* arrowDown@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D1CC4A91C16DA3C00835AB2 /* arrowDown@3x.png */; };
 		5D1CC4AD1C16DA3C00835AB2 /* arrowDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D1CC4AA1C16DA3C00835AB2 /* arrowDown.png */; };
@@ -2848,6 +2849,8 @@
 		5D19FAFE1C8BF1B200CF077C /* VideoPostInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoPostInfoView.m; sourceTree = "<group>"; };
 		5D19FB031C8C45A500CF077C /* downArrow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downArrow@3x.png"; sourceTree = "<group>"; };
 		5D19FB041C8C45A500CF077C /* downArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downArrow@2x.png"; sourceTree = "<group>"; };
+		5D1B89CE1FB2E22C00352B44 /* UserScoreMovieViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserScoreMovieViewController.h; sourceTree = "<group>"; };
+		5D1B89CF1FB2E22C00352B44 /* UserScoreMovieViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserScoreMovieViewController.m; sourceTree = "<group>"; };
 		5D1CC4A81C16DA3C00835AB2 /* arrowDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowDown@2x.png"; sourceTree = "<group>"; };
 		5D1CC4A91C16DA3C00835AB2 /* arrowDown@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowDown@3x.png"; sourceTree = "<group>"; };
 		5D1CC4AA1C16DA3C00835AB2 /* arrowDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowDown.png; sourceTree = "<group>"; };
@@ -5792,6 +5795,8 @@
 				29BA61AC1D6743DD0070AB1C /* CameraEditorViewController.m */,
 				29BA61AD1D6743DD0070AB1C /* CustomImagePickerController.h */,
 				29BA61AE1D6743DD0070AB1C /* CustomImagePickerController.m */,
+				5D1B89CE1FB2E22C00352B44 /* UserScoreMovieViewController.h */,
+				5D1B89CF1FB2E22C00352B44 /* UserScoreMovieViewController.m */,
 				29BA61AF1D6743DD0070AB1C /* ImageDetailCommentViewController.h */,
 				29BA61B01D6743DD0070AB1C /* ImageDetailCommentViewController.m */,
 				29BA61B11D6743DD0070AB1C /* ImageReviewViewController.h */,
@@ -10369,6 +10374,7 @@
 				29392AF4177A9E1700875227 /* SoundEngine.m in Sources */,
 				29AA59F51D70346900092894 /* RefreshTableView.m in Sources */,
 				A423C2F71C74877F00070DAF /* CameraFlashView.m in Sources */,
+				5D1B89D01FB2E22C00352B44 /* UserScoreMovieViewController.m in Sources */,
 				5D84B1191C755FF50053BB51 /* MyReplyPostTypeTwoCell.m in Sources */,
 				2908CC08177AA19200719668 /* SoundTask.m in Sources */,
 				A422C5DC1C5B7DF200EBD955 /* ZDProgressView.m in Sources */,
