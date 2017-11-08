@@ -75,7 +75,10 @@
 }
 
 - (void)updateWithDic:(NSDictionary *)dic comefromPay:(BOOL)pay {
-    if ([dic[@"remainCount"] boolValue]) {
+    NSDate *couponDate = [[DateEngine sharedDateEngine] dateFromString:dic[@"expireDate"]];
+    BOOL expire = [couponDate compare:[NSDate date]] == NSOrderedDescending;
+    
+    if ([dic[@"remainCount"] boolValue] && expire) {
         _stateBgView.image = [UIImage imageNamed:@"CouponList_pink"];
     } else {
         _stateBgView.image = [UIImage imageNamed:@"CouponList_gray"];

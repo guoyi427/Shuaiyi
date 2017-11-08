@@ -23,7 +23,7 @@
     UIView *sosBgview, *phoneView, *phoneViewTap;
 
     UILabel *movieNameLabel, *timerLabel;
-    UILabel *telephoneLabel;
+    UITextField *telephoneTextField;
     UILabel *movieTypeLabel;
     UILabel *cinemaNameLabel;
     UILabel *startTimeLabel;

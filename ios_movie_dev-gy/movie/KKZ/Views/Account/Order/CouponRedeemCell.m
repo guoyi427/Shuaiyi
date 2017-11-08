@@ -101,7 +101,11 @@
 
 - (void)updateWithDic:(NSDictionary *)dic comefromPay:(BOOL)pay {
     BOOL canUse = [dic[@"remainCount"] boolValue];
-    if (canUse) {
+    
+    NSDate *couponDate = [[DateEngine sharedDateEngine] dateFromString:dic[@"expireDate"]];
+    BOOL expire = [couponDate compare:[NSDate date]] == NSOrderedDescending;
+    
+    if (canUse && expire) {
         _stateBgView.image = [UIImage imageNamed:@"CouponList_pink"];
     } else {
         _stateBgView.image = [UIImage imageNamed:@"CouponList_gray"];
@@ -123,8 +127,11 @@
 
 - (void)updateCardWithDic:(NSDictionary *)dic comfromPay:(BOOL)pay {
     
+    NSDate *couponDate = [[DateEngine sharedDateEngine] dateFromString:dic[@"expireDate"]];
+    BOOL expire = [couponDate compare:[NSDate date]] == NSOrderedDescending;
+    
     BOOL canUse = [dic[@"remainCount"] boolValue];
-    if (canUse) {
+    if (canUse && expire) {
         _stateBgView.image = [UIImage imageNamed:@"CouponList_pink"];
     } else {
         _stateBgView.image = [UIImage imageNamed:@"CouponList_gray"];

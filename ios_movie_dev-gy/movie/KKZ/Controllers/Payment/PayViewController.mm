@@ -316,13 +316,13 @@
         make.height.mas_equalTo(33);
     }];
 
-    telephoneLabel = [[UILabel alloc] init];
-    telephoneLabel.backgroundColor = [UIColor clearColor];
-    telephoneLabel.textColor = [UIColor lightGrayColor];
-    telephoneLabel.font = [UIFont systemFontOfSize:14];
-    telephoneLabel.text = [DataEngine sharedDataEngine].phoneNum;
-    [phoneView addSubview:telephoneLabel];
-    [telephoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    telephoneTextField = [[UITextField alloc] init];
+    telephoneTextField.backgroundColor = [UIColor clearColor];
+    telephoneTextField.textColor = [UIColor lightGrayColor];
+    telephoneTextField.font = [UIFont systemFontOfSize:14];
+    telephoneTextField.text = [DataEngine sharedDataEngine].phoneNum;
+    [phoneView addSubview:telephoneTextField];
+    [telephoneTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(phoneView);
     }];
     
@@ -786,7 +786,7 @@
 
     seatInfoLabel.text = [NSString stringWithFormat:@"%@", [self.myOrder readableSeatInfos]];
     ticketCountLabel.text = [NSString stringWithFormat:@"数量：%ld张", (long) [self.myOrder seatCount]];
-    telephoneLabel.text = [NSString stringWithFormat:@"手机号：%@", self.myOrder.mobile];
+    telephoneTextField.text = [NSString stringWithFormat:@"%@", self.myOrder.mobile];
 }
 
 #pragma mark gestureRecognizer view delegate
@@ -799,6 +799,15 @@
 
 #pragma mark utility
 - (void)payOrderClick {
+    if (telephoneTextField.text.length < 11 || ![[telephoneTextField.text substringToIndex:1] isEqualToString:@"1"]) {
+        [appDelegate showAlertViewForTitle:@""
+                                   message:@"请输入正确的手机号码"
+                              cancelButton:@"好的"];
+        return;
+    } else {
+        BOOKING_PHONE_WRITE(telephoneTextField.text);
+    }
+    
     if (_isCardPay) {
         payView.ecardListStr = _couponString;
         payView.selectedMethod = PayMethodNone;
