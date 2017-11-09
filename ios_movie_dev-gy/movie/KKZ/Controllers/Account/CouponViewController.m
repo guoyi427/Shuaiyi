@@ -67,6 +67,13 @@ static NSString *RedeemCellId = @"redeemcell";
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self loadCouponList];
+}
+
+#pragma mark - Prepare
+
 - (void)prepareTableView {
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kAppScreenWidth, CGRectGetHeight(self.view.frame) - 64 - 50) style:UITableViewStylePlain];
     _tableView.delegate = self;
@@ -126,6 +133,7 @@ static NSString *RedeemCellId = @"redeemcell";
 
 - (void)commonBtnClick:(UIButton *)sender {
     CouponBindViewController *vc = [[CouponBindViewController alloc] init];
+    vc.type = _type;
     [self.navigationController pushViewController:vc animated:true];
 }
 

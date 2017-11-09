@@ -1309,8 +1309,9 @@
 /// 选中券
 - (void)couponViewController:(CouponViewController *)viewController didSelectedCouponList:(NSArray *)list type:(CouponType)type {
     NSLog(@"selected coupon list = %@", list);
-    
-    _lastCouponType = type;
+    if (list.count) {
+        _lastCouponType = type;
+    }
     
     NSMutableString *couponString = [[NSMutableString alloc] initWithString:@"["];
     for (NSDictionary *dic in list) {

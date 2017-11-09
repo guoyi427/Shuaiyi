@@ -10,11 +10,13 @@
 
 #import "PayTask.h"
 
-@interface CouponBindViewController ()
+@interface CouponBindViewController () <UITextFieldDelegate>
 {
     UIView *_bindView;
     UITextField *_couponCodeTextField;
     UITextField *_cardPasswordTextField;
+    UILabel *_messageLabel;
+    UIButton *_doneButton;
 }
 @end
 
@@ -59,7 +61,6 @@
     //    }
     _bindView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kAppScreenWidth, CGRectGetHeight(self.view.frame) - 64)];
     _bindView.backgroundColor = appDelegate.kkzLine;
-    _bindView.hidden = true;
     [self.view addSubview:_bindView];
     
     UITapGestureRecognizer *tapBindViewGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBindViewGRAction)];
@@ -83,19 +84,21 @@
         default:
             break;
     }
-    titleLabel.textColor = appDelegate.kkzGray;
-    titleLabel.font = [UIFont systemFontOfSize:14];
+    titleLabel.textColor = [UIColor grayColor];
+    titleLabel.font = [UIFont systemFontOfSize:16];
     [whiteView addSubview:titleLabel];
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(20);
-        make.top.mas_equalTo(30);
+        make.top.mas_equalTo(20);
+        make.width.mas_equalTo(60);
     }];
     
     _couponCodeTextField = [[UITextField alloc] init];
     _couponCodeTextField.backgroundColor = [UIColor whiteColor];
     _couponCodeTextField.textColor = appDelegate.kkzTextColor;
-    _couponCodeTextField.font = [UIFont systemFontOfSize:10];
+    _couponCodeTextField.font = [UIFont systemFontOfSize:14];
     _couponCodeTextField.placeholder = @"请输入券码";
+    _couponCodeTextField.delegate = self;
     [whiteView addSubview:_couponCodeTextField];
     [_couponCodeTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(titleLabel.mas_right).offset(20);
@@ -111,7 +114,7 @@
         [whiteView addSubview:passwordTitleLabel];
         [passwordTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(20);
-            make.top.equalTo(_couponCodeTextField.mas_bottom).offset(60);
+            make.top.equalTo(_couponCodeTextField.mas_bottom).offset(40);
         }];
         
         _cardPasswordTextField = [[UITextField alloc] init];
@@ -121,24 +124,53 @@
         _cardPasswordTextField.placeholder = @"请输入密码";
         [whiteView addSubview:_cardPasswordTextField];
         [_cardPasswordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(passwordTitleLabel.mas_right).offset(20);
+            make.left.equalTo(_couponCodeTextField);
             make.right.equalTo(_couponCodeTextField);
             make.centerY.equalTo(passwordTitleLabel);
         }];
+        
+        UIView *line = [[UIView alloc] init];
+        line.backgroundColor = appDelegate.kkzLine;
+        [whiteView addSubview:line];
+        [line mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.width.equalTo(whiteView);
+            make.top.mas_equalTo(60);
+            make.height.mas_equalTo(0.5);
+        }];
     }
     
-    UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    doneButton.backgroundColor = _couponCodeTextField.backgroundColor;
-    [doneButton setTitle:@"完成" forState:UIControlStateNormal];
-    [doneButton setTitleColor:appDelegate.kkzTextColor forState:UIControlStateNormal];
-    doneButton.titleLabel.font = [UIFont systemFontOfSize:20];
-    [doneButton setBackgroundImage:[UIImage imageNamed:@"Login_Button"] forState:UIControlStateNormal];
-    doneButton.enabled = false;
-    [doneButton addTarget:self action:@selector(bindViewButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [whiteView addSubview:doneButton];
-    [doneButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(_couponCodeTextField);
-        make.bottom.equalTo(whiteView).offset(-20);
+    UIView *bottomLine = [[UIView alloc] init];
+    bottomLine.backgroundColor = appDelegate.kkzLine;
+    [whiteView addSubview:bottomLine];
+    [bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.width.equalTo(whiteView);
+        make.bottom.mas_equalTo(-40);
+        make.height.mas_equalTo(0.5);
+    }];
+    
+    _messageLabel = [[UILabel alloc] init];
+    _messageLabel.textColor = appDelegate.kkzPink;
+    _messageLabel.text = @"输入的号码有误";
+    _messageLabel.font = [UIFont systemFontOfSize:10];
+    _messageLabel.hidden = true;
+    [whiteView addSubview:_messageLabel];
+    [_messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(titleLabel);
+        make.bottom.mas_equalTo(-10);
+    }];
+    
+    _doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_doneButton setTitle:@"完成" forState:UIControlStateNormal];
+    [_doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _doneButton.titleLabel.font = [UIFont systemFontOfSize:20];
+    [_doneButton setBackgroundImage:[UIImage imageNamed:@"Login_Button"] forState:UIControlStateNormal];
+    _doneButton.enabled = false;
+    [_doneButton addTarget:self action:@selector(bindViewButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [_bindView addSubview:_doneButton];
+    [_doneButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(20);
+        make.right.mas_equalTo(-20);
+        make.bottom.mas_equalTo(-20);
         make.height.mas_equalTo(40);
     }];
 }
@@ -151,8 +183,6 @@
         return;
     }
     
-    _bindView.hidden = true;
-    
     PayTask *task = [[PayTask alloc] initBindingCouponforUser:[_couponCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]
                                                       groupId:[NSString stringWithFormat:@"%lu", _type]
                                                      password:_cardPasswordTextField.text
@@ -162,6 +192,7 @@
                                                              [UIAlertView showAlertView:@"绑定完成" buttonText:@"确定"];
                                                          } else {
                                                              [UIAlertView showAlertView:@"绑定失败，请重试" buttonText:@"确定"];
+                                                             _messageLabel.hidden = false;
                                                          }
                                                          [appDelegate hideIndicator];
                                                      }];
@@ -173,6 +204,20 @@
 - (void)tapBindViewGRAction {
     [_couponCodeTextField resignFirstResponder];
     [_cardPasswordTextField resignFirstResponder];
+}
+
+#pragma mark - UITextField - Delegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    if (textField.text.length > 5) {
+        _doneButton.enabled = true;
+    } else {
+        _doneButton.enabled = false;
+    }
+    
+    _messageLabel.hidden = true;
+    return true;
 }
 
 @end
