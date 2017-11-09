@@ -76,24 +76,24 @@ static const NSInteger kPageDisplayDuration = 3;
     splashImage.image = splash;
     
     //广告的覆盖视图
-    UIView *bootom = [UIView new];
-    [self.view addSubview:bootom];
-    [bootom mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@133);
-        make.width.equalTo(self.view);
-        make.bottom.equalTo(self.view.mas_bottom);
-    }];
+//    UIView *bootom = [UIView new];
+//    [self.view addSubview:bootom];
+//    [bootom mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.height.equalTo(@133);
+//        make.width.equalTo(self.view);
+//        make.bottom.equalTo(self.view.mas_bottom);
+//    }];
     
-    UIImageView *iconV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"app_icon_slogan"]];
-    [bootom addSubview:iconV];
-    [iconV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(bootom.mas_centerX);
-        make.bottom.equalTo(bootom.mas_bottom).offset(-20);
-    }];
+//    UIImageView *iconV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"app_icon_slogan"]];
+//    [bootom addSubview:iconV];
+//    [iconV mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(bootom.mas_centerX);
+//        make.bottom.equalTo(bootom.mas_bottom).offset(-20);
+//    }];
     
     [splashImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(bootom.mas_top);
-        make.width.equalTo(self.view.mas_width);
+        make.bottom.equalTo(self.view);
+        make.left.width.equalTo(self.view);
         make.top.equalTo(@0);
     }];
     

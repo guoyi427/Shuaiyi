@@ -30,8 +30,8 @@
     
     NSMutableDictionary *para = [NSMutableDictionary dictionaryWithCapacity:3];
     [para setObject:@"splash_Query" forKey:@"action"];
-    [para setObject:[NSNumber numberWithFloat:kAppScreenWidth] forKey:@"width"];
-    [para setObject:[NSNumber numberWithFloat:kAppScreenHeight] forKey:@"height"];
+//    [para setObject:[NSNumber numberWithFloat:kAppScreenWidth] forKey:@"width"];
+//    [para setObject:[NSNumber numberWithFloat:kAppScreenHeight] forKey:@"height"];
     
     NSDictionary *newParams = [KKZBaseRequestParams getDecryptParams:para];
     

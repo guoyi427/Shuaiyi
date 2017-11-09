@@ -190,7 +190,7 @@
     //    gotoOrderTipImage
     
     UILabel *moreFilmLabel = [[UILabel alloc] init];
-    moreFilmLabel.textColor = [UIColor colorWithHex:@"#333333"];
+    moreFilmLabel.textColor = appDelegate.kkzGray;
     moreFilmLabel.font = [UIFont systemFontOfSize:13];
     moreFilmLabel.text = @"更多";
     [_movieListContentView addSubview:moreFilmLabel];
@@ -258,7 +258,7 @@
     //    gotoOrderTipImage
     
     UILabel *moreFilmLabel2 = [[UILabel alloc] init];
-    moreFilmLabel2.textColor = [UIColor colorWithHex:@"#333333"];
+    moreFilmLabel2.textColor = moreFilmLabel.textColor;
     moreFilmLabel2.font = [UIFont systemFontOfSize:13];
     moreFilmLabel2.text = @"更多";
     [_movieListContentView addSubview:moreFilmLabel2];
