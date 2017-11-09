@@ -28,7 +28,9 @@
 typedef void (^finishBlock)();
 
 @interface OrderListViewController ()
-
+{
+    UIButton *_needLoginButton;
+}
 /**
  *  周边订单控制器
  */
@@ -101,6 +103,18 @@ typedef void (^finishBlock)();
     orderTableView.backgroundColor = [UIColor clearColor];
     [holder addSubview:orderTableView];
 
+    _needLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _needLoginButton.hidden = true;
+    [_needLoginButton setTitle:@"未登录，请先登录" forState:UIControlStateNormal];
+    [_needLoginButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    _needLoginButton.titleLabel.font = [UIFont systemFontOfSize:18];
+    [_needLoginButton addTarget:self action:@selector(needLoginButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_needLoginButton];
+    [_needLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+        make.size.mas_equalTo(CGSizeMake(200, 100));
+    }];
+    
     orderTableView.hidden = YES;
 
     showMoreFooterView = [[ShowMoreIndicator alloc] initWithFrame:CGRectMake(0, 0, screentWith, 40)];
@@ -162,6 +176,17 @@ typedef void (^finishBlock)();
                                              selector:@selector(refreshCell:)
                                                  name:@"refreshOrderListY"
                                                object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self requestOrderList:ticketPage];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    isDisapear = YES;
+    [self resetLoading];
 }
 
 - (void)refreshCell:(NSNotification *) not{
@@ -240,10 +265,8 @@ typedef void (^finishBlock)();
     }
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    isDisapear = YES;
-    [self resetLoading];
+- (void)needLoginButtonAction {
+    [[UserManager shareInstance] gotoLoginControllerFrom:self];
 }
 
 #pragma mark utilities
@@ -277,6 +300,16 @@ typedef void (^finishBlock)();
  */
 - (void) requestOrderList:(NSInteger) page
 {
+    if (![UserManager shareInstance].isUserAuthorized) {
+        // 未登录
+        _needLoginButton.hidden = false;
+        orderTableView.hidden = true;
+        return;
+    }
+    
+    _needLoginButton.hidden = true;
+    orderTableView.hidden = false;
+    
     OrderRequest *request = [OrderRequest new];
     __weak typeof(self) weakSelf = self;
     [request requestOrderListAt:page success:^(NSArray * _Nullable orders, BOOL hasMore) {

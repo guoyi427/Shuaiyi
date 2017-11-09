@@ -42,7 +42,7 @@
 #define KOKOLOCATIONVIEWWIDTH ((screentWith - 158) * 0.5 - 10)
 #define KOKOLOCATIONVIEWHEIGHT 44.0f
 
-#define Banner_Height (110 * (screentWith / 320))
+#define Banner_Height (130 * (screentWith / 320))
 
 @interface MoviesNewViewController () <KOKOLocationViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 {
@@ -147,7 +147,7 @@
 }
 
 - (void)setupCollectionView {
-    _contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, screentWith, CGRectGetHeight(self.view.frame)-64)];
+    _contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, screentWith, CGRectGetHeight(self.view.frame)-64-49)];
     _contentView.backgroundColor = [UIColor whiteColor];
     _contentView.contentSize = CGSizeMake(0, 231*2 + Banner_Height);
     [self.view addSubview:_contentView];
@@ -840,6 +840,7 @@
         Movie *movie = [_currentMovieList objectAtIndex:indexPath.row];
         MovieDetailViewController *ctr = [[MovieDetailViewController alloc] initCinemaListForMovie:movie.movieId];
         ctr.isCommingSoon = false;
+        ctr.movie = movie;
         MovieListPosterCollectionViewCell *cell = (MovieListPosterCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
         self.sf_targetView = cell.moviePosterImage;
         [self.navigationController pushViewController:ctr animated:YES];
@@ -847,6 +848,7 @@
         Movie *movie = [_futureMovieList objectAtIndex:indexPath.row];
         MovieDetailViewController *ctr = [[MovieDetailViewController alloc] initCinemaListForMovie:movie.movieId];
         ctr.isCommingSoon = true;
+        ctr.movie = movie;
         MovieListPosterCollectionViewCell *cell = (MovieListPosterCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
         self.sf_targetView = cell.moviePosterImage;
         [self.navigationController pushViewController:ctr animated:YES];

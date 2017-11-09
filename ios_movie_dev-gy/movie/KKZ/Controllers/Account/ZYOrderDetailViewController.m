@@ -182,7 +182,7 @@
     _serialCodeLabel = [[UILabel alloc] init];
     _serialCodeLabel.textColor = appDelegate.kkzGray;
     _serialCodeLabel.font = [UIFont systemFontOfSize:15];
-    _serialCodeLabel.text = [NSString stringWithFormat:@"序列号: %@", _currentOrder.finalTicketNo];
+    _serialCodeLabel.text = [NSString stringWithFormat:@"票号: %@", _currentOrder.finalTicketNo];
     [grayView addSubview:_serialCodeLabel];
     
     _validCodeLabel = [[UILabel alloc] init];
@@ -200,7 +200,7 @@
         make.centerX.equalTo(grayView);
         make.bottom.mas_equalTo(-20);
     }];
-    
+    /*
     if (_currentOrder.qrCodePath.length > 0) {
         _qrCodeImageView = [[UIImageView alloc] init];
         [_qrCodeImageView sd_setImageWithURL:[NSURL URLWithString:_currentOrder.qrCodePath]];
@@ -218,11 +218,11 @@
         [_ticketBackgroundView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(_qrCodeImageView.mas_bottom).offset(20);
         }];
-    } else {
+    } else {*/
         [_ticketBackgroundView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(grayView.mas_bottom).offset(20);
         }];
-    }
+//    }
 }
 
 - (void)preparePriceView {

@@ -258,6 +258,12 @@
     [homeBgCover setBackgroundColor:[UIColor r:0 g:0 b:0 alpha:0.5]];
 
     [homeBackgroundView addSubview:homeBgCover];
+    
+    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blur];
+    effectView.frame = homeBackgroundView.bounds;
+    [homeBackgroundView addSubview:effectView];
+    
 
     if (self.movie.thumbPath.length) {
         self.urlStr = self.movie.thumbPath;
@@ -265,7 +271,7 @@
         self.urlStr = self.movie.pathVerticalS;
     }
 
-    NSString *url = [NSString stringWithFormat:@"movieDetail%@", self.urlStr];
+    NSString *url = [NSString stringWithFormat:@"%@", self.urlStr];
 
     UIImage *newImg = [[ImageEngineNew sharedImageEngineNew] getImageFromDiskForURL:[url MD5String] andSize:ImageSizeOrign];
     if (newImg) {
@@ -471,6 +477,7 @@
     [backBtn addTarget:self action:@selector(cancelViewController) forControlEvents:UIControlEventTouchUpInside];
     [self.navBarView addSubview:backBtn];
 
+    /*
     //右边分享按钮
     rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     rightBtn.frame = CGRectMake(screentWith - 60, 0, 60, 40);
@@ -484,6 +491,7 @@
     } else {
         rightBtn.hidden = NO;
     }
+     */
 }
 
 /**
@@ -570,25 +578,29 @@
     self.movie = responseData;
 
     //设置背景图片
-    if (self.movie.thumbPath.length) {
-        self.urlStr = self.movie.thumbPath;
-    } else {
+//    if (self.movie.thumbPath.length) {
+//        self.urlStr = self.movie.thumbPath;
+//    } else {
         self.urlStr = self.movie.pathVerticalS;
-    }
+//    }
 
-    NSString *url = [NSString stringWithFormat:@"movieDetail%@", self.urlStr];
+//    NSString *url = [NSString stringWithFormat:@"movieDetail%@", self.urlStr];
+//
+//    UIImage *newImg = [[ImageEngineNew sharedImageEngineNew] getImageFromDiskForURL:[url MD5String] andSize:ImageSizeOrign];
 
-    UIImage *newImg = [[ImageEngineNew sharedImageEngineNew] getImageFromDiskForURL:[url MD5String] andSize:ImageSizeOrign];
-
-    if (newImg) {
-        homeBackgroundView.image = newImg;
+    [homeBackgroundView sd_setImageWithURL:[NSURL URLWithString:self.urlStr]];
+    if (self.urlStr) {
         homeBgCover.image = nil;
-    } else {
-        NSThread *myThread = [[NSThread alloc] initWithTarget:self
-                                                     selector:@selector(newImage)
-                                                       object:nil];
-        [myThread start];
     }
+//    if (newImg) {
+////        homeBackgroundView.image = newImg;
+//        homeBgCover.image = nil;
+//    } else {
+//        NSThread *myThread = [[NSThread alloc] initWithTarget:self
+//                                                     selector:@selector(newImage)
+//                                                       object:nil];
+//        [myThread start];
+//    }
 
     //设置头部信息
     self.movie.hasImax = self.hasImax;
@@ -1661,11 +1673,11 @@
 - (void)newImage {
 
     //设置背景图片
-    if (self.movie.thumbPath.length) {
-        self.urlStr = self.movie.thumbPath;
-    } else {
+//    if (self.movie.thumbPath.length) {
+//        self.urlStr = self.movie.thumbPath;
+//    } else {
         self.urlStr = self.movie.pathVerticalS;
-    }
+//    }
 
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.urlStr]];
 
@@ -1678,7 +1690,7 @@
 
     UIImage *newImg = [KKZUtility croppedImage:img withFrame:CGRectMake((img.size.width - width) * 0.5, (img.size.height - height) * 0.5, width, height)];
 
-    UIImage *blureImg = [self blureImage:newImg withInputRadius:0.2f];
+    UIImage *blureImg = [self blureImage:newImg withInputRadius:3.0f];
     dispatch_async(dispatch_get_main_queue(), ^{
         UIImage *newImgLast = [KKZUtility resibleImage:blureImg toSize:homeBackgroundView.frame.size];
         
