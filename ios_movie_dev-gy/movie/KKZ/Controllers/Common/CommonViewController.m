@@ -413,13 +413,6 @@ static NSString *oldPushControllerName;
     }
 }
 
-- (void)setStatusBarDefaultStyle {
-    if (runningOniOS7) {
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault
-                                                    animated:NO];
-    }
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

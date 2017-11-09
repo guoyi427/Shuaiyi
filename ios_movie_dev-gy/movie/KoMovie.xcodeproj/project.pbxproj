@@ -1291,6 +1291,7 @@
 		5DA9BCC51FB3EF30005D6701 /* tab_accountH@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DA9BCC31FB3EF30005D6701 /* tab_accountH@3x.png */; };
 		5DA9BCC61FB3EF30005D6701 /* tab_accountH@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DA9BCC41FB3EF30005D6701 /* tab_accountH@2x.png */; };
 		5DA9BCC81FB3EF85005D6701 /* avatarRImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DA9BCC71FB3EF84005D6701 /* avatarRImg.png */; };
+		5DA9BCCB1FB45D31005D6701 /* CouponBindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA9BCCA1FB45D31005D6701 /* CouponBindViewController.m */; };
 		5DADF6951C86F03100C80BD1 /* MySubscreberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DADF6941C86F03100C80BD1 /* MySubscreberCell.m */; };
 		5DADF6981C87DD6200C80BD1 /* ClubPlate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DADF6971C87DD6200C80BD1 /* ClubPlate.m */; };
 		5DADF69B1C87E44400C80BD1 /* PostPlateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DADF69A1C87E44400C80BD1 /* PostPlateCell.m */; };
@@ -3500,6 +3501,8 @@
 		5DA9BCC31FB3EF30005D6701 /* tab_accountH@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab_accountH@3x.png"; path = "../../../../../../../../../../Downloads/我的头像切图/tab_accountH@3x.png"; sourceTree = "<group>"; };
 		5DA9BCC41FB3EF30005D6701 /* tab_accountH@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab_accountH@2x.png"; path = "../../../../../../../../../../Downloads/我的头像切图/tab_accountH@2x.png"; sourceTree = "<group>"; };
 		5DA9BCC71FB3EF84005D6701 /* avatarRImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatarRImg.png; sourceTree = "<group>"; };
+		5DA9BCC91FB45D31005D6701 /* CouponBindViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CouponBindViewController.h; sourceTree = "<group>"; };
+		5DA9BCCA1FB45D31005D6701 /* CouponBindViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CouponBindViewController.m; sourceTree = "<group>"; };
 		5DADF6931C86F03100C80BD1 /* MySubscreberCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySubscreberCell.h; sourceTree = "<group>"; };
 		5DADF6941C86F03100C80BD1 /* MySubscreberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySubscreberCell.m; sourceTree = "<group>"; };
 		5DADF6961C87DD6200C80BD1 /* ClubPlate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClubPlate.h; sourceTree = "<group>"; };
@@ -6676,6 +6679,8 @@
 				18CBE88C15ADDA160028E031 /* PayViewController.mm */,
 				F7E0BDD719EF7F98003E35BD /* CouponCheckViewController.h */,
 				F7E0BDD819EF7F98003E35BD /* CouponCheckViewController.m */,
+				5DA9BCC91FB45D31005D6701 /* CouponBindViewController.h */,
+				5DA9BCCA1FB45D31005D6701 /* CouponBindViewController.m */,
 			);
 			path = Payment;
 			sourceTree = "<group>";
@@ -10365,6 +10370,7 @@
 				294019CA1D62DEF8002BADEF /* PropertyDescription.m in Sources */,
 				29392AF4177A9E1700875227 /* SoundEngine.m in Sources */,
 				29AA59F51D70346900092894 /* RefreshTableView.m in Sources */,
+				5DA9BCCB1FB45D31005D6701 /* CouponBindViewController.m in Sources */,
 				A423C2F71C74877F00070DAF /* CameraFlashView.m in Sources */,
 				5D1B89D01FB2E22C00352B44 /* UserScoreMovieViewController.m in Sources */,
 				5D84B1191C755FF50053BB51 /* MyReplyPostTypeTwoCell.m in Sources */,

@@ -16,13 +16,13 @@
 #import "MovieRequest.h"
 #import "PayTask.h"
 
+//  ViewController
+#import "CouponBindViewController.h"
+
 @interface CouponViewController () <UITableViewDelegate, UITableViewDataSource>
 {
     //  UI
     UITableView *_tableView;
-    UIView *_bindView;
-    UITextField *_couponCodeTextField;
-    UITextField *_cardPasswordTextField;
     
     //  Data
     NSMutableArray *_modelList;
@@ -62,11 +62,13 @@ static NSString *RedeemCellId = @"redeemcell";
         [self.navBarView addSubview:rightBarButton];
 //    }
     
-    [self prepareBindView];
+    if (_comefromPay) {
+        [self prepareDoneButton];
+    }
 }
 
 - (void)prepareTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kAppScreenWidth, CGRectGetHeight(self.view.frame) - 64) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kAppScreenWidth, CGRectGetHeight(self.view.frame) - 64 - 50) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [_tableView registerClass:[CouponCell class] forCellReuseIdentifier:CouponCellId];
@@ -80,63 +82,19 @@ static NSString *RedeemCellId = @"redeemcell";
     }];
 }
 
-- (void)prepareBindView {
-//    if (!_comefromPay) {
-//        return;
-//    }
-    _bindView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kAppScreenWidth, CGRectGetHeight(self.view.frame) - 64)];
-    _bindView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
-    _bindView.hidden = true;
-    [self.view addSubview:_bindView];
-    
-    UITapGestureRecognizer *tapBindViewGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBindViewGRAction)];
-    [_bindView addGestureRecognizer:tapBindViewGR];
-    
-    UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(50, 150, kAppScreenWidth-100, 160)];
-    whiteView.backgroundColor = appDelegate.kkzLine;
-    whiteView.layer.cornerRadius = 5.0;
-    whiteView.layer.masksToBounds = true;
-    [_bindView addSubview:whiteView];
-    
-    _couponCodeTextField = [[UITextField alloc] init];
-    _couponCodeTextField.backgroundColor = [UIColor whiteColor];
-    _couponCodeTextField.textColor = appDelegate.kkzTextColor;
-    _couponCodeTextField.font = [UIFont systemFontOfSize:14];
-    _couponCodeTextField.placeholder = @"请输入券码";
-    [whiteView addSubview:_couponCodeTextField];
-    [_couponCodeTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(20);
-        make.right.mas_equalTo(-20);
-        make.top.mas_equalTo(25);
-        make.height.mas_equalTo(30);
-    }];
-    
-    if (_type == CouponType_Stored) {
-        _cardPasswordTextField = [[UITextField alloc] init];
-        _cardPasswordTextField.backgroundColor = _couponCodeTextField.backgroundColor;
-        _cardPasswordTextField.textColor = appDelegate.kkzTextColor;
-        _cardPasswordTextField.font = [UIFont systemFontOfSize:14];
-        _cardPasswordTextField.placeholder = @"请输入券码";
-        [whiteView addSubview:_cardPasswordTextField];
-        [_cardPasswordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_couponCodeTextField);
-            make.right.equalTo(_couponCodeTextField);
-            make.top.equalTo(_couponCodeTextField.mas_bottom).offset(10);
-            make.height.equalTo(_couponCodeTextField);
-        }];
-    }
-    
+- (void)prepareDoneButton {
     UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    doneButton.backgroundColor = _couponCodeTextField.backgroundColor;
-    [doneButton setTitle:@"完成" forState:UIControlStateNormal];
-    [doneButton setTitleColor:appDelegate.kkzTextColor forState:UIControlStateNormal];
-    doneButton.titleLabel.font = [UIFont systemFontOfSize:20];
-    [doneButton addTarget:self action:@selector(bindViewButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [whiteView addSubview:doneButton];
+    [doneButton setBackgroundImage:[UIImage imageNamed:@"Login_Button"] forState:UIControlStateNormal];
+    [doneButton setTitle:@"确定" forState:UIControlStateNormal];
+    [doneButton setTitleColor: [UIColor whiteColor] forState:UIControlStateNormal];
+    doneButton.titleLabel.font = [UIFont systemFontOfSize:16];
+    [doneButton addTarget:self action:@selector(cancelViewController) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:doneButton];
     [doneButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(_couponCodeTextField);
-        make.bottom.equalTo(whiteView).offset(-20);
-        make.height.mas_equalTo(40);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
+        make.bottom.mas_equalTo(-5);
+        make.height.mas_equalTo(45);
     }];
 }
 
@@ -164,41 +122,11 @@ static NSString *RedeemCellId = @"redeemcell";
     return true;
 }
 
-#pragma mark - UIButton - Actoin
+#pragma mark - UIButton - Action
 
-/// 绑定券按钮
 - (void)commonBtnClick:(UIButton *)sender {
-    _bindView.hidden = false;
-}
-
-- (void)bindViewButtonAction {
-    
-    if (_couponCodeTextField.text.length == 0) {
-        return;
-    }
-    
-    _bindView.hidden = true;
-    
-    PayTask *task = [[PayTask alloc] initBindingCouponforUser:[_couponCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]
-                                                      groupId:[NSString stringWithFormat:@"%lu", _type]
-                                                     password:_cardPasswordTextField.text
-                                                     finished:^(BOOL succeeded, NSDictionary *userInfo) {
-                                                         NSLog(@"%@", userInfo);
-                                                         if (succeeded) {
-                                                             [self loadCouponList];
-                                                             [UIAlertView showAlertView:@"绑定完成" buttonText:@"确定"];
-                                                         } else {
-                                                             [UIAlertView showAlertView:@"绑定失败，请重试" buttonText:@"确定"];
-                                                         }
-                                                         [appDelegate hideIndicator];
-                                                     }];
-    if ([[TaskQueue sharedTaskQueue] addTaskToQueue:task]) {
-        [appDelegate showIndicatorWithTitle:@"请稍候..." animated:YES fullScreen:NO overKeyboard:NO andAutoHide:NO];
-    }
-}
-
-- (void)tapBindViewGRAction {
-    _bindView.hidden = true;
+    CouponBindViewController *vc = [[CouponBindViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:true];
 }
 
 #pragma mark - Network - Request
@@ -267,7 +195,9 @@ static NSString *RedeemCellId = @"redeemcell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_modelList.count > indexPath.row) {
+    if (_modelList.count > indexPath.row && _comefromPay) {
+        [appDelegate showIndicatorWithTitle:nil animated:true fullScreen:true overKeyboard:true andAutoHide:false];
+        //  更新数据选中状态
         NSMutableDictionary *model = [NSMutableDictionary dictionaryWithDictionary: _modelList[indexPath.row]];
         if ([model[CellSelectedKey] boolValue]) {
             [model setObject:@false forKey:CellSelectedKey];
@@ -276,7 +206,61 @@ static NSString *RedeemCellId = @"redeemcell";
         }
         [_modelList replaceObjectAtIndex:indexPath.row withObject:model];
         
-        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        //  找出选中的coupon
+        NSMutableArray *selectedList = [[NSMutableArray alloc] init];
+        for (NSDictionary *dic in _modelList) {
+            if ([dic[CellSelectedKey] boolValue]) {
+                [selectedList addObject:dic];
+            }
+        }
+        
+        //  拼接已选券id
+        NSMutableString *couponString = [[NSMutableString alloc] initWithString:@"["];
+        for (NSDictionary *dic in selectedList) {
+            if (dic[@"couponId"]) {
+                [couponString appendString:[NSString stringWithFormat:@"{couponid: %@},", dic[@"couponId"]]];
+            }
+        }
+        couponString = [NSMutableString stringWithString: [couponString substringToIndex:couponString.length-1]];
+        [couponString appendString:@"]"];
+        if (couponString.length < 2) {
+            //  未选中任何券
+            couponString = [[NSMutableString alloc] initWithString: @""];
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            return;
+        }
+        //  更新价格状态
+        PayTask *task = [[PayTask alloc] initCheckECard:couponString
+                                               forOrder:_orderId
+                                               groupbuy:nil
+                                               finished:^(BOOL succeeded, NSDictionary *userInfo) {
+                                                   
+                                                   [appDelegate hideIndicator];
+                                                   
+                                                   if (succeeded) {
+                                                       [_modelList replaceObjectAtIndex:indexPath.row withObject:model];
+                                                       [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+
+                                                   } else {
+                                                       if ([model[CellSelectedKey] boolValue]) {
+                                                           [model setObject:@false forKey:CellSelectedKey];
+                                                       } else {
+                                                           [model setObject:@true forKey:CellSelectedKey];
+                                                       }
+                                                       [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                                       [appDelegate showAlertViewForTaskInfo:userInfo];
+                                                   }
+                                               }];
+        
+        if ([[TaskQueue sharedTaskQueue] addTaskToQueue:task]) {
+            [appDelegate showIndicatorWithTitle:@"请稍候..."
+                                       animated:YES
+                                     fullScreen:NO
+                                   overKeyboard:NO
+                                    andAutoHide:NO];
+        }
+        
+        
         if (_type == CouponType_Stored) {
             [self cancelViewController];
         }

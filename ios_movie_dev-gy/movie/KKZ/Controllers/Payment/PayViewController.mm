@@ -55,6 +55,7 @@
     NSArray *_selectedCouponList;
     NSInteger _coupon1Count;
     NSInteger _coupon2Count;
+    CouponType _lastCouponType;
     
     //  UI
     UILabel *_couponCountLabel;
@@ -1197,16 +1198,33 @@
  优惠券
  */
 - (void)tapCouponViewAction {
-    [self judgeCouponState];
+//    [self judgeCouponState];
+    if (_lastCouponType == CouponType_Redeem || _lastCouponType == CouponType_Stored) {
+        [UIAlertView showAlertView:@"优惠券、兑换券、储值卡不能同时使用" cancelText:@"取消" cancelTapped:^{
+            return;
+        } okText:@"确定" okTapped:^{
+            CouponViewController *vc = [[CouponViewController alloc] init];
+            vc.type = CouponType_coupon;
+            vc.comefromPay = true;
+            vc.delegate = self;
+            vc.selectedList = _selectedCouponList;
+            vc.orderId = self.orderNo;
+            [self.navigationController pushViewController:vc animated:true];
+            
+            [self uploadCouponCountView];
+        }];
+    } else {
+        CouponViewController *vc = [[CouponViewController alloc] init];
+        vc.type = CouponType_coupon;
+        vc.comefromPay = true;
+        vc.delegate = self;
+        vc.selectedList = _selectedCouponList;
+        vc.orderId = self.orderNo;
+        [self.navigationController pushViewController:vc animated:true];
+        
+        [self uploadCouponCountView];
+    }
     
-    CouponViewController *vc = [[CouponViewController alloc] init];
-    vc.type = CouponType_coupon;
-    vc.comefromPay = true;
-    vc.delegate = self;
-    vc.selectedList = _selectedCouponList;
-    [self.navigationController pushViewController:vc animated:true];
-    
-    [self uploadCouponCountView];
 }
 
 
@@ -1214,32 +1232,63 @@
  券码
  */
 - (void)tapCouponView2Action {
-     [self judgeCouponState];
-    
-    CouponViewController *vc = [[CouponViewController alloc] init];
-    vc.type = CouponType_Redeem;
-    vc.comefromPay = true;
-    vc.delegate = self;
-    vc.selectedList = _selectedCouponList;
-    [self.navigationController pushViewController:vc animated:true];
-    
-    [self uploadCouponCountView];
+//     [self judgeCouponState];
+    if (_lastCouponType == CouponType_coupon || _lastCouponType == CouponType_Stored) {
+        [UIAlertView showAlertView:@"优惠券、兑换券、储值卡不能同时使用" cancelText:@"取消" cancelTapped:^{
+            return;
+        } okText:@"确定" okTapped:^{
+            CouponViewController *vc = [[CouponViewController alloc] init];
+            vc.type = CouponType_Redeem;
+            vc.comefromPay = true;
+            vc.delegate = self;
+            vc.selectedList = _selectedCouponList;
+            vc.orderId = self.orderNo;
+            [self.navigationController pushViewController:vc animated:true];
+            [self uploadCouponCountView];
+        }];
+    } else {
+        CouponViewController *vc = [[CouponViewController alloc] init];
+        vc.type = CouponType_Redeem;
+        vc.comefromPay = true;
+        vc.delegate = self;
+        vc.selectedList = _selectedCouponList;
+        vc.orderId = self.orderNo;
+        [self.navigationController pushViewController:vc animated:true];
+         [self uploadCouponCountView];
+    }
 }
 
 /**
  储蓄卡
  */
 - (void)tapCardViewAction {
-    [self judgeCouponState];
+//    [self judgeCouponState];
+    if (_lastCouponType == CouponType_Redeem || _lastCouponType == CouponType_coupon) {
+        [UIAlertView showAlertView:@"优惠券、兑换券、储值卡不能同时使用" cancelText:@"取消" cancelTapped:^{
+            return;
+        } okText:@"确定" okTapped:^{
+            CouponViewController *vc = [[CouponViewController alloc] init];
+            vc.type = CouponType_Stored;
+            vc.comefromPay = true;
+            vc.delegate = self;
+            vc.selectedList = _selectedCouponList;
+            vc.orderId = self.orderNo;
+            [self.navigationController pushViewController:vc animated:true];
+            
+            [self uploadCouponCountView];
+        }];
+    } else {
+        CouponViewController *vc = [[CouponViewController alloc] init];
+        vc.type = CouponType_Stored;
+        vc.comefromPay = true;
+        vc.delegate = self;
+        vc.selectedList = _selectedCouponList;
+        vc.orderId = self.orderNo;
+        [self.navigationController pushViewController:vc animated:true];
+        
+        [self uploadCouponCountView];
+    }
     
-    CouponViewController *vc = [[CouponViewController alloc] init];
-    vc.type = CouponType_Stored;
-    vc.comefromPay = true;
-    vc.delegate = self;
-    vc.selectedList = _selectedCouponList;
-    [self.navigationController pushViewController:vc animated:true];
-    
-    [self uploadCouponCountView];
 }
 
 #pragma mark override from CommonViewController
@@ -1260,6 +1309,8 @@
 /// 选中券
 - (void)couponViewController:(CouponViewController *)viewController didSelectedCouponList:(NSArray *)list type:(CouponType)type {
     NSLog(@"selected coupon list = %@", list);
+    
+    _lastCouponType = type;
     
     NSMutableString *couponString = [[NSMutableString alloc] initWithString:@"["];
     for (NSDictionary *dic in list) {
@@ -1299,7 +1350,7 @@
                                                    }
                                                } else {
                                                    [self uploadCouponCountView];
-                                                   [appDelegate showAlertViewForTaskInfo:userInfo];
+//                                                   [appDelegate showAlertViewForTaskInfo:userInfo];
                                                    _selectedCouponList = nil;
                                                    payView.ecardListStr = @"";
                                                    _couponString = @"";

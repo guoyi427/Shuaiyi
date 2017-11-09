@@ -690,3 +690,13 @@ typedef enum {
     SMSValidcode = 0, //短信验证码
     VoiceValidcode = 1, //语音验证码
 } ValidcodeType;
+
+
+typedef enum : NSUInteger {
+    /// 优惠券
+    CouponType_coupon = 4,
+    /// 兑换码
+    CouponType_Redeem = 3,
+    /// 储值卡
+    CouponType_Stored = 1,
+} CouponType;

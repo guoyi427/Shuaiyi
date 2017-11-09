@@ -30,19 +30,19 @@
 //    }
     self.view.backgroundColor = [UIColor r:245 g:245 b:245];
     searchFieldView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screentWith, self.contentPositionY + 44)];
-    searchFieldView.backgroundColor = [UIColor whiteColor];
+    searchFieldView.backgroundColor = appDelegate.kkzBlack;//[UIColor whiteColor];
     [self.view addSubview:searchFieldView];
 
     searchBtn = [[UIButton alloc] initWithFrame:CGRectMake(screentWith - 48, self.contentPositionY, 44, 44)];
     [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
-    [searchBtn setTitleColor:[UIColor r:153 g:153 b:153] forState:UIControlStateNormal];
+    [searchBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     searchBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [searchBtn addTarget:self action:@selector(refreshSearchList) forControlEvents:UIControlEventTouchUpInside];
     [searchFieldView addSubview:searchBtn];
 
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame = CGRectMake(0, self.contentPositionY + 3, 44, 38);
-    [backBtn setImage:[UIImage imageNamed:@"blue_back"] forState:UIControlStateNormal];
+    [backBtn setImage:[UIImage imageNamed:@"white_back"] forState:UIControlStateNormal];
     [backBtn setImageEdgeInsets:UIEdgeInsetsMake(9.5, 11, 9, 13)];
     [backBtn addTarget:self action:@selector(cancelViewController) forControlEvents:UIControlEventTouchUpInside];
     [searchFieldView addSubview:backBtn];
@@ -66,9 +66,11 @@
 
     m_searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(32, self.contentPositionY, screentWith - 46 - 32, 44)];
     m_searchBar.delegate = self;
-    [m_searchBar setBackgroundImage:[UIImage imageNamed:@"searchBarViewBg"]];
-    m_searchBar.backgroundColor = [UIColor clearColor];
-    [m_searchBar setSearchFieldBackgroundImage:[UIImage imageNamed:@"searchBarBg"] forState:UIControlStateNormal];
+//    [m_searchBar setBackgroundImage:[UIImage imageNamed:@"searchBarViewBg"]];
+    m_searchBar.barTintColor = appDelegate.kkzBlack;
+    m_searchBar.tintColor = appDelegate.kkzBlack;
+    m_searchBar.backgroundColor = appDelegate.kkzBlack;//[UIColor clearColor];
+//    [m_searchBar setSearchFieldBackgroundImage:[UIImage imageNamed:@"searchBarBg"] forState:UIControlStateNormal];
     [searchFieldView addSubview:m_searchBar];
 
     KKZKeyboardTopView *topView = [[KKZKeyboardTopView alloc] initWithFrame:CGRectMake(0, 0, m_searchBar.frame.size.width, 38)];
@@ -86,8 +88,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
-    [self setStatusBarDefaultStyle];
 }
 
 #pragma mark utilities

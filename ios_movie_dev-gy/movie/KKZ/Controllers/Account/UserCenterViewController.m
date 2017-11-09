@@ -29,6 +29,8 @@
     UILabel *_nickNameLabel;
     UILabel *_wantSeeCountLabel;
     UILabel *_scoreCountLabel;
+    UIView *_vipView;
+    UIButton *_loginButton;
     
     //  Data
     NSArray<NSArray *> *_menuTitleList;
@@ -91,22 +93,50 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
         make.top.equalTo(_userImageView).offset(20);
     }];
     
+    //  vip
+    _vipView = [[UIView alloc] init];
+    _vipView.hidden = true;
+    [pinkView addSubview:_vipView];
+    
     UILabel *vipLabel = [[UILabel alloc] init];
     vipLabel.text = @"金牌会员";
     vipLabel.textColor = [UIColor whiteColor];
     vipLabel.font = [UIFont systemFontOfSize:12];
-    [pinkView addSubview:vipLabel];
-    [vipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_nickNameLabel);
-        make.top.equalTo(_nickNameLabel.mas_bottom).offset(2);
-    }];
+    [_vipView addSubview:vipLabel];
     
     UIImageView *vipIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"UserCenter_vipIcon"]];
-    [pinkView addSubview:vipIconView];
+    [_vipView addSubview:vipIconView];
+    
+    [_vipView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_nickNameLabel);
+        make.top.equalTo(_nickNameLabel.mas_bottom).offset(2);
+        make.size.mas_equalTo(CGSizeMake(200, 40));
+    }];
+    
+    [vipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_vipView);
+        make.top.equalTo(_vipView);
+    }];
+    
     [vipIconView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(vipLabel.mas_right).offset(5);
         make.centerY.equalTo(vipLabel);
     }];
+    
+    //  login button
+    _loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_loginButton setTitle:@"点击登录" forState:UIControlStateNormal];
+    [_loginButton setTitleColor: [UIColor whiteColor] forState:UIControlStateNormal];
+    _loginButton.titleLabel.font = [UIFont systemFontOfSize:16];
+    [_loginButton addTarget:self action:@selector(loginButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [pinkView addSubview:_loginButton];
+    [_loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_nickNameLabel);
+        make.centerY.equalTo(_userImageView);
+        make.size.mas_equalTo(CGSizeMake(80, 40));
+    }];
+    
+    //  bottom
     
     UIView *leftBottomView = [[UIView alloc] init];
     leftBottomView.backgroundColor = [UIColor whiteColor];
@@ -200,6 +230,15 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
 #pragma mark - Network - Request
 
 - (void)loadUserinfo {
+    if ([UserManager shareInstance].isUserAuthorized) {
+        _vipView.hidden = false;
+        _loginButton.hidden = true;
+    } else {
+        _vipView.hidden = true;
+        _loginButton.hidden = false;
+    }
+    [_tableView reloadData];
+    
     UserRequest *request = [[UserRequest alloc] init];
     [request requestUserDetail:^(User * _Nullable user) {
         [_userImageView sd_setImageWithURL:[NSURL URLWithString:user.headImg] placeholderImage:[UIImage imageNamed:@"avatarRImg"]];
@@ -244,9 +283,17 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     [self.navigationController pushViewController:scoreVC animated:true];
 }
 
+- (void)loginButtonAction {
+    WeakSelf
+    [[UserManager shareInstance] gotoLoginControllerFrom:weakSelf];
+}
+
 #pragma mark - UITableView - Delegate & Datasource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (![UserManager shareInstance].isUserAuthorized && section == 2) {
+        return _menuTitleList[section].count - 1;
+    }
     return _menuTitleList[section].count;
 }
 

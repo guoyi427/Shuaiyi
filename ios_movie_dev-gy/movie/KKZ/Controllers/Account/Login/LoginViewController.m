@@ -160,7 +160,7 @@ typedef enum : NSUInteger {
 - (void)viewWillAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self setStatusBarDefaultStyle];
+//    [self setStatusBarDefaultStyle];
 }
 
 /**
