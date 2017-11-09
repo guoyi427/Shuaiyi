@@ -935,7 +935,7 @@ typedef enum : NSUInteger {
     cc2d.longitude = [_cinemaDetail.longitude length] ? [_cinemaDetail.longitude doubleValue] : 0.0;
     
     BMKOpenPoiNearbyOption *opt = [[BMKOpenPoiNearbyOption alloc] init];
-    opt.appScheme = @"CIASMovie://mapsdk.baidu.com";
+    opt.appScheme = @"ZhangYu://mapsdk.baidu.com";
     opt.location = cc2d;
     opt.keyword = _cinemaDetail.cinemaName;
     opt.radius = 1000;
