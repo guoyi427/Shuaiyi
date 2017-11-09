@@ -660,6 +660,7 @@
  */
 - (void) checkRemindOrder:(BOOL) showTicket
 {
+    return;
     if (self.didAppear == NO) {
         //确保再首次进入首页时只请求一次（避免MovieListVc、InCommingMovieListVc 刷新回调）
         return;
@@ -793,7 +794,14 @@
             cell.movieName = movie.movieName;
             cell.imageUrl = movie.pathVerticalS;
             cell.point = movie.score;
-            cell.availableScreenType = [NSString stringWithFormat:@" %@ %@", movie.hasImax?@"IMAX":@"", movie.has3D?@"3D ":@""];
+            NSMutableString *screenString = [NSMutableString stringWithString:movie.hasImax?@"IMAX":@""];
+            if (movie.has3D) {
+                [screenString appendString:@" 3D"];
+            }
+            if (screenString.length) {
+                [screenString appendString:@" "];
+            }
+            cell.availableScreenType = [NSString stringWithFormat:@"%@", screenString];
             cell.isSale = true;
             cell.isPresell = false;
             cell.model = movie;
