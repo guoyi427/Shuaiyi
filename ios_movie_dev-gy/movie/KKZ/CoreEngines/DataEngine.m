@@ -43,6 +43,9 @@ static DataEngine *_dataEngine = nil;
             UserLogin *model = [NewLoginViewModel selectLoginDataFromDataBase];
             [self setUserDataModel:model];
         }
+        
+        _currentMovieList = [[NSMutableArray alloc] init];
+        _futureMovieList = [[NSMutableArray alloc] init];
     }
     return self;
 }

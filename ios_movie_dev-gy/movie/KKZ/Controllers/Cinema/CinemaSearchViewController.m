@@ -17,15 +17,17 @@
 #import "UserDefault.h"
 #import "NoDataViewY.h"
 #import "CinemaRequest.h"
+#import "ZYMovieListCell.h"
+#import "MovieDetailViewController.h"
 
 @implementation CinemaSearchViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    if (!self.isFromCinema) {
+//    if (!self.isFromCinema) {
         [self refreshCinemaList];
-    }
+//    }
     self.view.backgroundColor = [UIColor r:245 g:245 b:245];
     searchFieldView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screentWith, self.contentPositionY + 44)];
     searchFieldView.backgroundColor = [UIColor whiteColor];
@@ -51,6 +53,7 @@
     cinemaTable.dataSource = self;
     cinemaTable.backgroundColor = [UIColor clearColor];
     cinemaTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [cinemaTable registerClass:[ZYMovieListCell class] forCellReuseIdentifier:@"CellIdentifier"];
     [self.view addSubview:cinemaTable];
     cinemaTable.hidden = YES;
 
@@ -102,13 +105,12 @@
     if (USER_CITY) {
         NSMutableArray *dataArray = [[NSMutableArray alloc] initWithCapacity:0];
         int i = (int) [self.allCinemasListLayout count];
-        CinemaDetail *c = [[CinemaDetail alloc] init];
-        CinemaCellLayout *cinemaLayout = [[CinemaCellLayout alloc] init];
         for (int j = 0; j < i; j++) {
-            cinemaLayout = self.allCinemasListLayout[j];
-            c = cinemaLayout.cinema;
-            if ([c.cinemaName containsString:searchText]) {
-                [dataArray addObject:cinemaLayout];
+            Movie *tempMovie = self.allCinemasListLayout[j];
+            if ([tempMovie.movieName containsString:searchText] ||
+                [tempMovie.movieDirector containsString:searchText] ||
+                [tempMovie.actor containsString:searchText]) {
+                [dataArray addObject:tempMovie];
             }
         }
         searchList = [dataArray mutableCopy];
@@ -149,12 +151,18 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     static NSString *CellIdentifier = @"CellIdentifier";
-
+    /*
     NewCinemaCell *cell = (NewCinemaCell *) [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[NewCinemaCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     [self configureCell:cell atIndexPath:indexPath];
+     */
+    ZYMovieListCell *cell = (ZYMovieListCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (searchList.count > indexPath.row) {
+        Movie *model = searchList[indexPath.row];
+        [cell update:model type:ZYMovieListCellType_Current];
+    }
     return cell;
 }
 
@@ -163,10 +171,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    CinemaCellLayout *managedObject = nil;
-    managedObject = [searchList objectAtIndex:indexPath.row];
-    return managedObject.height;
+    return 137;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -185,17 +190,23 @@
         self.isCinema = YES;
     }
 
-    CinemaCellLayout *cinemaLayout = [searchList objectAtIndex:indexPath.row];
-    CinemaDetail *cinema = cinemaLayout.cinema;
-
-    CinemaTicketViewController *ticket = [[CinemaTicketViewController alloc] init];
-    ticket.cinemaName = cinema.cinemaName;
-    ticket.cinemaAddress = cinema.cinemaAddress;
-    ticket.cinemaId = cinema.cinemaId;
-    ticket.cinemaCloseTicketTime = cinema.closeTicketTime.stringValue;
-    ticket.cinemaDetail = cinema;
-    [self pushViewController:ticket
-                     animation:CommonSwitchAnimationBounce];
+//    CinemaCellLayout *cinemaLayout = [searchList objectAtIndex:indexPath.row];
+//    CinemaDetail *cinema = cinemaLayout.cinema;
+//
+//    CinemaTicketViewController *ticket = [[CinemaTicketViewController alloc] init];
+//    ticket.cinemaName = cinema.cinemaName;
+//    ticket.cinemaAddress = cinema.cinemaAddress;
+//    ticket.cinemaId = cinema.cinemaId;
+//    ticket.cinemaCloseTicketTime = cinema.closeTicketTime.stringValue;
+//    ticket.cinemaDetail = cinema;
+//    [self pushViewController:ticket
+//                     animation:CommonSwitchAnimationBounce];
+    
+    if (searchList.count > indexPath.row) {
+        Movie *model = searchList[indexPath.row];
+        MovieDetailViewController *ctr = [[MovieDetailViewController alloc] initCinemaListForMovie:model.movieId];
+        [self.navigationController pushViewController:ctr animated:YES];
+    }
 }
 
 - (void)dismissKeyBoard {
@@ -401,7 +412,10 @@
  请求影院列表
  */
 - (void)refreshCinemaList {
-
+    NSMutableArray *cinemaList = [[NSMutableArray alloc] initWithArray:[DataEngine sharedDataEngine].currentMovieList];
+    [cinemaList addObjectsFromArray:[DataEngine sharedDataEngine].futureMovieList];
+    self.allCinemasListLayout = cinemaList;
+    /*
     CinemaRequest *request = [[CinemaRequest alloc] init];
     [request requestCinemaList:[NSNumber numberWithInteger:USER_CITY]
             movieID:[NSNumber numberWithInteger:self.movieId]
@@ -413,7 +427,7 @@
                     [noAlertView removeFromSuperview];
                 }
                 //先数据
-                self.cinemas = cinemas;
+                self.cinemas = c;
                 NSMutableArray *muArr = [[NSMutableArray alloc] initWithCapacity:self.cinemas.count];
                 for (int i = 0; i < self.cinemas.count; i++) {
                     CinemaCellLayout *cinemaLayout = [[CinemaCellLayout alloc] init];
@@ -426,6 +440,7 @@
             failure:^(NSError *_Nullable err){
 
             }];
+     */
 }
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView

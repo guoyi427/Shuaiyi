@@ -454,6 +454,8 @@
                                       [_currentMovieList addObjectsFromArray:movieList];
                                       [_currentMovieCollectionView reloadData];
                                       [_contentView headerEndRefreshing];
+                                      [[DataEngine sharedDataEngine].currentMovieList removeAllObjects];
+                                      [[DataEngine sharedDataEngine].currentMovieList addObjectsFromArray:movieList];
                                   }
                                   failure:^(NSError *_Nullable err) {
                                       [_contentView headerEndRefreshing];
@@ -466,6 +468,8 @@
                                                [_futureMovieList addObjectsFromArray:movieList];
                                                [_futureMovieCollectionView reloadData];
                                                [_contentView headerEndRefreshing];
+                                               [[DataEngine sharedDataEngine].futureMovieList removeAllObjects];
+                                               [[DataEngine sharedDataEngine].futureMovieList addObjectsFromArray:movieList];
                                            }
                                            failure:^(NSError *_Nullable err) {
                                                [_contentView headerEndRefreshing];
@@ -483,14 +487,14 @@
     [self.navBarView addSubview:self.locationView];
 //    self.kkzTitleLabel.text = @"章鱼";
     // 搜索View
-    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.locationView.frame), 5, kAppScreenWidth - CGRectGetMaxX(self.locationView.frame) - 44, CGRectGetHeight(self.navBarView.frame) - 10)];
+    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.locationView.frame), 10, kAppScreenWidth - CGRectGetMaxX(self.locationView.frame) - 44, CGRectGetHeight(self.navBarView.frame) - 20)];
     searchView.backgroundColor = [UIColor whiteColor];
     searchView.layer.cornerRadius = 10.0;
     searchView.layer.masksToBounds = true;
     [self.navBarView addSubview:searchView];
     
     UILabel *searchLabel = [[UILabel alloc] init];
-    searchLabel.text = @"搜索电影";
+    searchLabel.text = @"搜索电影、导演、演员";
     searchLabel.textColor = appDelegate.kkzGray;
     searchLabel.font = [UIFont systemFontOfSize:14];
     [searchView addSubview:searchLabel];

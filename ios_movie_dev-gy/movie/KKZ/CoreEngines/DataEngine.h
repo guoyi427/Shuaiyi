@@ -61,6 +61,12 @@ typedef void ( ^ LoginFinishedBlock )(BOOL succeeded);
 
 @property (nonatomic, copy) LoginFinishedBlock finishBlock;
 
+/// 首页正在上映数据
+@property (nonatomic, strong) NSMutableArray *currentMovieList;
+
+/// 首页即将上映数据
+@property (nonatomic, strong) NSMutableArray *futureMovieList;
+
 + (DataEngine *)sharedDataEngine;
 - (NSDictionary *)getSoftwareInfo;
 
