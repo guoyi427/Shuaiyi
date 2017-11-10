@@ -1177,6 +1177,8 @@
 		5D8FF6491BEAFA6500F7E9F3 /* closeBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FF6461BEAFA6500F7E9F3 /* closeBtn.png */; };
 		5D8FF64A1BEAFA6500F7E9F3 /* closeBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FF6471BEAFA6500F7E9F3 /* closeBtn@2x.png */; };
 		5D8FF64B1BEAFA6500F7E9F3 /* closeBtn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FF6481BEAFA6500F7E9F3 /* closeBtn@3x.png */; };
+		5D917C2A1FB594820080DCEB /* OrderPay_Failure@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D917C281FB594810080DCEB /* OrderPay_Failure@2x.png */; };
+		5D917C2B1FB594820080DCEB /* OrderPay_Failure@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D917C291FB594820080DCEB /* OrderPay_Failure@3x.png */; };
 		5D91BA121A4D4AB6002AAA0E /* AlertViewY.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D91BA111A4D4AB6002AAA0E /* AlertViewY.m */; };
 		5D91BA1B1A4D69AE002AAA0E /* NoDataViewY.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D91BA1A1A4D69AE002AAA0E /* NoDataViewY.m */; };
 		5D94C2221C902C5F00D06B74 /* ic_bbs_supported.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D94C2211C902C5F00D06B74 /* ic_bbs_supported.png */; };
@@ -1288,8 +1290,6 @@
 		5DA8D6831C853FEE0055E6D5 /* MovieHotCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8D6821C853FEE0055E6D5 /* MovieHotCommentController.m */; };
 		5DA933B21C92DEF100CC14B9 /* clubPostImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DA933B01C92DEF100CC14B9 /* clubPostImage@2x.png */; };
 		5DA933B31C92DEF100CC14B9 /* clubPostImage@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DA933B11C92DEF100CC14B9 /* clubPostImage@3x.png */; };
-		5DA9BCC51FB3EF30005D6701 /* tab_accountH@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DA9BCC31FB3EF30005D6701 /* tab_accountH@3x.png */; };
-		5DA9BCC61FB3EF30005D6701 /* tab_accountH@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DA9BCC41FB3EF30005D6701 /* tab_accountH@2x.png */; };
 		5DA9BCC81FB3EF85005D6701 /* avatarRImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DA9BCC71FB3EF84005D6701 /* avatarRImg.png */; };
 		5DA9BCCB1FB45D31005D6701 /* CouponBindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA9BCCA1FB45D31005D6701 /* CouponBindViewController.m */; };
 		5DADF6951C86F03100C80BD1 /* MySubscreberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DADF6941C86F03100C80BD1 /* MySubscreberCell.m */; };
@@ -1362,6 +1362,12 @@
 		5DB2400C1A723325005BF496 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB2400B1A723325005BF496 /* Social.framework */; };
 		5DB2400E1A72332E005BF496 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB2400D1A72332E005BF496 /* Accounts.framework */; };
 		5DB240111A7238A4005BF496 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB240101A7238A4005BF496 /* libmp3lame.a */; };
+		5DB4714A1FB545F50068B8F4 /* OrderPay_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DB471461FB545F10068B8F4 /* OrderPay_Button@2x.png */; };
+		5DB4714B1FB545F50068B8F4 /* OrderLoading@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DB471471FB545F20068B8F4 /* OrderLoading@3x.png */; };
+		5DB4714C1FB545F50068B8F4 /* OrderLoading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DB471481FB545F40068B8F4 /* OrderLoading@2x.png */; };
+		5DB4714D1FB545F50068B8F4 /* OrderPay_Button@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DB471491FB545F50068B8F4 /* OrderPay_Button@3x.png */; };
+		5DB471501FB54F2B0068B8F4 /* tab_accountH@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DB4714E1FB54F290068B8F4 /* tab_accountH@3x.png */; };
+		5DB471511FB54F2B0068B8F4 /* tab_accountH@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DB4714F1FB54F290068B8F4 /* tab_accountH@2x.png */; };
 		5DB753C018CD9C11001A25FF /* AddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB753BF18CD9C11001A25FF /* AddressBook.m */; };
 		5DB753C318CD9E77001A25FF /* PlatformUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB753C218CD9E77001A25FF /* PlatformUser.m */; };
 		5DB763A31C7D567200CD1FAE /* UITableViewCell+JZExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB7639F1C7D567200CD1FAE /* UITableViewCell+JZExtension.m */; };
@@ -3369,6 +3375,8 @@
 		5D8FF6461BEAFA6500F7E9F3 /* closeBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closeBtn.png; sourceTree = "<group>"; };
 		5D8FF6471BEAFA6500F7E9F3 /* closeBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "closeBtn@2x.png"; sourceTree = "<group>"; };
 		5D8FF6481BEAFA6500F7E9F3 /* closeBtn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "closeBtn@3x.png"; sourceTree = "<group>"; };
+		5D917C281FB594810080DCEB /* OrderPay_Failure@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OrderPay_Failure@2x.png"; sourceTree = "<group>"; };
+		5D917C291FB594820080DCEB /* OrderPay_Failure@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OrderPay_Failure@3x.png"; sourceTree = "<group>"; };
 		5D91BA101A4D4AB6002AAA0E /* AlertViewY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertViewY.h; sourceTree = "<group>"; };
 		5D91BA111A4D4AB6002AAA0E /* AlertViewY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertViewY.m; sourceTree = "<group>"; };
 		5D91BA191A4D69AE002AAA0E /* NoDataViewY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoDataViewY.h; sourceTree = "<group>"; };
@@ -3498,8 +3506,6 @@
 		5DA8D6821C853FEE0055E6D5 /* MovieHotCommentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovieHotCommentController.m; sourceTree = "<group>"; };
 		5DA933B01C92DEF100CC14B9 /* clubPostImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clubPostImage@2x.png"; sourceTree = "<group>"; };
 		5DA933B11C92DEF100CC14B9 /* clubPostImage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clubPostImage@3x.png"; sourceTree = "<group>"; };
-		5DA9BCC31FB3EF30005D6701 /* tab_accountH@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab_accountH@3x.png"; path = "../../../../../../../../../../Downloads/我的头像切图/tab_accountH@3x.png"; sourceTree = "<group>"; };
-		5DA9BCC41FB3EF30005D6701 /* tab_accountH@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab_accountH@2x.png"; path = "../../../../../../../../../../Downloads/我的头像切图/tab_accountH@2x.png"; sourceTree = "<group>"; };
 		5DA9BCC71FB3EF84005D6701 /* avatarRImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatarRImg.png; sourceTree = "<group>"; };
 		5DA9BCC91FB45D31005D6701 /* CouponBindViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CouponBindViewController.h; sourceTree = "<group>"; };
 		5DA9BCCA1FB45D31005D6701 /* CouponBindViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CouponBindViewController.m; sourceTree = "<group>"; };
@@ -3597,6 +3603,12 @@
 		5DB2400D1A72332E005BF496 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		5DB2400F1A7238A4005BF496 /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
 		5DB240101A7238A4005BF496 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
+		5DB471461FB545F10068B8F4 /* OrderPay_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OrderPay_Button@2x.png"; sourceTree = "<group>"; };
+		5DB471471FB545F20068B8F4 /* OrderLoading@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OrderLoading@3x.png"; sourceTree = "<group>"; };
+		5DB471481FB545F40068B8F4 /* OrderLoading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OrderLoading@2x.png"; sourceTree = "<group>"; };
+		5DB471491FB545F50068B8F4 /* OrderPay_Button@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OrderPay_Button@3x.png"; sourceTree = "<group>"; };
+		5DB4714E1FB54F290068B8F4 /* tab_accountH@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_accountH@3x.png"; sourceTree = "<group>"; };
+		5DB4714F1FB54F290068B8F4 /* tab_accountH@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_accountH@2x.png"; sourceTree = "<group>"; };
 		5DB753BE18CD9C11001A25FF /* AddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBook.h; sourceTree = "<group>"; };
 		5DB753BF18CD9C11001A25FF /* AddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBook.m; sourceTree = "<group>"; };
 		5DB753C118CD9E77001A25FF /* PlatformUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformUser.h; sourceTree = "<group>"; };
@@ -4244,6 +4256,12 @@
 		181C8B72145C425A0085F7D3 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				5D917C281FB594810080DCEB /* OrderPay_Failure@2x.png */,
+				5D917C291FB594820080DCEB /* OrderPay_Failure@3x.png */,
+				5DB471481FB545F40068B8F4 /* OrderLoading@2x.png */,
+				5DB471471FB545F20068B8F4 /* OrderLoading@3x.png */,
+				5DB471461FB545F10068B8F4 /* OrderPay_Button@2x.png */,
+				5DB471491FB545F50068B8F4 /* OrderPay_Button@3x.png */,
 				5D06158A1FB063D100FC69B3 /* CouponList_normal@2x.png */,
 				5D0615891FB063D000FC69B3 /* CouponList_normal@3x.png */,
 				5D0615881FB063CE00FC69B3 /* CouponList_selected@2x.png */,
@@ -8291,6 +8309,8 @@
 		C26B45E216354C0C00F5B646 /* tabbar */ = {
 			isa = PBXGroup;
 			children = (
+				5DB4714F1FB54F290068B8F4 /* tab_accountH@2x.png */,
+				5DB4714E1FB54F290068B8F4 /* tab_accountH@3x.png */,
 				5D217A5D1AC5036800840390 /* tab_account.png */,
 				5D217A5E1AC5036800840390 /* tab_account@3x.png */,
 				5DCA7BBC1A5E4AC5007F4001 /* tab_home@2x.png */,
@@ -8301,10 +8321,8 @@
 				5D0DBFD81F9F1FBD008E99EB /* tab_order@3x.png */,
 				5D0DBFDA1F9F1FBE008E99EB /* tab_orderH@2x.png */,
 				5D0DBFD91F9F1FBD008E99EB /* tab_orderH@3x.png */,
-				5DA9BCC41FB3EF30005D6701 /* tab_accountH@2x.png */,
 				5DCA7BB61A5E4AC5007F4001 /* tab_account@2x.png */,
 				5DCA7BB81A5E4AC5007F4001 /* tab_cinema@2x.png */,
-				5DA9BCC31FB3EF30005D6701 /* tab_accountH@3x.png */,
 				5D217A621AC5036800840390 /* tab_cinema@3x.png */,
 				5D529A661FA6CE01003264D4 /* tab_cinemaH@2x.png */,
 				5D529A651FA6CE01003264D4 /* tab_cinemaH@3x.png */,
@@ -8650,7 +8668,7 @@
 				5D2179EB1AC502EB00840390 /* ic_splash_komovie@3x.png in Resources */,
 				5D8C97B01B4B7FF000AC1ED6 /* VoiceSearchFeedback003@2x.png in Resources */,
 				5D8C97E01B4B7FF000AC1ED6 /* chatBar_more_cardSelected@2x.png in Resources */,
-				5DA9BCC61FB3EF30005D6701 /* tab_accountH@2x.png in Resources */,
+				5DB471511FB54F2B0068B8F4 /* tab_accountH@2x.png in Resources */,
 				296C856C1AA587F800CB20E6 /* mic_wifi_3@3x.png in Resources */,
 				5D300E921A53ACFD00597A3D /* topCover.png in Resources */,
 				5DA12A0D1C2AB3DC00C2B577 /* manIcon.png in Resources */,
@@ -8665,6 +8683,7 @@
 				5D6FCBFA188E356000D23DE6 /* mic_wifi_3.png in Resources */,
 				296C85431AA554BE00CB20E6 /* publish_comment_icon.png in Resources */,
 				5D217A721AC5036800840390 /* tab_account@3x.png in Resources */,
+				5DB4714A1FB545F50068B8F4 /* OrderPay_Button@2x.png in Resources */,
 				5D8D17BF1C2036EF005BF6EA /* deleteBtn@3x.png in Resources */,
 				5D19FAF81C8BEE4A00CF077C /* shareWhiteCover@3x.png in Resources */,
 				5D3DB1E11CC4F3040090BE05 /* play@2x.png in Resources */,
@@ -8783,8 +8802,8 @@
 				5D8C97FF1B4B7FF000AC1ED6 /* chatBar_record.png in Resources */,
 				5D166C951FA705DE0031E414 /* Pay_TickBackground@2x.png in Resources */,
 				2965382F1C83F3AC0071C175 /* movie_like@3x.png in Resources */,
+				5DB471501FB54F2B0068B8F4 /* tab_accountH@3x.png in Resources */,
 				5D8C97FA1B4B7FF000AC1ED6 /* chatBar_keyboardSelected@2x.png in Resources */,
-				5DA9BCC51FB3EF30005D6701 /* tab_accountH@3x.png in Resources */,
 				A423567E1C197EC00081A975 /* cinemaDetail_dianzan@3x.png in Resources */,
 				5DD2D5D51BD0C452007C40FB /* notice.png in Resources */,
 				5DD906801C22AF89000B5F21 /* fav_star_half_blue.png in Resources */,
@@ -8830,6 +8849,7 @@
 				F754EABD1A15D4BB001DD5F0 /* recomment_cinema_icon.png in Resources */,
 				5D8D17BC1C2036EF005BF6EA /* searchRecordIcon@2x.png in Resources */,
 				A4ECFE1C1C71A87400D466B7 /* movieComment_switch@2x.png in Resources */,
+				5D917C2B1FB594820080DCEB /* OrderPay_Failure@3x.png in Resources */,
 				5D9D76D91FA61FC200684B44 /* PlanList_CinemaAddress_map@2x.png in Resources */,
 				5D7C849A1FA1D366009475C6 /* Login_QQ@3x.png in Resources */,
 				A4ECFE241C71BC9C00D466B7 /* movieComment_again_video@2x.png in Resources */,
@@ -8885,6 +8905,7 @@
 				A4E47F771C806A8E00C72917 /* movieComment_weixin@2x.png in Resources */,
 				29BB0DD91A98243F007591D6 /* logoWechatIcon.png in Resources */,
 				5D217A2B1AC5032D00840390 /* fav_star_no_orange_match@2x.png in Resources */,
+				5DB4714D1FB545F50068B8F4 /* OrderPay_Button@3x.png in Resources */,
 				2965380F1C83E14F0071C175 /* sns_my_comment@3x.png in Resources */,
 				5D976E9A1D127EE8002AE9F4 /* imax_screenType_logo@2x.png in Resources */,
 				5D0DBFDF1F9F1FBF008E99EB /* tab_orderH@2x.png in Resources */,
@@ -9356,6 +9377,7 @@
 				5D217AC31AC503B700840390 /* seat_icon@3x.png in Resources */,
 				A4E47F841C8079B200C72917 /* movieComment_top_bar@3x.png in Resources */,
 				5DAE629F1A2436510064723E /* appliedBtnY@2x.png in Resources */,
+				5DB4714C1FB545F50068B8F4 /* OrderLoading@2x.png in Resources */,
 				5D04CBE41C15A03600CB4B29 /* scoreHalfstar@2x.png in Resources */,
 				29BB0DEA1A9824A9007591D6 /* arrowRightGray@2x.png in Resources */,
 				5D06158E1FB063D400FC69B3 /* CouponList_normal@2x.png in Resources */,
@@ -9495,6 +9517,7 @@
 				5D3DB1E41CC4F3040090BE05 /* play@3x.png in Resources */,
 				2965382E1C83F3AC0071C175 /* movie_like@2x.png in Resources */,
 				5DB0B98A1A1355780071ABA9 /* messageY.png in Resources */,
+				5D917C2A1FB594820080DCEB /* OrderPay_Failure@2x.png in Resources */,
 				29612F741A9D9F2700A23781 /* movie_point_logo@3x.png in Resources */,
 				5D6FCBF9188E356000D23DE6 /* mic_wifi_2.png in Resources */,
 				F754EAC41A15DF44001DD5F0 /* fav_star_full_orange.png in Resources */,
@@ -9581,6 +9604,7 @@
 				5D217A2D1AC5032D00840390 /* fav_star_no_yellow_match@2x.png in Resources */,
 				5D7C84901FA1CA63009475C6 /* Login_Mobile@3x.png in Resources */,
 				5DD906721C22AE2D000B5F21 /* zanOrange.png in Resources */,
+				5DB4714B1FB545F50068B8F4 /* OrderLoading@3x.png in Resources */,
 				5D8C98261B4B7FF000AC1ED6 /* chat_receiver_audio_playing003.png in Resources */,
 				5DD906541C22AD86000B5F21 /* wantSeeIcon@3x.png in Resources */,
 				A406F7721C8D75D00012B1D9 /* videoPlayer_play@2x.png in Resources */,

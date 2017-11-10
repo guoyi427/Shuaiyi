@@ -611,7 +611,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 
 - (UIColor *)kkzPink {
     if (!kkzPink) {
-        kkzPink = [UIColor r:226 g:17 b:103];
+        kkzPink = [UIColor colorWithHex:@"#e50066"];
     }
     return kkzPink;
 }

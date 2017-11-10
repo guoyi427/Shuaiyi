@@ -39,6 +39,8 @@
 #import "KoMovie-Swift.h"
 #import "CinemaSearchViewController.h"
 
+#import "OrderPayViewController.h"
+
 #define KOKOLOCATIONVIEWWIDTH ((screentWith - 158) * 0.5 - 10)
 #define KOKOLOCATIONVIEWHEIGHT 44.0f
 
@@ -742,7 +744,8 @@
 }
 
 - (void)searchButtonAction {
-    CinemaSearchViewController *vc = [[CinemaSearchViewController alloc] init];
+//    CinemaSearchViewController *vc = [[CinemaSearchViewController alloc] init];
+    OrderPayViewController *vc = [[OrderPayViewController alloc] init];
     [self.navigationController pushViewController:vc animated:true];
 }
 

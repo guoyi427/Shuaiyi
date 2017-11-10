@@ -39,6 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor = appDelegate.kkzLine;
     self.kkzTitleLabel.text = @"电影票详情";
     [self prepareScrollView];
     [self prepareTicketView];
@@ -54,15 +55,19 @@
 #pragma mark - Prepare
 
 - (void)prepareScrollView {
-    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, kAppScreenWidth, screentHeight - 64)];
+    _scrollView = [[UIScrollView alloc] init];
     _scrollView.backgroundColor = appDelegate.kkzLine;
     [self.view addSubview:_scrollView];
+    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(self.view);
+        make.top.mas_equalTo(64);
+    }];
     
     _containsView = [[UIView alloc] init];
     _containsView.backgroundColor = appDelegate.kkzLine;
     [_scrollView addSubview:_containsView];
     [_containsView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(_scrollView);
+        make.left.right.bottom.top.equalTo(_scrollView);
     }];
 }
 
@@ -71,9 +76,9 @@
     _ticketBackgroundView.userInteractionEnabled = true;
     [_containsView addSubview:_ticketBackgroundView];
     [_ticketBackgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(13);
-        make.right.mas_equalTo(-13);
-        make.top.mas_equalTo(5);
+        make.left.equalTo(self.view).offset(13);
+        make.right.equalTo(self.view).offset(-13);
+        make.top.mas_equalTo(10);
     }];
     
     _cinemaNameLabel = [[UILabel alloc] init];
@@ -172,12 +177,6 @@
     grayView.layer.cornerRadius = 5.0;
     grayView.layer.masksToBounds = true;
     [_containsView addSubview:grayView];
-    [grayView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(_scrollView);
-        make.top.mas_equalTo(180);
-        make.width.mas_equalTo(180);
-        make.height.mas_equalTo(100);
-    }];
     
     _serialCodeLabel = [[UILabel alloc] init];
     _serialCodeLabel.textColor = appDelegate.kkzGray;
@@ -199,6 +198,14 @@
     [_validCodeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(grayView);
         make.bottom.mas_equalTo(-20);
+    }];
+    
+    [grayView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_scrollView);
+        make.top.mas_equalTo(180);
+        make.width.greaterThanOrEqualTo(_validCodeLabel).offset(40);
+        make.width.greaterThanOrEqualTo(_serialCodeLabel).offset(40);
+        make.height.mas_equalTo(100);
     }];
     /*
     if (_currentOrder.qrCodePath.length > 0) {
@@ -230,7 +237,7 @@
     whiteView.backgroundColor = [UIColor whiteColor];
     [_containsView addSubview:whiteView];
     [whiteView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.mas_equalTo(0);
+        make.left.right.equalTo(self.view);
         make.top.equalTo(_ticketBackgroundView.mas_bottom).offset(5);
         make.height.mas_equalTo(80);
     }];
@@ -241,8 +248,8 @@
     _orderCodeLabel.text = [NSString stringWithFormat:@"章鱼订单号：%@", _currentOrder.orderId];
     [whiteView addSubview:_orderCodeLabel];
     [_orderCodeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(20);
-        make.right.mas_lessThanOrEqualTo(-20);
+        make.left.equalTo(whiteView).offset(20);
+//        make.right.mas_lessThanOrEqualTo(-20);
         make.top.mas_equalTo(20);
     }];
     
@@ -254,7 +261,7 @@
     [whiteView addSubview:_priceLabel];
     [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_orderCodeLabel);
-        make.right.mas_lessThanOrEqualTo(-20);
+//        make.right.mas_lessThanOrEqualTo(-20);
         make.bottom.mas_equalTo(-20);
     }];
 }
@@ -264,7 +271,7 @@
     whiteView.backgroundColor = [UIColor whiteColor];
     [_containsView addSubview:whiteView];
     [whiteView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.mas_equalTo(0);
+        make.left.right.equalTo(self.view);
         make.top.equalTo(_priceLabel.mas_bottom).offset(30);
         make.height.mas_equalTo(80);
     }];
@@ -275,7 +282,7 @@
     _addressTitleLabel.text = _currentOrder.plan.cinema.cinemaName;
     [whiteView addSubview:_addressTitleLabel];
     [_addressTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(20);
+        make.left.equalTo(whiteView).offset(20);
         make.top.mas_equalTo(20);
         make.right.mas_lessThanOrEqualTo(-80);
     }];
@@ -316,12 +323,12 @@
     _distanceLabel.text = distanceStr;
     [whiteView addSubview:_distanceLabel];
     [_distanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(100);
+        make.right.equalTo(whiteView).offset(-100);
         make.centerY.equalTo(_addressLabel);
     }];
     
     [locationIconView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(_distanceLabel.mas_left).offset(5);
+        make.right.equalTo(_distanceLabel.mas_left).offset(-5);
         make.bottom.equalTo(_distanceLabel);
     }];
     
@@ -340,7 +347,7 @@
     mobileLabel.font = [UIFont systemFontOfSize:14];
     [_containsView addSubview:mobileLabel];
     [mobileLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(_containsView);
+        make.centerX.equalTo(self.view);
         make.top.equalTo(whiteView.mas_bottom).offset(20);
     }];
     
@@ -350,7 +357,7 @@
     workTimeLabel.font = [UIFont systemFontOfSize:12];
     [_containsView addSubview:workTimeLabel];
     [workTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(_containsView);
+        make.centerX.equalTo(self.view);
         make.top.equalTo(mobileLabel.mas_bottom).offset(5);
     }];
     
@@ -361,8 +368,18 @@
 
 #pragma mark - UIButton - Action
 
+- (void)cancelViewController {
+    if (_comefromPay) {
+        [self popToViewControllerAnimated:true];
+    } else {
+        [self popViewControllerAnimated:YES];
+    }
+}
+
 - (void)intoCinemaButtonAction {
-    
+    if (!_comefromPay) {
+        
+    }
 }
 
 - (void)mobileButtonAction {

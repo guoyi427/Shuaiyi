@@ -86,8 +86,8 @@
     //    [self setViewWillLoaded];
     viewPositionY = 20.0f;
 
-    [self.statusView setBackgroundColor:appDelegate.kkzBlue];
-    [self.navBarView setBackgroundColor:appDelegate.kkzBlue];
+//    [self.statusView setBackgroundColor:appDelegate.kkzBlue];
+//    [self.navBarView setBackgroundColor:appDelegate.kkzBlue];
 
     clubViewsMutableDict = [[NSMutableDictionary alloc] initWithCapacity:0];
     clubCtrsMutableDict = [[NSMutableDictionary alloc] initWithCapacity:0];

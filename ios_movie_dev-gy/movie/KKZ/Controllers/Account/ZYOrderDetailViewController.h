@@ -11,5 +11,6 @@
 @interface ZYOrderDetailViewController : CommonViewController
 
 @property (nonatomic, strong) Order *currentOrder;
+@property (nonatomic, assign) BOOL comefromPay;
 
 @end
