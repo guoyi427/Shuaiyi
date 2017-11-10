@@ -86,7 +86,7 @@
     
     _nameLabel.text = dic[@"info"][@"name"];
     _timeLabel.text = dic[@"expireDate"];
-    _priceLabel.text = dic[@"info"][@"price"];
+    _priceLabel.text = dic[@"info"][@"name"];//dic[@"info"][@"price"];
     
     _selectedStateView.hidden = !pay;
     //  判断是否选中

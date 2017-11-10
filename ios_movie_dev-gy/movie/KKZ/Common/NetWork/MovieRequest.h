@@ -122,5 +122,9 @@
                            success:(nullable void (^)(NSArray *_Nullable couponList))success
                            failure:(nullable void (^)(NSError *_Nullable err))failure;
 
+- (void)deleteCoupon:(NSString *)couponId
+             success:(nullable void (^)())success
+             failure:(nullable void (^)(NSError *_Nullable err))failure;
+
 
 @end

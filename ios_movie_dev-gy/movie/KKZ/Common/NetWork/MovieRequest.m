@@ -341,4 +341,26 @@
         success(responseObject[@"coupons"]);
     } failure:failure];
 }
+
+- (void)deleteCoupon:(NSString *)couponId
+             success:(nullable void (^)())success
+             failure:(nullable void (^)(NSError *_Nullable err))failure {
+    if (!couponId) {
+        return;
+    }
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    NSDictionary *params = [KKZBaseRequestParams
+                            getDecryptParams:@{
+                                               @"action": @"coupon_Delete",
+                                               @"coupon_id": couponId,
+                                               }];
+    [request GET:kKSSPServer parameters:params success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
+        NSLog(@"%@", responseObject);
+        NSInteger code = [responseObject[@"status"] integerValue];;
+        if (code == 0) {
+            success();
+        }
+    } failure:failure];
+}
+
 @end

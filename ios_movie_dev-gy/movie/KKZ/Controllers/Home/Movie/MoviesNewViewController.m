@@ -744,8 +744,8 @@
 }
 
 - (void)searchButtonAction {
-//    CinemaSearchViewController *vc = [[CinemaSearchViewController alloc] init];
-    OrderPayViewController *vc = [[OrderPayViewController alloc] init];
+    CinemaSearchViewController *vc = [[CinemaSearchViewController alloc] init];
+//    OrderPayViewController *vc = [[OrderPayViewController alloc] init];
     [self.navigationController pushViewController:vc animated:true];
 }
 
