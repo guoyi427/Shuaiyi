@@ -670,6 +670,7 @@
     }
     
     [self loadCouponList];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCouponList) name:@"updateCouponList" object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

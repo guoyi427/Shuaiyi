@@ -160,18 +160,18 @@
     }];
     
     _doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_doneButton setTitle:@"完成" forState:UIControlStateNormal];
+    [_doneButton setTitle:@"确认绑定" forState:UIControlStateNormal];
     [_doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    _doneButton.titleLabel.font = [UIFont systemFontOfSize:20];
+    _doneButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [_doneButton setBackgroundImage:[UIImage imageNamed:@"Login_Button"] forState:UIControlStateNormal];
     _doneButton.enabled = false;
     [_doneButton addTarget:self action:@selector(bindViewButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [_bindView addSubview:_doneButton];
     [_doneButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(20);
-        make.right.mas_equalTo(-20);
-        make.bottom.mas_equalTo(-20);
-        make.height.mas_equalTo(40);
+        make.centerX.equalTo(_bindView);
+        make.width.equalTo(@150);
+        make.top.equalTo(whiteView.mas_bottom).offset(30);
+        make.height.mas_equalTo(54);
     }];
 }
 
@@ -190,8 +190,9 @@
                                                          NSLog(@"%@", userInfo);
                                                          if (succeeded) {
                                                              [UIAlertView showAlertView:@"绑定完成" buttonText:@"确定"];
+                                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCouponList" object:nil];
                                                          } else {
-                                                             [UIAlertView showAlertView:@"绑定失败，请重试" buttonText:@"确定"];
+                                                             [appDelegate showAlertViewForTaskInfo:userInfo];
                                                              _messageLabel.hidden = false;
                                                          }
                                                          [appDelegate hideIndicator];

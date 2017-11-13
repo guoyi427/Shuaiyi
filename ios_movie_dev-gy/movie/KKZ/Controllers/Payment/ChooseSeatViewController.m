@@ -229,6 +229,7 @@ const int K_MAX_SELECTED_SEAT = 4;
     self.hallView = [[HallView alloc]init];
     [self.scrollHallView addSubview:self.hallView];
     
+    //  座位信息
     self.seatIndexView = [CPSeatIndexView new];
     [self.view addSubview:self.seatIndexView];
     [self.seatIndexView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -277,7 +278,7 @@ const int K_MAX_SELECTED_SEAT = 4;
     UIFont *font = [UIFont systemFontOfSize:12];
     
     UIButton *recommendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [recommendBtn setTitleColor:[UIColor colorWithHex:@"ff6000"] forState:UIControlStateNormal];
+    [recommendBtn setTitleColor:appDelegate.kkzPink forState:UIControlStateNormal];
     [recommendBtn setTitle:@"推荐座位" forState:UIControlStateNormal];
     recommendBtn.titleLabel.font = font;
     [recommendBtn addTarget:self action:@selector(getRecommendSeats) forControlEvents:UIControlEventTouchUpInside];

@@ -9,9 +9,14 @@
 #import "CouponCell.h"
 
 #import "CouponViewController.h"
+#import "MovieRequest.h"
 
 @interface CouponCell ()
 {
+    //  Data
+    NSDictionary *_model;
+    
+    //  UI
     UIImageView *_stateBgView;
     UILabel *_nameLabel;
     UILabel *_timeLabel;
@@ -56,7 +61,7 @@
         
         _priceLabel = [[UILabel alloc] init];
         _priceLabel.textColor = [UIColor whiteColor];
-        _priceLabel.font = [UIFont systemFontOfSize:28];
+        _priceLabel.font = [UIFont systemFontOfSize:18];
         [_stateBgView addSubview:_priceLabel];
         [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(_stateBgView);
@@ -70,11 +75,26 @@
             make.right.equalTo(_stateBgView).offset(-10);
             make.bottom.equalTo(_stateBgView).offset(-10);
         }];
+        
+        UIButton *deleteCouponButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [deleteCouponButton setTitle:@"我要解绑>"
+                            forState:UIControlStateNormal];
+        [deleteCouponButton setTitleColor:appDelegate.kkzPink forState:UIControlStateNormal];
+        deleteCouponButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        [deleteCouponButton addTarget:self action:@selector(deleteCouponButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        [_stateBgView addSubview:deleteCouponButton];
+        [deleteCouponButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(_priceLabel);
+            make.bottom.mas_equalTo(0);
+            make.size.mas_equalTo(CGSizeMake(150, 50));
+        }];
     }
     return self;
 }
 
 - (void)updateWithDic:(NSDictionary *)dic comefromPay:(BOOL)pay {
+    _model = dic;
+    
     NSDate *couponDate = [[DateEngine sharedDateEngine] dateFromString:dic[@"expireDate"]];
     BOOL expire = [couponDate compare:[NSDate date]] == NSOrderedDescending;
     
@@ -95,6 +115,22 @@
     } else {
         _selectedStateView.image = [UIImage imageNamed:@"CouponList_normal"];
     }
+}
+
+#pragma mark - UIButton - Action
+
+- (void)deleteCouponButtonAction {
+    [UIAlertView showAlertView:@"确认解绑卡券？" cancelText:@"取消" cancelTapped:^{
+        
+    } okText:@"确定" okTapped:^{
+        MovieRequest *req = [[MovieRequest alloc] init];
+        [req deleteCoupon:_model[@"couponId"] success:^{
+            [UIAlertView showAlertView:@"解绑成功" buttonText:@"确定"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCouponList" object:nil];
+        } failure:^(NSError * _Nullable err) {
+            [appDelegate showAlertViewForRequestInfo:err.userInfo];
+        }];
+    }];
 }
 
 @end

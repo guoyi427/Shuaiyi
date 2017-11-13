@@ -23,6 +23,8 @@
 {
     //  UI
     UITableView *_tableView;
+    UIButton *_doneButton;
+    UILabel *_nullLabel;
     
     //  Data
     NSMutableArray *_modelList;
@@ -65,11 +67,17 @@ static NSString *RedeemCellId = @"redeemcell";
     if (_comefromPay) {
         [self prepareDoneButton];
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCouponList) name:@"updateCouponList" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadCouponList];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Prepare
@@ -90,19 +98,45 @@ static NSString *RedeemCellId = @"redeemcell";
 }
 
 - (void)prepareDoneButton {
-    UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [doneButton setBackgroundImage:[UIImage imageNamed:@"Login_Button"] forState:UIControlStateNormal];
-    [doneButton setTitle:@"确定" forState:UIControlStateNormal];
-    [doneButton setTitleColor: [UIColor whiteColor] forState:UIControlStateNormal];
-    doneButton.titleLabel.font = [UIFont systemFontOfSize:16];
-    [doneButton addTarget:self action:@selector(cancelViewController) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:doneButton];
-    [doneButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(15);
-        make.right.mas_equalTo(-15);
-        make.bottom.mas_equalTo(-5);
+    _doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_doneButton setBackgroundImage:[UIImage imageNamed:@"Pay_paybutton"] forState:UIControlStateNormal];
+    [_doneButton setTitle:@"确定使用" forState:UIControlStateNormal];
+    [_doneButton setTitleColor: [UIColor whiteColor] forState:UIControlStateNormal];
+    _doneButton.titleLabel.font = [UIFont systemFontOfSize:16];
+    [_doneButton addTarget:self action:@selector(cancelViewController) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_doneButton];
+    [_doneButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.mas_equalTo(0);
         make.height.mas_equalTo(45);
     }];
+    
+    _nullLabel = [[UILabel alloc] init];
+    NSString *text = nil;
+    switch (_type) {
+        case CouponType_coupon:
+            text = @"优惠券";
+            break;
+        case CouponType_Redeem:
+            text = @"兑换券";
+            break;
+        case CouponType_Stored:
+            text = @"储蓄卡";
+            break;
+        default:
+            break;
+    }
+    _nullLabel.text = [NSString stringWithFormat:@"您还未绑定%@，去绑定 >", text];
+    _nullLabel.textColor = [UIColor grayColor];
+    _nullLabel.font = [UIFont systemFontOfSize:16];
+    _nullLabel.hidden = true;
+    _nullLabel.userInteractionEnabled = true;
+    [self.view addSubview:_nullLabel];
+    [_nullLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+    }];
+    
+    UITapGestureRecognizer *tapNullLabelGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commonBtnClick:)];
+    [_nullLabel addGestureRecognizer:tapNullLabelGR];
 }
 
 - (void)cancelViewController {
@@ -144,7 +178,10 @@ static NSString *RedeemCellId = @"redeemcell";
         [_tableView headerEndRefreshing];
         [_modelList removeAllObjects];
         [_modelList addObjectsFromArray:couponList];
-
+        
+        _doneButton.hidden = _modelList.count == 0;
+        _nullLabel.hidden = _modelList.count != 0;
+        
         //  标记已经选中的券
         if (_selectedList && _selectedList.count) {
             for (int i = 0; i < _modelList.count; i ++) {

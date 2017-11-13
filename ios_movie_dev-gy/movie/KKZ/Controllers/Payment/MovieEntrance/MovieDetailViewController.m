@@ -213,8 +213,13 @@
 {
     [super viewDidAppear:animated];
     [KKZAnalytics postActionWithEvent:[[KKZAnalyticsEvent alloc]initWithMovie:self.movie] action:AnalyticsActionFilm_details];
-    //  用户评分
-    [self loadUserScore];
+    if ([[UserManager shareInstance] isUserAuthorized]) {
+        //  用户评分
+        [self loadUserScore];
+    } else {
+        _tableFooterNullLabel.hidden = false;
+        _tableFooterScoreView.hidden = true;
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -551,6 +556,11 @@
 #pragma mark - UIButton - Action
 
 - (void)userScoreButtonAction {
+    if (![[UserManager shareInstance] isUserAuthorized]) {
+        [[UserManager shareInstance] gotoLoginControllerFrom:self];
+        return;
+    }
+    
     if (self.movie) {
         UserScoreMovieViewController *vc = [[UserScoreMovieViewController alloc] init];
         vc.model = self.movie;

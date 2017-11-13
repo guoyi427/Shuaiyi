@@ -9,6 +9,7 @@
 #import "CouponRedeemCell.h"
 
 #import "CouponViewController.h"
+#import "MovieRequest.h"
 
 @interface CouponRedeemCell ()
 {
@@ -18,6 +19,7 @@
     UILabel *_timeLabel;
     UILabel *_stateLabel;
     UILabel *_subStateLabel;
+    NSDictionary *_model;
     
     UIImageView *_selectedStateView;
     
@@ -95,13 +97,26 @@
             make.right.equalTo(_stateBgView).offset(-10);
             make.bottom.equalTo(_stateBgView).offset(-10);
         }];
+        
+        UIButton *deleteCouponButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [deleteCouponButton setTitle:@"我要解绑>"
+                            forState:UIControlStateNormal];
+        [deleteCouponButton setTitleColor:appDelegate.kkzPink forState:UIControlStateNormal];
+        deleteCouponButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        [deleteCouponButton addTarget:self action:@selector(deleteCouponButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        [_stateBgView addSubview:deleteCouponButton];
+        [deleteCouponButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(_stateLabel);
+            make.bottom.mas_equalTo(0);
+            make.size.mas_equalTo(CGSizeMake(150, 50));
+        }];
     }
     return self;
 }
 
 - (void)updateWithDic:(NSDictionary *)dic comefromPay:(BOOL)pay {
     BOOL canUse = [dic[@"remainCount"] boolValue];
-    
+    _model = dic;
     NSDate *couponDate = [[DateEngine sharedDateEngine] dateFromString:dic[@"expireDate"]];
     BOOL expire = [couponDate compare:[NSDate date]] == NSOrderedDescending;
     
@@ -126,7 +141,7 @@
 }
 
 - (void)updateCardWithDic:(NSDictionary *)dic comfromPay:(BOOL)pay {
-    
+    _model = dic;
     NSDate *couponDate = [[DateEngine sharedDateEngine] dateFromString:dic[@"expireDate"]];
     BOOL expire = [couponDate compare:[NSDate date]] == NSOrderedDescending;
     
@@ -153,4 +168,19 @@
     }
 }
 
+#pragma mark - UIButton - Action
+
+- (void)deleteCouponButtonAction {
+    [UIAlertView showAlertView:@"确认解绑卡券？" cancelText:@"取消" cancelTapped:^{
+        
+    } okText:@"确定" okTapped:^{
+        MovieRequest *req = [[MovieRequest alloc] init];
+        [req deleteCoupon:_model[@"couponId"] success:^{
+            [UIAlertView showAlertView:@"解绑成功" buttonText:@"确定"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCouponList" object:nil];
+        } failure:^(NSError * _Nullable err) {
+            [appDelegate showAlertViewForRequestInfo:err.userInfo];
+        }];
+    }];
+}
 @end
