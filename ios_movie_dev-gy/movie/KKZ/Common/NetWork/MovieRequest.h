@@ -101,6 +101,10 @@
 - (void)requestWantList:(nullable void (^)(NSArray *_Nullable movieList))success
                 failure:(nullable void (^)(NSError *_Nullable err))failure;
 
+- (void)requestWantMovieId:(NSNumber *)movieId
+                   success:(nullable void (^)(BOOL relation))success
+                failure:(nullable void (^)(NSError *_Nullable err))failure;
+
 /// point 分数  1~10
 - (void)addScoreMovieId:(nullable NSNumber *)movieId
                   point:(nullable NSNumber *)point

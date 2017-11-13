@@ -290,6 +290,24 @@
     } failure:failure];
 }
 
+- (void)requestWantMovieId:(NSNumber *)movieId success:(void (^)(BOOL))success failure:(void (^)(NSError * _Nullable))failure {
+    if (!movieId) {
+        return;
+    }
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    NSDictionary *params = [KKZBaseRequestParams getDecryptParams:@{
+                                                                    @"action": @"relation_Query",
+                                                                    @"movie_id": movieId
+                                                                    }];
+    [request GET:kKSSPServer
+      parameters:params
+    resultKeyMap:nil
+         success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
+             BOOL result = [responseObject[@"relation"][@"relation"] boolValue];
+             success(result);
+         } failure:failure];
+}
+
 - (void)addScoreMovieId:(nullable NSNumber *)movieId
                   point:(nullable NSNumber *)point
                 success:(nullable void (^)())success
@@ -315,7 +333,7 @@
                             getDecryptParams:@{
                                                @"action": @"relation_Add",
                                                @"movie_id": movieId,
-                                               @"relation": relation
+                                               @"relation": [relation toNumber]
                                                }];
     [request GET:kKSSPServer parameters:params success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
         success();

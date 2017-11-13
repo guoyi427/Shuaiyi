@@ -98,6 +98,9 @@
     UIView *_tableFooterScoreView;
     UIImageView *_tableFooterPostImageView;
     RatingView *_scoreRatingView;
+    UILabel *_scoreTimeLabel;
+    UILabel *_scoreNameLabel;
+    UIButton *_relationButton;
 }
 
 /**
@@ -187,19 +190,19 @@
     //加载数据
     [self loadMovieDetail];
     [self callMovieDetailApiDidSucceed:self.movie];
-    [self loadMovieHobby]; //周边
-    [self loadMediaLibrary];
+//    [self loadMovieHobby]; //周边
+//    [self loadMediaLibrary];
     [self loadActorList];
 
     [self loadMovieSupport]; //喜欢 不喜欢 情况
     currentPage = 1;
-    [self loadMovieHotCommentList]; //热门吐槽
+//    [self loadMovieHotCommentList]; //热门吐槽
 
     //社区板块
-    [self loadMoviePlateList];
+//    [self loadMoviePlateList];
 
     //社区精华帖子
-    [self loadMoviePostList];
+//    [self loadMoviePostList];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subscribePostSucceed:) name:@"SubscribePostSucceedMovieDetail" object:nil];
 
@@ -216,6 +219,7 @@
     if ([[UserManager shareInstance] isUserAuthorized]) {
         //  用户评分
         [self loadUserScore];
+        [self loadRelation];
     } else {
         _tableFooterNullLabel.hidden = false;
         _tableFooterScoreView.hidden = true;
@@ -306,16 +310,17 @@
     [buyTicketBtn addTarget:self action:@selector(buyTicketBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buyTicketBtn];
     
-    UIButton *relationButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    relationButton.frame = CGRectMake(0, screentHeight - 50, 75, 50);
-    [relationButton setTitle:@"想看" forState:UIControlStateNormal];
-    [relationButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    relationButton.titleLabel.font = [UIFont systemFontOfSize:10];
-    [relationButton setTitleEdgeInsets:UIEdgeInsetsMake(20, 0, 0, 20)];
-    [relationButton setImage:[UIImage imageNamed:@"MovieDetail_Relation"] forState:UIControlStateNormal];
-    [relationButton setImageEdgeInsets:UIEdgeInsetsMake(0, 20, 15, 0)];
-    [relationButton addTarget:self action:@selector(relationButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:relationButton];
+    _relationButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _relationButton.frame = CGRectMake(0, screentHeight - 50, 75, 50);
+    [_relationButton setTitle:@"想看" forState:UIControlStateNormal];
+    [_relationButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _relationButton.titleLabel.font = [UIFont systemFontOfSize:10];
+    [_relationButton setTitleEdgeInsets:UIEdgeInsetsMake(20, 0, 0, 20)];
+    [_relationButton setImage:[UIImage imageNamed:@"MovieDetail_Relation"] forState:UIControlStateNormal];
+    [_relationButton setImage:[UIImage imageNamed:@"MovieDetail_Relation_select"] forState:UIControlStateSelected];
+    [_relationButton setImageEdgeInsets:UIEdgeInsetsMake(0, 20, 15, 0)];
+    [_relationButton addTarget:self action:@selector(relationButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_relationButton];
 }
 
 - (void)buyTicketBtnClicked {
@@ -335,6 +340,7 @@
         [UIAlertView showAlertView:button.isSelected?@"喜欢成功":@"取消喜欢成功" buttonText:@"确定"];
     } failure:^(NSError * _Nullable err) {
         [appDelegate showAlertViewForRequestInfo:err.userInfo];
+        button.selected = !button.isSelected;
     }];
 }
 
@@ -427,25 +433,35 @@
         make.edges.equalTo(footerView);
     }];
     
-    _tableFooterPostImageView = [[UIImageView alloc] init];
-    _tableFooterPostImageView.layer.cornerRadius = 5.0;
-    _tableFooterPostImageView.layer.masksToBounds = true;
-    _tableFooterPostImageView.contentMode = UIViewContentModeScaleAspectFill;
-    [_tableFooterPostImageView sd_setImageWithURL:[NSURL URLWithString:self.movie.pathVerticalS]];
-    [_tableFooterScoreView addSubview:_tableFooterPostImageView];
-    [_tableFooterPostImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(15);
-        make.centerY.equalTo(_tableFooterScoreView);
-        make.size.mas_equalTo(CGSizeMake(60, 60));
-    }];
-    
     UILabel *scoreLabel = [[UILabel alloc] init];
     scoreLabel.text = @"评分:";
     scoreLabel.textColor = [UIColor blackColor];
     scoreLabel.font = [UIFont systemFontOfSize:12];
     [_tableFooterScoreView addSubview:scoreLabel];
     [scoreLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_tableFooterPostImageView.mas_right).offset(15);
+        make.left.equalTo(_tableFooterScoreView).offset(15);
+        make.top.equalTo(_tableFooterScoreView).offset(15);
+    }];
+    
+    _tableFooterPostImageView = [[UIImageView alloc] init];
+    _tableFooterPostImageView.layer.cornerRadius = 15.0;
+    _tableFooterPostImageView.layer.masksToBounds = true;
+    _tableFooterPostImageView.contentMode = UIViewContentModeScaleAspectFill;
+    [_tableFooterPostImageView sd_setImageWithURL:[NSURL URLWithString:self.movie.pathVerticalS]];
+    [_tableFooterScoreView addSubview:_tableFooterPostImageView];
+    [_tableFooterPostImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(scoreLabel);
+        make.top.equalTo(scoreLabel.mas_bottom).offset(20);
+        make.size.mas_equalTo(CGSizeMake(30, 30));
+    }];
+    
+    _scoreNameLabel = [[UILabel alloc] init];
+    _scoreNameLabel.font = [UIFont systemFontOfSize:10];
+    _scoreNameLabel.textColor = [UIColor grayColor];
+    _scoreNameLabel.text = [DataEngine sharedDataEngine].userName;
+    [_tableFooterScoreView addSubview:_scoreNameLabel];
+    [_scoreNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_tableFooterPostImageView.mas_right).offset(10);
         make.centerY.equalTo(_tableFooterPostImageView);
     }];
     
@@ -453,15 +469,24 @@
     [_scoreRatingView setImagesDeselected:@"fav_star_no_yellow_match"
                      partlySelected:@"fav_star_half_yellow"
                        fullSelected:@"fav_star_full_yellow"
-                           iconSize:CGSizeMake(30, 30)
+                           iconSize:CGSizeMake(10, 10)
                         andDelegate:nil];
     _scoreRatingView.userInteractionEnabled = false;
     [_tableFooterScoreView addSubview:_scoreRatingView];
     [_scoreRatingView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(scoreLabel.mas_right).offset(5);
-        make.centerY.equalTo(_tableFooterPostImageView);
-        make.height.mas_equalTo(30);
-        make.width.equalTo(footerView).offset(-80);
+        make.right.equalTo(_tableFooterScoreView).offset(-15);
+        make.top.equalTo(_tableFooterPostImageView);
+        make.height.mas_equalTo(15);
+        make.width.mas_equalTo(60);
+    }];
+    
+    _scoreTimeLabel = [[UILabel alloc] init];
+    _scoreTimeLabel.font = [UIFont systemFontOfSize:10];
+    _scoreTimeLabel.textColor = [UIColor grayColor];
+    [_tableFooterScoreView addSubview:_scoreTimeLabel];
+    [_scoreTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_scoreRatingView);
+        make.top.equalTo(_scoreRatingView.mas_bottom).offset(10);
     }];
 }
 
@@ -582,6 +607,15 @@
             failure:^(NSError *_Nullable err) {
                 [weakSelf callMovieDetailApiDidFailed:err];
             }];
+}
+
+- (void)loadRelation {
+    MovieRequest *req = [[MovieRequest alloc] init];
+    [req requestWantMovieId:_movieId success:^(BOOL relation) {
+        _relationButton.selected = relation;
+    } failure:^(NSError * _Nullable err) {
+        
+    }];
 }
 
 - (void)callMovieDetailApiDidSucceed:(id)responseData {
@@ -1466,7 +1500,7 @@
             userGroup:@"1,2,3,0"
             success:^(NSArray *_Nullable hotComments, NSInteger total, BOOL hasMore) {
                 if (page == 1) {
-                    [self.clubPosts removeAllObjects];
+                    [weakSelf.clubPosts removeAllObjects];
                 }
                 [weakSelf callMovieHotCommentApiDidSucceed:hotComments total:total hasMore:hasMore];
                 _moreHotCommentButton.enabled = true;
@@ -1545,16 +1579,16 @@
 - (void)loadMoviePlateList {
     currentPage = 1;
     NSInteger rows = 5;
-
+    WeakSelf
     ClubRequest *moviePlateRequest = [[ClubRequest alloc] init];
     [moviePlateRequest requestMoviePlateListWithMovieId:self.movieId.integerValue
             currentPage:currentPage
             rowsNum:rows
             success:^(id _Nullable postPlates) {
-                [self callMoviePlateApiDidSucceed:postPlates];
+                [weakSelf callMoviePlateApiDidSucceed:postPlates];
             }
             failure:^(NSError *_Nullable err) {
-                [self callMoviePlateApiDidFailed:err];
+                [weakSelf callMoviePlateApiDidFailed:err];
             }];
 }
 
@@ -1602,6 +1636,7 @@
             _tableFooterScoreView.hidden = false;
             [_scoreRatingView displayRating:[response[@"movie"][@"score"] floatValue]/2.0];
             [_tableFooterPostImageView sd_setImageWithURL:[NSURL URLWithString:response[@"movie"][@"pathVerticalS"]]];
+            _scoreTimeLabel.text = [[DateEngine sharedDateEngine] stringFromDate:[NSDate dateWithTimeIntervalSince1970: [response[@"createTime"] doubleValue]/1000.0] withFormat:@"yyyy-MM-dd"];
         } else {
             //
             _tableFooterNullLabel.hidden = false;

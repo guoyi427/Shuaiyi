@@ -1502,6 +1502,8 @@
 		5DE7F9C71D2E05C00076C4B0 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DE7F9C61D2E05C00076C4B0 /* CoreBluetooth.framework */; };
 		5DF0C2AE1C9A692600520F88 /* ShareIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DF0C2AD1C9A692600520F88 /* ShareIcon.png */; };
 		5DF51C351BF34202004665F4 /* VerificationCodeTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF51C341BF34202004665F4 /* VerificationCodeTask.m */; };
+		5DFACF081FB9872500949157 /* MovieDetail_Relation_select@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DFACF061FB9872400949157 /* MovieDetail_Relation_select@3x.png */; };
+		5DFACF091FB9872500949157 /* MovieDetail_Relation_select@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DFACF071FB9872400949157 /* MovieDetail_Relation_select@2x.png */; };
 		5DFAD0A418618FFE00C332D5 /* mic_click_speak_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DFAD09A18618FFE00C332D5 /* mic_click_speak_down.png */; };
 		5DFAD0A518618FFE00C332D5 /* mic_click_speak.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DFAD09B18618FFE00C332D5 /* mic_click_speak.png */; };
 		5DFAD0A618618FFE00C332D5 /* mic_keyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DFAD09C18618FFE00C332D5 /* mic_keyboard.png */; };
@@ -3764,6 +3766,8 @@
 		5DF0C2AD1C9A692600520F88 /* ShareIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ShareIcon.png; sourceTree = "<group>"; };
 		5DF51C331BF34202004665F4 /* VerificationCodeTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerificationCodeTask.h; sourceTree = "<group>"; };
 		5DF51C341BF34202004665F4 /* VerificationCodeTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerificationCodeTask.m; sourceTree = "<group>"; };
+		5DFACF061FB9872400949157 /* MovieDetail_Relation_select@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MovieDetail_Relation_select@3x.png"; sourceTree = "<group>"; };
+		5DFACF071FB9872400949157 /* MovieDetail_Relation_select@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MovieDetail_Relation_select@2x.png"; sourceTree = "<group>"; };
 		5DFAD09A18618FFE00C332D5 /* mic_click_speak_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mic_click_speak_down.png; sourceTree = "<group>"; };
 		5DFAD09B18618FFE00C332D5 /* mic_click_speak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mic_click_speak.png; sourceTree = "<group>"; };
 		5DFAD09C18618FFE00C332D5 /* mic_keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mic_keyboard.png; sourceTree = "<group>"; };
@@ -4283,6 +4287,8 @@
 				5D6F969A1FA32E4F00C37A20 /* OrderDetail_mobiel@3x.png */,
 				5DA55F6F1FA2517400CA9640 /* MovieDetail_Relation@2x.png */,
 				5DA55F6E1FA2517300CA9640 /* MovieDetail_Relation@3x.png */,
+				5DFACF071FB9872400949157 /* MovieDetail_Relation_select@2x.png */,
+				5DFACF061FB9872400949157 /* MovieDetail_Relation_select@3x.png */,
 				5DA55F6C1FA2517300CA9640 /* MovieDetail_Score@2x.png */,
 				5DA55F6D1FA2517300CA9640 /* MovieDetail_Score@3x.png */,
 				5D7C84951FA1D365009475C6 /* Login_QQ@2x.png */,
@@ -8930,6 +8936,7 @@
 				5D8C97D21B4B7FF000AC1ED6 /* VoiceSearchFeedback020@2x.png in Resources */,
 				A4E47F751C806A8E00C72917 /* movieComment_weibo@2x.png in Resources */,
 				2905BEF41AA017530091D5DA /* Ticket_green_img.png in Resources */,
+				5DFACF091FB9872500949157 /* MovieDetail_Relation_select@2x.png in Resources */,
 				296C85761AA587F800CB20E6 /* voice_play_right_2@2x.png in Resources */,
 				5D8E392B1C11832B00EABCE1 /* blueStar@3x.png in Resources */,
 				5DD9064E1C22A22B000B5F21 /* commentLevelBlue@3x.png in Resources */,
@@ -9736,6 +9743,7 @@
 				A45A39051C201CA200BA5950 /* Star_white@2x.png in Resources */,
 				5D06158B1FB063D400FC69B3 /* CouponList_selected@3x.png in Resources */,
 				5D8C97DB1B4B7FF000AC1ED6 /* callBg@2x.png in Resources */,
+				5DFACF081FB9872500949157 /* MovieDetail_Relation_select@3x.png in Resources */,
 				5D217AC61AC503B700840390 /* seat_loverleft_icon@2x.png in Resources */,
 				5D02D3FA1A831B8F00986D19 /* shuo_mic_icon.png in Resources */,
 				5D98ACB11B9FF8F600EBF0D1 /* navigationBar_BgGreen@2x.png in Resources */,
