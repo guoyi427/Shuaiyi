@@ -305,6 +305,7 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
 
 - (void)searchButtonAction:(UIButton *)button {
     CinemaSearchViewController *vc = [[CinemaSearchViewController alloc] init];
+    vc.isCinema = _segmentedControl.selectedSegmentIndex == 1;
     [self.navigationController pushViewController:vc animated:true];
 }
 

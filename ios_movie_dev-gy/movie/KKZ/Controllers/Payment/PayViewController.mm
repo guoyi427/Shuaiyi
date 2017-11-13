@@ -1327,8 +1327,10 @@
     _couponString = couponString;
     _selectedCouponList = list;
     
-    if (type == CouponType_Stored) {
+    if (type == CouponType_Stored && list.count > 0) {
         _isCardPay = true;
+    } else {
+        _isCardPay = false;
     }
     
     //  更新价格状态

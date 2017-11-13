@@ -68,6 +68,34 @@ static NSString *RedeemCellId = @"redeemcell";
         [self prepareDoneButton];
     }
     
+    _nullLabel = [[UILabel alloc] init];
+    NSString *text = nil;
+    switch (_type) {
+        case CouponType_coupon:
+            text = @"优惠券";
+            break;
+        case CouponType_Redeem:
+            text = @"兑换券";
+            break;
+        case CouponType_Stored:
+            text = @"储蓄卡";
+            break;
+        default:
+            break;
+    }
+    _nullLabel.text = [NSString stringWithFormat:@"您还未绑定%@，去绑定 >", text];
+    _nullLabel.textColor = [UIColor grayColor];
+    _nullLabel.font = [UIFont systemFontOfSize:16];
+    _nullLabel.hidden = true;
+    _nullLabel.userInteractionEnabled = true;
+    [self.view addSubview:_nullLabel];
+    [_nullLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+    }];
+    
+    UITapGestureRecognizer *tapNullLabelGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commonBtnClick:)];
+    [_nullLabel addGestureRecognizer:tapNullLabelGR];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCouponList) name:@"updateCouponList" object:nil];
 }
 
@@ -109,34 +137,6 @@ static NSString *RedeemCellId = @"redeemcell";
         make.left.right.bottom.mas_equalTo(0);
         make.height.mas_equalTo(45);
     }];
-    
-    _nullLabel = [[UILabel alloc] init];
-    NSString *text = nil;
-    switch (_type) {
-        case CouponType_coupon:
-            text = @"优惠券";
-            break;
-        case CouponType_Redeem:
-            text = @"兑换券";
-            break;
-        case CouponType_Stored:
-            text = @"储蓄卡";
-            break;
-        default:
-            break;
-    }
-    _nullLabel.text = [NSString stringWithFormat:@"您还未绑定%@，去绑定 >", text];
-    _nullLabel.textColor = [UIColor grayColor];
-    _nullLabel.font = [UIFont systemFontOfSize:16];
-    _nullLabel.hidden = true;
-    _nullLabel.userInteractionEnabled = true;
-    [self.view addSubview:_nullLabel];
-    [_nullLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(self.view);
-    }];
-    
-    UITapGestureRecognizer *tapNullLabelGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commonBtnClick:)];
-    [_nullLabel addGestureRecognizer:tapNullLabelGR];
 }
 
 - (void)cancelViewController {
@@ -307,7 +307,7 @@ static NSString *RedeemCellId = @"redeemcell";
         
         
         if (_type == CouponType_Stored) {
-            [self cancelViewController];
+//            [self cancelViewController];
         }
     }
 }

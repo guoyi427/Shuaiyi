@@ -186,9 +186,9 @@
     //统计事件：【购票】影院入口-进入影院页
     StatisEvent(EVENT_BUY_CHOOSE_CINEMA_SOURCE_CINEMA);
 
-    if (!appDelegate.isAuthorized) {
-        self.isCinema = YES;
-    }
+//    if (!appDelegate.isAuthorized) {
+//        self.isCinema = YES;
+//    }
 
 //    CinemaCellLayout *cinemaLayout = [searchList objectAtIndex:indexPath.row];
 //    CinemaDetail *cinema = cinemaLayout.cinema;
@@ -201,11 +201,16 @@
 //    ticket.cinemaDetail = cinema;
 //    [self pushViewController:ticket
 //                     animation:CommonSwitchAnimationBounce];
-    
-    if (searchList.count > indexPath.row) {
-        Movie *model = searchList[indexPath.row];
-        MovieDetailViewController *ctr = [[MovieDetailViewController alloc] initCinemaListForMovie:model.movieId];
-        [self.navigationController pushViewController:ctr animated:YES];
+    if (_isCinema) {
+        if (searchList.count > indexPath.row) {
+            
+        }
+    } else {
+        if (searchList.count > indexPath.row) {
+            Movie *model = searchList[indexPath.row];
+            MovieDetailViewController *ctr = [[MovieDetailViewController alloc] initCinemaListForMovie:model.movieId];
+            [self.navigationController pushViewController:ctr animated:YES];
+        }
     }
 }
 

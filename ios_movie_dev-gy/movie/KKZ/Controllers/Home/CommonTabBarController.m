@@ -66,7 +66,7 @@
     [self.view addSubview:tabbar];
 
     //TabBar上面的按钮
-    NSArray *titleArr = @[ @"电影", @"影院", @"订单", @"我的" ];
+    NSArray *titleArr = @[ @"首页", @"电影", @"订单", @"我的" ];
     NSArray *normalImgArr = @[ @"tab_home", @"tab_cinema", @"tab_order", @"tab_account" ];
     NSArray *selectImgArr = @[ @"tab_homeH", @"tab_cinemaH", @"tab_orderH", @"tab_accountH" ];
     CGFloat itemWidth = 64;
