@@ -101,7 +101,8 @@
     UILabel *_scoreTimeLabel;
     UILabel *_scoreNameLabel;
     UIButton *_relationButton;
-    UIVisualEffectView *_effectView;
+//    UIVisualEffectView *_effectView;
+    UIView *_effectView;
 }
 
 /**
@@ -269,9 +270,10 @@
 
     [homeBackgroundView addSubview:homeBgCover];
     
-    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    _effectView = [[UIVisualEffectView alloc] initWithEffect:blur];
+//    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    _effectView = [[UIView alloc] init];//[[UIVisualEffectView alloc] initWithEffect:blur];
     _effectView.frame = homeBackgroundView.bounds;
+    _effectView.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.7];
     [homeBackgroundView addSubview:_effectView];
     
 

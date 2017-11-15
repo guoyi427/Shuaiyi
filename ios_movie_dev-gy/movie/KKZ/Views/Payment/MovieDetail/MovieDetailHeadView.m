@@ -71,7 +71,7 @@
 
         movieTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.postImageView.frame) + marginImgToTitle, CGRectGetMinY(self.postImageView.frame) + marginY, screentWith - (CGRectGetMaxX(self.postImageView.frame) + marginImgToTitle), movieTitleFont)];
         movieTitleLabel.font = [UIFont systemFontOfSize:movieTitleFont];
-        movieTitleLabel.textColor = [UIColor blackColor];
+        movieTitleLabel.textColor = [UIColor whiteColor];
         movieTitleLabel.backgroundColor = [UIColor clearColor];
         movieTitleLabel.textAlignment = NSTextAlignmentLeft;
         [self addSubview:movieTitleLabel];
@@ -133,8 +133,8 @@
         [movieDetailInfo setBackgroundColor:[UIColor clearColor]];
         [whiteView addSubview:movieDetailInfo];
         [movieDetailInfo mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(movieType.mas_right).offset(30);
-            make.centerY.equalTo(movieType);
+            make.left.equalTo(movieTitleLabel);
+            make.top.equalTo(movieType.mas_bottom).offset(5);
         }];
 
         //  上映时间

@@ -4,7 +4,7 @@
 
 
 //========友盟统计========
-#define kUMengAppKey @"4eda21de5270150da7000027"
+#define kUMengAppKey @"59f2d415aed179250600004e"
 #define kUMengChannelId @"App Store"
 
 
