@@ -44,7 +44,7 @@ static const CGFloat kPageMargin = 15.f;
 
     UITextField *telephone = [[UITextField alloc] initWithFrame:CGRectMake(0, top, screentWith, 20)];
     telephone.userInteractionEnabled = NO;
-    telephone.text = @"客服电话: 400-000-9666";
+    telephone.text = @"客服电话: 400-030-1053";
     telephone.font = [UIFont systemFontOfSize:14];
     telephone.textColor = [UIColor grayColor];
     telephone.textAlignment = NSTextAlignmentCenter;

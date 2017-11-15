@@ -18,6 +18,7 @@
 #import "NoDataViewY.h"
 #import "CinemaRequest.h"
 #import "ZYMovieListCell.h"
+#import "ZYCinemaCell.h"
 #import "MovieDetailViewController.h"
 
 @implementation CinemaSearchViewController
@@ -25,9 +26,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-//    if (!self.isFromCinema) {
+    if (!self.isFromCinema) {
         [self refreshCinemaList];
-//    }
+    }
     self.view.backgroundColor = [UIColor r:245 g:245 b:245];
     searchFieldView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screentWith, self.contentPositionY + 44)];
     searchFieldView.backgroundColor = appDelegate.kkzBlack;//[UIColor whiteColor];
@@ -54,11 +55,12 @@
     cinemaTable.backgroundColor = [UIColor clearColor];
     cinemaTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [cinemaTable registerClass:[ZYMovieListCell class] forCellReuseIdentifier:@"CellIdentifier"];
+    [cinemaTable registerClass:[ZYCinemaCell class] forCellReuseIdentifier:@"CellIdentifier2"];
     [self.view addSubview:cinemaTable];
     cinemaTable.hidden = YES;
 
     nodataView = [[NoDataViewY alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height * 0.5 - 100, screentWith, 120)];
-    nodataView.alertLabelText = @"未搜索到查询的影院";
+    nodataView.alertLabelText = @"未搜索到查询的结果";
 
     searchRecord = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.contentPositionY + 44, screentWith, screentHeight - 44 - self.contentPositionY)];
     [searchRecord setBackgroundColor:[UIColor clearColor]];
@@ -103,23 +105,44 @@
     cinemaTable.hidden = NO;
 
     if (USER_CITY) {
-        NSMutableArray *dataArray = [[NSMutableArray alloc] initWithCapacity:0];
-        int i = (int) [self.allCinemasListLayout count];
-        for (int j = 0; j < i; j++) {
-            Movie *tempMovie = self.allCinemasListLayout[j];
-            if ([tempMovie.movieName containsString:searchText] ||
-                [tempMovie.movieDirector containsString:searchText] ||
-                [tempMovie.actor containsString:searchText]) {
-                [dataArray addObject:tempMovie];
+        if (_isFromCinema) {
+            //  影院
+            NSMutableArray *dataArray = [[NSMutableArray alloc] initWithCapacity:0];
+            for (int i = 0; i < self.allCinemasListLayout.count; i ++) {
+                CinemaDetail *tempCinema = self.allCinemasListLayout[i];
+                if ([tempCinema.cinemaName containsString:searchText] ||
+                    [tempCinema.cinemaAddress containsString:searchText]) {
+                    [dataArray addObject:tempCinema];
+                }
             }
-        }
-        searchList = [dataArray mutableCopy];
-        [cinemaTable reloadData];
-
-        if (searchList.count == 0) {
-            [cinemaTable addSubview:nodataView];
+            searchList = [dataArray mutableCopy];
+            [cinemaTable reloadData];
+            
+            if (searchList.count == 0) {
+                [cinemaTable addSubview:nodataView];
+            } else {
+                [nodataView removeFromSuperview];
+            }
         } else {
-            [nodataView removeFromSuperview];
+            //  影片
+            NSMutableArray *dataArray = [[NSMutableArray alloc] initWithCapacity:0];
+            int i = (int) [self.allCinemasListLayout count];
+            for (int j = 0; j < i; j++) {
+                Movie *tempMovie = self.allCinemasListLayout[j];
+                if ([tempMovie.movieName containsString:searchText] ||
+                    [tempMovie.movieDirector containsString:searchText] ||
+                    [tempMovie.actor containsString:searchText]) {
+                    [dataArray addObject:tempMovie];
+                }
+            }
+            searchList = [dataArray mutableCopy];
+            [cinemaTable reloadData];
+            
+            if (searchList.count == 0) {
+                [cinemaTable addSubview:nodataView];
+            } else {
+                [nodataView removeFromSuperview];
+            }
         }
     } else {
         [UIAlertView showAlertView:@"请您先选择城市" buttonText:@"确定"];
@@ -158,12 +181,23 @@
     }
     [self configureCell:cell atIndexPath:indexPath];
      */
-    ZYMovieListCell *cell = (ZYMovieListCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (searchList.count > indexPath.row) {
-        Movie *model = searchList[indexPath.row];
-        [cell update:model type:ZYMovieListCellType_Current];
+    if (_isFromCinema) {
+        //  影院
+        ZYCinemaCell *c_cell = (ZYCinemaCell *)[tableView dequeueReusableCellWithIdentifier:@"CellIdentifier2"];
+        if (searchList.count > indexPath.row) {
+            CinemaDetail *model = searchList[indexPath.row];
+            [c_cell update:model];
+        }
+        return c_cell;
+    } else {
+        //  影片
+        ZYMovieListCell *cell = (ZYMovieListCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (searchList.count > indexPath.row) {
+            Movie *model = searchList[indexPath.row];
+            [cell update:model type:ZYMovieListCellType_Current];
+        }
+        return cell;
     }
-    return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -171,6 +205,9 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (_isFromCinema) {
+        return 80;
+    }
     return 137;
 }
 
@@ -201,9 +238,16 @@
 //    ticket.cinemaDetail = cinema;
 //    [self pushViewController:ticket
 //                     animation:CommonSwitchAnimationBounce];
-    if (_isCinema) {
+    if (_isFromCinema) {
         if (searchList.count > indexPath.row) {
-            
+            CinemaDetail *model = searchList[indexPath.row];
+            CinemaTicketViewController *ticket = [[CinemaTicketViewController alloc] init];
+            ticket.cinemaName = model.cinemaName;
+            ticket.cinemaAddress = model.cinemaAddress;
+            ticket.cinemaId = model.cinemaId;
+            ticket.cinemaCloseTicketTime = model.closeTicketTime.stringValue;
+            ticket.cinemaDetail = model;
+            [self pushViewController:ticket animation:CommonSwitchAnimationBounce];
         }
     } else {
         if (searchList.count > indexPath.row) {

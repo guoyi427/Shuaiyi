@@ -1182,6 +1182,7 @@
 		5D91BA121A4D4AB6002AAA0E /* AlertViewY.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D91BA111A4D4AB6002AAA0E /* AlertViewY.m */; };
 		5D91BA1B1A4D69AE002AAA0E /* NoDataViewY.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D91BA1A1A4D69AE002AAA0E /* NoDataViewY.m */; };
 		5D94C2221C902C5F00D06B74 /* ic_bbs_supported.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D94C2211C902C5F00D06B74 /* ic_bbs_supported.png */; };
+		5D974CD71FBC1412002D1602 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D974CD61FBC1412002D1602 /* AboutViewController.m */; };
 		5D976E9A1D127EE8002AE9F4 /* imax_screenType_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D976E981D127EE8002AE9F4 /* imax_screenType_logo@2x.png */; };
 		5D976E9B1D127EE8002AE9F4 /* imax_screenType_logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D976E991D127EE8002AE9F4 /* imax_screenType_logo@3x.png */; };
 		5D976E9E1D12812C002AE9F4 /* moviePlayIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D976E9C1D12812C002AE9F4 /* moviePlayIcon@3x.png */; };
@@ -1405,6 +1406,10 @@
 		5DC637701B84184E00C89C67 /* passbook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DC6376D1B84184E00C89C67 /* passbook@2x.png */; };
 		5DC637711B84184E00C89C67 /* passbook@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DC6376E1B84184E00C89C67 /* passbook@3x.png */; };
 		5DC637731B844E2000C89C67 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DC637721B844E2000C89C67 /* PassKit.framework */; };
+		5DC83B511FBB3C5A002D2CF9 /* bind_coupon_button_enabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DC83B4D1FBB3C58002D2CF9 /* bind_coupon_button_enabled@2x.png */; };
+		5DC83B521FBB3C5A002D2CF9 /* bind_coupon_button_unabled@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DC83B4E1FBB3C59002D2CF9 /* bind_coupon_button_unabled@3x.png */; };
+		5DC83B531FBB3C5A002D2CF9 /* bind_coupon_button_enabled@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DC83B4F1FBB3C59002D2CF9 /* bind_coupon_button_enabled@3x.png */; };
+		5DC83B541FBB3C5A002D2CF9 /* bind_coupon_button_unabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DC83B501FBB3C5A002D2CF9 /* bind_coupon_button_unabled@2x.png */; };
 		5DC892351A5A9983009DAF26 /* loginLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DC892331A5A9983009DAF26 /* loginLogo@2x.png */; };
 		5DC9DFC71AFDA3D2005C2A97 /* kkzActivityBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DC9DFC61AFDA3D2005C2A97 /* kkzActivityBg.png */; };
 		5DC9DFCB1B007E6F005C2A97 /* avatorBgY.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DC9DFCA1B007E6F005C2A97 /* avatorBgY.png */; };
@@ -3384,6 +3389,8 @@
 		5D91BA191A4D69AE002AAA0E /* NoDataViewY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoDataViewY.h; sourceTree = "<group>"; };
 		5D91BA1A1A4D69AE002AAA0E /* NoDataViewY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoDataViewY.m; sourceTree = "<group>"; };
 		5D94C2211C902C5F00D06B74 /* ic_bbs_supported.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_bbs_supported.png; sourceTree = "<group>"; };
+		5D974CD51FBC1412002D1602 /* AboutViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		5D974CD61FBC1412002D1602 /* AboutViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		5D976E981D127EE8002AE9F4 /* imax_screenType_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imax_screenType_logo@2x.png"; sourceTree = "<group>"; };
 		5D976E991D127EE8002AE9F4 /* imax_screenType_logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imax_screenType_logo@3x.png"; sourceTree = "<group>"; };
 		5D976E9C1D12812C002AE9F4 /* moviePlayIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moviePlayIcon@3x.png"; sourceTree = "<group>"; };
@@ -3660,6 +3667,10 @@
 		5DC6376D1B84184E00C89C67 /* passbook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "passbook@2x.png"; sourceTree = "<group>"; };
 		5DC6376E1B84184E00C89C67 /* passbook@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "passbook@3x.png"; sourceTree = "<group>"; };
 		5DC637721B844E2000C89C67 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
+		5DC83B4D1FBB3C58002D2CF9 /* bind_coupon_button_enabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bind_coupon_button_enabled@2x.png"; sourceTree = "<group>"; };
+		5DC83B4E1FBB3C59002D2CF9 /* bind_coupon_button_unabled@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bind_coupon_button_unabled@3x.png"; sourceTree = "<group>"; };
+		5DC83B4F1FBB3C59002D2CF9 /* bind_coupon_button_enabled@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bind_coupon_button_enabled@3x.png"; sourceTree = "<group>"; };
+		5DC83B501FBB3C5A002D2CF9 /* bind_coupon_button_unabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bind_coupon_button_unabled@2x.png"; sourceTree = "<group>"; };
 		5DC892331A5A9983009DAF26 /* loginLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginLogo@2x.png"; sourceTree = "<group>"; };
 		5DC9DFC61AFDA3D2005C2A97 /* kkzActivityBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kkzActivityBg.png; sourceTree = "<group>"; };
 		5DC9DFCA1B007E6F005C2A97 /* avatorBgY.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatorBgY.png; sourceTree = "<group>"; };
@@ -4260,6 +4271,10 @@
 		181C8B72145C425A0085F7D3 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				5DC83B4D1FBB3C58002D2CF9 /* bind_coupon_button_enabled@2x.png */,
+				5DC83B4F1FBB3C59002D2CF9 /* bind_coupon_button_enabled@3x.png */,
+				5DC83B501FBB3C5A002D2CF9 /* bind_coupon_button_unabled@2x.png */,
+				5DC83B4E1FBB3C59002D2CF9 /* bind_coupon_button_unabled@3x.png */,
 				5D917C281FB594810080DCEB /* OrderPay_Failure@2x.png */,
 				5D917C291FB594820080DCEB /* OrderPay_Failure@3x.png */,
 				5DB471481FB545F40068B8F4 /* OrderLoading@2x.png */,
@@ -6558,6 +6573,8 @@
 				5D52F6DF1FA2634F004BB91B /* CouponViewController.m */,
 				5D6F96931FA2E42400C37A20 /* ZYOrderDetailViewController.h */,
 				5D6F96941FA2E42400C37A20 /* ZYOrderDetailViewController.m */,
+				5D974CD51FBC1412002D1602 /* AboutViewController.h */,
+				5D974CD61FBC1412002D1602 /* AboutViewController.m */,
 				5D166C981FA73CE90031E414 /* EditUserInfoViewController.h */,
 				5D166C991FA73CE90031E414 /* EditUserInfoViewController.m */,
 				5D166C9B1FA7444B0031E414 /* EditNickNameViewController.h */,
@@ -8886,6 +8903,7 @@
 				5D87B86C1BCD12D300F28FE8 /* sliderVolumn@2x.png in Resources */,
 				2905BEEC1AA017530091D5DA /* appointment_order_logo@3x.png in Resources */,
 				296538111C83E14F0071C175 /* sns_my_favor@3x.png in Resources */,
+				5DC83B511FBB3C5A002D2CF9 /* bind_coupon_button_enabled@2x.png in Resources */,
 				5DA129DE1C279CA700C2B577 /* introduceBtnHL@3x.png in Resources */,
 				5D217A211AC5032D00840390 /* down_shadow_img@2x.png in Resources */,
 				2958E9391DCB0D8900BD043B /* ic_login_clear_input@2x.png in Resources */,
@@ -9134,10 +9152,12 @@
 				A406F79B1C9123070012B1D9 /* pufa_method_icon@2x.png in Resources */,
 				5D8FF63D1BE9CE6600F7E9F3 /* arrowOrange@2x.png in Resources */,
 				5D3A644B1BDF451700DE98CA /* jingdong_method_icon@3x.png in Resources */,
+				5DC83B541FBB3C5A002D2CF9 /* bind_coupon_button_unabled@2x.png in Resources */,
 				5D3193CD1FA05F5100F6DEF7 /* Movie_current_normal@2x.png in Resources */,
 				5D8E392E1C11832B00EABCE1 /* whiteStar.png in Resources */,
 				5D8C97CC1B4B7FF000AC1ED6 /* VoiceSearchFeedback017@2x.png in Resources */,
 				5DD906971C22CE93000B5F21 /* arrowLineY@3x.png in Resources */,
+				5DC83B531FBB3C5A002D2CF9 /* bind_coupon_button_enabled@3x.png in Resources */,
 				29BB0DD11A98243F007591D6 /* logoQzoneIcon@2x.png in Resources */,
 				2905BEF61AA017530091D5DA /* Ticket_green_img@3x.png in Resources */,
 				5D8C98091B4B7FF000AC1ED6 /* chatBar_colorMore_camera@2x.png in Resources */,
@@ -9566,6 +9586,7 @@
 				5D98AC841B9E991500EBF0D1 /* redEcard.png in Resources */,
 				F71CFB1F1A1BA0A400D093E6 /* movie_similar_logo.png in Resources */,
 				5DA022E21C5CC03E00FB555D /* supportIcon@2x.png in Resources */,
+				5DC83B521FBB3C5A002D2CF9 /* bind_coupon_button_unabled@3x.png in Resources */,
 				F71845181A2C02DC00DE4D5F /* coupon_select_icon.png in Resources */,
 				5D8C97F71B4B7FF000AC1ED6 /* chatBar_keyboard.png in Resources */,
 				A423567D1C197EC00081A975 /* cinemaDetail_dianzan@2x.png in Resources */,
@@ -10506,6 +10527,7 @@
 				A423C3001C75C69000070DAF /* CameraPreView.m in Sources */,
 				290DAD1817AF8D1500606043 /* AudioButton.m in Sources */,
 				5D0DBFED1F9F3826008E99EB /* UIViewController+SFTrainsitionExtension.m in Sources */,
+				5D974CD71FBC1412002D1602 /* AboutViewController.m in Sources */,
 				0986E4ED1D93C413009FAFFF /* ClubRequest.m in Sources */,
 				A4127DD51C55D915001B8A50 /* SingleCenterLayout.m in Sources */,
 				A4127DC11C55D734001B8A50 /* CoreDataManager.m in Sources */,

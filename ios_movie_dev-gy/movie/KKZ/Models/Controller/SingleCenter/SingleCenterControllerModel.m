@@ -11,7 +11,7 @@
 @implementation SingleCenterControllerModel
 
 + (NSArray *)getSettingCellTitleString {
-    return  @[@"修改个人资料", @"第三方授权管理", @"清除数据缓存", @"意见反馈", @"给抠电影评价", @"拨打客服热线：400-000-9666"];
+    return  @[@"修改个人资料", @"第三方授权管理", @"清除数据缓存", @"意见反馈", @"给抠电影评价", @"拨打客服热线：400-030-1053"];
 }
 
 + (NSArray *)getSettingCellDetailShowOrHiden{

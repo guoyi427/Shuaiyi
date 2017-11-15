@@ -73,7 +73,7 @@
 
     UITextField *tel = [[UITextField alloc] initWithFrame:CGRectMake(0, positionY - 10, screentWith, 20)];
     tel.userInteractionEnabled = NO;
-    tel.text = @"客服电话:400-000-9666";
+    tel.text = @"客服电话: 400-030-1053";
     tel.font = [UIFont systemFontOfSize:14];
     tel.textColor = [UIColor grayColor];
     tel.textAlignment = NSTextAlignmentCenter;

@@ -46,7 +46,7 @@
     [backBtn addTarget:self action:@selector(cancelViewController) forControlEvents:UIControlEventTouchUpInside];
     [self.navBarView addSubview:backBtn];
 
-    self.kkzTitleLabel.text = @"使用优惠券/兑换券";
+    self.kkzTitleLabel.text = @"使用章鱼券/章鱼券";
 
     holder = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 44 + self.contentPositionY, screentWith, screentContentHeight - 44)];
     [self.view addSubview:holder];

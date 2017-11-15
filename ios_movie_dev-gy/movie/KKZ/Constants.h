@@ -42,7 +42,7 @@
 #define kAppUrl @"https://itunes.apple.com/cn/app/id485584268?mt=8"
 
 //客服电话
-#define kHotLine @"4000009666"
+#define kHotLine @"4000301053"
 
 //keychain related
 //TODO：DELETE
@@ -693,10 +693,10 @@ typedef enum {
 
 
 typedef enum : NSUInteger {
-    /// 优惠券
+    /// 章鱼券
     CouponType_coupon = 4,
-    /// 兑换码
+    /// 章鱼码
     CouponType_Redeem = 3,
-    /// 储值卡
+    /// 章鱼卡
     CouponType_Stored = 1,
 } CouponType;

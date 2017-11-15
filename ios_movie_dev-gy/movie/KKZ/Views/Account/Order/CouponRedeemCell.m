@@ -26,6 +26,7 @@
     //  储蓄卡
     UILabel *_cardValueLabel;
     UILabel *_remainValueLabel;
+    UIButton *_deleteCouponButton;
 }
 @end
 
@@ -98,14 +99,14 @@
             make.bottom.equalTo(_stateBgView).offset(-10);
         }];
         
-        UIButton *deleteCouponButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [deleteCouponButton setTitle:@"我要解绑>"
+        _deleteCouponButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_deleteCouponButton setTitle:@"我要解绑>"
                             forState:UIControlStateNormal];
-        [deleteCouponButton setTitleColor:appDelegate.kkzPink forState:UIControlStateNormal];
-        deleteCouponButton.titleLabel.font = [UIFont systemFontOfSize:14];
-        [deleteCouponButton addTarget:self action:@selector(deleteCouponButtonAction) forControlEvents:UIControlEventTouchUpInside];
-        [_stateBgView addSubview:deleteCouponButton];
-        [deleteCouponButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        [_deleteCouponButton setTitleColor:appDelegate.kkzPink forState:UIControlStateNormal];
+        _deleteCouponButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        [_deleteCouponButton addTarget:self action:@selector(deleteCouponButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        [_stateBgView addSubview:_deleteCouponButton];
+        [_deleteCouponButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(_stateLabel);
             make.bottom.mas_equalTo(0);
             make.size.mas_equalTo(CGSizeMake(150, 50));
@@ -131,6 +132,7 @@
     _timeLabel.text = dic[@"expireDate"];
     _stateLabel.text = dic[@"info"][@"name"];
     
+    _deleteCouponButton.hidden = pay;
     _selectedStateView.hidden = !pay;
     //  判断是否选中
     if ([dic[CellSelectedKey] boolValue]) {
@@ -159,6 +161,7 @@
     
     _nameLabel.text = [NSString stringWithFormat:@"%@元 剩余：%@元", dic[@"cardValue"], dic[@"remainValue"]];
     
+    _deleteCouponButton.hidden = pay;
     _selectedStateView.hidden = !pay;
     //  判断是否选中
     if ([dic[CellSelectedKey] boolValue]) {

@@ -26,13 +26,13 @@
     [super viewDidLoad];
     switch (_type) {
         case CouponType_Stored:
-            self.kkzTitleLabel.text = @"绑定储蓄卡";
+            self.kkzTitleLabel.text = @"绑定章鱼卡";
             break;
         case CouponType_coupon:
-            self.kkzTitleLabel.text = @"绑定优惠券";
+            self.kkzTitleLabel.text = @"绑定章鱼券";
             break;
         case CouponType_Redeem:
-            self.kkzTitleLabel.text = @"绑定兑换码";
+            self.kkzTitleLabel.text = @"绑定章鱼码";
             break;
         default:
             break;
@@ -73,13 +73,13 @@
     UILabel *titleLabel = [[UILabel alloc] init];
     switch (_type) {
         case CouponType_Stored:
-            titleLabel.text = @"储蓄卡";
+            titleLabel.text = @"章鱼卡";
             break;
         case CouponType_coupon:
-            titleLabel.text = @"优惠券";
+            titleLabel.text = @"章鱼券";
             break;
         case CouponType_Redeem:
-            titleLabel.text = @"兑换码";
+            titleLabel.text = @"章鱼码";
             break;
         default:
             break;
@@ -163,15 +163,16 @@
     [_doneButton setTitle:@"确认绑定" forState:UIControlStateNormal];
     [_doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _doneButton.titleLabel.font = [UIFont systemFontOfSize:16];
-    [_doneButton setBackgroundImage:[UIImage imageNamed:@"Login_Button"] forState:UIControlStateNormal];
+    [_doneButton setBackgroundImage:[UIImage imageNamed:@"bind_coupon_button_enabled"] forState:UIControlStateNormal];
+    [_doneButton setBackgroundImage:[UIImage imageNamed:@"bind_coupon_button_enabled"] forState:UIControlStateDisabled];
     _doneButton.enabled = false;
     [_doneButton addTarget:self action:@selector(bindViewButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [_bindView addSubview:_doneButton];
     [_doneButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(_bindView);
-        make.width.equalTo(@150);
+        make.width.mas_equalTo(413/2.0);
         make.top.equalTo(whiteView.mas_bottom).offset(30);
-        make.height.mas_equalTo(54);
+        make.height.mas_equalTo(60);
     }];
 }
 

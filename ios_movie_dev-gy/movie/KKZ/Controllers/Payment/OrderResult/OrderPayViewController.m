@@ -172,7 +172,7 @@
     
     //  客服电话
     UILabel *mobileLabel = [[UILabel alloc] init];
-    mobileLabel.text = @"客服电话 4006-888-888";
+    mobileLabel.text = @"客服电话 400-030-1053";
     mobileLabel.textColor = appDelegate.kkzPink;
     mobileLabel.font = [UIFont systemFontOfSize:14];
     [holder addSubview:mobileLabel];

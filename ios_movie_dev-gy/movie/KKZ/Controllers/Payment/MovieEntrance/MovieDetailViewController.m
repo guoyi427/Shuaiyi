@@ -101,6 +101,7 @@
     UILabel *_scoreTimeLabel;
     UILabel *_scoreNameLabel;
     UIButton *_relationButton;
+    UIVisualEffectView *_effectView;
 }
 
 /**
@@ -269,9 +270,9 @@
     [homeBackgroundView addSubview:homeBgCover];
     
     UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blur];
-    effectView.frame = homeBackgroundView.bounds;
-    [homeBackgroundView addSubview:effectView];
+    _effectView = [[UIVisualEffectView alloc] initWithEffect:blur];
+    _effectView.frame = homeBackgroundView.bounds;
+    [homeBackgroundView addSubview:_effectView];
     
 
     if (self.movie.thumbPath.length) {
@@ -298,7 +299,7 @@
     UIButton *buyTicketBtn = [[UIButton alloc] initWithFrame:CGRectMake(150-75, screentHeight - 50, screentWith-150+75, 50)];//CGRectMake(150, screentHeight - 50, screentWith-150, 50)];
     [buyTicketBtn setBackgroundImage:[UIImage imageNamed:@"Pay_paybutton"] forState:UIControlStateNormal];
     if (_isCommingSoon) {
-        [buyTicketBtn setTitle:@"等待拍片" forState:UIControlStateNormal];
+        [buyTicketBtn setTitle:@"即将上映" forState:UIControlStateNormal];
         buyTicketBtn.enabled = false;
 //        buyTicketBtn.frame = CGRectMake(150-75, screentHeight - 50, screentWith-150+75, 50);
     } else {
@@ -318,6 +319,7 @@
     [_relationButton setTitleEdgeInsets:UIEdgeInsetsMake(20, 0, 0, 20)];
     [_relationButton setImage:[UIImage imageNamed:@"MovieDetail_Relation"] forState:UIControlStateNormal];
     [_relationButton setImage:[UIImage imageNamed:@"MovieDetail_Relation_select"] forState:UIControlStateSelected];
+    [_relationButton setImage:[UIImage imageNamed:@"MovieDetail_Relation_select"] forState:UIControlStateHighlighted | UIControlStateSelected];
     [_relationButton setImageEdgeInsets:UIEdgeInsetsMake(0, 20, 15, 0)];
     [_relationButton addTarget:self action:@selector(relationButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_relationButton];
@@ -334,13 +336,15 @@
 }
 
 - (void)relationButtonAction:(UIButton *)button {
-    button.selected = !button.isSelected;
+    if (button.isSelected) {
+        return;
+    }
     MovieRequest *request = [[MovieRequest alloc] init];
     [request addRelationMovieId:[NSString stringWithFormat:@"%@", _movieId] relation:[NSString stringWithFormat:@"%d", button.isSelected] success:^{
         [UIAlertView showAlertView:button.isSelected?@"喜欢成功":@"取消喜欢成功" buttonText:@"确定"];
+        button.selected = true;
     } failure:^(NSError * _Nullable err) {
         [appDelegate showAlertViewForRequestInfo:err.userInfo];
-        button.selected = !button.isSelected;
     }];
 }
 
@@ -1772,18 +1776,19 @@
     float postBgh = homeBgHeight;
 
     if (scrollView.contentOffset.y < 0) {
-        frame.origin.x = scrollView.contentOffset.y / 2.0;
+//        frame.origin.x = 0;//scrollView.contentOffset.y / 2.0;
         frame.origin.y = 0;
         frame.size.height = postBgh - scrollView.contentOffset.y;
-        frame.size.width = screentWith - scrollView.contentOffset.y;
+//        frame.size.width = screentWith - scrollView.contentOffset.y;
     } else {
-        frame.origin.x = 0;
+//        frame.origin.x = 0;
         frame.origin.y = 0 - scrollView.contentOffset.y;
-        frame.size.width = screentWith;
+//        frame.size.width = screentWith;
         frame.size.height = postBgh;
     }
 
     homeBackgroundView.frame = frame;
+    _effectView.frame = frame;
     if (scrollView.contentOffset.y >= headHeight) {
         [homeBgCover setBackgroundColor:[UIColor whiteColor]];
         //设置导航栏背景色
@@ -1802,8 +1807,7 @@
 
         self.kkzTitleLabel.hidden = YES;
     }
-
-    homeBackgroundView.frame = frame;
+    
     frame = homeBgCover.frame;
     frame.size = homeBackgroundView.frame.size;
     homeBgCover.frame = frame;

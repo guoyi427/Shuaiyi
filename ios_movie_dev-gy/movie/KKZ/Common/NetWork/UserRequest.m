@@ -555,24 +555,24 @@
     KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
     NSMutableDictionary *dicParams = [NSMutableDictionary dictionaryWithCapacity:5];
     [dicParams setValue:@"user_Update" forKey:@"action"];
-    [dicParams setValue:imageData forKey:@"head_image"];
+//    [dicParams setValue:imageData forKey:@"head_image"];
     NSDictionary *newParams = [KKZBaseRequestParams getDecryptParams:dicParams];
     
-//    [request upload:kKSSPServer parameters:newParams fromData:^(id<AFMultipartFormData>  _Nonnull formData) {
-//        if (imageData) {
-//            [formData appendPartWithFileData:imageData name:@"head_img" fileName:@"file.jpg" mimeType:@"image/jpeg"];
-//        }
-//    } resultClass:nil success:^(id  _Nullable data, id  _Nullable responseObject) {
-//        if (success) {
-//            success();
-//        }
-//    } failure:failure];
-    
-    [request POST:kKSSPServer parameters:newParams resultClass:nil success:^(id  _Nullable data, id  _Nullable responseObject) {
+    [request upload:kKSSPServer parameters:newParams fromData:^(id<AFMultipartFormData>  _Nonnull formData) {
+        if (imageData) {
+            [formData appendPartWithFileData:imageData name:@"head_img" fileName:@"file.jpg" mimeType:@"image/jpeg"];
+        }
+    } resultClass:nil success:^(id  _Nullable data, id  _Nullable responseObject) {
         if (success) {
             success();
         }
     } failure:failure];
+    
+//    [request POST:kKSSPServer parameters:newParams resultClass:nil success:^(id  _Nullable data, id  _Nullable responseObject) {
+//        if (success) {
+//            success();
+//        }
+//    } failure:failure];
 }
 
 @end

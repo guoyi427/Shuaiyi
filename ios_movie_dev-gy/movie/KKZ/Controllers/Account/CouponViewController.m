@@ -43,9 +43,9 @@ static NSString *RedeemCellId = @"redeemcell";
     _modelList = [[NSMutableArray alloc] init];
     
     if (_type == CouponType_coupon) {
-        self.kkzTitleLabel.text = @"优惠券";
+        self.kkzTitleLabel.text = @"章鱼券";
     } else if (_type == CouponType_Redeem) {
-        self.kkzTitleLabel.text = @"兑换码";
+        self.kkzTitleLabel.text = @"章鱼码";
     } else {
         self.kkzTitleLabel.text = @"储蓄卡";
     }
@@ -72,13 +72,13 @@ static NSString *RedeemCellId = @"redeemcell";
     NSString *text = nil;
     switch (_type) {
         case CouponType_coupon:
-            text = @"优惠券";
+            text = @"章鱼券";
             break;
         case CouponType_Redeem:
-            text = @"兑换券";
+            text = @"章鱼券";
             break;
         case CouponType_Stored:
-            text = @"储蓄卡";
+            text = @"章鱼卡";
             break;
         default:
             break;

@@ -58,10 +58,10 @@
     CouponType _lastCouponType;
     
     //  UI
-    UILabel *_couponCountLabel;
-    UILabel *_couponCountLabel2;
-    UILabel *_couponNullLabel;
-    UILabel *_couponNullLabel2;
+//    UILabel *_couponCountLabel;
+//    UILabel *_couponCountLabel2;
+//    UILabel *_couponNullLabel;
+//    UILabel *_couponNullLabel2;
     UIImageView *_couponArrowView;
     UIImageView *_couponArrowView2;
 }
@@ -461,7 +461,7 @@
     }];
     
     UILabel *couponTitleLabel = [[UILabel alloc] init];
-    couponTitleLabel.text = @"优惠券";
+    couponTitleLabel.text = @"章鱼券";
     couponTitleLabel.font = [UIFont systemFontOfSize:14];
     couponTitleLabel.textColor = appDelegate.kkzGray;
     [couponView addSubview:couponTitleLabel];
@@ -470,25 +470,25 @@
         make.centerY.equalTo(couponView);
     }];
     
-    _couponNullLabel = [[UILabel alloc] init];
-    _couponNullLabel.text = @"不可使用";
-    _couponNullLabel.textColor = appDelegate.kkzGray;
-    _couponNullLabel.font = [UIFont systemFontOfSize:14];
-    _couponNullLabel.hidden = true;
-    [couponView addSubview:_couponNullLabel];
-    [_couponNullLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(110);
-        make.centerY.equalTo(couponView);
-    }];
+//    _couponNullLabel = [[UILabel alloc] init];
+//    _couponNullLabel.text = @"不可使用";
+//    _couponNullLabel.textColor = appDelegate.kkzGray;
+//    _couponNullLabel.font = [UIFont systemFontOfSize:14];
+//    _couponNullLabel.hidden = true;
+//    [couponView addSubview:_couponNullLabel];
+//    [_couponNullLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(110);
+//        make.centerY.equalTo(couponView);
+//    }];
     
     _couponArrowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowRightGray"]];
-    _couponArrowView.hidden = true;
+//    _couponArrowView.hidden = true;
     [couponView addSubview:_couponArrowView];
     [_couponArrowView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-15);
         make.centerY.equalTo(couponView);
     }];
-    
+    /*
     _couponCountLabel = [[UILabel alloc] init];
     _couponCountLabel.textColor = appDelegate.kkzPink;
     _couponCountLabel.font = [UIFont systemFontOfSize:12];
@@ -497,7 +497,7 @@
         make.right.equalTo(_couponArrowView.mas_left).offset(-10);
         make.centerY.equalTo(couponView);
     }];
-    
+    */
     UIView *couponBottomLine = [[UIView alloc] init];
     couponBottomLine.backgroundColor = appDelegate.kkzLine;
     [couponView addSubview:couponBottomLine];
@@ -520,7 +520,7 @@
     }];
     
     UILabel *coupon2TitleLabel = [[UILabel alloc] init];
-    coupon2TitleLabel.text = @"兑换码";
+    coupon2TitleLabel.text = @"章鱼码";
     coupon2TitleLabel.font = [UIFont systemFontOfSize:14];
     coupon2TitleLabel.textColor = appDelegate.kkzGray;
     [couponView2 addSubview:coupon2TitleLabel];
@@ -529,25 +529,25 @@
         make.centerY.equalTo(couponView2);
     }];
     
-    _couponNullLabel2 = [[UILabel alloc] init];
-    _couponNullLabel2.text = @"不可使用";
-    _couponNullLabel2.textColor = appDelegate.kkzGray;
-    _couponNullLabel2.font = [UIFont systemFontOfSize:14];
-    _couponNullLabel2.hidden = true;
-    [couponView2 addSubview:_couponNullLabel2];
-    [_couponNullLabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(110);
-        make.centerY.equalTo(couponView2);
-    }];
+//    _couponNullLabel2 = [[UILabel alloc] init];
+//    _couponNullLabel2.text = @"不可使用";
+//    _couponNullLabel2.textColor = appDelegate.kkzGray;
+//    _couponNullLabel2.font = [UIFont systemFontOfSize:14];
+//    _couponNullLabel2.hidden = true;
+//    [couponView2 addSubview:_couponNullLabel2];
+//    [_couponNullLabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(110);
+//        make.centerY.equalTo(couponView2);
+//    }];
     
     _couponArrowView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowRightGray"]];
-    _couponArrowView2.hidden = true;
+//    _couponArrowView2.hidden = true;
     [couponView2 addSubview:_couponArrowView2];
     [_couponArrowView2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-15);
         make.centerY.equalTo(couponView2);
     }];
-    
+    /*
     _couponCountLabel2 = [[UILabel alloc] init];
     _couponCountLabel2.textColor = appDelegate.kkzPink;
     _couponCountLabel2.font = [UIFont systemFontOfSize:12];
@@ -556,11 +556,11 @@
         make.right.equalTo(_couponArrowView2.mas_left).offset(-10);
         make.centerY.equalTo(couponView2);
     }];
-    
+    */
     UITapGestureRecognizer *tapCouponView2GR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCouponView2Action)];
     [couponView2 addGestureRecognizer:tapCouponView2GR];
     
-    //  储值卡
+    //  章鱼卡
     UIView *cardView = [[UIView alloc] init];
     cardView.backgroundColor = [UIColor whiteColor];
     [holder addSubview:cardView];
@@ -571,7 +571,7 @@
     }];
     
     UILabel *cardTitleLabel = [[UILabel alloc] init];
-    cardTitleLabel.text = @"储值卡";
+    cardTitleLabel.text = @"章鱼卡";
     cardTitleLabel.font = [UIFont systemFontOfSize:14];
     cardTitleLabel.textColor = appDelegate.kkzGray;
     [cardView addSubview:cardTitleLabel];
@@ -592,7 +592,7 @@
     
     //  客服电话
     UILabel *telphoneLabel = [[UILabel alloc] init];
-    telphoneLabel.text = @"客服电话 4006-888-888";
+    telphoneLabel.text = @"客服电话 400-030-1053";
     telphoneLabel.textColor = appDelegate.kkzPink;
     telphoneLabel.font = [UIFont systemFontOfSize:15];
     [holder addSubview:telphoneLabel];
@@ -669,8 +669,8 @@
         [[UserManager shareInstance] updateBalance:nil failure:nil];
     }
     
-    [self loadCouponList];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCouponList) name:@"updateCouponList" object:nil];
+//    [self loadCouponList];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCouponList) name:@"updateCouponList" object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -1153,13 +1153,13 @@
 }
 
 #pragma mark - Network - Request
-
+/*
 - (void)loadCouponList {
     MovieRequest *request = [[MovieRequest alloc] init];
     [request queryCouponListWithGroupId:4 success:^(NSArray * _Nullable couponList) {
         NSInteger count = couponList.count;
-        _couponArrowView.hidden = count == 0;
-        _couponNullLabel.hidden = count > 0;
+//        _couponArrowView.hidden = count == 0;
+//        _couponNullLabel.hidden = count > 0;
         _couponCountLabel.hidden = count == 0;
         _couponCountLabel.text = [NSString stringWithFormat:@"%ld个可用", count];
         _coupon1Count = count;
@@ -1170,8 +1170,8 @@
     MovieRequest *request2 = [[MovieRequest alloc] init];
     [request2 queryCouponListWithGroupId:3 success:^(NSArray * _Nullable couponList) {
         NSInteger count = couponList.count;
-        _couponArrowView2.hidden = count == 0;
-        _couponNullLabel2.hidden = count > 0;
+//        _couponArrowView2.hidden = count == 0;
+//        _couponNullLabel2.hidden = count > 0;
         _couponCountLabel2.hidden = count == 0;
         _couponCountLabel2.text = [NSString stringWithFormat:@"%ld个可用", count];
         _coupon2Count = count;
@@ -1179,15 +1179,17 @@
         
     }];
 }
-
+*/
+/*
 - (void)uploadCouponCountView {
-    _couponCountLabel.text = [NSString stringWithFormat:@"%ld个可用", _coupon1Count];
-    _couponCountLabel2.text = [NSString stringWithFormat:@"%ld个可用", _coupon2Count];
+//    _couponCountLabel.text = [NSString stringWithFormat:@"%ld个可用", _coupon1Count];
+//    _couponCountLabel2.text = [NSString stringWithFormat:@"%ld个可用", _coupon2Count];
 }
+ */
 
 - (BOOL)judgeCouponState {
     if (_selectedCouponList && _selectedCouponList.count) {
-        [UIAlertView showAlertView:@"优惠券、兑换券、储值卡不能同时使用" buttonText:@"确定"];
+        [UIAlertView showAlertView:@"章鱼券、章鱼券、章鱼卡不能同时使用" buttonText:@"确定"];
         return true;
     }
     return false;
@@ -1200,8 +1202,9 @@
  */
 - (void)tapCouponViewAction {
 //    [self judgeCouponState];
-    if (_lastCouponType == CouponType_Redeem || _lastCouponType == CouponType_Stored) {
-        [UIAlertView showAlertView:@"优惠券、兑换券、储值卡不能同时使用" cancelText:@"取消" cancelTapped:^{
+    if ((_lastCouponType == CouponType_Redeem || _lastCouponType == CouponType_Stored) &&
+        _selectedCouponList.count > 0) {
+        [UIAlertView showAlertView:@"章鱼券、章鱼券、章鱼卡不能同时使用" cancelText:@"取消" cancelTapped:^{
             return;
         } okText:@"确定" okTapped:^{
             CouponViewController *vc = [[CouponViewController alloc] init];
@@ -1212,7 +1215,7 @@
             vc.orderId = self.orderNo;
             [self.navigationController pushViewController:vc animated:true];
             
-            [self uploadCouponCountView];
+//            [self uploadCouponCountView];
         }];
     } else {
         CouponViewController *vc = [[CouponViewController alloc] init];
@@ -1223,7 +1226,7 @@
         vc.orderId = self.orderNo;
         [self.navigationController pushViewController:vc animated:true];
         
-        [self uploadCouponCountView];
+//        [self uploadCouponCountView];
     }
     
 }
@@ -1234,8 +1237,9 @@
  */
 - (void)tapCouponView2Action {
 //     [self judgeCouponState];
-    if (_lastCouponType == CouponType_coupon || _lastCouponType == CouponType_Stored) {
-        [UIAlertView showAlertView:@"优惠券、兑换券、储值卡不能同时使用" cancelText:@"取消" cancelTapped:^{
+    if ((_lastCouponType == CouponType_coupon || _lastCouponType == CouponType_Stored) &&
+        _selectedCouponList.count > 0) {
+        [UIAlertView showAlertView:@"章鱼券、章鱼券、章鱼卡不能同时使用" cancelText:@"取消" cancelTapped:^{
             return;
         } okText:@"确定" okTapped:^{
             CouponViewController *vc = [[CouponViewController alloc] init];
@@ -1245,7 +1249,7 @@
             vc.selectedList = _selectedCouponList;
             vc.orderId = self.orderNo;
             [self.navigationController pushViewController:vc animated:true];
-            [self uploadCouponCountView];
+//            [self uploadCouponCountView];
         }];
     } else {
         CouponViewController *vc = [[CouponViewController alloc] init];
@@ -1255,7 +1259,7 @@
         vc.selectedList = _selectedCouponList;
         vc.orderId = self.orderNo;
         [self.navigationController pushViewController:vc animated:true];
-         [self uploadCouponCountView];
+//         [self uploadCouponCountView];
     }
 }
 
@@ -1264,8 +1268,9 @@
  */
 - (void)tapCardViewAction {
 //    [self judgeCouponState];
-    if (_lastCouponType == CouponType_Redeem || _lastCouponType == CouponType_coupon) {
-        [UIAlertView showAlertView:@"优惠券、兑换券、储值卡不能同时使用" cancelText:@"取消" cancelTapped:^{
+    if ((_lastCouponType == CouponType_Redeem || _lastCouponType == CouponType_coupon) &&
+    _selectedCouponList.count > 0){
+        [UIAlertView showAlertView:@"章鱼券、章鱼券、章鱼卡不能同时使用" cancelText:@"取消" cancelTapped:^{
             return;
         } okText:@"确定" okTapped:^{
             CouponViewController *vc = [[CouponViewController alloc] init];
@@ -1276,7 +1281,7 @@
             vc.orderId = self.orderNo;
             [self.navigationController pushViewController:vc animated:true];
             
-            [self uploadCouponCountView];
+//            [self uploadCouponCountView];
         }];
     } else {
         CouponViewController *vc = [[CouponViewController alloc] init];
@@ -1287,7 +1292,7 @@
         vc.orderId = self.orderNo;
         [self.navigationController pushViewController:vc animated:true];
         
-        [self uploadCouponCountView];
+//        [self uploadCouponCountView];
     }
     
 }
@@ -1343,6 +1348,7 @@
                                                
                                                if (succeeded) {
                                                    [payView setOrderTotalFee:[userInfo[@"agio"] floatValue]];
+                                                   /*
                                                    moneyNeedPayLabel.text = [NSString stringWithFormat:@"￥%.2f", [userInfo[@"agio"] floatValue]];
                                                    NSArray *couponList = userInfo[@"coupons"];
                                                    if (couponList.count > 0) {
@@ -1352,8 +1358,9 @@
                                                            _couponCountLabel2.text = [NSString stringWithFormat:@"已使用%lu张", couponList.count];
                                                        }
                                                    }
+                                                    */
                                                } else {
-                                                   [self uploadCouponCountView];
+//                                                   [self uploadCouponCountView];
 //                                                   [appDelegate showAlertViewForTaskInfo:userInfo];
                                                    _selectedCouponList = nil;
                                                    payView.ecardListStr = @"";

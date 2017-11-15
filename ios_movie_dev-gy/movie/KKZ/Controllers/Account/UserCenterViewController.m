@@ -19,6 +19,7 @@
 #import "UserCenterMovieViewController.h"
 #import "CouponViewController.h"
 #import "EditUserInfoViewController.h"
+#import "AboutViewController.h"
 
 @interface UserCenterViewController () <UITableViewDelegate, UITableViewDataSource>
 {
@@ -47,7 +48,7 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _menuTitleList = @[@[@"储值卡", @"优惠券", @"兑换码"],@[@"资料修改"],@[@"关于章鱼电影", @"注销账号"]];
+    _menuTitleList = @[@[@"章鱼卡", @"章鱼券", @"章鱼码"],@[@"资料修改"],@[@"关于章鱼电影", @"注销账号"]];
     
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableView.backgroundColor = appDelegate.kkzLine;
@@ -319,7 +320,7 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            //  储值卡
+            //  章鱼卡
             CouponViewController *vc = [[CouponViewController alloc] init];
             vc.type = CouponType_Stored;
             [self.navigationController pushViewController:vc animated:true];
@@ -346,7 +347,8 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     } else if (indexPath.section == 2) {
         if (indexPath.row == 0) {
             //  关于章鱼
-            
+            AboutViewController *vc = [[AboutViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:true];
         } else {
             //  注销账号
             [UIAlertView showAlertView:@"是否确定注销账号" cancelText:@"取消" cancelTapped:^{
