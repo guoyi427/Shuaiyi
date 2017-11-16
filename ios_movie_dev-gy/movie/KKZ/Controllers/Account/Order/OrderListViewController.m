@@ -125,7 +125,9 @@ typedef void (^finishBlock)();
 
     noAlertView = [[AlertViewY alloc] initWithFrame:CGRectMake(0, screentHeight * 0.5 - 120, screentWith, 120)];
     noAlertView.alertLabelText = @"正在查询订单列表，请稍候...";
-
+    noAlertView.alertView.hidden = true;
+    noAlertView.vBg.hidden = true;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(refreshOrderStates:)
                                                  name:@"refreshOrderStates"
@@ -271,11 +273,10 @@ typedef void (^finishBlock)();
 
 #pragma mark utilities
 - (void)refreshTicketOrder {
-
     [nodataView removeFromSuperview];
     if (ticketList.count == 0) {
         [orderTableView addSubview:noAlertView];
-        [noAlertView startAnimation];
+//        [noAlertView startAnimation];
     }
 
     ticketPage = 1;
@@ -340,6 +341,9 @@ typedef void (^finishBlock)();
 
 #pragma mark - Table view data source
 - (void)configureTicketCell:(OrderTicketCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    if (ticketList.count <= indexPath.row) {
+        return;
+    }
     Order *order = [ticketList objectAtIndex:indexPath.row];
     Ticket *ticket = order.plan;
     @try {

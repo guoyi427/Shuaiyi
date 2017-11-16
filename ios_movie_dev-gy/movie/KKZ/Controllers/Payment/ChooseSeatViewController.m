@@ -22,6 +22,7 @@
 #import "Ticket.h"
 #import "OrderRequest.h"
 #import <Category_KKZ/NSStringExtra.h>
+#import <Category_KKZ/UIImage+Resize.h>
 
 #import "SwitchPlanView.h"
 #import "SwitchPlanDelegate.h"
@@ -61,6 +62,9 @@ const int K_MAX_SELECTED_SEAT = 4;
  */
 @property (nonatomic, strong) HallView *hallView;
 @property (nonatomic, strong) UILabel *hallLabel;
+
+//  失败图
+@property (nonatomic, strong) UIImageView *errorView;
 
 /**
  座位图 scrollView
@@ -228,6 +232,25 @@ const int K_MAX_SELECTED_SEAT = 4;
     
     self.hallView = [[HallView alloc]init];
     [self.scrollHallView addSubview:self.hallView];
+    
+    self.errorView = [[UIImageView alloc] initWithImage:[UIImage centerResizeFrom:[UIImage imageNamed:@"OrderPay_Failure"]
+                                                                          newSize:CGSizeMake(kAppScreenWidth, kAppScreenWidth) bgColor:[UIColor colorWithHex:@"#e3e3e3"]]];
+    self.errorView.contentMode = UIViewContentModeScaleAspectFill;
+    self.errorView.hidden = true;
+    [self.view addSubview:self.errorView];
+    [self.errorView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(_scrollHallView);
+    }];
+    
+    UILabel *errorLabel = [[UILabel alloc] init];
+    errorLabel.text = @"还没获取到数据";
+    errorLabel.textColor = [UIColor grayColor];
+    errorLabel.font = [UIFont systemFontOfSize:14];
+    [self.errorView addSubview:errorLabel];
+    [errorLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.errorView);
+        make.centerY.equalTo(self.errorView).offset(70);
+    }];
     
     //  座位信息
     self.seatIndexView = [CPSeatIndexView new];
@@ -517,22 +540,21 @@ const int K_MAX_SELECTED_SEAT = 4;
     self.hallView.hidden = YES;
     self.navigatorView.hidden = YES;
     self.seatIndexView.hidden = YES;
-    
+    self.errorView.hidden = true;
+    WeakSelf
     [request requestCinemaSeat:self.plan.cinema.cinemaId
                         planId:self.plan.planId
                         hallId:self.plan.hallNo
                        success:^(NSArray * _Nullable seats, NSString * _Nullable notice) {
-                           
-                           self.allSeats = seats;
-                           [self handleMessage:notice];
-                           
-                           [self updateHallView];
+                           weakSelf.allSeats = seats;
+                           [weakSelf handleMessage:notice];
+                           [weakSelf updateHallView];
                            
                            [appDelegate hideIndicator];
                            
                        } failure:^(NSError * _Nullable err) {
                            DLog(@"request seat error: %@",err);
-                           
+                           weakSelf.errorView.hidden = false;
                            //网络错误提示
                            if (err.code == KKZ_REQUEST_STATUS_NETWORK_ERROR) {
                                

@@ -810,7 +810,7 @@
         BOOKING_PHONE_WRITE(telephoneTextField.text);
     }
     
-    if (_isCardPay) {
+    if (_isCardPay || payView.orderTotalFee <= 0) {
         payView.ecardListStr = _couponString;
         payView.selectedMethod = PayMethodNone;
         [payView payOrder];
@@ -1348,8 +1348,8 @@
                                                
                                                if (succeeded) {
                                                    [payView setOrderTotalFee:[userInfo[@"agio"] floatValue]];
-                                                   /*
                                                    moneyNeedPayLabel.text = [NSString stringWithFormat:@"￥%.2f", [userInfo[@"agio"] floatValue]];
+                                                   /*
                                                    NSArray *couponList = userInfo[@"coupons"];
                                                    if (couponList.count > 0) {
                                                        if (type == CouponType_coupon) {

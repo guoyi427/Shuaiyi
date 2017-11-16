@@ -99,6 +99,7 @@
     _couponCodeTextField.font = [UIFont systemFontOfSize:14];
     _couponCodeTextField.placeholder = @"请输入券码";
     _couponCodeTextField.delegate = self;
+    _couponCodeTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     [whiteView addSubview:_couponCodeTextField];
     [_couponCodeTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(titleLabel.mas_right).offset(20);
@@ -122,6 +123,8 @@
         _cardPasswordTextField.textColor = appDelegate.kkzTextColor;
         _cardPasswordTextField.font = [UIFont systemFontOfSize:14];
         _cardPasswordTextField.placeholder = @"请输入密码";
+        _cardPasswordTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+        _cardPasswordTextField.secureTextEntry = true;
         [whiteView addSubview:_cardPasswordTextField];
         [_cardPasswordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_couponCodeTextField);
@@ -165,7 +168,6 @@
     _doneButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [_doneButton setBackgroundImage:[UIImage imageNamed:@"bind_coupon_button_enabled"] forState:UIControlStateNormal];
     [_doneButton setBackgroundImage:[UIImage imageNamed:@"bind_coupon_button_enabled"] forState:UIControlStateDisabled];
-    _doneButton.enabled = false;
     [_doneButton addTarget:self action:@selector(bindViewButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [_bindView addSubview:_doneButton];
     [_doneButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -181,9 +183,10 @@
 - (void)bindViewButtonAction {
     
     if (_couponCodeTextField.text.length == 0) {
+        [UIAlertView showAlertView:@"输入内容为空" buttonText:@"确定"];
         return;
     }
-    
+    WeakSelf
     PayTask *task = [[PayTask alloc] initBindingCouponforUser:[_couponCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]
                                                       groupId:[NSString stringWithFormat:@"%lu", _type]
                                                      password:_cardPasswordTextField.text
@@ -192,9 +195,13 @@
                                                          if (succeeded) {
                                                              [UIAlertView showAlertView:@"绑定完成" buttonText:@"确定"];
                                                              [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCouponList" object:nil];
+                                                             _cardPasswordTextField.text = @"";
+                                                             _couponCodeTextField.text = @"";
+                                                             [weakSelf.navigationController popViewControllerAnimated:true];
                                                          } else {
                                                              [appDelegate showAlertViewForTaskInfo:userInfo];
                                                              _messageLabel.hidden = false;
+                                                             _messageLabel.text = userInfo[@"LogicError"][@"error"];
                                                          }
                                                          [appDelegate hideIndicator];
                                                      }];
@@ -211,13 +218,6 @@
 #pragma mark - UITextField - Delegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    
-    if (textField.text.length > 5) {
-        _doneButton.enabled = true;
-    } else {
-        _doneButton.enabled = false;
-    }
-    
     _messageLabel.hidden = true;
     return true;
 }

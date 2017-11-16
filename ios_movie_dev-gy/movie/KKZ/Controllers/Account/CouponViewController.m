@@ -47,7 +47,7 @@ static NSString *RedeemCellId = @"redeemcell";
     } else if (_type == CouponType_Redeem) {
         self.kkzTitleLabel.text = @"章鱼码";
     } else {
-        self.kkzTitleLabel.text = @"储蓄卡";
+        self.kkzTitleLabel.text = @"章鱼卡";
     }
     
     [self prepareTableView];

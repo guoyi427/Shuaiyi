@@ -341,6 +341,11 @@
     if (button.isSelected) {
         return;
     }
+    
+    if (![UserManager shareInstance].isUserAuthorized) {
+        [[UserManager shareInstance] gotoLoginControllerFrom:self];
+    }
+    
     MovieRequest *request = [[MovieRequest alloc] init];
     [request addRelationMovieId:[NSString stringWithFormat:@"%@", _movieId] relation:[NSString stringWithFormat:@"%d", button.isSelected] success:^{
         [UIAlertView showAlertView:button.isSelected?@"喜欢成功":@"取消喜欢成功" buttonText:@"确定"];

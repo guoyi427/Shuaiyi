@@ -1374,6 +1374,8 @@
 		5DB763A31C7D567200CD1FAE /* UITableViewCell+JZExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB7639F1C7D567200CD1FAE /* UITableViewCell+JZExtension.m */; };
 		5DB763A41C7D567200CD1FAE /* UITableViewRowAction+JZExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB763A11C7D567200CD1FAE /* UITableViewRowAction+JZExtension.m */; };
 		5DB763A51C7D567200CD1FAE /* UITableViewRowAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB763A21C7D567200CD1FAE /* UITableViewRowAction.m */; };
+		5DB91CA21FBD722A00F29A6B /* logo_holder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DB91CA01FBD722800F29A6B /* logo_holder@3x.png */; };
+		5DB91CA31FBD722A00F29A6B /* logo_holder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DB91CA11FBD722900F29A6B /* logo_holder@2x.png */; };
 		5DB97B2E1D1B74CE00F0564E /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB97B2D1D1B74CE00F0564E /* libicucore.tbd */; };
 		5DB97B301D1B74DD00F0564E /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB97B2F1D1B74DD00F0564E /* libz.1.2.5.tbd */; };
 		5DB97B321D1B74FC00F0564E /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB97B311D1B74FC00F0564E /* libstdc++.tbd */; };
@@ -3626,6 +3628,8 @@
 		5DB763A01C7D567200CD1FAE /* UITableViewRowAction+JZExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewRowAction+JZExtension.h"; sourceTree = "<group>"; };
 		5DB763A11C7D567200CD1FAE /* UITableViewRowAction+JZExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewRowAction+JZExtension.m"; sourceTree = "<group>"; };
 		5DB763A21C7D567200CD1FAE /* UITableViewRowAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewRowAction.m; sourceTree = "<group>"; };
+		5DB91CA01FBD722800F29A6B /* logo_holder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_holder@3x.png"; sourceTree = "<group>"; };
+		5DB91CA11FBD722900F29A6B /* logo_holder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_holder@2x.png"; sourceTree = "<group>"; };
 		5DB97B2D1D1B74CE00F0564E /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		5DB97B2F1D1B74DD00F0564E /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		5DB97B311D1B74FC00F0564E /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
@@ -4271,6 +4275,8 @@
 		181C8B72145C425A0085F7D3 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				5DB91CA11FBD722900F29A6B /* logo_holder@2x.png */,
+				5DB91CA01FBD722800F29A6B /* logo_holder@3x.png */,
 				5DC83B4D1FBB3C58002D2CF9 /* bind_coupon_button_enabled@2x.png */,
 				5DC83B4F1FBB3C59002D2CF9 /* bind_coupon_button_enabled@3x.png */,
 				5DC83B501FBB3C5A002D2CF9 /* bind_coupon_button_unabled@2x.png */,
@@ -9136,6 +9142,7 @@
 				5D79A0681C1BC59D007A811E /* scoreBg.png in Resources */,
 				5DD2D5C31BCE7E3B007C40FB /* share_white_bg.png in Resources */,
 				5DCA34E81C8D98600060ECEE /* musicIcon@2x.png in Resources */,
+				5DB91CA21FBD722A00F29A6B /* logo_holder@3x.png in Resources */,
 				29E836411AA5BAD300389229 /* expiredKota@3x.png in Resources */,
 				5D9D76DA1FA61FC200684B44 /* PlanList_CinemaAddress_map@3x.png in Resources */,
 				5DD906591C22ADC5000B5F21 /* commentOrange@2x.png in Resources */,
@@ -9680,6 +9687,7 @@
 				5DA129FA1C2A9FBB00C2B577 /* fav_star_half_orangenew.png in Resources */,
 				5D19FB061C8C45A500CF077C /* downArrow@2x.png in Resources */,
 				290DAD2617AF9A5400606043 /* audio_play_btn.png in Resources */,
+				5DB91CA31FBD722A00F29A6B /* logo_holder@2x.png in Resources */,
 				5D98ACB31B9FF8F600EBF0D1 /* navigationBar_BgGreen.png in Resources */,
 				5D217A381AC5032D00840390 /* topCover@3x.png in Resources */,
 				5DAE62A21A2436510064723E /* refuseBtnY.png in Resources */,

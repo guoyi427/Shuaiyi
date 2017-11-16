@@ -19,6 +19,7 @@
     //  UI
     UIImageView *_stateBgView;
     UILabel *_nameLabel;
+    UILabel *_detailLabel;
     UILabel *_timeLabel;
     UILabel *_priceLabel;
     UIImageView *_selectedStateView;
@@ -47,9 +48,19 @@
         _nameLabel.font = [UIFont systemFontOfSize:18];
         [_stateBgView addSubview:_nameLabel];
         [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(35);
+            make.top.mas_equalTo(25);
             make.left.mas_equalTo(20);
         }];
+        
+        _detailLabel = [[UILabel alloc] init];
+        _detailLabel.textColor = [UIColor whiteColor];
+        _detailLabel.font = [UIFont systemFontOfSize:13];
+        [_stateBgView addSubview:_detailLabel];
+        [_detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_nameLabel);
+            make.top.equalTo(_nameLabel.mas_bottom).offset(4);
+        }];
+
         
         _timeLabel = [[UILabel alloc] init];
         _timeLabel.textColor = [UIColor whiteColor];
@@ -57,7 +68,7 @@
         [_stateBgView addSubview:_timeLabel];
         [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_nameLabel);
-            make.top.equalTo(_nameLabel.mas_bottom).offset(10);
+            make.top.equalTo(_detailLabel.mas_bottom).offset(8);
         }];
         
         _priceLabel = [[UILabel alloc] init];
@@ -105,7 +116,8 @@
         _stateBgView.image = [UIImage imageNamed:@"CouponList_gray"];
     }
     
-    _nameLabel.text = dic[@"info"][@"name"];
+    _nameLabel.text = [NSString stringWithFormat:@"%@", dic[@"info"][@"name"]];
+    _detailLabel.text = [NSString stringWithFormat:@"章鱼券：%@", dic[@"couponId"]];
     _timeLabel.text = dic[@"expireDate"];
     _priceLabel.text = dic[@"info"][@"name"];//dic[@"info"][@"price"];
     

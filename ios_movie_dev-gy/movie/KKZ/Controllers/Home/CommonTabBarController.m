@@ -80,7 +80,7 @@
                                                  normalImage:normalImgArr[i]
                                            hightlightedImage:selectImgArr[i]
                                                  normalColor:[UIColor r:123 g:123 b:123]
-                                           hightlightedColor:[UIColor r:36 g:148 b:254]
+                                           hightlightedColor:appDelegate.kkzPink
                                                        index:i];
         item.delegate = self;
         [tabbar addSubview:item];

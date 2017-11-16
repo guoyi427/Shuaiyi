@@ -83,9 +83,9 @@ static const CGFloat planButtonFont = 13.0f;
         _planButton = [UIButton buttonWithType:0];
         _planButton.frame = CGRectMake((kCommonScreenWidth - planButtonWidth) * 0.5, CGRectGetMaxY(self.titleLabel.frame) + planButtonTop, planButtonWidth, planButtonHeight);
         _planButton.titleLabel.font = [UIFont systemFontOfSize:planButtonFont];
-        [_planButton setTitleColor:[UIColor colorWithHex:@"#666666"]
+        [_planButton setTitleColor:appDelegate.kkzPink//[UIColor colorWithHex:@"#666666"]
                           forState:UIControlStateNormal];
-        _planButton.layer.borderColor = [UIColor colorWithHex:@"#666666"].CGColor;
+        _planButton.layer.borderColor = appDelegate.kkzPink.CGColor;//[UIColor colorWithHex:@"#666666"].CGColor;
         _planButton.layer.borderWidth = 1.0f;
         _planButton.layer.masksToBounds = YES;
         _planButton.layer.cornerRadius = planButtonHeight * 0.5f;

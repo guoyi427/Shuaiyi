@@ -127,8 +127,8 @@
         _stateBgView.image = [UIImage imageNamed:@"CouponList_gray"];
     }
     
-    _nameLabel.text = dic[@"info"][@"name"];
-    _detailLabel.text = dic[@"info"][@"description"];
+    _nameLabel.text = [NSString stringWithFormat:@"%@", dic[@"info"][@"name"]];
+    _detailLabel.text = [NSString stringWithFormat:@"章鱼码：%@", dic[@"couponId"]];
     _timeLabel.text = dic[@"expireDate"];
     _stateLabel.text = dic[@"info"][@"name"];
     
@@ -154,12 +154,11 @@
         _stateBgView.image = [UIImage imageNamed:@"CouponList_gray"];
     }
     
-//    _nameLabel.text = dic[@"info"][@"name"];
-    _detailLabel.text = dic[@"info"][@"description"];
+    _nameLabel.text = [NSString stringWithFormat:@"%@元 剩余：%@元", dic[@"cardValue"], dic[@"remainValue"]];
+    _detailLabel.text = [NSString stringWithFormat:@"章鱼卡：%@", dic[@"couponId"]];
     _timeLabel.text = dic[@"expireDate"];
     _stateLabel.text = dic[@"info"][@"name"];
     
-    _nameLabel.text = [NSString stringWithFormat:@"%@元 剩余：%@元", dic[@"cardValue"], dic[@"remainValue"]];
     
     _deleteCouponButton.hidden = pay;
     _selectedStateView.hidden = !pay;

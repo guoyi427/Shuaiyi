@@ -124,7 +124,7 @@
 //    self.availableScreenType = @"IMAX 3D";
 //    self.movieName = @"神奇动物在哪里";
     
-    UIImage *placeHolderImage = [UIImage centerResizeFrom:[UIImage imageNamed:@"movie_nopic"] newSize:CGSizeMake(self.frame.size.width, self.frame.size.height-20) bgColor:[UIColor colorWithHex:self.posterImageBackColor]];
+    UIImage *placeHolderImage = [UIImage centerResizeFrom:[UIImage imageNamed:@"logo_holder"] newSize:CGSizeMake(self.frame.size.width, self.frame.size.height-20) bgColor:[UIColor colorWithHex:@"#e3e3e3"]];
     [self.moviePosterImage sd_setImageWithURL:[MovieListPosterCollectionViewCell getUrlDeleteChineseWithString:self.imageUrl]
                              placeholderImage:placeHolderImage];
     movieNameLabel.text = self.movieName;
