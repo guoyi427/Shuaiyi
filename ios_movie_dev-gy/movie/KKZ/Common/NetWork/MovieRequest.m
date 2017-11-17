@@ -381,4 +381,59 @@
     } failure:failure];
 }
 
+- (void)bindCoupon:(nullable NSString *)couponId
+           groupId:(nullable NSString *)groupId
+          password:(nullable NSString *)password
+           success:(nullable void (^)(NSDictionary *_Nullable responseDic))success
+           failure:(nullable void (^)(NSError *_Nullable err))failure {
+    
+    if (!couponId || !groupId) {
+        return;
+    }
+    
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    NSDictionary *params = nil;
+    if (password && password.length) {
+        params = [KKZBaseRequestParams getDecryptParams:@{
+                                                          @"action": @"coupon_Binding",
+                                                          @"group_id": groupId,
+                                                          @"coupon_id": couponId,
+                                                          @"password": password,
+                                                          @"to_bind": @true
+                                                          }];
+    } else {
+        params = [KKZBaseRequestParams getDecryptParams:@{
+                                                          @"action": @"coupon_Binding",
+                                                          @"group_id": groupId,
+                                                          @"coupon_id": couponId,
+                                                          @"to_bind": @true
+                                                          }];
+    }
+    
+    [request GET:kKSSPServer parameters:params success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
+        success(responseObject);
+    } failure:failure];
+}
+
+- (void)checkCoupon:(nullable NSString *)couponIds
+            orderId:(nullable NSString *)orderId
+         groupBuyId:(nullable NSString *)groupBuyId
+            success:(nullable void (^)(NSDictionary *_Nullable responseDic))success
+            failure:(nullable void (^)(NSError *_Nullable err))failure {
+    if (!orderId || !couponIds) {
+        return;
+    }
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    KKZBaseRequestParams *params = [KKZBaseRequestParams getDecryptParams:@{
+                                                                            @"action": @"coupon_Check",
+                                                                            @"order_id": orderId,
+                                                                            @"coupon_ids": couponIds,
+//                                                                            @"groupbuy_id": groupBuyId
+                                                                            }];
+    [request GET:kKSSPServer parameters:params success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
+        success(responseObject);
+    } failure:failure];
+
+}
+
 @end

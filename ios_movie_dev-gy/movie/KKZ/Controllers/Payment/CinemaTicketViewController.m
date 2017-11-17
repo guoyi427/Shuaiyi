@@ -914,7 +914,7 @@ typedef enum : NSUInteger {
     [self loadCinemaPlanList:self.movieId];
     [self.listTable setContentOffset:CGPointMake(0, self.maximumVerticalOffset)
                             animated:NO];
-    [self requestPromotionList:self.movieId];
+//    [self requestPromotionList:self.movieId];
 }
 /**
  *  MARK: 点击影院信息

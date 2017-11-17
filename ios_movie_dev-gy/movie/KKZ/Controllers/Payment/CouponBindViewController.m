@@ -187,6 +187,7 @@
         return;
     }
     WeakSelf
+    /*
     PayTask *task = [[PayTask alloc] initBindingCouponforUser:[_couponCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]
                                                       groupId:[NSString stringWithFormat:@"%lu", _type]
                                                      password:_cardPasswordTextField.text
@@ -208,6 +209,26 @@
     if ([[TaskQueue sharedTaskQueue] addTaskToQueue:task]) {
         [appDelegate showIndicatorWithTitle:@"请稍候..." animated:YES fullScreen:NO overKeyboard:NO andAutoHide:NO];
     }
+     */
+    MovieRequest *req = [[MovieRequest alloc] init];
+    [req bindCoupon:[_couponCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] groupId:[NSString stringWithFormat:@"%lu", _type] password:_cardPasswordTextField.text success:^(NSDictionary * _Nullable responseDic) {
+        if ([responseDic[@"status"] integerValue] == 0) {
+            //  success
+            [UIAlertView showAlertView:@"绑定完成" buttonText:@"确定"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCouponList" object:nil];
+            _cardPasswordTextField.text = @"";
+            _couponCodeTextField.text = @"";
+            [weakSelf.navigationController popViewControllerAnimated:true];
+        } else {
+            [appDelegate showAlertViewForRequestInfo:responseDic];
+            _messageLabel.hidden = false;
+            _messageLabel.text = responseDic[KKZRequestErrorMessageKey];
+        }
+    } failure:^(NSError * _Nullable err) {
+        [appDelegate showAlertViewForRequestInfo:err.userInfo];
+        _messageLabel.hidden = false;
+        _messageLabel.text = err.userInfo[KKZRequestErrorMessageKey];
+    }];
 }
 
 - (void)tapBindViewGRAction {

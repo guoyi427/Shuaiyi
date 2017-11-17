@@ -109,7 +109,7 @@
     [self.view addSubview:holder];
     holder.backgroundColor = [UIColor r:245 g:245 b:245];
     holder.showsVerticalScrollIndicator = NO;
-    holder.contentSize = CGSizeMake(0, 750);
+    holder.contentSize = CGSizeMake(0, 700);
     
     [self queryUserMobile];
     [self queryOrderDetail];
@@ -598,7 +598,7 @@
     [holder addSubview:telphoneLabel];
     [telphoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(holder);
-        make.top.equalTo(cardView.mas_bottom).offset(10);
+        make.top.equalTo(cardView.mas_bottom).offset(30);
     }];
     
     //  工作时间
@@ -1322,7 +1322,7 @@
     NSMutableString *couponString = [[NSMutableString alloc] initWithString:@"["];
     for (NSDictionary *dic in list) {
         if (dic[@"couponId"]) {
-            [couponString appendString:[NSString stringWithFormat:@"{couponid: %@},", dic[@"couponId"]]];
+            [couponString appendString:[NSString stringWithFormat:@"{couponid: '%@'},", dic[@"couponId"]]];
         }
     }
     couponString = [NSMutableString stringWithString: [couponString substringToIndex:couponString.length-1]];
@@ -1339,6 +1339,7 @@
     }
     
     //  更新价格状态
+    /*
     PayTask *task = [[PayTask alloc] initCheckECard:couponString
                                            forOrder:self.orderNo
                                            groupbuy:nil
@@ -1349,19 +1350,7 @@
                                                if (succeeded) {
                                                    [payView setOrderTotalFee:[userInfo[@"agio"] floatValue]];
                                                    moneyNeedPayLabel.text = [NSString stringWithFormat:@"￥%.2f", [userInfo[@"agio"] floatValue]];
-                                                   /*
-                                                   NSArray *couponList = userInfo[@"coupons"];
-                                                   if (couponList.count > 0) {
-                                                       if (type == CouponType_coupon) {
-                                                           _couponCountLabel.text = [NSString stringWithFormat:@"已使用%lu张", couponList.count];
-                                                       } else if (type == CouponType_Redeem) {
-                                                           _couponCountLabel2.text = [NSString stringWithFormat:@"已使用%lu张", couponList.count];
-                                                       }
-                                                   }
-                                                    */
                                                } else {
-//                                                   [self uploadCouponCountView];
-//                                                   [appDelegate showAlertViewForTaskInfo:userInfo];
                                                    _selectedCouponList = nil;
                                                    payView.ecardListStr = @"";
                                                    _couponString = @"";
@@ -1378,6 +1367,27 @@
                                overKeyboard:NO
                                 andAutoHide:NO];
     }
+     */
+    MovieRequest *request = [[MovieRequest alloc] init];
+    [request checkCoupon:couponString orderId:self.orderNo groupBuyId:nil success:^(NSDictionary * _Nullable responseDic) {
+        if ([responseDic[@"status"] integerValue] == 0) {
+            //  success
+            [payView setOrderTotalFee:[responseDic[@"agio"] floatValue]];
+            moneyNeedPayLabel.text = [NSString stringWithFormat:@"￥%.2f", [responseDic[@"agio"] floatValue]];
+        } else {
+            _selectedCouponList = nil;
+            payView.ecardListStr = @"";
+            _couponString = @"";
+            [payView setOrderTotalFee:self.myOrder.money.floatValue];
+            moneyNeedPayLabel.text = [NSString stringWithFormat:@"￥%.2f", self.myOrder.money.floatValue];
+        }
+    } failure:^(NSError * _Nullable err) {
+        _selectedCouponList = nil;
+        payView.ecardListStr = @"";
+        _couponString = @"";
+        [payView setOrderTotalFee:self.myOrder.money.floatValue];
+        moneyNeedPayLabel.text = [NSString stringWithFormat:@"￥%.2f", self.myOrder.money.floatValue];
+    }];
 }
 
 @end

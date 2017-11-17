@@ -483,6 +483,12 @@ typedef void (^finishBlock)();
 
 - (void) resetLoading
 {
+    if (![UserManager shareInstance].isUserAuthorized) {
+        // 未登录
+        _needLoginButton.hidden = false;
+        orderTableView.hidden = true;
+        return;
+    }
     showMoreFooterView.isLoading = NO;
     [appDelegate hideIndicator];
     ticketTableLocked = NO;

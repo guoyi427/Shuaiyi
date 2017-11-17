@@ -108,9 +108,6 @@
 
     _currentMovieList = [[NSMutableArray alloc] init];
     _futureMovieList = [[NSMutableArray alloc] init];
-    
-    //加载导航栏
-    [self loadNavBar];
 
     //加载广告位
     [self loadBanners];
@@ -128,6 +125,9 @@
     self.isGpsCity = YES;
 
     [self loadNewData];
+    
+    //加载导航栏
+    [self loadNavBar];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -149,9 +149,11 @@
 }
 
 - (void)setupCollectionView {
-    _contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, screentWith, CGRectGetHeight(self.view.frame)-64-49)];
+    _contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, screentWith, CGRectGetHeight(self.view.frame)-49)];
     _contentView.backgroundColor = [UIColor whiteColor];
     _contentView.contentSize = CGSizeMake(0, 231*2 + Banner_Height);
+    self.automaticallyAdjustsScrollViewInsets = false;
+    _contentView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     [self.view addSubview:_contentView];
     
     WeakSelf
@@ -485,15 +487,24 @@
  2. middleItem segment显示
  */
 - (void)loadNavBar {
+    
+    UIView *naviBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kAppScreenWidth, 64)];
+    [self.view addSubview:naviBarView];
+    
+    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+    gradientLayer.frame = naviBarView.bounds;
+    gradientLayer.colors = @[(id)[UIColor blackColor].CGColor, (id)[UIColor clearColor].CGColor];
+    [naviBarView.layer addSublayer:gradientLayer];
+    
     //左边定位城市的展示
-    [self.navBarView addSubview:self.locationView];
+    [naviBarView addSubview:self.locationView];
 //    self.kkzTitleLabel.text = @"章鱼";
     // 搜索View
-    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.locationView.frame), 10, kAppScreenWidth - CGRectGetMaxX(self.locationView.frame) - 44, CGRectGetHeight(self.navBarView.frame) - 20)];
+    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.locationView.frame), 30, kAppScreenWidth - CGRectGetMaxX(self.locationView.frame) - 44, CGRectGetHeight(naviBarView.frame) - 35)];
     searchView.backgroundColor = [UIColor whiteColor];
     searchView.layer.cornerRadius = 10.0;
     searchView.layer.masksToBounds = true;
-    [self.navBarView addSubview:searchView];
+    [naviBarView addSubview:searchView];
     
     UILabel *searchLabel = [[UILabel alloc] init];
     searchLabel.text = @"搜索电影、导演、演员";
@@ -683,7 +694,7 @@
 
 #pragma mark override from CommonViewController
 - (BOOL)showNavBar {
-    return YES;
+    return false;
 }
 
 - (BOOL)showTitleBar {
@@ -702,7 +713,7 @@
 - (KOKOLocationView *)locationView {
     if (!_locationView) {
         _locationView = [[KOKOLocationView alloc]
-                initWithFrame:CGRectMake(0, 0, KOKOLOCATIONVIEWWIDTH,
+                initWithFrame:CGRectMake(0, 20, KOKOLOCATIONVIEWWIDTH,
                                          KOKOLOCATIONVIEWHEIGHT)];
         _locationView.delegate = self;
     }

@@ -130,5 +130,15 @@
              success:(nullable void (^)())success
              failure:(nullable void (^)(NSError *_Nullable err))failure;
 
+- (void)bindCoupon:(nullable NSString *)couponId
+           groupId:(nullable NSString *)groupId
+          password:(nullable NSString *)password
+           success:(nullable void (^)(NSDictionary *_Nullable responseDic))success
+           failure:(nullable void (^)(NSError *_Nullable err))failure;
 
+- (void)checkCoupon:(nullable NSString *)couponIds
+            orderId:(nullable NSString *)orderId
+         groupBuyId:(nullable NSString *)groupBuyId
+            success:(nullable void (^)(NSDictionary *_Nullable responseDic))success
+            failure:(nullable void (^)(NSError *_Nullable err))failure;
 @end

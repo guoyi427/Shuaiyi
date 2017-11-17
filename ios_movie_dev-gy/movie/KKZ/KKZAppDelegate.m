@@ -949,6 +949,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 }
 
 - (void)login {
+    [self signout];
     [[DataEngine sharedDataEngine] startLoginFinished:^(BOOL succeeded) {
         
     }];

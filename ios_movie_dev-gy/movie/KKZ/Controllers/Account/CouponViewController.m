@@ -263,7 +263,7 @@ static NSString *RedeemCellId = @"redeemcell";
         NSMutableString *couponString = [[NSMutableString alloc] initWithString:@"["];
         for (NSDictionary *dic in selectedList) {
             if (dic[@"couponId"]) {
-                [couponString appendString:[NSString stringWithFormat:@"{couponid: %@},", dic[@"couponId"]]];
+                [couponString appendString:[NSString stringWithFormat:@"{couponid: '%@'},", dic[@"couponId"]]];
             }
         }
         couponString = [NSMutableString stringWithString: [couponString substringToIndex:couponString.length-1]];
@@ -275,6 +275,7 @@ static NSString *RedeemCellId = @"redeemcell";
             return;
         }
         //  更新价格状态
+        /*
         PayTask *task = [[PayTask alloc] initCheckECard:couponString
                                                forOrder:_orderId
                                                groupbuy:nil
@@ -304,7 +305,33 @@ static NSString *RedeemCellId = @"redeemcell";
                                    overKeyboard:NO
                                     andAutoHide:NO];
         }
-        
+        */
+        MovieRequest *request = [[MovieRequest alloc] init];
+        [request checkCoupon:couponString orderId:_orderId groupBuyId:nil success:^(NSDictionary * _Nullable responseDic) {
+            [appDelegate hideIndicator];
+            if ([responseDic[@"status"] integerValue] == 0) {
+                //  success
+                [_modelList replaceObjectAtIndex:indexPath.row withObject:model];
+                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            } else {
+                if ([model[CellSelectedKey] boolValue]) {
+                    [model setObject:@false forKey:CellSelectedKey];
+                } else {
+                    [model setObject:@true forKey:CellSelectedKey];
+                }
+                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                [appDelegate showAlertViewForRequestInfo:responseDic];
+            }
+        } failure:^(NSError * _Nullable err) {
+            [appDelegate hideIndicator];
+            if ([model[CellSelectedKey] boolValue]) {
+                [model setObject:@false forKey:CellSelectedKey];
+            } else {
+                [model setObject:@true forKey:CellSelectedKey];
+            }
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            [appDelegate showAlertViewForRequestInfo:err.userInfo];
+        }];
         
         if (_type == CouponType_Stored) {
 //            [self cancelViewController];
