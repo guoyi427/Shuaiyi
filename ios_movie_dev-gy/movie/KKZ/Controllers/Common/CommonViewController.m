@@ -53,8 +53,8 @@ static NSString *oldPushControllerName;
 
     if ([self isNavMainColor] && [self showNavBar]) {
         //设置导航栏背景色
-//        self.navBarView.backgroundColor = appDelegate.kkzBlack;//appDelegate.kkzBlue;
-//        self.statusView.backgroundColor = appDelegate.kkzBlack;//appDelegate.kkzBlue;
+        self.navBarView.backgroundColor = appDelegate.kkzBlack;//appDelegate.kkzBlue;
+        self.statusView.backgroundColor = appDelegate.kkzBlack;//appDelegate.kkzBlue;
     }
 
     self.firstAppear = YES;
@@ -179,8 +179,8 @@ static NSString *oldPushControllerName;
         //导航条背景
         _navBarView = [[UIImageView alloc]
                 initWithFrame:CGRectMake(0, 0, kCommonScreenWidth, 64)];
-//        _navBarView.backgroundColor = kkzNavBarBackgroundColor;
-        _navBarView.image = [UIImage imageNamed:@"NaviBar_backgroud@2x.jpg"];
+        _navBarView.backgroundColor = kkzNavBarBackgroundColor;
+//        _navBarView.image = [UIImage imageNamed:@"NaviBar_backgroud@2x.jpg"];
         //分割线
         if ([self showNavBarLine]) {
             UIView *titleBarDivider = [[UIView alloc]

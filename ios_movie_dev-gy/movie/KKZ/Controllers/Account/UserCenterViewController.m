@@ -68,7 +68,7 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     _tableView.tableHeaderView = _headerView;
     
     UIImageView *pinkView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screentWith, kAppScreenWidth/375.0*145)];
-    pinkView.image = [UIImage imageNamed:@"UserCenter_headerView@2x.jpg"];
+    pinkView.image = [UIImage imageNamed:@"NaviBar_backgroud@2x.jpg"];
     pinkView.contentMode = UIViewContentModeScaleAspectFill;
     [_headerView addSubview:pinkView];
     
@@ -85,7 +85,11 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     }];
     
     _nickNameLabel = [[UILabel alloc] init];
-    _nickNameLabel.text = [DataEngine sharedDataEngine].userName;
+    if ([DataEngine sharedDataEngine].userName.length > 0) {
+        _nickNameLabel.text = [DataEngine sharedDataEngine].userName;
+    } else {
+        _nickNameLabel.text = [DataEngine sharedDataEngine].phoneNum;
+    }
     _nickNameLabel.textColor = [UIColor whiteColor];
     _nickNameLabel.font = [UIFont systemFontOfSize:15];
     [pinkView addSubview:_nickNameLabel];

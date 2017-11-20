@@ -104,19 +104,19 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
 }
 
 - (void)prepareNavibar {
-    _locationView = [[KOKOLocationView alloc] initWithFrame:CGRectMake(0, 0, KOKOLOCATIONVIEWWIDTH, KOKOLOCATIONVIEWHEIGHT)];
+    _locationView = [[KOKOLocationView alloc] initWithFrame:CGRectMake(0, 20, KOKOLOCATIONVIEWWIDTH, KOKOLOCATIONVIEWHEIGHT)];
     _locationView.delegate = self;
 
     [self.navBarView addSubview:_locationView];
     
     UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchButton.frame = CGRectMake(kAppScreenWidth - 44, 0, 44, 44);
+    searchButton.frame = CGRectMake(kAppScreenWidth - 44, 20, 44, 44);
     [searchButton setImage:[UIImage imageNamed:@"searchIcon"] forState:UIControlStateNormal];
     [searchButton addTarget:self action:@selector(searchButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.navBarView addSubview:searchButton];
     
     _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"电影", @"影院"]];
-    _segmentedControl.frame = CGRectMake((kAppScreenWidth - segmentedControlWidth)/2.0, 10, segmentedControlWidth, 44-20);
+    _segmentedControl.frame = CGRectMake((kAppScreenWidth - segmentedControlWidth)/2.0,30, segmentedControlWidth, 44-20);
     _segmentedControl.tintColor = [UIColor grayColor];
     _segmentedControl.selectedSegmentIndex = 0;
     [_segmentedControl setTitleTextAttributes:@{
