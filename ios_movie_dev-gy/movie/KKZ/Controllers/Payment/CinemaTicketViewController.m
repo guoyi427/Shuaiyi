@@ -97,7 +97,7 @@ typedef enum : NSUInteger {
 /**
  *  表视图
  */
-@property (nonatomic, strong) CinemaTableView *listTable;
+@property (nonatomic, strong) UITableView *listTable;
 
 /**
  *  表视图的头部视图
@@ -261,6 +261,7 @@ typedef enum : NSUInteger {
     _locService.delegate = self;
 }
 
+#pragma mark - Cinema TableView - Delegate
 /**
  *  下拉刷新方法
  */
@@ -304,6 +305,10 @@ typedef enum : NSUInteger {
     self.listTable.tableFooterView = self.requestLoadingView;
     [self.requestLoadingView startAnimation];
     self.listTable.tableHeaderView = self.cinemaHeaderView;
+    WeakSelf
+    [self.listTable addHeaderWithCallback:^{
+        [weakSelf beginRquestData];
+    }];
 }
 
 #pragma mark - request
@@ -379,7 +384,8 @@ typedef enum : NSUInteger {
     //判断内存排期里是否有请求过的数据
     NSMutableArray *planArray = [self.cachePlanDic valueForKey:[movieID stringValue]];
     if (planArray) {
-        [self.listTable setTableViewHeaderState:tableHeaderNormalState];
+//        [self.listTable setTableViewHeaderState:tableHeaderNormalState];
+        [self.listTable headerEndRefreshing];
         [self planDataProcessing:planArray];
         return;
     }
@@ -392,8 +398,8 @@ typedef enum : NSUInteger {
             inCineam:self.cinemaId
             success:^(NSArray *_Nullable plans) {
 
-                [self.listTable setTableViewHeaderState:tableHeaderNormalState];
-
+//                [self.listTable setTableViewHeaderState:tableHeaderNormalState];
+                [self.listTable headerEndRefreshing];
                 if (plans.count) {
                     Ticket *ticket = plans[0];
                     [self.cachePlanDic setValue:plans
@@ -402,8 +408,8 @@ typedef enum : NSUInteger {
                 [self planDataProcessing:plans];
             }
             failure:^(NSError *_Nullable err) {
-                [self.listTable setTableViewHeaderState:tableHeaderNormalState];
-
+//                [self.listTable setTableViewHeaderState:tableHeaderNormalState];
+                [self.listTable headerEndRefreshing];
                 [self movieListRquestFailed];
             }];
 }
@@ -493,8 +499,8 @@ typedef enum : NSUInteger {
 - (void)movieListRquestFailed {
 
     //下拉刷新状态置为正常
-    [self.listTable setTableViewHeaderState:tableHeaderNormalState];
-
+//    [self.listTable setTableViewHeaderState:tableHeaderNormalState];
+    [self.listTable headerEndRefreshing];
     //停止加载动画
     [self.requestLoadingView stopAnimation];
 
@@ -892,13 +898,13 @@ typedef enum : NSUInteger {
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [self.listTable cinemaScrollViewDidEndDecelerating:scrollView];
+//    [self.listTable cinemaScrollViewDidEndDecelerating:scrollView];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
                   willDecelerate:(BOOL)decelerate {
-    [self.listTable cinemaScrollViewDidEndDragging:scrollView
-                                    willDecelerate:decelerate];
+//    [self.listTable cinemaScrollViewDidEndDragging:scrollView
+//                                    willDecelerate:decelerate];
 }
 
 #pragma mark - View Delegate
@@ -1084,18 +1090,16 @@ typedef enum : NSUInteger {
     return _titleLabel;
 }
 
-- (CinemaTableView *)listTable {
+- (UITableView *)listTable {
     if (!_listTable) {
-        _listTable = [[CinemaTableView alloc]
-                initWithOnlyRefreshFrame:CGRectMake(
-                                                 0, CGRectGetMaxY(self.navBarView.frame),
-                                                 kCommonScreenWidth,
-                                                 kCommonScreenHeight -
-                                                         CGRectGetMaxY(self.navBarView.frame))
+        _listTable = [[UITableView alloc]
+                initWithFrame:CGRectMake(0, CGRectGetMaxY(self.navBarView.frame),
+                                         kCommonScreenWidth,
+                                         kCommonScreenHeight - CGRectGetMaxY(self.navBarView.frame))
                                    style:UITableViewStylePlain];
         _listTable.dataSource = self;
         _listTable.delegate = self;
-        _listTable.cinemaDelegate = self;
+//        _listTable.cinemaDelegate = self;
         _listTable.separatorStyle = UITableViewCellSeparatorStyleNone;
         //        CGFloat noticeHeight =
         //        CGRectGetHeight(self.cinemaNoticeView.frame);
