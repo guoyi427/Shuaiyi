@@ -294,8 +294,9 @@ typedef enum : NSUInteger {
 - (void)loadNavBar {
 //    [self.navBarView addSubview:self.collectionButton];
     [self.navBarView addSubview:self.shareButton];
-    self.titleLabel.text = self.cinemaName;
-    [self.navBarView addSubview:self.titleLabel];
+//    self.titleLabel.text = self.cinemaName;
+    self.kkzTitleLabel.text = self.cinemaName;
+//    [self.navBarView addSubview:self.titleLabel];
 }
 
 - (void)loadTableView {
@@ -460,7 +461,8 @@ typedef enum : NSUInteger {
     if (!self.cinemaName) {
         self.cinemaName = self.cinemaDetail.cinemaName;
         self.cinemaAddress = self.cinemaDetail.cinemaAddress;
-        self.titleLabel.text = self.cinemaDetail.cinemaName;
+//        self.titleLabel.text = self.cinemaDetail.cinemaName;
+        self.kkzTitleLabel.text = self.cinemaDetail.cinemaName;
     }
 
     //影院须知视图修改
@@ -1070,7 +1072,7 @@ typedef enum : NSUInteger {
         CGFloat rightMargin =
                 kCommonScreenWidth - CGRectGetMinX(self.shareButton.frame);
         _titleLabel = [[UILabel alloc]
-                initWithFrame:CGRectMake(rightMargin, 0,
+                initWithFrame:CGRectMake(rightMargin, 20,
                                          kCommonScreenWidth - 2 * rightMargin,
                                          CGRectGetHeight(self.navBarView.frame))];
         _titleLabel.font = [UIFont systemFontOfSize:16.0f];
@@ -1275,7 +1277,7 @@ typedef enum : NSUInteger {
 }
 
 - (BOOL)showTitleBar {
-    return FALSE;
+    return true;
 }
 
 - (void)didReceiveMemoryWarning {

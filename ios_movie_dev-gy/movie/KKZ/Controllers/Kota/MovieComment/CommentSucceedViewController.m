@@ -58,7 +58,7 @@
 
     backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 
-    backBtn.frame = CGRectMake(0, 3, 60, 38);
+    backBtn.frame = self.kkzBackBtn.frame;//CGRectMake(0, 3, 60, 38);
 
     [backBtn setImage:[UIImage imageNamed:@"white_back"] forState:UIControlStateNormal];
 

@@ -51,7 +51,7 @@
     [super viewDidLoad];
 
     backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame = CGRectMake(0, 0, 60, 38);
+    backBtn.frame = self.kkzBackBtn.frame;//CGRectMake(0, 0, 60, 38);
     [backBtn setImageEdgeInsets:UIEdgeInsetsMake(5, 11, 5, 21)];
     [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(cancelViewController) forControlEvents:UIControlEventTouchUpInside];

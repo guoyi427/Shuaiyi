@@ -240,7 +240,7 @@ const static CGFloat cinemaPlanHeight = 0;//47.0f;
     searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     searchBtn.backgroundColor = [UIColor clearColor];
 
-    searchBtn.frame = CGRectMake(screentWith - 44 * 2 - 5, 0, 44, 44);
+    searchBtn.frame = CGRectMake(screentWith - 44 * 2 - 5, 20, 44, 44);
     searchBtn.contentEdgeInsets = UIEdgeInsetsMake(13, 12, 13, 10);
 
     [searchBtn addTarget:self
@@ -254,7 +254,7 @@ const static CGFloat cinemaPlanHeight = 0;//47.0f;
     selectDistrictBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     selectDistrictBtn.backgroundColor = [UIColor clearColor];
 
-    selectDistrictBtn.frame = CGRectMake(screentWith - 44 - 5, 0, 44, 44);
+    selectDistrictBtn.frame = CGRectMake(screentWith - 44 - 5, 20, 44, 44);
     selectDistrictBtn.contentEdgeInsets = UIEdgeInsetsMake(13, 10, 13, 12);
 
     [selectDistrictBtn addTarget:self

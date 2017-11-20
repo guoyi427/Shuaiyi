@@ -18,6 +18,9 @@
 
 #import "KKZUtility.h"
 
+//  ViewController
+#import "MovieDetailViewController.h"
+
 @interface UserCenterMovieViewController () <UITableViewDelegate, UITableViewDataSource>
 {
     
@@ -134,6 +137,12 @@ static NSString *UserCenterMovieCell2Identifier = @"userMovieCell2";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    if (_modelList.count > indexPath.row) {
+        NSDictionary *dic = _modelList[indexPath.row][@"movie"];
+        Movie *model = [MTLJSONAdapter modelOfClass:Movie.class fromJSONDictionary:dic error:nil];
+        MovieDetailViewController *vc = [[MovieDetailViewController alloc] initCinemaListForMovie:model.movieId];
+        vc.movie = model;
+        [self.navigationController pushViewController:vc animated:true];
+    }
 }
 @end

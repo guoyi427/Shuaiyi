@@ -506,13 +506,14 @@
  */
 - (void)addNavView {
     [self.navBarView setBackgroundColor:[UIColor clearColor]];
-
+    self.navBarView.image = nil;
+    
     self.kkzTitleLabel.text = self.movie.movieName;
     self.kkzTitleLabel.hidden = YES;
 
     backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 
-    backBtn.frame = CGRectMake(0, 3, 60, 38);
+    backBtn.frame = self.kkzBackBtn.frame;//CGRectMake(0, 23, 60, 38);
     [backBtn setImageEdgeInsets:UIEdgeInsetsMake(9.5, 11, 9, 29)]; //11 * 20
     [backBtn setImage:[UIImage imageNamed:@"movieComment_back"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(cancelViewController) forControlEvents:UIControlEventTouchUpInside];
@@ -1691,7 +1692,7 @@
 
 - (BOOL)showNavBar {
 
-    return TRUE;
+    return true;
 }
 
 - (BOOL)showBackButton {

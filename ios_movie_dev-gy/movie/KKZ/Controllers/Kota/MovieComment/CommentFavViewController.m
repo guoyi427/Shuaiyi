@@ -34,7 +34,7 @@
     self.kkzTitleLabel.text = self.titleName;
 
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame = CGRectMake(0, 3, 60, 38);
+    backBtn.frame = self.kkzBackBtn.frame;//CGRectMake(0, 3, 60, 38);
     [backBtn setImage:[UIImage imageNamed:@"white_back"] forState:UIControlStateNormal];
     [backBtn setImageEdgeInsets:UIEdgeInsetsMake(9.5, 11, 9, 29)];
     [backBtn addTarget:self action:@selector(cancelViewController) forControlEvents:UIControlEventTouchUpInside];

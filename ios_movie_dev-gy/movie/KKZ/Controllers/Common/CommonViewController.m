@@ -53,8 +53,8 @@ static NSString *oldPushControllerName;
 
     if ([self isNavMainColor] && [self showNavBar]) {
         //设置导航栏背景色
-        self.navBarView.backgroundColor = appDelegate.kkzBlack;//appDelegate.kkzBlue;
-        self.statusView.backgroundColor = appDelegate.kkzBlack;//appDelegate.kkzBlue;
+//        self.navBarView.backgroundColor = appDelegate.kkzBlack;//appDelegate.kkzBlue;
+//        self.statusView.backgroundColor = appDelegate.kkzBlack;//appDelegate.kkzBlue;
     }
 
     self.firstAppear = YES;
@@ -178,9 +178,9 @@ static NSString *oldPushControllerName;
 
         //导航条背景
         _navBarView = [[UIImageView alloc]
-                initWithFrame:CGRectMake(0, 20, kCommonScreenWidth, 44)];
-        _navBarView.backgroundColor = kkzNavBarBackgroundColor;
-
+                initWithFrame:CGRectMake(0, 0, kCommonScreenWidth, 64)];
+//        _navBarView.backgroundColor = kkzNavBarBackgroundColor;
+        _navBarView.image = [UIImage imageNamed:@"NaviBar_backgroud@2x.jpg"];
         //分割线
         if ([self showNavBarLine]) {
             UIView *titleBarDivider = [[UIView alloc]
@@ -220,7 +220,7 @@ static NSString *oldPushControllerName;
     if (!_kkzTitleLabel) {
         CGFloat height = kkzTitleBarHeight;
         _kkzTitleLabel = [[UILabel alloc]
-                initWithFrame:CGRectMake(60, 0.0, screentWith - 60 - 60, height)];
+                initWithFrame:CGRectMake(60, 20.0, screentWith - 60 - 60, height)];
         _kkzTitleLabel.font = [UIFont boldSystemFontOfSize:16];
         _kkzTitleLabel.backgroundColor = [UIColor clearColor];
         _kkzTitleLabel.textAlignment = NSTextAlignmentCenter;
@@ -232,7 +232,7 @@ static NSString *oldPushControllerName;
 - (UIButton *)kkzBackBtn {
     if (!_kkzBackBtn) {
         _kkzBackBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _kkzBackBtn.frame = CGRectMake(0, 3, 60, 38);
+        _kkzBackBtn.frame = CGRectMake(0, 23, 60, 38);
         [_kkzBackBtn setImage:[UIImage imageNamed:@"white_back"]
                      forState:UIControlStateNormal];
         [_kkzBackBtn setImageEdgeInsets:UIEdgeInsetsMake(9.5, 11, 9, 29)];

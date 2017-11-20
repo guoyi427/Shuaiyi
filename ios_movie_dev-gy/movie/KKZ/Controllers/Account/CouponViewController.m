@@ -56,7 +56,7 @@ static NSString *RedeemCellId = @"redeemcell";
     
 //    if (_comefromPay) {
         UIButton *rightBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        rightBarButton.frame = CGRectMake(screentWith-44, 0, 44, 44);
+        rightBarButton.frame = CGRectMake(screentWith-44, 20, 44, 44);
         [rightBarButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [rightBarButton setTitle:@"绑定" forState:UIControlStateNormal];
         rightBarButton.titleLabel.font = [UIFont systemFontOfSize:16];

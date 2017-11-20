@@ -20,16 +20,44 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.kkzTitleLabel.text = @"关于章鱼";
     
-    UILabel *textLabel = [[UILabel alloc] init];
-    textLabel.textColor = [UIColor grayColor];
-    textLabel.font = [UIFont systemFontOfSize:14];
-    textLabel.text = @"关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼关于章鱼";
-    textLabel.numberOfLines = 0;
-    [self.view addSubview:textLabel];
-    [textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(30);
-        make.right.mas_equalTo(-30);
-        make.top.mas_equalTo(64 + 20);
+    UIImageView *iconImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"About_icon"]];
+    [self.view addSubview:iconImageView];
+    [iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.mas_equalTo(150);
+    }];
+    
+    //  客服电话
+    UILabel *telphoneLabel = [[UILabel alloc] init];
+    telphoneLabel.text = @"客服电话 400-030-1053";
+    telphoneLabel.textColor = appDelegate.kkzPink;
+    telphoneLabel.font = [UIFont systemFontOfSize:15];
+    [self.view addSubview:telphoneLabel];
+    [telphoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.bottom.mas_equalTo(-130);
+    }];
+    
+    //  工作时间
+    UILabel *workTimeLabel = [[UILabel alloc] init];
+    workTimeLabel.text = @"工作时间：早9:00-晚22:00";
+    workTimeLabel.textColor = appDelegate.kkzGray;
+    workTimeLabel.font = [UIFont systemFontOfSize:15];
+    [self.view addSubview:workTimeLabel];
+    [workTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(telphoneLabel.mas_bottom).offset(3);
+    }];
+    
+    //
+    UILabel *bottomLabel = [[UILabel alloc] init];
+    bottomLabel.text = @"©2017 All Rights Reserved Asia Innovations Ltd.";
+    bottomLabel.font = [UIFont systemFontOfSize:12];
+    bottomLabel.textColor = [UIColor grayColor];
+    [self.view addSubview:bottomLabel];
+    [bottomLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.bottom.equalTo(self.view).offset(-20);
     }];
 }
 
