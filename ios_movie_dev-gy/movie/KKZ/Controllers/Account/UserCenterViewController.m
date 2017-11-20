@@ -48,7 +48,7 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _menuTitleList = @[@[@"章鱼卡", @"章鱼券", @"章鱼码"],@[@"资料修改"],@[@"关于章鱼电影", @"注销账号"]];
+    _menuTitleList = @[@[@"章鱼卡", @"章鱼券", @"章鱼码"],@[@"资料修改"],@[@"意见反馈", @"关于章鱼电影", @"注销账号"]];
     
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableView.backgroundColor = appDelegate.kkzLine;
@@ -350,10 +350,13 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
         }
     } else if (indexPath.section == 2) {
         if (indexPath.row == 0) {
+            //  意见反馈
+            
+        } else if (indexPath.row == 1) {
             //  关于章鱼
             AboutViewController *vc = [[AboutViewController alloc] init];
             [self.navigationController pushViewController:vc animated:true];
-        } else {
+        } else if (indexPath.row == 2) {
             //  注销账号
             [UIAlertView showAlertView:@"是否确定注销账号" cancelText:@"取消" cancelTapped:^{
                 
