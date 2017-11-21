@@ -200,7 +200,7 @@
         label.font = font;
         label.text = self.cinemaCellLayout.flags[i];
         label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [UIColor colorWithHex:@"#6b8499"];
+        label.textColor = appDelegate.kkzPink;//[UIColor colorWithHex:@"#6b8499"];
         label.layer.borderWidth = K_ONE_PIXEL;
         label.layer.borderColor = label.textColor.CGColor;
         label.layer.masksToBounds = YES;
