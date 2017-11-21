@@ -13,6 +13,8 @@
 #import "ZYMovieListCell.h"
 #import "ZYCinemaCell.h"
 #import "MJRefresh.h"
+#import "AlertViewY.h"
+#import "NoDataViewY.h"
 
 //  Request
 #import "CinemaRequest.h"
@@ -48,6 +50,8 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
     UIControl *ctrHolderWhite;
     //区域选择view
     VerticalCinemaPickerView *districtView;
+    AlertViewY *_noAlertView;
+    NoDataViewY *_nodataView;
     
     UIView *_topBarView;
     UIButton *_currentMovieButton;
@@ -79,6 +83,7 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
     [self prepareCurrentMovieView];
     [self prepareFutureMovieView];
     [self prepareCinemaView];
+    [self prepareNotice];
     
     [self loadCurrentMovieData];
     [self loadFutureMovieData];
@@ -240,9 +245,32 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
     }];
 }
 
+/**
+ *  数据加载提示信息
+ */
+- (void)prepareNotice {
+    _noAlertView = [[AlertViewY alloc]
+                        initWithFrame:CGRectMake(0, self.view.frame.size.height * 0.5 - 121,
+                                                 screentWith, 120)];
+    _noAlertView.alertLabelText = @"亲"
+    @"，正在获取影院信息，请稍候~";
+    
+    _nodataView = [[NoDataViewY alloc]
+                       initWithFrame:CGRectMake(0, self.view.frame.size.height * 0.5 - 121,
+                                                screentWith, 120)];
+    _nodataView.alertLabelText =
+    @"亲，目前这部电影还没有上映影院哦，请再等等吧~";
+}
+
 #pragma mark - Network - Request
 
 - (void)loadCurrentMovieData {
+    
+    if (_currentMovieList.count == 0) {
+        [self.view addSubview:_noAlertView];
+        [_noAlertView startAnimation];
+    }
+    
     MovieRequest *movieRequest = [[MovieRequest alloc] init];
     [movieRequest requestMoviesWithCityId:[NSString stringWithFormat:@"%tu", USER_CITY]
                                      page:1
@@ -251,13 +279,19 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
                                       [_currentMovieList addObjectsFromArray:movieList];
                                       [_currentMovieTableView reloadData];
                                       [_currentMovieTableView headerEndRefreshing];
+                                      [_noAlertView removeFromSuperview];
                                   }
                                   failure:^(NSError *_Nullable err) {
                                       [_currentMovieTableView headerEndRefreshing];
+                                      [_noAlertView removeFromSuperview];
                                   }];
 }
 
 - (void)loadFutureMovieData {
+    if (_futureMovieList.count == 0) {
+        [self.view addSubview:_noAlertView];
+        [_noAlertView startAnimation];
+    }
     MovieRequest *movieRequest = [[MovieRequest alloc] init];
     [movieRequest requestInCommingMoviesWithCityId:[NSString stringWithFormat:@"%tu", USER_CITY]
                                               page:1
@@ -266,15 +300,20 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
                                                [_futureMovieList addObjectsFromArray:movieList];
                                                [_futureMovieTableView reloadData];
                                                [_futureMovieTableView headerEndRefreshing];
+                                               [_noAlertView removeFromSuperview];
                                            }
                                            failure:^(NSError *_Nullable err) {
                                                [_futureMovieTableView headerEndRefreshing];
+                                               [_noAlertView removeFromSuperview];
                                            }];
 }
 
 - (void)loadCinemaData {
     if (USER_CITY) {
-        
+        if (_cinemaList.count == 0) {
+            [self.view addSubview:_noAlertView];
+            [_noAlertView startAnimation];
+        }
         CinemaRequest *request = [[CinemaRequest alloc] init];
         [request requestCinemaList:[NSNumber numberWithInt:USER_CITY].stringValue
                            success:^(NSArray *_Nullable cinemas, NSArray *_Nullable favedCinemas,
@@ -297,6 +336,7 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
                                     _districtCinemaList = [districtsCinemas mutableCopy];
                                     _districtList = [districts mutableCopy];
                                 }];
+                               [_noAlertView removeFromSuperview];
                            }
                            failure:^(NSError *_Nullable err) {
                                DLog(@"请求影院列表 失败 %@", err);
@@ -309,6 +349,7 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
                                }else{
                                    [UIAlertView showAlertView:KNET_FAULT_MSG buttonText:@"确定"];
                                }
+                               [_noAlertView removeFromSuperview];
                            }];
         
     } else {
