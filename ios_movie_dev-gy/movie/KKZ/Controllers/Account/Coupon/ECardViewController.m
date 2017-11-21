@@ -46,7 +46,7 @@
 
     // 帮助 button
 
-    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(screentWith - 50, 0, 44, 44)];
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(screentWith - 50, 20, 44, 44)];
     [btn setImage:[UIImage imageNamed:@"kotahelp"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(helpBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.navBarView addSubview:btn];

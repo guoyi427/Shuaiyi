@@ -1164,6 +1164,9 @@
 		5D8D17C91C225CC1005BF6EA /* editBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D8D17C61C225CC1005BF6EA /* editBg@2x.png */; };
 		5D8D17CA1C225CC1005BF6EA /* editBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D8D17C71C225CC1005BF6EA /* editBg.png */; };
 		5D8D17CB1C225CC1005BF6EA /* editBg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D8D17C81C225CC1005BF6EA /* editBg@3x.png */; };
+		5D8D87641FC3CDF500F8C518 /* Splash@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5D8D87631FC3CDF400F8C518 /* Splash@2x.jpg */; };
+		5D8D87671FC3F3E600F8C518 /* NullImage@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D8D87651FC3F3E500F8C518 /* NullImage@3x.png */; };
+		5D8D87681FC3F3E600F8C518 /* NullImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D8D87661FC3F3E600F8C518 /* NullImage@2x.png */; };
 		5D8E21BB1C449B9900307A7C /* RewardScoreTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8E21BA1C449B9900307A7C /* RewardScoreTask.m */; };
 		5D8E392A1C11832B00EABCE1 /* whiteStar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E39241C11832B00EABCE1 /* whiteStar@3x.png */; };
 		5D8E392B1C11832B00EABCE1 /* blueStar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E39251C11832B00EABCE1 /* blueStar@3x.png */; };
@@ -3373,6 +3376,9 @@
 		5D8D17C61C225CC1005BF6EA /* editBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editBg@2x.png"; sourceTree = "<group>"; };
 		5D8D17C71C225CC1005BF6EA /* editBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editBg.png; sourceTree = "<group>"; };
 		5D8D17C81C225CC1005BF6EA /* editBg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editBg@3x.png"; sourceTree = "<group>"; };
+		5D8D87631FC3CDF400F8C518 /* Splash@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Splash@2x.jpg"; sourceTree = "<group>"; };
+		5D8D87651FC3F3E500F8C518 /* NullImage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NullImage@3x.png"; sourceTree = "<group>"; };
+		5D8D87661FC3F3E600F8C518 /* NullImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NullImage@2x.png"; sourceTree = "<group>"; };
 		5D8E21B91C449B9900307A7C /* RewardScoreTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardScoreTask.h; sourceTree = "<group>"; };
 		5D8E21BA1C449B9900307A7C /* RewardScoreTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardScoreTask.m; sourceTree = "<group>"; };
 		5D8E39241C11832B00EABCE1 /* whiteStar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteStar@3x.png"; sourceTree = "<group>"; };
@@ -4281,6 +4287,9 @@
 		181C8B72145C425A0085F7D3 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				5D8D87661FC3F3E600F8C518 /* NullImage@2x.png */,
+				5D8D87651FC3F3E500F8C518 /* NullImage@3x.png */,
+				5D8D87631FC3CDF400F8C518 /* Splash@2x.jpg */,
 				5D1DF07B1FC2A139008F2762 /* About_icon@2x.png */,
 				5D1DF07C1FC2A13A008F2762 /* About_icon@3x.png */,
 				5D1DF07A1FC2A138008F2762 /* NaviBar_backgroud@2x.jpg */,
@@ -9198,6 +9207,7 @@
 				5DD906731C22AE2D000B5F21 /* zanOrange@2x.png in Resources */,
 				A47380521C217A3500599F32 /* newFriend_add@3x.png in Resources */,
 				296C85711AA587F800CB20E6 /* microphone_gray@3x.png in Resources */,
+				5D8D87681FC3F3E600F8C518 /* NullImage@2x.png in Resources */,
 				5DD9064F1C22A22B000B5F21 /* commentLevelBlue@2x.png in Resources */,
 				A4ECFE231C71BC9C00D466B7 /* movieComment_again_record@3x.png in Resources */,
 				F79CAC641A109B510057E00C /* no_movieTrailer.png in Resources */,
@@ -9291,6 +9301,7 @@
 				5DCA7BC21A5E4AC5007F4001 /* tab_cinema@2x.png in Resources */,
 				29BB0DD31A98243F007591D6 /* logoRenrenIcon.png in Resources */,
 				5D162FF01B451A6200C6C1D4 /* clearBtnYN@2x.png in Resources */,
+				5D8D87641FC3CDF500F8C518 /* Splash@2x.jpg in Resources */,
 				5D3DB1B51CBB77E20090BE05 /* search_cinemaDistrict_btn@2x.png in Resources */,
 				A406F7711C8D75D00012B1D9 /* videoPlayer_pause@3x.png in Resources */,
 				5D98ACEA1BA1171E00EBF0D1 /* payFailIcon@2x.png in Resources */,
@@ -9592,6 +9603,7 @@
 				5DA129F51C2A9FBB00C2B577 /* fav_star_half_orangenew@2x.png in Resources */,
 				5D8C97C71B4B7FF000AC1ED6 /* VoiceSearchFeedback015.png in Resources */,
 				29612F441A9D9EF300A23781 /* map_cinema_detail@3x.png in Resources */,
+				5D8D87671FC3F3E600F8C518 /* NullImage@3x.png in Resources */,
 				5D04CBB61C15351E00CB4B29 /* buyticketBtnHL@2x.png in Resources */,
 				297643141DD5A756008C1A95 /* ic_back_gray@2x.png in Resources */,
 				5D0615841FB011EB00FC69B3 /* UserCenter_vipIcon@2x.png in Resources */,

@@ -25,6 +25,7 @@
     UITableView *_tableView;
     UIButton *_doneButton;
     UILabel *_nullLabel;
+    UIImageView *_nullImageView;
     
     //  Data
     NSMutableArray *_modelList;
@@ -95,6 +96,14 @@ static NSString *RedeemCellId = @"redeemcell";
     
     UITapGestureRecognizer *tapNullLabelGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commonBtnClick:)];
     [_nullLabel addGestureRecognizer:tapNullLabelGR];
+    
+    _nullImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"NullImage"]];
+    _nullImageView.hidden = true;
+    [self.view addSubview:_nullImageView];
+    [_nullImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.bottom.equalTo(_nullLabel.mas_top).offset(-10);
+    }];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCouponList) name:@"updateCouponList" object:nil];
 }
@@ -181,6 +190,7 @@ static NSString *RedeemCellId = @"redeemcell";
         
         _doneButton.hidden = _modelList.count == 0;
         _nullLabel.hidden = _modelList.count != 0;
+        _nullImageView.hidden = _modelList.count != 0;
         
         //  标记已经选中的券
         if (_selectedList && _selectedList.count) {

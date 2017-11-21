@@ -190,7 +190,7 @@ static NSString *const KOMOVIE_HOST = @"komovie.cn";
 - (UIButton *)closeBtn {
     if (!_closeBtn) {
         _closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _closeBtn.frame = CGRectMake(44, 0, 44, 44);
+        _closeBtn.frame = CGRectMake(44, 20, 44, 44);
         [_closeBtn setTitle:@"关闭" forState:UIControlStateNormal];
         [_closeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _closeBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16];

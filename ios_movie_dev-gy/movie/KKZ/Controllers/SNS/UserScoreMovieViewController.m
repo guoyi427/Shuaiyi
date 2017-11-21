@@ -25,7 +25,7 @@
     self.view.backgroundColor = appDelegate.kkzLine;
     
     UIButton *commitBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    commitBarButton.frame = CGRectMake(kAppScreenWidth - 44, 0, 44, 44);
+    commitBarButton.frame = CGRectMake(kAppScreenWidth - 44, 20, 44, 44);
     [commitBarButton setTitle:@"提交" forState:UIControlStateNormal];
     [commitBarButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     commitBarButton.titleLabel.font = [UIFont systemFontOfSize:14];

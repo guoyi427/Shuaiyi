@@ -127,7 +127,7 @@
     if (!_uploadLogSwitcher) {
         _uploadLogSwitcher =
                 [[UISwitch alloc] initWithFrame:CGRectMake(15, 180, 45, 35)];
-        _uploadLogSwitcher.onTintColor = appDelegate.kkzBlue;
+        _uploadLogSwitcher.onTintColor = appDelegate.kkzPink;
         [_uploadLogSwitcher sizeToFit];
         _uploadLogSwitcher.on = YES;
     }
@@ -155,7 +155,7 @@
         _doneButton.titleName = @"发送";
         _doneButton.titleFont = [UIFont systemFontOfSize:14];
         _doneButton.titleColor = [UIColor whiteColor];
-        _doneButton.backgroundColor = appDelegate.kkzBlue;
+        _doneButton.backgroundColor = appDelegate.kkzPink;
         [_doneButton addTarget:self
                           action:@selector(doneButtonTapped)
                 forControlEvents:UIControlEventTouchUpInside];
@@ -228,7 +228,7 @@
 
     } else if (text.length == 0) {
         [appDelegate showAlertViewForTitle:@""
-                                   message:@"Oops，刚清了缓存，小KO希望你说点什么再发"
+                                   message:@"Oops，刚清了缓存，章鱼希望你说点什么再发"
                               cancelButton:@"确定"];
     } else {
         [self sendAddFeedback:text];

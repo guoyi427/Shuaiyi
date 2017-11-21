@@ -20,6 +20,7 @@
 #import "CouponViewController.h"
 #import "EditUserInfoViewController.h"
 #import "AboutViewController.h"
+#import "FeedBackViewController.h"
 
 @interface UserCenterViewController () <UITableViewDelegate, UITableViewDataSource>
 {
@@ -83,6 +84,9 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
         make.bottom.mas_equalTo(-15);
         make.size.mas_equalTo(CGSizeMake(65, 65));
     }];
+    
+    UITapGestureRecognizer *tapUserImageGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserImageAction)];
+    [_userImageView addGestureRecognizer:tapUserImageGR];
     
     _nickNameLabel = [[UILabel alloc] init];
     if ([DataEngine sharedDataEngine].userName.length > 0) {
@@ -276,6 +280,12 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
 
 #pragma mark - UIButton - Action
 
+- (void)tapUserImageAction {
+    //  资料修改
+    EditUserInfoViewController *vc = [[EditUserInfoViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:true];
+}
+
 - (void)tapRelationViewAction {
     UserCenterMovieViewController *relationVC = [[UserCenterMovieViewController alloc] init];
     relationVC.type = UserCenterMovieType_WantSee;
@@ -351,7 +361,8 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     } else if (indexPath.section == 2) {
         if (indexPath.row == 0) {
             //  意见反馈
-            
+            FeedBackViewController *vc = [[FeedBackViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:true];
         } else if (indexPath.row == 1) {
             //  关于章鱼
             AboutViewController *vc = [[AboutViewController alloc] init];

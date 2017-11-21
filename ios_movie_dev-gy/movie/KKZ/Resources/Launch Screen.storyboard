@@ -21,34 +21,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Login-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="WiY-aZ-R5Z">
-                                <rect key="frame" x="130" y="150" width="114" height="114"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="114" id="K5e-WF-gnD"/>
-                                    <constraint firstAttribute="width" constant="114" id="zGy-Lc-bXl"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splash.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="xol-Dy-CFN">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="章鱼电影" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xcl-gW-NzQ">
-                                <rect key="frame" x="159" y="272" width="57.5" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.89803921568627454" green="0.0" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="©2017 All Rights Reserved Asia Innovations Ltd." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D6b-KD-LNV">
-                                <rect key="frame" x="72" y="635" width="231" height="12"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="WiY-aZ-R5Z" secondAttribute="bottom" constant="403" id="1zw-Er-Wbs"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="D6b-KD-LNV" secondAttribute="bottom" constant="20" id="Crz-1F-bDE"/>
-                            <constraint firstItem="D6b-KD-LNV" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Igm-l5-NjW"/>
-                            <constraint firstItem="WiY-aZ-R5Z" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="cH3-xH-eh2"/>
-                            <constraint firstItem="Xcl-gW-NzQ" firstAttribute="top" secondItem="WiY-aZ-R5Z" secondAttribute="bottom" constant="8" id="qxm-jz-S4S"/>
-                            <constraint firstItem="Xcl-gW-NzQ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="w93-PZ-Odc"/>
+                            <constraint firstItem="xol-Dy-CFN" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="HIR-h3-gWG"/>
+                            <constraint firstItem="xol-Dy-CFN" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="I7b-Py-M3h"/>
+                            <constraint firstItem="xol-Dy-CFN" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" id="nIW-qn-cbH"/>
+                            <constraint firstItem="xol-Dy-CFN" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="wd8-56-8UI"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -58,6 +40,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Login-icon.png" width="114" height="114"/>
+        <image name="Splash.jpg" width="621" height="1104"/>
     </resources>
 </document>

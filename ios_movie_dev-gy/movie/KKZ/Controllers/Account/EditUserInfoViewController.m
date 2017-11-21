@@ -50,7 +50,7 @@
     CGFloat Padding = 15.0f;
     
     UILabel *headLabel = [[UILabel alloc] init];
-    headLabel.text = @"安全头像";
+    headLabel.text = @"头像";
     headLabel.textColor = appDelegate.kkzTextColor;
     headLabel.font = [UIFont systemFontOfSize:14];
     [headView addSubview:headLabel];

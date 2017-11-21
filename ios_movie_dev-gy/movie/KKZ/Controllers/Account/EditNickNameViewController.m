@@ -37,7 +37,7 @@
     [self.view addSubview:_nickNameTextField];
     
     UIButton *commitButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    commitButton.frame = CGRectMake(kAppScreenWidth - 44, 0, 44, 44);
+    commitButton.frame = CGRectMake(kAppScreenWidth - 44, 20, 44, 44);
     [commitButton setTitle:@"提交" forState:UIControlStateNormal];
     [commitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [commitButton addTarget:self action:@selector(commitButtonAction) forControlEvents:UIControlEventTouchUpInside];
