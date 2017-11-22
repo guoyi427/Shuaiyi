@@ -268,7 +268,7 @@
   if (!_minPriceLbl) {
     _minPriceLbl = [[UILabel alloc] init];
     [_minPriceLbl setBackgroundColor:[UIColor clearColor]];
-    _minPriceLbl.textColor = kUIColorOrange;
+      _minPriceLbl.textColor = appDelegate.kkzPink;//kUIColorOrange;
     _minPriceLbl.hidden = YES;
   }
   return _minPriceLbl;

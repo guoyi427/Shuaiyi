@@ -57,7 +57,7 @@
 #import "ThirdPartLoginEngine.h"
 
 #import "NetworkUtil.h"
-
+//#import "LoadingViewManager.h"
 #import "CityRequest.h"
 #import "ClubTask.h"
 #import "KKZUtility.h"
@@ -1135,7 +1135,6 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
                     fullScreen:(BOOL)fullLayout
                   overKeyboard:(BOOL)overKb
                    andAutoHide:(BOOL)autoHide {
-
     if (!indicator) {
         indicator = [[WaitIndicatorView alloc] initWithFrame:self.window.bounds];
     }
@@ -1165,6 +1164,9 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
         [self.window addSubview:indicator];
         [self.window bringSubviewToFront:indicator];
     }
+    /*
+    [[LoadingViewManager sharedInstance] startWithText:title ? title : @"加载中"];
+     */
     if (autoHide) {
         [self performSelector:@selector(hideIndicator)
                      withObject:nil
@@ -1238,6 +1240,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 
 - (void)hideIndicator {
     [indicator removeFromSuperview];
+//    [[LoadingViewManager sharedInstance] stop];
 }
 
 - (void)hideintegralV {

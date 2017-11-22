@@ -18,7 +18,7 @@
 #define kSinaCallback @"http://m.kokozu.net/kologin/callback.php"
 
 //微信
-#define kWeixinKey @"wx74c15f9950ca03b1"
+#define kWeixinKey @"wx21b7795f3c5cbde3"//@"wx74c15f9950ca03b1"
 #define kWeixinSecret @"c57280b55fbd08f7d88491818326faa5"
 
 //QQ空间

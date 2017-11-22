@@ -251,7 +251,11 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
     UserRequest *request = [[UserRequest alloc] init];
     [request requestUserDetail:^(User * _Nullable user) {
         [_userImageView sd_setImageWithURL:[NSURL URLWithString:user.headImg] placeholderImage:[UIImage imageNamed:@"avatarRImg"]];
-        _nickNameLabel.text = user.nickName;
+        if (user.nickName && user.nickName.length > 0) {
+            _nickNameLabel.text = user.nickName;
+        } else {
+            _nickNameLabel.text = [DataEngine sharedDataEngine].phoneNum;
+        }
         _wantSeeCountLabel.text = [NSString stringWithFormat:@"%@", user.loveMovieCount];
         _scoreCountLabel.text = [NSString stringWithFormat:@"%@", user.pointMovieCount];
     } failure:^(NSError * _Nullable err) {

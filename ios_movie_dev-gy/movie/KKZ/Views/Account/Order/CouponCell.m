@@ -96,7 +96,7 @@
         [_deleteCouponButton addTarget:self action:@selector(deleteCouponButtonAction) forControlEvents:UIControlEventTouchUpInside];
         [_stateBgView addSubview:_deleteCouponButton];
         [_deleteCouponButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(_priceLabel);
+            make.centerX.equalTo(_priceLabel).offset(5);
             make.bottom.mas_equalTo(0);
             make.size.mas_equalTo(CGSizeMake(150, 50));
         }];

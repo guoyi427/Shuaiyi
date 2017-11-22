@@ -175,7 +175,7 @@ static NSString *const KOMOVIE_HOST = @"komovie.cn";
 #pragma mark Init Views
 - (XMLampText *)webTitleLabel {
     if (!_webTitleLabel) {
-        _webTitleLabel = [[XMLampText alloc] initWithFrame:CGRectMake(0, 0, screentWith - 45 * 2, 44.0)];
+        _webTitleLabel = [[XMLampText alloc] initWithFrame:CGRectMake(0, 20, screentWith - 45 * 2, 44.0)];
         _webTitleLabel.lineBreakMode = NSLineBreakByClipping;
         _webTitleLabel.lampText = self.webTitle;
         _webTitleLabel.lampFont = [UIFont systemFontOfSize:15];
@@ -698,7 +698,7 @@ static NSString *const KOMOVIE_HOST = @"komovie.cn";
     self.webTitleLabel.frame = frame;
 
     self.webTitleLabel.motionWidth = width;
-    self.webTitleLabel.frame = CGRectMake(left, 0, width, 44);
+    self.webTitleLabel.frame = CGRectMake(left, 20, width, 44);
 }
 
 @end

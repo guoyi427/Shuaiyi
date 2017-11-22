@@ -36,7 +36,6 @@
 #import "AFNetworkReachabilityManager.h"
 
 
-
 const NSInteger K_TAG_TICKET_SET_BASE = 1000;
 const NSInteger K_TAG_TICKET_GET_BASE = 1001;
 
@@ -447,7 +446,6 @@ const int K_MAX_SELECTED_SEAT = 4;
     event.featur_name = [[DateEngine sharedDateEngine] stringFromDate:self.plan.movieTime];
     [KKZAnalytics postActionWithEvent:event action:AnalyticsActionChoose_seat];
     
-   
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -1083,13 +1081,13 @@ const int K_MAX_SELECTED_SEAT = 4;
        void (^makeTest)() = ^() {
         
         self.btnCheckOrder.enabled = NO;
-        
         [appDelegate showIndicatorWithTitle:@"正在锁座"
                                    animated:YES
                                  fullScreen:NO
                                overKeyboard:NO
                                 andAutoHide:NO];
-        
+          
+        WeakSelf
         OrderRequest *request = [OrderRequest new];
         [request addTicketOrder:[DataEngine sharedDataEngine].phoneNum seatNO:[self selectedSeatIds]
                        seatInfo:[self selectedSeatInfos]
@@ -1097,9 +1095,9 @@ const int K_MAX_SELECTED_SEAT = 4;
                      activityID:self.activityId
                         success:^(Order * _Nullable order) {
             
-            [self handleNewOrder:order];
+            [weakSelf handleNewOrder:order];
             
-            self.btnCheckOrder.enabled = YES;
+            weakSelf.btnCheckOrder.enabled = YES;
             
             
         } failure:^(NSError * _Nullable err, Order * _Nullable oldOrder) {
@@ -1109,14 +1107,14 @@ const int K_MAX_SELECTED_SEAT = 4;
             //存在未完成订单
             if (oldOrder) {
                 
-                [self handleOldOrder:oldOrder];
+                [weakSelf handleOldOrder:oldOrder];
                 
             } else {
-                self.btnCheckOrder.enabled = YES;
+                weakSelf.btnCheckOrder.enabled = YES;
                 
                 [appDelegate showAlertViewForTitle:nil message:err.userInfo[KKZRequestErrorMessageKey] cancelButton:@"确定"];
                 
-                [self resetSelectedSeats];
+                [weakSelf resetSelectedSeats];
                 
                 [appDelegate hideIndicator];
             }

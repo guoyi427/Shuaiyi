@@ -134,6 +134,7 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
     [self.navBarView addSubview:searchButton];
     
     //右边筛选按钮
+    /*
     _selectDistrictBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _selectDistrictBtn.backgroundColor = [UIColor clearColor];
     _selectDistrictBtn.hidden = true;
@@ -146,7 +147,7 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
     [_selectDistrictBtn setImage:[UIImage imageNamed:@"search_cinemaDistrict_btn"]
                        forState:UIControlStateNormal];
     [self.navBarView addSubview:_selectDistrictBtn];
-    
+    */
     _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"电影", @"影院"]];
     _segmentedControl.frame = CGRectMake((kAppScreenWidth - segmentedControlWidth)/2.0,30, segmentedControlWidth, 44-20);
     _segmentedControl.tintColor = [UIColor grayColor];

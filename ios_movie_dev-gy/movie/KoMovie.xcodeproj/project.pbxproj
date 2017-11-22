@@ -1167,6 +1167,7 @@
 		5D8D87641FC3CDF500F8C518 /* Splash@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5D8D87631FC3CDF400F8C518 /* Splash@2x.jpg */; };
 		5D8D87671FC3F3E600F8C518 /* NullImage@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D8D87651FC3F3E500F8C518 /* NullImage@3x.png */; };
 		5D8D87681FC3F3E600F8C518 /* NullImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D8D87661FC3F3E600F8C518 /* NullImage@2x.png */; };
+		5D8D876E1FC4020A00F8C518 /* LoadingViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8D876D1FC4020A00F8C518 /* LoadingViewManager.m */; };
 		5D8E21BB1C449B9900307A7C /* RewardScoreTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8E21BA1C449B9900307A7C /* RewardScoreTask.m */; };
 		5D8E392A1C11832B00EABCE1 /* whiteStar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E39241C11832B00EABCE1 /* whiteStar@3x.png */; };
 		5D8E392B1C11832B00EABCE1 /* blueStar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E39251C11832B00EABCE1 /* blueStar@3x.png */; };
@@ -3379,6 +3380,8 @@
 		5D8D87631FC3CDF400F8C518 /* Splash@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Splash@2x.jpg"; sourceTree = "<group>"; };
 		5D8D87651FC3F3E500F8C518 /* NullImage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NullImage@3x.png"; sourceTree = "<group>"; };
 		5D8D87661FC3F3E600F8C518 /* NullImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NullImage@2x.png"; sourceTree = "<group>"; };
+		5D8D876C1FC4020A00F8C518 /* LoadingViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoadingViewManager.h; sourceTree = "<group>"; };
+		5D8D876D1FC4020A00F8C518 /* LoadingViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoadingViewManager.m; sourceTree = "<group>"; };
 		5D8E21B91C449B9900307A7C /* RewardScoreTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardScoreTask.h; sourceTree = "<group>"; };
 		5D8E21BA1C449B9900307A7C /* RewardScoreTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardScoreTask.m; sourceTree = "<group>"; };
 		5D8E39241C11832B00EABCE1 /* whiteStar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteStar@3x.png"; sourceTree = "<group>"; };
@@ -6111,6 +6114,8 @@
 				29BA630D1D6E9DA40070AB1C /* KKZCommonWebView.m */,
 				29AA59DD1D70266A00092894 /* KKZIntegralView.h */,
 				29AA59DE1D70266A00092894 /* KKZIntegralView.m */,
+				5D8D876C1FC4020A00F8C518 /* LoadingViewManager.h */,
+				5D8D876D1FC4020A00F8C518 /* LoadingViewManager.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -10491,6 +10496,7 @@
 				5D1F38481C70821400907D1B /* ClubPosterCommentCell.m in Sources */,
 				29BA63291D6E9E2E0070AB1C /* SingleCenterViewController+layout.m in Sources */,
 				5DB763A51C7D567200CD1FAE /* UITableViewRowAction.m in Sources */,
+				5D8D876E1FC4020A00F8C518 /* LoadingViewManager.m in Sources */,
 				5DADF6951C86F03100C80BD1 /* MySubscreberCell.m in Sources */,
 				50B128061DAB833300D8AF24 /* OrderRequest.m in Sources */,
 				29AA5A081D70372D00092894 /* PSListCollectionViewCell.m in Sources */,

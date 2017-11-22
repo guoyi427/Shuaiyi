@@ -81,7 +81,7 @@
     self.kkzTitleLabel.text = @"选择城市";
 
     UIButton *locationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    locationBtn.frame = CGRectMake(screentWith - 70, 4, 60, 38);
+    locationBtn.frame = CGRectMake(screentWith - 70, 24, 60, 38);
     locationBtn.backgroundColor = [UIColor clearColor];
     [locationBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     locationBtn.titleLabel.font = [UIFont systemFontOfSize:14];

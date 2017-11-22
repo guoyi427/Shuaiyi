@@ -44,7 +44,7 @@
 #define KOKOLOCATIONVIEWWIDTH ((screentWith - 158) * 0.5 - 10)
 #define KOKOLOCATIONVIEWHEIGHT 44.0f
 
-#define Banner_Height (130 * (screentWith / 320))
+#define Banner_Height (0.53 * screentWith)
 
 @interface MoviesNewViewController () <KOKOLocationViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 {
@@ -501,14 +501,14 @@
 //    self.kkzTitleLabel.text = @"章鱼";
     // 搜索View
     UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.locationView.frame), 30, kAppScreenWidth - CGRectGetMaxX(self.locationView.frame) - 44, CGRectGetHeight(naviBarView.frame) - 35)];
-    searchView.backgroundColor = [UIColor whiteColor];
+    searchView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.7];
     searchView.layer.cornerRadius = 10.0;
     searchView.layer.masksToBounds = true;
     [naviBarView addSubview:searchView];
     
     UILabel *searchLabel = [[UILabel alloc] init];
     searchLabel.text = @"搜索电影、导演、演员";
-    searchLabel.textColor = appDelegate.kkzGray;
+    searchLabel.textColor = [UIColor grayColor];
     searchLabel.font = [UIFont systemFontOfSize:14];
     [searchView addSubview:searchLabel];
     [searchLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -568,7 +568,7 @@
     int height = [notification.userInfo[NOTIFICATION_KEY_HEIGHT] intValue];
     if (height > 0) {
         CGRect frame = _imgPlayer.frame;
-        frame.size.height = height;
+        frame.size.height = Banner_Height; //height;
         _imgPlayer.frame = frame;
 
         _isShowBanner = YES;
