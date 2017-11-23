@@ -650,7 +650,7 @@ typedef enum {
     /// valid code
     SiteTypeKKZValidcode,// = 26,
     SiteTypeQQ,
-    SiteTypeWX,// = 12,
+    SiteTypeWX = 12,
     SiteTypeTaobao,
     SiteTypeAliPay = 9,
     SiteTypeQQSpace,

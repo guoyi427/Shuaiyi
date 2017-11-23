@@ -57,7 +57,7 @@
                            partlySelected:@"fav_star_half_yellow"
                              fullSelected:@"fav_star_full_yellow"
                                  iconSize:CGSizeMake(30, 30)
-                              andDelegate:self];
+                            andDelegate:self];
     [bgView addSubview:scoreRatingView];
     [scoreRatingView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(titleLabel.mas_right).offset(5);

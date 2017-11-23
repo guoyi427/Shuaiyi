@@ -103,7 +103,7 @@ static const NSTimeInterval PLAY_INTERVAL_SECONDS = 5;
 
     } else if ([self.typeId isEqualToString:@"6"]) { // 约电影
         [[NSNotificationCenter defaultCenter] postNotificationName:@"imagePlayerViewHeightKota" object:nil userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%f", height] forKey:NOTIFICATION_KEY_HEIGHT]];
-    }else if ([self.typeId isEqualToString:@"15"]) { // 发现
+    } else if ([self.typeId isEqualToString:@"15"]) { // 发现
         [[NSNotificationCenter defaultCenter] postNotificationName:@"imagePlayerViewHeightDiscover" object:nil userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%f", height] forKey:NOTIFICATION_KEY_HEIGHT]];
     }
 

@@ -1646,7 +1646,7 @@
             //
             _tableFooterNullLabel.hidden = true;
             _tableFooterScoreView.hidden = false;
-            [_scoreRatingView displayRating:[response[@"movie"][@"score"] floatValue]/2.0];
+            [_scoreRatingView displayRating:[response[@"point"] floatValue]/2.0];
             [_tableFooterPostImageView sd_setImageWithURL:[NSURL URLWithString:[DataEngine sharedDataEngine].headImg]];
             _scoreTimeLabel.text = [[DateEngine sharedDateEngine] stringFromDate:[NSDate dateWithTimeIntervalSince1970: [response[@"createTime"] doubleValue]/1000.0] withFormat:@"yyyy-MM-dd"];
         } else {

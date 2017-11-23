@@ -31,7 +31,7 @@
     KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
 
     NSMutableDictionary *para = [NSMutableDictionary dictionaryWithDictionary:params];
-    [para setObject:@"cinema_Selfquery" forKey:@"action"];
+    [para setObject:@"cinema_Query" forKey:@"action"];
 
     NSDictionary *newParams = [KKZBaseRequestParams getDecryptParams:para];
 
