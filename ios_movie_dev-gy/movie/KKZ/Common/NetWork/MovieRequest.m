@@ -349,8 +349,8 @@
     NSDictionary *params = [KKZBaseRequestParams
                             getDecryptParams:@{
                                                @"action": @"relation_Delete",
-                                               @"movie_id": movieId,
-                                               @"relation": @1
+                                               @"movie_id": movieId
+//                                               @"relation": @1
                                                }];
     [request GET:kKSSPServer parameters:params success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
         success();

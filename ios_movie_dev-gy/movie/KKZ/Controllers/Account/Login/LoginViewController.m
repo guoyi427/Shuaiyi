@@ -21,6 +21,7 @@
 #import "RegisterValidCodeViewController.h"
 #import "PasswordFindViewController.h"
 #import "BindingMobileViewController.h"
+#import "UserRequest.h"
 
 #define kInputLineNormal HEX(@"#DDDDDD")
 #define kInputLineFocused HEX(@"#008cff")
@@ -775,7 +776,13 @@ typedef enum : NSUInteger {
                                   site:SiteTypeKKZValidcode
                                success:^(UserLogin *_Nullable userLogin) {
 
-                                   [weak_self handleLoginSucceed];
+                                   UserRequest *request = [[UserRequest alloc] init];
+                                   [request requestUserDetail:^(User * _Nullable user) {
+                                       [weak_self handleLoginSucceed];
+                                   } failure:^(NSError * _Nullable err) {
+                                       [appDelegate showAlertViewForRequestInfo:err.userInfo];
+                                       [KKZUtility hidenIndicator];
+                                   }];
                                }
                                failure:^(NSError *_Nullable err) {
 

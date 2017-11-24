@@ -481,7 +481,7 @@
     _scoreNameLabel = [[UILabel alloc] init];
     _scoreNameLabel.font = [UIFont systemFontOfSize:10];
     _scoreNameLabel.textColor = [UIColor grayColor];
-    _scoreNameLabel.text = [DataEngine sharedDataEngine].userName;
+    _scoreNameLabel.text = _scoreNameLabel.text = [DataEngine sharedDataEngine].userName.length > 0 ? [DataEngine sharedDataEngine].userName : [DataEngine sharedDataEngine].phoneNum;
     [_tableFooterScoreView addSubview:_scoreNameLabel];
     [_scoreNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_tableFooterPostImageView.mas_right).offset(10);
@@ -1660,6 +1660,8 @@
             _tableFooterScoreView.hidden = false;
             [_scoreRatingView displayRating:[response[@"point"] floatValue]/2.0];
             [_tableFooterPostImageView sd_setImageWithURL:[NSURL URLWithString:[DataEngine sharedDataEngine].headImg]];
+            _scoreNameLabel.text = [DataEngine sharedDataEngine].userName.length > 0 ? [DataEngine sharedDataEngine].userName : [DataEngine sharedDataEngine].phoneNum;
+            NSLog(@"%@", [DataEngine sharedDataEngine].headImg);
             _scoreTimeLabel.text = [[DateEngine sharedDateEngine] stringFromDate:[NSDate dateWithTimeIntervalSince1970: [response[@"createTime"] doubleValue]/1000.0] withFormat:@"yyyy-MM-dd"];
         } else {
             //
