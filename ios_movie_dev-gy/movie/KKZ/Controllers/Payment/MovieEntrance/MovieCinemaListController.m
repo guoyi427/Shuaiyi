@@ -273,7 +273,7 @@ const static CGFloat cinemaPlanHeight = 0;//47.0f;
 - (void)searchBtnClick {
     CinemaSearchViewController *searchCtr =
             [[CinemaSearchViewController alloc] init];
-    searchCtr.isFromCinema = NO;
+    searchCtr.isFromCinema = true;
     searchCtr.allCinemasListLayout = self.cellLayouts;
     [self pushViewController:searchCtr animation:CommonSwitchAnimationSwipeR2L];
 }

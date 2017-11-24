@@ -109,7 +109,13 @@
             //  影院
             NSMutableArray *dataArray = [[NSMutableArray alloc] initWithCapacity:0];
             for (int i = 0; i < self.allCinemasListLayout.count; i ++) {
-                CinemaDetail *tempCinema = self.allCinemasListLayout[i];
+                id object = self.allCinemasListLayout[i];
+                CinemaDetail *tempCinema = nil;
+                if ([object isKindOfClass:[CinemaDetail class]]) {
+                    tempCinema = object;
+                } else if ([object isKindOfClass:[CinemaCellLayout class]]) {
+                    tempCinema = ((CinemaCellLayout *)object).cinema;
+                }
                 if ([tempCinema.cinemaName containsString:searchText] ||
                     [tempCinema.cinemaAddress containsString:searchText]) {
                     [dataArray addObject:tempCinema];
@@ -360,7 +366,7 @@
     if (searchText.length) {
         searchRecord.hidden = YES;
         cinemaTable.hidden = NO;
-        [searchBtn setTitleColor:[UIColor r:0 g:140 b:255] forState:UIControlStateNormal];
+        [searchBtn setTitleColor:appDelegate.kkzPink forState:UIControlStateNormal];
         searchBtn.userInteractionEnabled = YES;
         self.isTextChange = YES;
         [self refreshCinemaSearchListWithSearchtext:searchText];
