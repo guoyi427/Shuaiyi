@@ -837,7 +837,14 @@
             cell.movieName = movie.movieName;
             cell.imageUrl = movie.pathVerticalS;
             cell.point = movie.score;
-            cell.availableScreenType = [NSString stringWithFormat:@" %@ %@", movie.hasImax?@"IMAX":@"", movie.has3D?@"3D ":@""];
+            NSMutableString *screenString = [NSMutableString stringWithString:movie.hasImax?@"IMAX":@""];
+            if (movie.has3D) {
+                [screenString appendString:@" 3D"];
+            }
+            if (screenString.length) {
+                [screenString appendString:@" "];
+            }
+            cell.availableScreenType = [NSString stringWithFormat:@"%@", screenString];
             cell.isSale = false;
             cell.isPresell = true;//movie.hasPlan;
             cell.model = movie;

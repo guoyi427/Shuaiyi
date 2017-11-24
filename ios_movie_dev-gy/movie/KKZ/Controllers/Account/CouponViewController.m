@@ -140,28 +140,12 @@ static NSString *RedeemCellId = @"redeemcell";
     [_doneButton setTitle:@"确定使用" forState:UIControlStateNormal];
     [_doneButton setTitleColor: [UIColor whiteColor] forState:UIControlStateNormal];
     _doneButton.titleLabel.font = [UIFont systemFontOfSize:16];
-    [_doneButton addTarget:self action:@selector(cancelViewController) forControlEvents:UIControlEventTouchUpInside];
+    [_doneButton addTarget:self action:@selector(doneButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_doneButton];
     [_doneButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.mas_equalTo(0);
         make.height.mas_equalTo(45);
     }];
-}
-
-- (void)cancelViewController {
-    //  找出选中的coupon
-    NSMutableArray *selectedList = [[NSMutableArray alloc] init];
-    for (NSDictionary *dic in _modelList) {
-        if ([dic[CellSelectedKey] boolValue]) {
-            [selectedList addObject:dic];
-        }
-    }
-    
-    if (_delegate &&
-        [_delegate respondsToSelector:@selector(couponViewController:didSelectedCouponList:type:)]) {
-        [_delegate couponViewController:self didSelectedCouponList:selectedList type:_type];
-    }
-    [self popViewControllerAnimated:YES];
 }
 
 - (BOOL)showBackButton {
@@ -178,6 +162,22 @@ static NSString *RedeemCellId = @"redeemcell";
     CouponBindViewController *vc = [[CouponBindViewController alloc] init];
     vc.type = _type;
     [self.navigationController pushViewController:vc animated:true];
+}
+
+- (void)doneButtonAction {
+    //  找出选中的coupon
+    NSMutableArray *selectedList = [[NSMutableArray alloc] init];
+    for (NSDictionary *dic in _modelList) {
+        if ([dic[CellSelectedKey] boolValue]) {
+            [selectedList addObject:dic];
+        }
+    }
+    
+    if (_delegate &&
+        [_delegate respondsToSelector:@selector(couponViewController:didSelectedCouponList:type:)]) {
+        [_delegate couponViewController:self didSelectedCouponList:selectedList type:_type];
+    }
+    [self popViewControllerAnimated:YES];
 }
 
 #pragma mark - Network - Request
@@ -344,7 +344,7 @@ static NSString *RedeemCellId = @"redeemcell";
         }];
         
         if (_type == CouponType_Stored) {
-//            [self cancelViewController];
+
         }
     }
 }
