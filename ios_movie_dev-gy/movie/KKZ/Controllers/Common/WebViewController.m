@@ -39,12 +39,12 @@ static NSString *const TAG = @"WebViewController:";
 /**
  * 唤起支付的 URL 前缀。
  */
-static NSString *const PAY_URL_PREFIX = @"komovie://app/pay?data=";
+static NSString *const PAY_URL_PREFIX = @"ZhangYu://app/pay?data=";
 
 /**
  * Komovie 的域名。
  */
-static NSString *const KOMOVIE_HOST = @"komovie.cn";
+static NSString *const KOMOVIE_HOST = @"zhangyu.cn";
 
 @interface WebViewController ()
 
@@ -373,7 +373,7 @@ static NSString *const KOMOVIE_HOST = @"komovie.cn";
         return NO;
     }
     // 跳转到登录页面
-    else if ([urlString hasPrefix:@"komovie://app/page?name=Login"]) {
+    else if ([urlString hasPrefix:@"ZhangYu://app/page?name=Login"]) {
         [self navigateToLogin:urlString];
         return NO;
     }
@@ -465,7 +465,7 @@ static NSString *const KOMOVIE_HOST = @"komovie.cn";
 #pragma mark Handle navigate to login
 // 判定是否需要登录 komovie://app/page?name=Login&extra1=[callbackUrl]&extra2=1
 - (void)navigateToLogin:(NSString *)url {
-    if ([url hasPrefix:@"komovie://app/page?name=Login"]) {
+    if ([url hasPrefix:@"ZhangYu://app/page?name=Login"]) {
         NSDictionary *dictParams = [self queryParamsFromUrl:url];
         NSString *extra1 = [dictParams kkz_stringForKey:@"extra1"];
         self.loginCallbackUrl = [extra1 URLDecodedString];

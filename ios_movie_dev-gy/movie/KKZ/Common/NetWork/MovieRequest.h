@@ -117,6 +117,12 @@
                    success:(nullable void (^)())success
                    failure:(nullable void (^)(NSError *_Nullable err))failure;
 
+/// 取消喜欢
+- (void)deleteRelationMovieId:(nullable NSString *)movieId
+                     relation:(nullable NSString *)relation
+                      success:(nullable void (^)())success
+                      failure:(nullable void (^)(NSError *_Nullable err))failure;
+
 /*
  coupon_Query   group_id 传3是 兑换码
  coupon_Query   group_id 传4是 优惠券

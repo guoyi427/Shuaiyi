@@ -191,7 +191,7 @@
 
     self.childWebTitle = tab.title;
 
-    if ([urlString hasPrefix:@"komovie://"]) {
+    if ([urlString hasPrefix:@"ZhangYu://"]) {
 
         NSArray *contents = [urlString componentsSeparatedByString:@"?"];
         NSString *body = contents.count > 1 ? (NSString *) [contents objectAtIndex:1] : @"";

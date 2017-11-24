@@ -40,8 +40,18 @@
 				<string>ZhangYu</string>
 				<string>QQ05FCC15D</string>
 				<string>sinaweibosso.1767451078</string>
-				<string>wx74c15f9950ca03b1</string>
+				<string>wx21b7795f3c5cbde3</string>
 				<string>tencent100450653</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>wechatPay</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>ZhangYu</string>
 			</array>
 		</dict>
 	</array>

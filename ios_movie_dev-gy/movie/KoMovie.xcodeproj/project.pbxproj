@@ -903,6 +903,7 @@
 		5D57B8661B312A3100ACAE47 /* preSell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D57B8641B312A3100ACAE47 /* preSell@2x.png */; };
 		5D57B8671B312A3100ACAE47 /* preSell@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D57B8651B312A3100ACAE47 /* preSell@3x.png */; };
 		5D5EBAF41FA2218500CC6B5F /* UserCenterMovieCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5EBAF31FA2218500CC6B5F /* UserCenterMovieCell.m */; };
+		5D5FF9B41FC6C85F00199E86 /* BindingMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5FF9B31FC6C85F00199E86 /* BindingMobileViewController.m */; };
 		5D600BF21BB253E400FE13DC /* libFMDeviceManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D600BF11BB253E400FE13DC /* libFMDeviceManager.a */; };
 		5D600BF81BB25E0000FE13DC /* yipay_method_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D600BF51BB25E0000FE13DC /* yipay_method_icon.png */; };
 		5D600BF91BB25E0000FE13DC /* yipay_method_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D600BF61BB25E0000FE13DC /* yipay_method_icon@2x.png */; };
@@ -3083,6 +3084,8 @@
 		5D57B8651B312A3100ACAE47 /* preSell@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "preSell@3x.png"; sourceTree = "<group>"; };
 		5D5EBAF21FA2218500CC6B5F /* UserCenterMovieCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserCenterMovieCell.h; sourceTree = "<group>"; };
 		5D5EBAF31FA2218500CC6B5F /* UserCenterMovieCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserCenterMovieCell.m; sourceTree = "<group>"; };
+		5D5FF9B21FC6C85F00199E86 /* BindingMobileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BindingMobileViewController.h; sourceTree = "<group>"; };
+		5D5FF9B31FC6C85F00199E86 /* BindingMobileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BindingMobileViewController.m; sourceTree = "<group>"; };
 		5D600BF01BB253E400FE13DC /* FMDeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDeviceManager.h; sourceTree = "<group>"; };
 		5D600BF11BB253E400FE13DC /* libFMDeviceManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFMDeviceManager.a; sourceTree = "<group>"; };
 		5D600BF51BB25E0000FE13DC /* yipay_method_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yipay_method_icon.png; sourceTree = "<group>"; };
@@ -6007,6 +6010,8 @@
 				29975F591DD0780600C6B813 /* LoginConstants.h */,
 				2958E91F1DCAF91500BD043B /* LoginViewController.h */,
 				2958E9201DCAF91500BD043B /* LoginViewController.m */,
+				5D5FF9B21FC6C85F00199E86 /* BindingMobileViewController.h */,
+				5D5FF9B31FC6C85F00199E86 /* BindingMobileViewController.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -10324,6 +10329,7 @@
 				5D0FE0BA1B5F7D6000442973 /* HXUserInfo.m in Sources */,
 				506E420F1DC88B070040DFAA /* CommentOrder.m in Sources */,
 				29BA622B1D6B12D50070AB1C /* ContactsViewController.m in Sources */,
+				5D5FF9B41FC6C85F00199E86 /* BindingMobileViewController.m in Sources */,
 				29BA62EE1D6E93840070AB1C /* RedEnvelopeCell.m in Sources */,
 				C2D36C9D190E399600A1C87F /* MovieDialogue.m in Sources */,
 				5D3193D31FA0730F00F6DEF7 /* ZYMovieListCell.m in Sources */,

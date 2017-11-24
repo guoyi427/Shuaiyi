@@ -397,11 +397,11 @@ typedef enum : NSUInteger {
         SingleCenterModel *model = dataArray[i];
         if ([model.iosUrl
                     isEqualToString:
-                            @"komovie://app/page?name=EvaluationViewController"]) {
+                            @"ZhangYu://app/page?name=EvaluationViewController"]) {
             model.waitEvalueCount = 0;
         }
         if ([model.iosUrl
-                    isEqualToString:@"komovie://app/page?name=ECardViewController"]) {
+                    isEqualToString:@"ZhangYu://app/page?name=ECardViewController"]) {
             model.waitEvalueCount = 0;
         }
     }
@@ -533,11 +533,11 @@ typedef enum : NSUInteger {
             SingleCenterModel *model = dataArray[i];
             if ([model.iosUrl
                  isEqualToString:
-                 @"komovie://app/page?name=EvaluationViewController"]) {
+                 @"ZhangYu://app/page?name=EvaluationViewController"]) {
                 model.waitEvalueCount = needCommentOrderCount.intValue;
             }
             if ([model.iosUrl
-                 isEqualToString:@"komovie://app/page?name=ECardViewController"]) {
+                 isEqualToString:@"ZhangYu://app/page?name=ECardViewController"]) {
                 model.waitEvalueCount = availableCouponCount.intValue;
             }
         }

@@ -333,7 +333,24 @@
                             getDecryptParams:@{
                                                @"action": @"relation_Add",
                                                @"movie_id": movieId,
-                                               @"relation": [relation toNumber]
+                                               @"relation": @1
+                                               }];
+    [request GET:kKSSPServer parameters:params success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
+        success();
+    } failure:failure];
+}
+
+/// 取消喜欢
+- (void)deleteRelationMovieId:(nullable NSString *)movieId
+                     relation:(nullable NSString *)relation
+                      success:(nullable void (^)())success
+                      failure:(nullable void (^)(NSError *_Nullable err))failure {
+    KKZBaseNetRequest *request = [KKZBaseNetRequest requestWithBaseURL:kKSSBaseUrl baseParams:nil];
+    NSDictionary *params = [KKZBaseRequestParams
+                            getDecryptParams:@{
+                                               @"action": @"relation_Delete",
+                                               @"movie_id": movieId,
+                                               @"relation": @1
                                                }];
     [request GET:kKSSPServer parameters:params success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
         success();

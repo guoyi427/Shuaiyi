@@ -7,7 +7,7 @@
 
 @interface UrlOpenUtility : NSObject
 
-#define APP_OPEN_PATH @"komovie://app/page?"
+#define APP_OPEN_PATH @"ZhangYu://app/page?"
 #define ACTIVITY_OPEN_PATH @"http://m.komovie.cn/sub/client?"
 
 /**

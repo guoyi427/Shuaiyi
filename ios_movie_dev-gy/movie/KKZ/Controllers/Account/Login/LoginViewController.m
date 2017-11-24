@@ -20,10 +20,11 @@
 #import "UIViewController+HideKeyboard.h"
 #import "RegisterValidCodeViewController.h"
 #import "PasswordFindViewController.h"
+#import "BindingMobileViewController.h"
 
 #define kInputLineNormal HEX(@"#DDDDDD")
 #define kInputLineFocused HEX(@"#008cff")
-#define kInputTextNormal [UIColor whiteColor]
+#define kInputTextNormal [UIColor blackColor]
 #define kInputTextFocused HEX(@"#008cff")
 #define kLoginEnabled HEX(@"#008cff")
 #define kLoginDisabled HEX(@"#99d1ff")
@@ -157,20 +158,12 @@ typedef enum : NSUInteger {
     [self resignFirstResponders];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-//    [self setStatusBarDefaultStyle];
-}
-
 /**
  *  视图加载完成
  */
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationController setNavigationBarHidden:true];
-    self.view.backgroundColor = [UIColor blackColor];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     //加载主页面
     [self loadContentViews];
 
@@ -188,15 +181,16 @@ typedef enum : NSUInteger {
  * 加载页面
  */
 - (void)loadContentViews {
+    self.kkzTitleLabel.text = @"登录";
     
     //滚动条视图
     [self.view addSubview:self.contentView];
     
     //关闭按钮
-    [self.contentView addSubview:self.closeButton];
+    [self.navBarView addSubview:self.closeButton];
     
     //logo
-    [self.contentView addSubview:self.logoImageView];
+//    [self.contentView addSubview:self.logoImageView];
     
     //输入框内容
     [self.contentView addSubview:self.inputContent];
@@ -292,7 +286,7 @@ typedef enum : NSUInteger {
 //    [self.contentView addSubview:self.voiceValidcodeBtn];
     
     //QQ登录按钮
-    [self.contentView addSubview:self.qqLoginBtn];
+//    [self.contentView addSubview:self.qqLoginBtn];
     
     //微信登录按钮
     [self.contentView addSubview:self.wechatLoginBtn];
@@ -333,10 +327,10 @@ typedef enum : NSUInteger {
 
 - (UIButton *)closeButton {
     if (!_closeButton) {
-        UIImage *closeImg = [UIImage imageNamed:@"ic_login_close"];
+        UIImage *closeImg = [UIImage imageNamed:@"loginCloseButton"];
         _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _closeButton.frame = CGRectMake(0, 18, closeImg.size.width + closeButtonInsets * 2, closeImg.size.height + closeButtonInsets * 2);
-        _closeButton.backgroundColor = [UIColor clearColor];
+//        _closeButton.backgroundColor = [UIColor whiteColor];
         [_closeButton setImage:closeImg forState:UIControlStateNormal];
         [_closeButton setImageEdgeInsets:UIEdgeInsetsMake(closeButtonInsets, closeButtonInsets, closeButtonInsets, closeButtonInsets)];
         _closeButton.tag = closeButtonTag;
@@ -364,7 +358,7 @@ typedef enum : NSUInteger {
 
 - (UIView *)inputContent {
     if (!_inputContent) {
-        _inputContent = [[UIView alloc] initWithFrame:CGRectMake(inputContentLeft, CGRectGetMaxY(self.logoImageView.frame) + inputContentTop, screentWith - inputContentLeft * 2, inputContentHeight)];
+        _inputContent = [[UIView alloc] initWithFrame:CGRectMake(inputContentLeft, 64 + inputContentTop, screentWith - inputContentLeft * 2, inputContentHeight)];
         _inputContent.backgroundColor = [UIColor clearColor];
     }
     return _inputContent;
@@ -635,7 +629,14 @@ typedef enum : NSUInteger {
                                         
                                         if (result) {
                                             //第三方登录请求
-                                            [weak_self handleLoginSucceed];
+                                            //  判断是否有手机号
+                                            if ([DataEngine sharedDataEngine].phoneNum.length == 0) {
+                                                [KKZUtility hidenIndicator];
+                                                BindingMobileViewController *vc = [[BindingMobileViewController alloc] init];
+                                                [weak_self.navigationController pushViewController:vc animated:true];
+                                            } else {
+                                                [weak_self handleLoginSucceed];
+                                            }
                                         } else {
                                             [UIAlertView showAlertView:@"登录失败" buttonText:@"确定"];
                                         }
@@ -1056,7 +1057,15 @@ typedef enum : NSUInteger {
 
 #pragma mark - Override super methods
 - (BOOL)showNavBar {
-    return NO;
+    return true;
+}
+
+- (BOOL)showTitleBar {
+    return true;
+}
+
+- (BOOL)showBackButton {
+    return false;
 }
 
 @end

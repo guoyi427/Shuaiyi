@@ -23,7 +23,7 @@
 - (void)handleDate {
 
     if (self.type.integerValue == 1) {
-        NSString *urLbodyStr = [self.url stringByReplacingOccurrencesOfString:@"komovie://app/page?" withString:@""];
+        NSString *urLbodyStr = [self.url stringByReplacingOccurrencesOfString:@"ZhangYu://app/page?" withString:@""];
 
         NSArray *params = [urLbodyStr componentsSeparatedByString:@"url="];
 

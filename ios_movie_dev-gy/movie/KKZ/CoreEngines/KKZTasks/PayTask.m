@@ -198,7 +198,7 @@
                                     forKey:@"red_money"];
         }
 
-        [self addParametersWithValue:@"komovie://payBackUrl"
+        [self addParametersWithValue:@"ZhangYu://payBackUrl"
                                 forKey:@"callback_url"];
         [self setRequestMethod:@"GET"];
     }

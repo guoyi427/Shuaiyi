@@ -560,13 +560,14 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 }
 
 - (UIColor *)kkzBlue {
-    if (!kkzBlue)
-        kkzBlue =
-                [UIColor colorWithRed:0
-                                green:140 / 255.0
-                                 blue:255 / 255.0
-                                alpha:1];
-    return kkzBlue;
+    return appDelegate.kkzPink;
+//    if (!kkzBlue)
+//        kkzBlue =
+//                [UIColor colorWithRed:0
+//                                green:140 / 255.0
+//                                 blue:255 / 255.0
+//                                alpha:1];
+//    return kkzBlue;
 }
 
 - (UIColor *)kkzDarkBlue {
@@ -1023,9 +1024,9 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 - (void)parseURLYiZhiFu:(NSURL *)url application:(UIApplication *)application {
 
     NSString *urlStr = [url absoluteString];
-    if ([urlStr hasPrefix:@"KoMovie://"]) {
+    if ([urlStr hasPrefix:@"ZhangYu://"]) {
         //翼支付
-        if ([urlStr hasPrefix:@"KoMovie://resultCode=00"]) {
+        if ([urlStr hasPrefix:@"ZhangYu://resultCode=00"]) {
             NSDictionary *d =
                     [NSDictionary dictionaryWithObject:urlStr
                                                 forKey:@"yiPayResult"];
@@ -1043,11 +1044,11 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
     DLog(@"AppDelegate -> parseURL: %@", url);
 
     NSString *urlStr = [url absoluteString];
-    if ([urlStr hasPrefix:@"KoMovie://"]) {
+    if ([urlStr hasPrefix:@"ZhangYu://"]) {
 
         //如果极简 SDK
         //不可用，会跳转支付宝钱包进行支付，需要将支付宝钱包的支付结果回传给 SDK
-        if ([urlStr hasPrefix:@"KoMovie://safepay/"]) {
+        if ([urlStr hasPrefix:@"ZhangYu://safepay/"]) {
             [[AlipaySDK defaultService]
                     processOrderWithPaymentResult:url
                                   standbyCallback:^(NSDictionary *resultDic){
@@ -1068,7 +1069,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
         [UrlOpenUtility handleOpenAppUrl:[NSURL URLWithString:urlStr]];
     }
     //使用 komovie:// 形式启动 APP
-    else if ([urlStr hasPrefix:@"komovie://"]) {
+    else if ([urlStr hasPrefix:@"ZhangYu://"]) {
         NSDictionary *params = [url queryParams];
         NSString *uId = [params kkz_stringForKey:@"alipay_user_id"];
         NSString *token = [params kkz_stringForKey:@"auth_code"];

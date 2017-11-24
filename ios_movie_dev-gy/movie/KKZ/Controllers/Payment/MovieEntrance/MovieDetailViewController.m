@@ -338,21 +338,33 @@
 }
 
 - (void)relationButtonAction:(UIButton *)button {
-    if (button.isSelected) {
-        return;
-    }
     
     if (![UserManager shareInstance].isUserAuthorized) {
         [[UserManager shareInstance] gotoLoginControllerFrom:self];
     }
     
+    button.enabled = false;
     MovieRequest *request = [[MovieRequest alloc] init];
-    [request addRelationMovieId:[NSString stringWithFormat:@"%@", _movieId] relation:[NSString stringWithFormat:@"%d", button.isSelected] success:^{
-        [UIAlertView showAlertView:@"喜欢成功" buttonText:@"确定"];
-        button.selected = true;
-    } failure:^(NSError * _Nullable err) {
-        [appDelegate showAlertViewForRequestInfo:err.userInfo];
-    }];
+    if (button.isSelected) {
+        [request deleteRelationMovieId:[NSString stringWithFormat:@"%@", _movieId] relation:nil success:^{
+            [UIAlertView showAlertView:@"取消喜欢成功" buttonText:@"确定"];
+            button.selected = false;
+            button.enabled = true;
+        } failure:^(NSError * _Nullable err) {
+            [appDelegate showAlertViewForRequestInfo:err.userInfo];
+            button.enabled = true;
+        }];
+    } else {
+        [request addRelationMovieId:[NSString stringWithFormat:@"%@", _movieId] relation:[NSString stringWithFormat:@"%d", button.isSelected] success:^{
+            [UIAlertView showAlertView:@"喜欢成功" buttonText:@"确定"];
+            button.selected = true;
+            button.enabled = true;
+        } failure:^(NSError * _Nullable err) {
+            [appDelegate showAlertViewForRequestInfo:err.userInfo];
+            button.enabled = true;
+        }];
+    }
+    
 }
 
 - (void)scoreButtonAction {

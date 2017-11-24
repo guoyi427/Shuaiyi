@@ -404,11 +404,12 @@
     NSMutableDictionary *dicParams = [NSMutableDictionary dictionaryWithCapacity:1];
     [dicParams setValue:phoneNum forKey:@"user_name"];
     [dicParams setValue:password forKey:@"password"];
-    [dicParams setValue:code forKey:@"valid_code"];
-    [dicParams setValue:[NSNumber numberWithInt:SiteTypeKKZ] forKey:@"site"];
+//    [dicParams setValue:code forKey:@"valid_code"];
+    [dicParams setValue:[NSNumber numberWithInt:SiteTypeKKZValidcode] forKey:@"site"];
+    [dicParams setValue:@"user_Binding" forKey:@"action"];
     NSDictionary *newParams = [KKZBaseRequestParams getDecryptParams:dicParams];
     
-    [request GET:KKSSPKotaPath(@"accountBinding.chtml")
+    [request GET:kKSSPServer
       parameters:newParams
     resultKeyMap:nil
          success:^(NSDictionary * _Nullable data, id  _Nullable responseObject) {
