@@ -353,7 +353,7 @@
 }
 
 - (void)callCs {
-    [UIAlertView showAlertView:@"拨打抠电影免费客服热线吗？"
+    [UIAlertView showAlertView:@"拨打章鱼电影免费客服热线吗？"
                     cancelText:@"取消"
                   cancelTapped:nil
                         okText:@"呼叫"

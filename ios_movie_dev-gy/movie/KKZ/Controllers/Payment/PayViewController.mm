@@ -111,6 +111,9 @@
     holder.showsVerticalScrollIndicator = NO;
     holder.contentSize = CGSizeMake(0, 700);
     
+    UITapGestureRecognizer *tapBackgroundViewGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBackgroundViewAction)];
+    [holder addGestureRecognizer:tapBackgroundViewGR];
+    
     [self queryUserMobile];
     [self queryOrderDetail];
     [self queryOrderWarning];
@@ -801,7 +804,7 @@
 
 #pragma mark utility
 - (void)payOrderClick {
-    if (telephoneTextField.text.length < 11 || ![[telephoneTextField.text substringToIndex:1] isEqualToString:@"1"]) {
+    if (telephoneTextField.text.length != 11 || ![[telephoneTextField.text substringToIndex:1] isEqualToString:@"1"]) {
         [appDelegate showAlertViewForTitle:@""
                                    message:@"请输入正确的手机号码"
                               cancelButton:@"好的"];
@@ -1295,6 +1298,10 @@
 //        [self uploadCouponCountView];
     }
     
+}
+
+- (void)tapBackgroundViewAction {
+    [telephoneTextField resignFirstResponder];
 }
 
 #pragma mark override from CommonViewController
