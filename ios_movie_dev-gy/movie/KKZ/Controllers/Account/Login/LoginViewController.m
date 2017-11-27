@@ -29,7 +29,7 @@
 #define kInputTextFocused HEX(@"#008cff")
 #define kLoginEnabled HEX(@"#008cff")
 #define kLoginDisabled HEX(@"#99d1ff")
-#define kValidcodeEnabled HEX(@"#008cff")
+#define kValidcodeEnabled HEX(@"#000000")
 #define kValidcodeDisabled HEX(@"#d3d3d3")
 #define kVoiceValidcodeEnabled HEX(@"#999999")
 #define kVoiceValidcodeDisabled HEX(@"#D3D3D3")
@@ -38,9 +38,10 @@
 static const CGFloat loginLogoViewTop = 52.0f;
 
 /****************登录页面输入框背景********************/
-static const CGFloat inputContentTop = 28.0f;
-static const CGFloat inputContentLeft = 15.0f;
-static const CGFloat inputContentHeight = 121;
+static const CGFloat inputContentTop = 0.0;//28.0f;
+static const CGFloat inputContentLeft = 0.0;//15.0f;
+static const CGFloat inputContentHeight = 88;
+static const CGFloat inputContentLeftPadding = 20;
 
 /****************登录页面输入框文字********************/
 static const CGFloat mobileTitleWidth = 50.0f;
@@ -106,7 +107,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) UIView *inputContent;
 
 //手机号输入框的提示标题
-//@property (nonatomic, strong) UIImageView *mobileTitle;
+@property (nonatomic, strong) UILabel *mobileTitle;
 
 //手机号输入框
 @property (nonatomic, strong) KKZTextField *mobileInputField;
@@ -118,7 +119,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) RoundCornersButton *queryValidcodeButton;
 
 //验证码输入的提示信息
-//@property (nonatomic, strong) UIImageView *validcodeTitle;
+@property (nonatomic, strong) UILabel *validcodeTitle;
 
 //验证码输入框
 @property (nonatomic, strong) KKZTextField *validcodeInputField;
@@ -196,70 +197,72 @@ typedef enum : NSUInteger {
     //输入框内容
     [self.contentView addSubview:self.inputContent];
     
-    //  background view
-    UIImageView *mobileBgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Login_TextField"]];
-    [self.inputContent addSubview:mobileBgView];
-    [mobileBgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.top.equalTo(self.inputContent);
-        make.height.mas_equalTo(111/2.0);
-    }];
-    
-    UIImageView *mobileIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Login_Mobile"]];
-    [mobileBgView addSubview:mobileIcon];
-    [mobileIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(20);
-        make.width.mas_equalTo(23.5);
-        make.centerY.equalTo(mobileBgView);
-    }];
+    //手机输入框标题
+    [self.inputContent addSubview:self.mobileTitle];
     
     //手机输入框
     [self.inputContent addSubview:self.mobileInputField];
-    [self.mobileInputField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(mobileIcon.mas_right).offset(10);
-        make.centerY.equalTo(mobileBgView);
-        make.right.equalTo(mobileBgView).offset(-20);
-        make.height.mas_equalTo(44);
-    }];
     
-    //  background view
-    UIImageView *validBgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Login_TextField"]];
-    validBgView.userInteractionEnabled = true;
-    [self.inputContent addSubview:validBgView];
-    [validBgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.equalTo(self.inputContent);
-        make.height.mas_equalTo(111/2.0);
-    }];
+    //获取验证码
+    [self.inputContent addSubview:self.queryValidcodeButton];
     
-    UIImageView *validIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Login_Password"]];
-    [validBgView addSubview:validIcon];
-    [validIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(20);
-        make.width.mas_equalTo(21.5);
-        make.centerY.equalTo(validBgView);
-    }];
+    //手机号输入框分割线
+    [self.inputContent addSubview:self.mobileBottomLine];
+    
+    //验证码输入框标题
+    [self.inputContent addSubview:self.validcodeTitle];
     
     //验证码输入框
     [self.inputContent addSubview:self.validcodeInputField];
-    [self.validcodeInputField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(validIcon.mas_right).offset(10);
-        make.centerY.equalTo(validBgView);
-        make.right.equalTo(validBgView).offset(-120);
-        make.height.mas_equalTo(44);
+    
+    //验证码输入框分割线
+    [self.inputContent addSubview:self.validcodeBottomLine];
+    
+    //  协议
+    UILabel *protocolLabel = [[UILabel alloc] init];
+    [self.contentView addSubview:protocolLabel];
+    NSMutableAttributedString *protocolStr = [[NSMutableAttributedString alloc] initWithString:@"登录即为同意《章鱼电影用户协议》"
+                                                                                    attributes:@{
+                                                                                                 NSFontAttributeName: [UIFont systemFontOfSize:14],
+                                                                                                 NSForegroundColorAttributeName: appDelegate.kkzGray
+                                                                                                 }];
+    NSRange protocolRange = NSMakeRange(6, 10);
+    [protocolStr addAttribute:NSForegroundColorAttributeName value:appDelegate.kkzPink range:protocolRange];
+    [protocolStr addAttribute:NSUnderlineStyleAttributeName value:@1 range:protocolRange];
+    [protocolStr addAttribute:NSUnderlineColorAttributeName value:appDelegate.kkzPink range:protocolRange];
+    protocolLabel.attributedText = protocolStr;
+    [protocolLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(20);
+        make.top.equalTo(self.inputContent.mas_bottom).offset(10);
     }];
     
-    //  验证吗
-    [validBgView addSubview:self.queryValidcodeButton];
-    [self.queryValidcodeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(validBgView);
-        make.centerY.equalTo(validBgView);
-    }];
+    UITapGestureRecognizer *tapProtocolLabelGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapProtocolLabelGRAction)];
+    [protocolLabel addGestureRecognizer:tapProtocolLabelGR];
+    protocolLabel.userInteractionEnabled = true;
     
     //登录按钮
     [self.contentView addSubview:self.loginBtn];
     [self.loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.height.equalTo(validBgView);
-        make.top.equalTo(validBgView.mas_bottom).offset(10);
+        make.left.mas_equalTo(30);
+        make.right.mas_equalTo(-30);
+        make.top.equalTo(self.validcodeInputField.mas_bottom).offset(40);
+        make.height.mas_equalTo(44);
     }];
+    
+    //  遇到问题
+    UILabel *requestLabel = [[UILabel alloc] init];
+    requestLabel.text = @"遇到问题?";
+    requestLabel.textColor = appDelegate.kkzGray;
+    requestLabel.font = [UIFont systemFontOfSize:14];
+    [self.contentView addSubview:requestLabel];
+    [requestLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.contentView);
+        make.top.equalTo(self.loginBtn.mas_bottom).offset(20);
+    }];
+    
+    UITapGestureRecognizer *tapReqeustLabelGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRequestLabelGRAction)];
+    [requestLabel addGestureRecognizer:tapReqeustLabelGR];
+    requestLabel.userInteractionEnabled = true;
     
 //    CGFloat Padding = 30.0f;
     
@@ -291,6 +294,15 @@ typedef enum : NSUInteger {
     
     //微信登录按钮
     [self.contentView addSubview:self.wechatLoginBtn];
+    UILabel *wechatLoginLabel = [[UILabel alloc] init];
+    wechatLoginLabel.text = @"—— 其他登录方式 ——";
+    wechatLoginLabel.textColor = appDelegate.kkzGray;
+    wechatLoginLabel.font = [UIFont systemFontOfSize:15];
+    [self.contentView addSubview:wechatLoginLabel];
+    [wechatLoginLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.contentView);
+        make.bottom.equalTo(self.wechatLoginBtn.mas_top).offset(-10);
+    }];
     
     //新浪微博登录按钮
 //    [self.contentView addSubview:self.sinaLoginBtn];
@@ -365,11 +377,22 @@ typedef enum : NSUInteger {
     return _inputContent;
 }
 
+- (UILabel *)mobileTitle {
+    if (!_mobileTitle) {
+        _mobileTitle = [[UILabel alloc] initWithFrame:CGRectMake(inputContentLeftPadding, 0, mobileTitleWidth, mobileTitleHeight)];
+        _mobileTitle.text = @"手机号";
+        _mobileTitle.font = [UIFont systemFontOfSize:kText45PX];
+        _mobileTitle.textColor = kInputTextNormal;
+        _mobileTitle.backgroundColor = [UIColor clearColor];
+    }
+    return _mobileTitle;
+}
+
 - (KKZTextField *)mobileInputField {
     if (!_mobileInputField) {
-        CGFloat mobileOriginX = 50 + mobileFieldLeft;
+        CGFloat mobileOriginX = 50 + mobileFieldLeft + inputContentLeftPadding;
         
-        _mobileInputField = [[KKZTextField alloc] initWithFrame:CGRectMake(mobileOriginX, 0, CGRectGetWidth(self.inputContent.frame) - mobileOriginX - 8, mobileTitleHeight) andFieldType:KKZTextFieldWithClear];
+        _mobileInputField = [[KKZTextField alloc] initWithFrame:CGRectMake(mobileOriginX, 0, CGRectGetWidth(self.inputContent.frame) - mobileOriginX - 150, mobileTitleHeight) andFieldType:KKZTextFieldWithClear];
         _mobileInputField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _mobileInputField.font = [UIFont systemFontOfSize:kText45PX];
         _mobileInputField.backgroundColor = [UIColor clearColor];
@@ -397,19 +420,19 @@ typedef enum : NSUInteger {
 
 - (RoundCornersButton *)queryValidcodeButton {
     if (!_queryValidcodeButton) {
-        _queryValidcodeButton = [[RoundCornersButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.inputContent.frame) - 96, (mobileTitleHeight - 30) / 2.f + mobileTitleHeight, 96, 30)];
+        _queryValidcodeButton = [[RoundCornersButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.inputContent.frame) - 96 - inputContentLeftPadding, (mobileTitleHeight - 30) / 2.f, 96, 30)];
         _queryValidcodeButton.tag = validcodeButtonTag;
         _queryValidcodeButton.enabled = NO;
-//        _queryValidcodeButton.backgroundColor = [UIColor clearColor];
-//        _queryValidcodeButton.rimWidth = 1;
-//        _queryValidcodeButton.rimColor = kValidcodeDisabled;
-//        _queryValidcodeButton.cornerNum = 3;
-//        _queryValidcodeButton.titleName = @"获取验证码";
-//        _queryValidcodeButton.titleColor = kValidcodeDisabled;
-//        _queryValidcodeButton.titleFont = [UIFont systemFontOfSize:kText36PX];
-        [_queryValidcodeButton setBackgroundImage:[UIImage imageNamed:@"Login_ValidCode"] forState:UIControlStateNormal];
-        [_queryValidcodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
-        _queryValidcodeButton.titleLabel.font = [UIFont systemFontOfSize:kText36PX];
+        _queryValidcodeButton.fillColor = kValidcodeDisabled;
+        _queryValidcodeButton.rimWidth = 1;
+        _queryValidcodeButton.rimColor = kValidcodeDisabled;
+        _queryValidcodeButton.cornerNum = 3;
+        _queryValidcodeButton.titleName = @"获取验证码";
+        _queryValidcodeButton.titleColor = [UIColor grayColor];
+        _queryValidcodeButton.titleFont = [UIFont systemFontOfSize:kText36PX];
+//        [_queryValidcodeButton setBackgroundImage:[UIImage imageNamed:@"Login_ValidCode"] forState:UIControlStateNormal];
+//        [_queryValidcodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+//        _queryValidcodeButton.titleLabel.font = [UIFont systemFontOfSize:kText36PX];
         [_queryValidcodeButton addTarget:self
                                   action:@selector(loginMainBtnClick:)
                         forControlEvents:UIControlEventTouchUpInside];
@@ -419,15 +442,26 @@ typedef enum : NSUInteger {
 
 - (UIView *)mobileBottomLine {
     if (!_mobileBottomLine) {
-        _mobileBottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, mobileTitleHeight + mobileLineHeight, screentWith - 2 * inputContentLeft, mobileLineHeight)];
+        _mobileBottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, mobileTitleHeight + mobileLineHeight, screentWith, mobileLineHeight)];
         _mobileBottomLine.backgroundColor = kInputLineNormal;
     }
     return _mobileBottomLine;
 }
 
+- (UILabel *)validcodeTitle {
+    if (!_validcodeTitle) {
+        _validcodeTitle = [[UILabel alloc] initWithFrame:CGRectMake(inputContentLeftPadding, CGRectGetMaxY(self.mobileBottomLine.frame), mobileTitleWidth, mobileTitleHeight)];
+        _validcodeTitle.text = @"验证码";
+        _validcodeTitle.font = [UIFont systemFontOfSize:kText45PX];
+        _validcodeTitle.textColor = kInputTextNormal;
+        _validcodeTitle.backgroundColor = [UIColor clearColor];
+    }
+    return _validcodeTitle;
+}
+
 - (KKZTextField *)validcodeInputField {
     if (!_validcodeInputField) {
-        CGFloat passOriginX = 50 + mobileFieldLeft;
+        CGFloat passOriginX = 50 + mobileFieldLeft + inputContentLeftPadding;
         _validcodeInputField = [[KKZTextField alloc] initWithFrame:CGRectMake(passOriginX, CGRectGetMaxY(self.mobileBottomLine.frame), CGRectGetWidth(_mobileInputField.frame), mobileTitleHeight)
                                                       andFieldType:KKZTextFieldWithClear];
         _validcodeInputField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -454,7 +488,7 @@ typedef enum : NSUInteger {
 
 - (UIView *)validcodeBottomLine {
     if (!_validcodeBottomLine) {
-        _validcodeBottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, inputContentHeight - mobileLineHeight, screentWith - 2 * inputContentLeft, mobileLineHeight)];
+        _validcodeBottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, inputContentHeight - mobileLineHeight, screentWith, mobileLineHeight)];
         _validcodeBottomLine.backgroundColor = kInputLineNormal;
     }
     return _validcodeBottomLine;
@@ -718,8 +752,8 @@ typedef enum : NSUInteger {
 
 - (void)startValidcodeButtonCountdown {
     NSString *titleName = isQueriedSMSValidcode ? [NSString stringWithFormat:@"%d秒后重发", timeCount] : @"获取验证码";
-//    self.queryValidcodeButton.titleName = titleName;
-    [self.queryValidcodeButton setTitle:titleName forState:UIControlStateNormal];
+    self.queryValidcodeButton.titleName = titleName;
+//    [self.queryValidcodeButton setTitle:titleName forState:UIControlStateNormal];
     [self.queryValidcodeButton setNeedsDisplay];
     
     NSMutableAttributedString *title = [self setupVoiceValidcodeBtnTitle:NO];
@@ -733,18 +767,18 @@ typedef enum : NSUInteger {
     if (timeCount <= 0) {
         self.queryValidcodeButton.enabled = YES;
         [self.queryValidcodeButton setNeedsDisplay];
-//        self.queryValidcodeButton.titleName = @"获取验证码";
-        [self.queryValidcodeButton setTitle:@"获取验证码"
-                                   forState:UIControlStateNormal];
+        self.queryValidcodeButton.titleName = @"获取验证码";
+//        [self.queryValidcodeButton setTitle:@"获取验证码"
+//                                   forState:UIControlStateNormal];
         [timer invalidate];
         timer = nil;
         [self checkValidcodeButtonEnable];
     }
     else { //倒计时显示
         NSString *titleName = isQueriedSMSValidcode ? [NSString stringWithFormat:@"%d秒后重发", timeCount] : @"获取验证码";
-//        self.queryValidcodeButton.titleName = titleName;
-        [self.queryValidcodeButton setTitle:titleName
-                                   forState:UIControlStateNormal];
+        self.queryValidcodeButton.titleName = titleName;
+//        [self.queryValidcodeButton setTitle:titleName
+//                                   forState:UIControlStateNormal];
         [self.queryValidcodeButton setNeedsDisplay];
     }
 }
@@ -860,6 +894,14 @@ typedef enum : NSUInteger {
     [self.validcodeInputField resignFirstResponder];
 }
 
+- (void)tapProtocolLabelGRAction {
+    
+}
+
+- (void)tapRequestLabelGRAction {
+    
+}
+
 #pragma mark - Delegates
 #pragma mark UIScrollViewDelegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -882,7 +924,7 @@ typedef enum : NSUInteger {
     [UIView animateWithDuration:.2
                      animations:^{
 
-                         [self.contentView setContentOffset:CGPointMake(0, offsetY)];
+//                         [self.contentView setContentOffset:CGPointMake(0, offsetY)];
                      }
                      completion:nil];
 
@@ -1036,12 +1078,14 @@ typedef enum : NSUInteger {
     [self.voiceValidcodeBtn setAttributedTitle:title
                                       forState:UIControlStateNormal];
     if (enabled) {
-        self.queryValidcodeButton.rimColor = kValidcodeEnabled;
-        self.queryValidcodeButton.titleColor = kValidcodeEnabled;
+        self.queryValidcodeButton.rimColor = appDelegate.kkzPink;
+        self.queryValidcodeButton.titleColor = [UIColor whiteColor];
+        self.queryValidcodeButton.fillColor = appDelegate.kkzPink;
     }
     else {
         self.queryValidcodeButton.rimColor = kValidcodeDisabled;
-        self.queryValidcodeButton.titleColor = kValidcodeDisabled;
+        self.queryValidcodeButton.fillColor = kValidcodeDisabled;
+        self.queryValidcodeButton.titleColor = [UIColor grayColor];
     }
 }
 
