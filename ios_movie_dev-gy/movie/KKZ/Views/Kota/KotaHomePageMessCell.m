@@ -59,7 +59,7 @@
         [avatarImageView addSubview:avatarBtn];
 
         nickNameLbl = [[UILabel alloc] initWithFrame:CGRectMake(60, 20, 175, 20)];
-        nickNameLbl.text = @"抠电影";
+        nickNameLbl.text = @"章鱼电影";
         nickNameLbl.textColor = [UIColor blackColor];
         nickNameLbl.backgroundColor = [UIColor clearColor];
         nickNameLbl.textAlignment = NSTextAlignmentLeft;

@@ -214,7 +214,7 @@
     if (smsClass != nil && ([smsClass canSendText])) {
         picker = [[MFMessageComposeViewController alloc] init];
         picker.messageComposeDelegate = self;
-        picker.body = [NSString stringWithFormat:@"全国在线选座，约会购影票，尽在抠电影～下载地址：%@", kAppHTML5Url];
+        picker.body = [NSString stringWithFormat:@"全国在线选座，约会购影票，尽在章鱼电影～下载地址：%@", kAppHTML5Url];
         picker.recipients = [NSArray arrayWithObject:tel];
 
         [self presentViewController:picker animated:NO completion:nil];

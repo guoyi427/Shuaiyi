@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CameraEditorViewController.h"
 
-static NSString *failAudioPermissionFail = @"请在iPhone的\"设置－隐私\"选项中，允许抠电影访问你的摄像头和麦克风";
+static NSString *failAudioPermissionFail = @"请在iPhone的\"设置－隐私\"选项中，允许章鱼电影访问你的摄像头和麦克风";
 
 @class MovieCommentViewController;
 @class MovieSelectView;

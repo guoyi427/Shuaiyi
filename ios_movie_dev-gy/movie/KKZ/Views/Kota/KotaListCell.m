@@ -274,7 +274,7 @@
     }
 
     UIImage *image = [UIImage imageNamed:@"kota_tip_share"];
-    NSString *content = [NSString stringWithFormat:@"看电影没人陪？帅哥美女等着你。查看详情：%@。更多精彩，尽在【抠电影客户端】。", shareUrl];
+    NSString *content = [NSString stringWithFormat:@"看电影没人陪？帅哥美女等着你。查看详情：%@。更多精彩，尽在【章鱼电影客户端】。", shareUrl];
     NSString *contentQQSpace = [NSString stringWithFormat:@"看电影没人陪？帅哥美女等着你"];
     NSString *contentWeChat = [NSString stringWithFormat:@"看电影没人陪？帅哥美女等着你"];
 

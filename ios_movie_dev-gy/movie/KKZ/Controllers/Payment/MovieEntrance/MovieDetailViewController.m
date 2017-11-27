@@ -563,7 +563,7 @@
     }
 
     NSString *date = [[DateEngine sharedDateEngine] stringFromDateYYYYMMDD:self.movie.publishTime];
-    NSString *content = [NSString stringWithFormat:@"分享电影《%@》%.1f分 %@上映，查看详情:%@。更多精彩，尽在【抠电影客户端】。", self.movie.movieName, [self.movie.score floatValue], date, shareUrl];
+    NSString *content = [NSString stringWithFormat:@"分享电影《%@》%.1f分 %@上映，查看详情:%@。更多精彩，尽在【章鱼电影客户端】。", self.movie.movieName, [self.movie.score floatValue], date, shareUrl];
     NSString *contentWeChat = [NSString stringWithFormat:@"分享电影《%@》%.1f分 %@上映。", self.movie.movieName, [self.movie.score floatValue], date];
     NSString *contentQQSpace = [NSString stringWithFormat:@"分享电影《%@》%.1f分 %@上映。", self.movie.movieName, [self.movie.score floatValue], date];
     NSString *str;

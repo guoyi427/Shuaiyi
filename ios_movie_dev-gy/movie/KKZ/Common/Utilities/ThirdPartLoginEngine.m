@@ -167,7 +167,7 @@
 
     id<ISSContent> publishContent = nil;
     publishContent = [ShareSDK content:content
-                        defaultContent:@"抠电影"
+                        defaultContent:@"章鱼电影"
                                  image:[ShareSDK imageWithUrl:imageURL]
                                  title:title
                                    url:url
@@ -183,10 +183,10 @@
     //在授权页面中添加关注官方微博
     [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
                                                          [ShareSDK userFieldWithType:SSUserFieldTypeName
-                                                                               value:@"抠电影_官方"],
+                                                                               value:@"章鱼电影_官方"],
                                                          SHARE_TYPE_NUMBER(ShareTypeSinaWeibo),
                                                          [ShareSDK userFieldWithType:SSUserFieldTypeName
-                                                                               value:@"抠电影"],
+                                                                               value:@"章鱼电影"],
                                                          SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
                                                          nil]];
 

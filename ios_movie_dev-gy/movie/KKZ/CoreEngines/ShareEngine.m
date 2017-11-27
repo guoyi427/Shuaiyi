@@ -89,10 +89,10 @@ static ShareEngine *_shareEngine = nil;
     //在授权页面中添加关注官方微博
     [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
                                                          [ShareSDK userFieldWithType:SSUserFieldTypeName
-                                                                               value:@"抠电影_官方"],
+                                                                               value:@"章鱼电影_官方"],
                                                          SHARE_TYPE_NUMBER(ShareTypeSinaWeibo),
                                                          [ShareSDK userFieldWithType:SSUserFieldTypeName
-                                                                               value:@"抠电影"],
+                                                                               value:@"章鱼电影"],
                                                          SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
                                                          nil]];
 
@@ -179,10 +179,10 @@ static ShareEngine *_shareEngine = nil;
     //在授权页面中添加关注官方微博
     [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
                                                          [ShareSDK userFieldWithType:SSUserFieldTypeName
-                                                                               value:@"抠电影_官方"],
+                                                                               value:@"章鱼电影_官方"],
                                                          SHARE_TYPE_NUMBER(ShareTypeSinaWeibo),
                                                          [ShareSDK userFieldWithType:SSUserFieldTypeName
-                                                                               value:@"抠电影"],
+                                                                               value:@"章鱼电影"],
                                                          SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
                                                          nil]];
 
@@ -257,10 +257,10 @@ static ShareEngine *_shareEngine = nil;
     //在授权页面中添加关注官方微博
     [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
                                                          [ShareSDK userFieldWithType:SSUserFieldTypeName
-                                                                               value:@"抠电影_官方"],
+                                                                               value:@"章鱼电影_官方"],
                                                          SHARE_TYPE_NUMBER(ShareTypeSinaWeibo),
                                                          [ShareSDK userFieldWithType:SSUserFieldTypeName
-                                                                               value:@"抠电影"],
+                                                                               value:@"章鱼电影"],
                                                          SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
                                                          nil]];
 
@@ -325,7 +325,7 @@ static ShareEngine *_shareEngine = nil;
     self.title = title;
     self.url = url;
     if (content.length == 0) {
-        content = @"抠电影";
+        content = @"章鱼电影";
     }
     id<ISSContent> publishContent = [ShareSDK content:content
                                        defaultContent:nil
@@ -365,10 +365,10 @@ static ShareEngine *_shareEngine = nil;
     //在授权页面中添加关注官方微博
     [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
                                                          [ShareSDK userFieldWithType:SSUserFieldTypeName
-                                                                               value:@"抠电影_官方"],
+                                                                               value:@"章鱼电影_官方"],
                                                          SHARE_TYPE_NUMBER(ShareTypeSinaWeibo),
                                                          [ShareSDK userFieldWithType:SSUserFieldTypeName
-                                                                               value:@"抠电影"],
+                                                                               value:@"章鱼电影"],
                                                          SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
                                                          nil]];
 
@@ -439,7 +439,7 @@ static ShareEngine *_shareEngine = nil;
     id<ISSContent> publishContent = nil;
     //    if (self.imageURL && self.imageURL.length > 0) {
     publishContent = [ShareSDK content:self.content
-                        defaultContent:@"抠电影"
+                        defaultContent:@"章鱼电影"
                                  image:[ShareSDK imageWithUrl:self.imageURL]
                                  title:self.title
                                    url:self.url
@@ -476,10 +476,10 @@ static ShareEngine *_shareEngine = nil;
     //在授权页面中添加关注官方微博
     [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
                                                          [ShareSDK userFieldWithType:SSUserFieldTypeName
-                                                                               value:@"抠电影_官方"],
+                                                                               value:@"章鱼电影_官方"],
                                                          SHARE_TYPE_NUMBER(ShareTypeSinaWeibo),
                                                          [ShareSDK userFieldWithType:SSUserFieldTypeName
-                                                                               value:@"抠电影"],
+                                                                               value:@"章鱼电影"],
                                                          SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
                                                          nil]];
 
@@ -768,10 +768,10 @@ static ShareEngine *_shareEngine = nil;
     //在授权页面中添加关注官方微博
     [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
                                                          [ShareSDK userFieldWithType:SSUserFieldTypeName
-                                                                               value:@"抠电影_官方"],
+                                                                               value:@"章鱼电影_官方"],
                                                          SHARE_TYPE_NUMBER(ShareTypeSinaWeibo),
                                                          [ShareSDK userFieldWithType:SSUserFieldTypeName
-                                                                               value:@"抠电影"],
+                                                                               value:@"章鱼电影"],
                                                          SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
                                                          nil]];
 

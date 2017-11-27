@@ -295,18 +295,18 @@
     //分享订单
     NSString *shareUrl = [NSString stringWithFormat:@"%@&type=%@&targetId=%@&userId=%@", kAppShareHTML5Url, @"10", self.myOrder.orderId, [DataEngine sharedDataEngine].userId];
 
-    NSString *content = [NSString stringWithFormat:@"我在#抠电影#买了《%@》，%@，%@，%@的电影票。查看详情：%@。更多精彩，尽在【抠电影客户端】。",
+    NSString *content = [NSString stringWithFormat:@"我在#章鱼电影#买了《%@》，%@，%@，%@的电影票。查看详情：%@。更多精彩，尽在【章鱼电影客户端】。",
                                                    self.myOrder.plan.movie.movieName,
                                                    self.myOrder.plan.cinema.cinemaName,
                                                    self.myOrder.plan.hallName,
                                                    [self.myOrder movieTimeDesc],
                                                    shareUrl];
-    NSString *contentQQSpace = [NSString stringWithFormat:@"我在#抠电影#买了《%@》，%@，%@，%@的电影票。",
+    NSString *contentQQSpace = [NSString stringWithFormat:@"我在#章鱼电影#买了《%@》，%@，%@，%@的电影票。",
                                                           self.myOrder.plan.movie.movieName,
                                                           self.myOrder.plan.cinema.cinemaName,
                                                           self.myOrder.plan.hallName,
                                                           [self.myOrder movieTimeDesc]];
-    NSString *contentWeChat = [NSString stringWithFormat:@"我在#抠电影#买了《%@》，%@，%@，%@的电影票。",
+    NSString *contentWeChat = [NSString stringWithFormat:@"我在#章鱼电影#买了《%@》，%@，%@，%@的电影票。",
                                                          self.myOrder.plan.movie.movieName,
                                                          self.myOrder.plan.cinema.cinemaName,
                                                          self.myOrder.plan.hallName,
@@ -330,7 +330,7 @@
                                                        [poplistview updateWithcontent:content
                                                                         contentWeChat:contentWeChat
                                                                        contentQQSpace:contentQQSpace
-                                                                                title:@"抠电影"
+                                                                                title:@"章鱼电影"
                                                                             imagePath:image
                                                                              imageURL:self.myOrder.plan.movie.thumbPath
                                                                                   url:shareUrl

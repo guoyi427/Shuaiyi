@@ -102,9 +102,9 @@
         contentQQSpace = self.activity.shareContent;
         contentWeChat = self.activity.shareContent;
     } else {
-        acContent = [NSString stringWithFormat:@"我参加了{%@}活动，召唤小伙伴一起参加优惠活动！快下载【抠电影客户端】%@", self.activity.activityTitle, kAppHTML5Url];
-        contentQQSpace = [NSString stringWithFormat:@"我参加了{%@}活动，召唤小伙伴一起参加优惠活动！快下载【抠电影客户端】%@", self.activity.activityTitle, kAppHTML5Url];
-        contentWeChat = [NSString stringWithFormat:@"我参加了{%@}活动，召唤小伙伴一起参加优惠活动！快下载【抠电影客户端】%@", self.activity.activityTitle, kAppHTML5Url];
+        acContent = [NSString stringWithFormat:@"我参加了{%@}活动，召唤小伙伴一起参加优惠活动！快下载【章鱼电影客户端】%@", self.activity.activityTitle, kAppHTML5Url];
+        contentQQSpace = [NSString stringWithFormat:@"我参加了{%@}活动，召唤小伙伴一起参加优惠活动！快下载【章鱼电影客户端】%@", self.activity.activityTitle, kAppHTML5Url];
+        contentWeChat = [NSString stringWithFormat:@"我参加了{%@}活动，召唤小伙伴一起参加优惠活动！快下载【章鱼电影客户端】%@", self.activity.activityTitle, kAppHTML5Url];
     }
     [poplistview updateWithcontent:acContent
                      contentWeChat:contentWeChat

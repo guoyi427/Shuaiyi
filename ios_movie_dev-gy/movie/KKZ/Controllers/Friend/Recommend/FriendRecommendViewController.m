@@ -252,7 +252,7 @@ static const CGFloat chooseHeight = 40.0f;
         //调取手机短信
         [self showMessageView:[NSArray arrayWithObjects:invitedUser, nil]
                           title:nil
-                           body:[NSString stringWithFormat:@"全国在线选座,约会购影票,尽在抠电影~下载地址：%@", kAppHTML5Url]];
+                           body:[NSString stringWithFormat:@"全国在线选座,约会购影票,尽在章鱼电影~下载地址：%@", kAppHTML5Url]];
     }
 }
 

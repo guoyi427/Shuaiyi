@@ -613,14 +613,14 @@
                                                     self.myOrder.orderId, [DataEngine sharedDataEngine].userId];
 
     NSString *content = [NSString
-            stringWithFormat:@"我在#抠电影#买了《%@》,%@,%@,%@的电影票。查看详情：%@"
-                             @"。更多精彩，尽在【抠电影客户端】。",
+            stringWithFormat:@"我在#章鱼电影#买了《%@》,%@,%@,%@的电影票。查看详情：%@"
+                             @"。更多精彩，尽在【章鱼电影客户端】。",
                              self.myOrder.plan.movie.movieName, self.myOrder.plan.cinema.cinemaName, self.myOrder.plan.hallName, [self.myOrder movieTimeDesc], shareUrl];
     NSString *contentQQSpace =
-            [NSString stringWithFormat:@"我在#抠电影#买了《%@》,%@,%@,%@的电影票。", self.myOrder.plan.movie.movieName,
+            [NSString stringWithFormat:@"我在#章鱼电影#买了《%@》,%@,%@,%@的电影票。", self.myOrder.plan.movie.movieName,
                                        self.myOrder.plan.cinema.cinemaName, self.myOrder.plan.hallName, [self.myOrder movieTimeDesc]];
     NSString *contentWeChat =
-            [NSString stringWithFormat:@"我在#抠电影#买了《%@》,%@,%@,%@的电影票。", self.myOrder.plan.movie.movieName,
+            [NSString stringWithFormat:@"我在#章鱼电影#买了《%@》,%@,%@,%@的电影票。", self.myOrder.plan.movie.movieName,
                                        self.myOrder.plan.cinema.cinemaName, self.myOrder.plan.hallName, [self.myOrder movieTimeDesc]];
 
     NSString *str;

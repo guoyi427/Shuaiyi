@@ -242,8 +242,8 @@
         shareUrl = [NSString stringWithFormat:@"%@&type=%@&targetId=%d", kAppShareHTML5Url, @"5", song.songId];
     }
 
-    NSString *content = [NSString stringWithFormat:@"我分享了《%@》中的原声音乐大碟：%@-%@，查看歌曲内容：%@。更多精彩，尽在【抠电影客户端】", self.movie.movieName, song.singer, song.songName, shareUrl];
-    NSString *contentQQSpace = [NSString stringWithFormat:@"我分享了《%@》中的原声音乐大碟：%@-%@，查看歌曲内容：%@。更多精彩，尽在【抠电影客户端】", self.movie.movieName, song.singer, song.songName, shareUrl];
+    NSString *content = [NSString stringWithFormat:@"我分享了《%@》中的原声音乐大碟：%@-%@，查看歌曲内容：%@。更多精彩，尽在【章鱼电影客户端】", self.movie.movieName, song.singer, song.songName, shareUrl];
+    NSString *contentQQSpace = [NSString stringWithFormat:@"我分享了《%@》中的原声音乐大碟：%@-%@，查看歌曲内容：%@。更多精彩，尽在【章鱼电影客户端】", self.movie.movieName, song.singer, song.songName, shareUrl];
     NSString *contentWeChat = [NSString stringWithFormat:@"我分享了《%@》中的原声音乐大碟：%@-%@。", self.movie.movieName, song.singer, song.songName];
 
     NSString *str;
@@ -256,7 +256,7 @@
     [poplistview updateWithcontent:content
                      contentWeChat:contentWeChat
                     contentQQSpace:contentQQSpace
-                             title:@"抠电影"
+                             title:@"章鱼电影"
                          imagePath:self.shareImageView.image
                           imageURL:str
                                url:shareUrl

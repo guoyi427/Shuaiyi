@@ -332,7 +332,7 @@ static const CGFloat settingBannerHeight = 50.0f;
     //添加标签
     UILabel *thankTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kCommonScreenWidth, 15)];
     [thankTitle setBackgroundColor:[UIColor clearColor]];
-    thankTitle.text = @"感谢使用抠电影";
+    thankTitle.text = @"感谢使用章鱼电影";
     thankTitle.textColor = [UIColor lightGrayColor];
     thankTitle.textAlignment = NSTextAlignmentCenter;
     thankTitle.font = [UIFont systemFontOfSize:12];
