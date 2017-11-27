@@ -286,8 +286,12 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
 
 - (void)tapUserImageAction {
     //  资料修改
-    EditUserInfoViewController *vc = [[EditUserInfoViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:true];
+    if ([UserManager shareInstance].isUserAuthorized) {
+        EditUserInfoViewController *vc = [[EditUserInfoViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:true];
+    } else {
+        [self loginButtonAction];
+    }
 }
 
 - (void)tapRelationViewAction {
