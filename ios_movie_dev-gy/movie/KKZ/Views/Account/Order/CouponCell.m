@@ -116,7 +116,7 @@
         _stateBgView.image = [UIImage imageNamed:@"CouponList_gray"];
     }
     
-    _nameLabel.text = [NSString stringWithFormat:@"%@", dic[@"info"][@"name"]];
+    _nameLabel.text = [NSString stringWithFormat:@"%@", dic[@"info"][@"description"]];
     _detailLabel.text = [NSString stringWithFormat:@"章鱼券：%@", dic[@"couponId"]];
     _timeLabel.text = dic[@"expireDate"];
     _priceLabel.text = dic[@"info"][@"name"];//dic[@"info"][@"price"];

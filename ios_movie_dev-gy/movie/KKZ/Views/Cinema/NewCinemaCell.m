@@ -69,6 +69,7 @@
     reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         //加载影院名称
         [self addSubview:self.cinemaLbl];
