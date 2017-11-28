@@ -1326,14 +1326,17 @@
         _lastCouponType = type;
     }
     
-    NSMutableString *couponString = [[NSMutableString alloc] initWithString:@"["];
+    NSMutableArray *couponJsonList = [[NSMutableArray alloc] initWithCapacity:list.count];
     for (NSDictionary *dic in list) {
         if (dic[@"couponId"]) {
-            [couponString appendString:[NSString stringWithFormat:@"{couponid: '%@'},", dic[@"couponId"]]];
+            [couponJsonList addObject:@{
+                                        @"couponid": [NSString stringWithFormat:@"%@", dic[@"couponId"]]
+                                        }];
         }
     }
-    couponString = [NSMutableString stringWithString: [couponString substringToIndex:couponString.length-1]];
-    [couponString appendString:@"]"];
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:couponJsonList options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *couponString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
     payView.ecardListStr = couponString;
     _couponString = couponString;

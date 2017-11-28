@@ -8607,9 +8607,9 @@
 				ORGANIZATIONNAME = "Ariadne’s Thread Co., Ltd";
 				TargetAttributes = {
 					32C3ED2513D6D12B0054C078 = {
-						DevelopmentTeam = 9KMWVF27DM;
+						DevelopmentTeam = 6W529KQBZ7;
 						LastSwiftMigration = 0820;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -10769,8 +10769,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: mao Mao (F968ZK4VD3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = 9KMWVF27DM;
+				DEVELOPMENT_TEAM = 6W529KQBZ7;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -10804,11 +10805,11 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kokozu.Cinephile2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hanhai.zhangyu;
 				PRODUCT_NAME = KoMovie;
-				PROVISIONING_PROFILE = "38e6f501-7335-4e6c-b33a-7310910986de";
+				PROVISIONING_PROFILE = "3a437027-9bc2-4a48-bbf2-69d340fbe3f1";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = Zhangyu_Develop;
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "KKZ/KoMovie-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -10830,10 +10831,11 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = KoMovie/KoMovie.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ariadne's thread Co., Ltd. (9KMWVF27DM)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = 9KMWVF27DM;
+				DEVELOPMENT_TEAM = 6W529KQBZ7;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -10867,10 +10869,11 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kokozu.Cinephile2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hanhai.zhangyu;
 				PRODUCT_NAME = KoMovie;
-				PROVISIONING_PROFILE = "fed1cb7c-f8da-486e-a72e-5155a47d6348";
+				PROVISIONING_PROFILE = "8b900e62-032c-4505-b6f8-c4191567edcc";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE_SPECIFIER = ZhangYu_Adhoc;
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "KKZ/KoMovie-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
