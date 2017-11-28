@@ -15,6 +15,7 @@
 #import "MJRefresh.h"
 #import "AlertViewY.h"
 #import "NoDataViewY.h"
+#import "NewCinemaCell.h"
 
 //  Request
 #import "CinemaRequest.h"
@@ -27,6 +28,7 @@
 
 //  Model
 #import "CinemaHelper.h"
+#import "CinemaCellLayout.h"
 
 static CGFloat segmentedControlWidth = 150.0f;
 static CGFloat topBarHeight = 35.0f;
@@ -65,6 +67,8 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
     NSMutableArray *_currentMovieList;
     NSMutableArray *_futureMovieList;
     NSMutableArray *_cinemaList;
+    NSMutableArray<CinemaCellLayout *> *_cinemaCellLayoutList;
+    
     NSMutableArray *_networkCinemaList;
     NSMutableArray *_districtList;
     NSMutableArray *_districtCinemaList;
@@ -107,6 +111,7 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
     _currentMovieList = [[NSMutableArray alloc] init];
     _futureMovieList = [[NSMutableArray alloc] init];
     _cinemaList = [[NSMutableArray alloc] init];
+    _cinemaCellLayoutList = [[NSMutableArray alloc] init];
 }
 
 - (BOOL)showNavBar {
@@ -236,7 +241,7 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
     _cinemaTableView.hidden = true;
     _cinemaTableView.delegate = self;
     _cinemaTableView.dataSource = self;
-    [_cinemaTableView registerClass:[ZYCinemaCell class] forCellReuseIdentifier:CinemaCellIdentifier];
+    [_cinemaTableView registerClass:[NewCinemaCell class] forCellReuseIdentifier:CinemaCellIdentifier];
     _cinemaTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_cinemaTableView];
     
@@ -315,6 +320,8 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
             [self.view addSubview:_noAlertView];
             [_noAlertView startAnimation];
         }
+        
+        WeakSelf
         CinemaRequest *request = [[CinemaRequest alloc] init];
         [request requestCinemaList:[NSNumber numberWithInt:USER_CITY].stringValue
                            success:^(NSArray *_Nullable cinemas, NSArray *_Nullable favedCinemas,
@@ -329,6 +336,8 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
                                
                                [_cinemaList removeAllObjects];
                                [_cinemaList addObjectsFromArray:sortedCinemas];
+                               [weakSelf updateCellLayoutList];
+                               
                                [_cinemaTableView reloadData];
                                _networkCinemaList = [sortedCinemas mutableCopy];
                                
@@ -358,6 +367,18 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
         [appDelegate showAlertViewForTitle:@""
                                    message:@"亲, 先选择你所在的城市吧"
                               cancelButton:@"好的"];
+    }
+}
+
+/**
+ 根据 cinemaList 更新 cinemaCellLayoutList
+ */
+- (void)updateCellLayoutList {
+    [_cinemaCellLayoutList removeAllObjects];
+    for (CinemaDetail *detail in _cinemaList) {
+        CinemaCellLayout *layout = [[CinemaCellLayout alloc] init];
+        layout.cinema = detail;
+        [_cinemaCellLayoutList addObject:layout];
     }
 }
 
@@ -571,24 +592,30 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
         if (_currentMovieList.count > indexPath.row) {
             Movie *model = _currentMovieList[indexPath.row];
             [c_cell update:model type:ZYMovieListCellType_Current];
-            cell = c_cell;
         }
-        
+        cell = c_cell;
     } else if (tableView == _futureMovieTableView) {
         ZYMovieListCell *f_cell = (ZYMovieListCell *)[tableView dequeueReusableCellWithIdentifier:FutureMovieCellIdentifier];
         if (_futureMovieList.count > indexPath.row) {
             Movie *model = _futureMovieList[indexPath.row];
             [f_cell update:model type:ZYMovieListCellType_Future];
-            cell = f_cell;
         }
+        cell = f_cell;
     } else if (tableView == _cinemaTableView) {
+        /*
         ZYCinemaCell *c_cell = (ZYCinemaCell *)[tableView dequeueReusableCellWithIdentifier:CinemaCellIdentifier];
         if (_cinemaList.count > indexPath.row) {
             CinemaDetail *model = _cinemaList[indexPath.row];
             [c_cell update:model];
             cell = c_cell;
+        }*/
+        NewCinemaCell *c_cell = (NewCinemaCell *)[tableView dequeueReusableCellWithIdentifier:CinemaCellIdentifier];
+        if (_cinemaCellLayoutList.count > indexPath.row) {
+            CinemaCellLayout *layout = _cinemaCellLayoutList[indexPath.row];
+            c_cell.cinemaCellLayout = layout;
+            [c_cell updateCinemaCell];
         }
-        
+        cell = c_cell;
     }
     return cell;
 }
@@ -599,7 +626,12 @@ static NSString *CinemaCellIdentifier = @"Cinema-cell";
     } else if (tableView == _futureMovieTableView) {
         return 173;
     } else if (tableView == _cinemaTableView) {
-        return 80.0;
+        CGFloat cellHeight = 0;
+        if (_cinemaCellLayoutList.count > indexPath.row) {
+            CinemaCellLayout *layout = _cinemaCellLayoutList[indexPath.row];
+            cellHeight = layout.height;
+        }
+        return cellHeight;
     }
     return 0;
 }
