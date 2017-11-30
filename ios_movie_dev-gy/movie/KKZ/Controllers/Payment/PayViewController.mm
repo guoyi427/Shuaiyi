@@ -109,7 +109,7 @@
     [self.view addSubview:holder];
     holder.backgroundColor = [UIColor r:245 g:245 b:245];
     holder.showsVerticalScrollIndicator = NO;
-    holder.contentSize = CGSizeMake(0, 700);
+    holder.contentSize = CGSizeMake(0, 730);
     
     UITapGestureRecognizer *tapBackgroundViewGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBackgroundViewAction)];
     [holder addGestureRecognizer:tapBackgroundViewGR];
@@ -595,9 +595,11 @@
     
     //  客服电话
     UILabel *telphoneLabel = [[UILabel alloc] init];
-    telphoneLabel.text = @"客服电话 400-030-1053";
+    telphoneLabel.text = @"不支持退票、改签\n客服电话 400-030-1053";
     telphoneLabel.textColor = appDelegate.kkzPink;
     telphoneLabel.font = [UIFont systemFontOfSize:15];
+    telphoneLabel.numberOfLines = 2;
+    telphoneLabel.textAlignment = NSTextAlignmentCenter;
     [holder addSubview:telphoneLabel];
     [telphoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(holder);
