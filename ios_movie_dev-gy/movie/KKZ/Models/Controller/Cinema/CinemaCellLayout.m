@@ -23,7 +23,7 @@ static const CGFloat marginLeft = 15.0f;
 static const CGFloat marginRight = 15.0f;
 
 /*****************上边距****************/
-static const CGFloat marginTop = 15.0f;
+static const CGFloat marginTop = 10.0f;
 
 /*****************下边距****************/
 static const CGFloat marginBottom = 15.0f;

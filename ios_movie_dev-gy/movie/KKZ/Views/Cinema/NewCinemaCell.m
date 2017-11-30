@@ -91,7 +91,7 @@
         [self.bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(@(marginX));
             make.height.equalTo(@(K_ONE_PIXEL));
-            make.bottom.equalTo(@1);
+            make.bottom.mas_equalTo(-1);
             make.right.equalTo(@0);
         }];
         

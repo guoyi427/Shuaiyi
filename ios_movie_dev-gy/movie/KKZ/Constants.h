@@ -32,11 +32,11 @@
 #define kQQWeiBoCallback @"http://www.komovie.cn"
 
 //分享内容的链接
-#define kAppShareHTML5Url @"http://m.komovie.cn/?m=share"
+#define kAppShareHTML5Url @""//@"http://m.komovie.cn/?m=share"
 
 //========其他信息========
 //官网下载APP链接
-#define kAppHTML5Url @"http://www.komovie.cn/download"
+#define kAppHTML5Url @""//@"http://www.komovie.cn/download"
 
 //AppStore应用的下载链接
 #define kAppUrl @"https://itunes.apple.com/cn/app/id485584268?mt=8"
