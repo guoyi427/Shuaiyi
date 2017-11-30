@@ -50,7 +50,7 @@
     BOOL isAppOpen = [urlString hasPrefix:APP_OPEN_PATH];
     BOOL isActivityOpen = [urlString hasPrefix:ACTIVITY_OPEN_PATH];
 
-    if (isActivityOpen && ![urlString containsString:@"name="]) { // 原链接地址
+    if ([urlString containsString:@"name="]) { // 原链接地址
         return [self handleActivityOpenUrl:url];
     }
 

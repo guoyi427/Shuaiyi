@@ -1065,7 +1065,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
         //        }
     }
     //使用 komovie://app/page? 形式启动 APP
-    else if ([urlStr hasPrefix:APP_OPEN_PATH]) {
+    else if ([urlStr hasPrefix:APP_OPEN_PATH] || [urlStr hasPrefix:@"zhangyu"]) {
         [UrlOpenUtility handleOpenAppUrl:[NSURL URLWithString:urlStr]];
     }
     //使用 komovie:// 形式启动 APP
