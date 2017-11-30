@@ -24,7 +24,7 @@
 #import "UserRequest.h"
 
 #define kInputLineNormal HEX(@"#DDDDDD")
-#define kInputLineFocused HEX(@"#008cff")
+#define kInputLineFocused HEX(@"#DDDDDD")//HEX(@"#008cff")
 #define kInputTextNormal [UIColor blackColor]
 #define kInputTextFocused HEX(@"#008cff")
 #define kLoginEnabled HEX(@"#008cff")
@@ -58,7 +58,7 @@ static const CGFloat loginBtnTop = 20.0f;
 static const CGFloat loginBtnLeft = 15.0f;
 static const CGFloat loginBtnRight = 15.0f;
 static const CGFloat loginBtnHeight = 44.0f;
-static const CGFloat weixinBtnBottom = 100.0f;
+static const CGFloat weixinBtnBottom = 30.0f;
 
 /****************关闭按钮********************/
 static const CGFloat closeButtonInsets = 15.0f;
@@ -243,8 +243,8 @@ typedef enum : NSUInteger {
     //登录按钮
     [self.contentView addSubview:self.loginBtn];
     [self.loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(30);
-        make.right.mas_equalTo(-30);
+        make.left.equalTo(self.view).offset(30);
+        make.right.equalTo(self.view).offset(-30);
         make.top.equalTo(self.validcodeInputField.mas_bottom).offset(40);
         make.height.mas_equalTo(44);
     }];

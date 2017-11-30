@@ -118,7 +118,7 @@
 - (void)updateWithDic:(NSDictionary *)dic comefromPay:(BOOL)pay {
     BOOL canUse = [dic[@"remainCount"] boolValue];
     _model = dic;
-    NSDate *couponDate = [[DateEngine sharedDateEngine] dateFromString:dic[@"expireDate"]];
+    NSDate *couponDate = [NSDate dateWithTimeIntervalSince1970:[[[DateEngine sharedDateEngine] dateFromString:dic[@"expireDate"]] timeIntervalSince1970] + 86400];
     BOOL expire = [couponDate compare:[NSDate date]] == NSOrderedDescending;
     
     if (canUse && expire) {
@@ -129,7 +129,7 @@
     
     _nameLabel.text = [NSString stringWithFormat:@"%@", dic[@"info"][@"description"]];
     _detailLabel.text = [NSString stringWithFormat:@"章鱼码：%@", dic[@"couponId"]];
-    _timeLabel.text = dic[@"expireDate"];
+    _timeLabel.text = [[DateEngine sharedDateEngine] stringFromDateYYYYMMDD: [[DateEngine sharedDateEngine] dateFromString:dic[@"expireDate"]]];
     _stateLabel.text = dic[@"info"][@"name"];
     
     _deleteCouponButton.hidden = pay;
@@ -144,7 +144,7 @@
 
 - (void)updateCardWithDic:(NSDictionary *)dic comfromPay:(BOOL)pay {
     _model = dic;
-    NSDate *couponDate = [[DateEngine sharedDateEngine] dateFromString:dic[@"expireDate"]];
+    NSDate *couponDate = [NSDate dateWithTimeIntervalSince1970:[[[DateEngine sharedDateEngine] dateFromString:dic[@"expireDate"]] timeIntervalSince1970] + 86400];
     BOOL expire = [couponDate compare:[NSDate date]] == NSOrderedDescending;
     
     BOOL canUse = [dic[@"remainCount"] boolValue];
@@ -156,7 +156,7 @@
     
     _nameLabel.text = [NSString stringWithFormat:@"%@元 剩余：%@元", dic[@"cardValue"], dic[@"remainValue"]];
     _detailLabel.text = [NSString stringWithFormat:@"章鱼卡：%@", dic[@"couponId"]];
-    _timeLabel.text = dic[@"expireDate"];
+    _timeLabel.text = [[DateEngine sharedDateEngine] stringFromDateYYYYMMDD: [[DateEngine sharedDateEngine] dateFromString:dic[@"expireDate"]]];;
     _stateLabel.text = dic[@"info"][@"name"];
     
     

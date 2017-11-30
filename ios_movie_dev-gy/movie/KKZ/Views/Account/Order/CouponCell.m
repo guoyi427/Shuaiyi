@@ -107,7 +107,7 @@
 - (void)updateWithDic:(NSDictionary *)dic comefromPay:(BOOL)pay {
     _model = dic;
     
-    NSDate *couponDate = [[DateEngine sharedDateEngine] dateFromString:dic[@"expireDate"]];
+    NSDate *couponDate = [NSDate dateWithTimeIntervalSince1970:[[[DateEngine sharedDateEngine] dateFromString:dic[@"expireDate"]] timeIntervalSince1970] + 86400];
     BOOL expire = [couponDate compare:[NSDate date]] == NSOrderedDescending;
     
     if ([dic[@"remainCount"] boolValue] && expire) {
@@ -118,7 +118,7 @@
     
     _nameLabel.text = [NSString stringWithFormat:@"%@", dic[@"info"][@"description"]];
     _detailLabel.text = [NSString stringWithFormat:@"章鱼券：%@", dic[@"couponId"]];
-    _timeLabel.text = dic[@"expireDate"];
+    _timeLabel.text = [[DateEngine sharedDateEngine] stringFromDateYYYYMMDD: [[DateEngine sharedDateEngine] dateFromString:dic[@"expireDate"]]];;
     _priceLabel.text = dic[@"info"][@"name"];//dic[@"info"][@"price"];
     
     _deleteCouponButton.hidden = pay;

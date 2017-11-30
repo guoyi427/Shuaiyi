@@ -137,7 +137,7 @@ static NSString *RedeemCellId = @"redeemcell";
 - (void)prepareDoneButton {
     _doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_doneButton setBackgroundImage:[UIImage imageNamed:@"Pay_paybutton"] forState:UIControlStateNormal];
-    [_doneButton setTitle:@"确定使用" forState:UIControlStateNormal];
+    [_doneButton setTitle:@"确认" forState:UIControlStateNormal];
     [_doneButton setTitleColor: [UIColor whiteColor] forState:UIControlStateNormal];
     _doneButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [_doneButton addTarget:self action:@selector(doneButtonAction) forControlEvents:UIControlEventTouchUpInside];
