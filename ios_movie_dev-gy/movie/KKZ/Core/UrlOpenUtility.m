@@ -210,9 +210,10 @@
 
     NSString *plan_id = [dictParams kkz_stringForKey:@"plan_id"];
     NSString *activityId = [dictParams kkz_stringForKey:@"activity_id"];
+    NSString *name = [dictParams kkz_stringForKey:@"name"];
 
     // 影院排期列表页面
-    if (movie_id.length > 0 && cinema_id.length > 0) {
+    if ([name isEqualToString:@"CinemaTicketViewController"]) {
         CinemaTicketViewController *cdv = [[CinemaTicketViewController alloc] init];
         cdv.movieId = [movie_id toNumber];
         cdv.cinemaId = [cinema_id toNumber];
@@ -221,7 +222,7 @@
         return YES;
     }
     // 影片详情页面
-    else if (movie_id.length > 0) {
+    else if ([name isEqualToString:@"MovieDetailViewController"]) {
 
         MovieDetailViewController *mvc = [[MovieDetailViewController alloc] initCinemaListForMovie:[movie_id toNumber]];
         CommonViewController *parentCtr = [KKZUtility getRootNavagationLastTopController];
@@ -230,7 +231,7 @@
         return YES;
     }
     // 影院排期列表页面
-    else if (cinema_id.length > 0) {
+    else if ([name isEqualToString:@"CinemaTicketViewController"]) {
         CinemaTicketViewController *cdv = [[CinemaTicketViewController alloc] init];
         cdv.cinemaId = [cinema_id toNumber];
         CommonViewController *parentCtr = [KKZUtility getRootNavagationLastTopController];
@@ -238,7 +239,7 @@
         return YES;
     }
     // 选座页面
-    else if (plan_id.length > 0) {
+    else if ([name isEqualToString:@"ChooseSeatViewController"]) {
         
         PlanRequest *request = [PlanRequest new];
             [request requestPlanDetail:plan_id success:^(Ticket * _Nullable plan) {
