@@ -43,15 +43,15 @@
 #import <CoreLocation/CoreLocation.h>
 #import <QuartzCore/QuartzCore.h>
 #import <ShareSDK/ShareSDK.h>
-#import <TencentOpenAPI/QQApiInterface.h>
-#import <TencentOpenAPI/TencentOAuth.h>
+//#import <TencentOpenAPI/QQApiInterface.h>
+//#import <TencentOpenAPI/TencentOAuth.h>
 #import <sys/utsname.h>
 
 #import "CommonTabBarController.h"
 #import "NavigationController.h"
 //#import "SingleCenterTask.h"
 //开启QQ网页授权需要
-#import <QZoneConnection/ISSQZoneApp.h>
+//#import <QZoneConnection/ISSQZoneApp.h>
 
 #import "FMDeviceManager.h"
 #import "ThirdPartLoginEngine.h"
@@ -1307,18 +1307,18 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
    http://connect.qq.com/intro/login/上申请加入QQ登录，并将相关信息填写到以下字段
    如果需要实现SSO，需要导入TencentOpenAPI.framework,并引入QQApiInterface.h和TencentOAuth.h，将QQApiInterface和TencentOAuth的类型传入接口
    **/
-    [ShareSDK connectQZoneWithAppKey:kQzoneAPIKey
-                           appSecret:kQzoneSecretKey
-                   qqApiInterfaceCls:[QQApiInterface class]
-                     tencentOAuthCls:[TencentOAuth class]];
+//    [ShareSDK connectQZoneWithAppKey:kQzoneAPIKey
+//                           appSecret:kQzoneSecretKey
+//                   qqApiInterfaceCls:[QQApiInterface class]
+//                     tencentOAuthCls:[TencentOAuth class]];
     //导入QQ互联和QQ好友分享需要的外部库类型，如果不需要QQ空间SSO和QQ好友分享可以不调用此方法
-    [ShareSDK importQQClass:[QQApiInterface class]
-            tencentOAuthCls:[TencentOAuth class]];
+//    [ShareSDK importQQClass:[QQApiInterface class]
+//            tencentOAuthCls:[TencentOAuth class]];
 
     //添加QQ应用  注册网址  http://open.qq.com/
-    [ShareSDK connectQQWithQZoneAppKey:kQzoneAPIKey
-                     qqApiInterfaceCls:[QQApiInterface class]
-                       tencentOAuthCls:[TencentOAuth class]];
+//    [ShareSDK connectQQWithQZoneAppKey:kQzoneAPIKey
+//                     qqApiInterfaceCls:[QQApiInterface class]
+//                       tencentOAuthCls:[TencentOAuth class]];
 
     /**
    连接腾讯微博开放平台应用以使用相关功能，此应用需要引用TencentWeiboConnection.framework
@@ -1329,9 +1329,9 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
                                 redirectUri:kQQWeiBoCallback];
 
     //开启QQ空间网页授权开关(optional)
-    id<ISSQZoneApp> app =
-            (id<ISSQZoneApp>) [ShareSDK getClientWithType:ShareTypeQQSpace];
-    [app setIsAllowWebAuthorize:YES];
+//    id<ISSQZoneApp> app =
+//            (id<ISSQZoneApp>) [ShareSDK getClientWithType:ShareTypeQQSpace];
+//    [app setIsAllowWebAuthorize:YES];
 }
 
 //微信支付

@@ -90,25 +90,13 @@ PODS:
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
-  - ShareSDK_KKZ (2.12.2):
-    - ShareSDK_KKZ/Core (= 2.12.2)
-  - ShareSDK_KKZ/Connection/QQ (2.12.2):
-    - ShareSDK_KKZ/Core
-    - ShareSDK_KKZ/Extend/QQConnectSDK
-  - ShareSDK_KKZ/Connection/QZone (2.12.2):
-    - ShareSDK_KKZ/Core
-    - ShareSDK_KKZ/Extend/QQConnectSDK
-  - ShareSDK_KKZ/Connection/SinaWeibo (2.12.2):
-    - ShareSDK_KKZ/Core
-  - ShareSDK_KKZ/Connection/WeChat (2.12.2):
+  - ShareSDK_KKZ (2.12.3):
+    - ShareSDK_KKZ/Core (= 2.12.3)
+  - ShareSDK_KKZ/Connection/WeChat (2.12.3):
     - ShareSDK_KKZ/Core
     - ShareSDK_KKZ/Extend/WeChatSDK
-  - ShareSDK_KKZ/Core (2.12.2)
-  - ShareSDK_KKZ/Extend/QQConnectSDK (2.12.2):
-    - ShareSDK_KKZ/Core
-  - ShareSDK_KKZ/Extend/WeChatSDK (2.12.2):
-    - ShareSDK_KKZ/Core
-  - ShareSDK_KKZ/UI/Flat (2.12.2):
+  - ShareSDK_KKZ/Core (2.12.3)
+  - ShareSDK_KKZ/Extend/WeChatSDK (2.12.3):
     - ShareSDK_KKZ/Core
   - SnapKit (3.2.0)
   - SwitchMovieView (0.2.0):
@@ -158,14 +146,9 @@ DEPENDENCIES:
   - ObjectiveSugar (~> 1.1.0)
   - Reachability (~> 3.2)
   - SDWebImage (~> 3.8.1)
-  - ShareSDK_KKZ (~> 2.12.2)
-  - ShareSDK_KKZ/Connection/QQ
-  - ShareSDK_KKZ/Connection/QZone
-  - ShareSDK_KKZ/Connection/SinaWeibo
+  - ShareSDK_KKZ (~> 2.12.3)
   - ShareSDK_KKZ/Connection/WeChat
-  - ShareSDK_KKZ/Extend/QQConnectSDK
   - ShareSDK_KKZ/Extend/WeChatSDK
-  - ShareSDK_KKZ/UI/Flat
   - SnapKit (~> 3.2.0)
   - SwitchMovieView
   - THProgressView (~> 1.0)
@@ -211,7 +194,7 @@ SPEC CHECKSUMS:
   ObjectiveSugar: a6a25f23d657c19df0a0b972466d5b5ca9f5295c
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
-  ShareSDK_KKZ: bdf927bf7d15939c6a0f00369907290dc30da0b3
+  ShareSDK_KKZ: f351d0ba93c822f47e359b08fc404028501adda4
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   SwitchMovieView: dd0e9b715df9fd042724b1397f4f0433c8f2924a
   THProgressView: 999dc78f748f4cb6d69408f545de4d82ef7f1cec
@@ -221,6 +204,6 @@ SPEC CHECKSUMS:
   V8HorizontalPickerView: 6451e226ea7939c3499cefbbc0dcab85c941c28c
   ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: d58f8a68fdf17fd7afa5f7e67bbcbb526d734a0a
+PODFILE CHECKSUM: 6de26d2b472d9c8c5e793f03a5ceca34a249975c
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0.beta.2

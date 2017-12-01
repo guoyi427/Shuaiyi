@@ -63,7 +63,7 @@
 
 
 //========加密的信息========
-#define kKsspKey @"123456"//@"abcdYzx" //MD5的key
+#define kKsspKey @"rtdC4kPJxzwAusHz"//@"abcdYzx" //MD5的key
 #define kKDesKey @"jkh7887k" //DES的key
 #define kKDesLogKey @"koMovie1" //用户客户端错误日志DES加密的key
 
@@ -114,10 +114,11 @@
 ////==========正式环境==========
 
 ////TODO: 合并BaseURL
-#define kKSSBaseUrl @"http://47.95.148.114:8082"//@"http://newapi.komovie.cn"
-#define USER_SERVE @"http://api.release.komovie.cn"
-#define KKSSMediaServerBase @"http://api.release.komovie.cn"
-#define KKSSClubSeverBase @"http://api.release.komovie.cn"
+#define kKSSBaseUrl @"http://api.zhangyumovie.com"// @"http://47.95.148.114:8082"////@"http://newapi.komovie.cn"
+
+#define USER_SERVE @""//@"http://api.release.komovie.cn"
+#define KKSSMediaServerBase @""//@"http://api.release.komovie.cn"
+#define KKSSClubSeverBase @""//@"http://api.release.komovie.cn"
 //数据服务器地址
 #define kKSSPDataServer @"data/service"
 //KOTA服务器地址
@@ -127,23 +128,23 @@
 #define kKSSPServer @"movie/service"
 #define kKSSPServerPath(path) [NSString stringWithFormat:@"%@/%@",kKSSPServer,path]
 //红包服务器地址
-#define KKSSPRED @"http://redenvelope.komovie.cn/movie/receiveredenvelop/"
+#define KKSSPRED @""//@"http://redenvelope.komovie.cn/movie/receiveredenvelop/"
 //社区服务器地址
 #define KKSSClubSeverPath(path) [NSString stringWithFormat:@"sns/%@",path]
 //路径拼接好的 社区服务器地址，全部task请求重构后，删除KKSSClubSeverAPI
-#define KKSSClubSeverAPI [NSString stringWithFormat:@"%@/sns/",KKSSClubSeverBase]
+#define KKSSClubSeverAPI @""//[NSString stringWithFormat:@"%@/sns/",KKSSClubSeverBase]
 //媒体库服务器地址
 #define KKSSMediaServerPath(path) [NSString stringWithFormat:@"data/%@",path]
 //task请求重构后，删除KKSSMediaServerAPI
-#define KKSSMediaServerAPI @"http://api.release.komovie.cn/data/"
+#define KKSSMediaServerAPI @""//@"http://api.release.komovie.cn/data/"
 //
 #define USER_SERVE_API_PATH(path) [NSString stringWithFormat:@"user/%@", path]
 //统计服务器地址
-#define StatisticsSever @"http://api.release.komovie.cn/access-web/access/data/report"
+#define StatisticsSever @""//@"http://api.release.komovie.cn/access-web/access/data/report"
 //二维码服务器地址
-#define kKSSPQRServer @"http://newapi.komovie.cn/movie/qr"
+#define kKSSPQRServer @""//@"http://newapi.komovie.cn/movie/qr"
 //影迷卡主机
-#define kKSSPCinphileServerBaseURL @"http://api.mad.komovie.cn" //非用户中心
+#define kKSSPCinphileServerBaseURL @""//@"http://api.mad.komovie.cn" //非用户中心
 
 
 

@@ -54,13 +54,13 @@
     [head setValue:[[UIDevice currentDevice] platform] forKey:@"mobile_model"];
       
       //    影片详情页的热门评论 用影迷卡接口 所以 当主机地址为影迷卡时 channel ID 也对应更换
-      if ([self.baseURL.absoluteString isEqualToString:kKSSPCinphileServerBaseURL]) {
-          [head setValue:@"219" forKey:@"channel_id"];
-      } else {
+//      if ([self.baseURL.absoluteString isEqualToString:kKSSPCinphileServerBaseURL]) {
+//          [head setValue:@"219" forKey:@"channel_id"];
+//      } else {
           [head setValue:kChannelId forKey:@"channel_id"];
           [head setValue:[DataEngine sharedDataEngine].sessionId
                   forKey:@"session_id"];
-      }
+//      }
       
     [head setValue:kChannelName forKey:@"channel_name"];
     

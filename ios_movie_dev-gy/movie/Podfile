@@ -1,19 +1,19 @@
 source 'https://github.com/CocoaPods/Specs.git'
-source 'http://git.cias.net.cn/ios_specs/Specs.git'
+source 'http://git.kokozu.net/ios_specs/Specs.git'
 
 platform :ios, '8.0'
 use_frameworks!
 
 def pods_Share
     #ShareSDK
-    pod 'ShareSDK_KKZ', '~> 2.12.2'
-    pod 'ShareSDK_KKZ/Connection/QQ'
-    pod 'ShareSDK_KKZ/Connection/QZone'
-    pod 'ShareSDK_KKZ/Connection/SinaWeibo'
+    pod 'ShareSDK_KKZ', '~> 2.12.3'
+    #pod 'ShareSDK_KKZ/Connection/QQ'
+    #pod 'ShareSDK_KKZ/Connection/QZone'
+    #pod 'ShareSDK_KKZ/Connection/SinaWeibo'
     pod 'ShareSDK_KKZ/Connection/WeChat'
-    pod 'ShareSDK_KKZ/Extend/QQConnectSDK'
+    #pod 'ShareSDK_KKZ/Extend/QQConnectSDK'
     pod 'ShareSDK_KKZ/Extend/WeChatSDK'
-    pod 'ShareSDK_KKZ/UI/Flat'
+    #pod 'ShareSDK_KKZ/UI/Flat'
     
 end
 
