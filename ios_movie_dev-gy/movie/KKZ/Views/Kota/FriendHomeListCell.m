@@ -141,9 +141,9 @@
         commentView.hidden = YES;
 
         starView = [[RatingView alloc] initWithFrame:CGRectMake(0, 0, 80, 20)];
-        [starView setImagesDeselected:@"fav_star_no_orange_match"
-                       partlySelected:@"fav_star_half_orange"
-                         fullSelected:@"fav_star_full_orange"
+        [starView setImagesDeselected:@"fav_star_no_yellow_match"
+                       partlySelected:@"fav_star_half_yellow"
+                         fullSelected:@"fav_star_full_yellow"
                              iconSize:CGSizeMake(13, 13)
                           andDelegate:self];
 

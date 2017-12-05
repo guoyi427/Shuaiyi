@@ -53,7 +53,7 @@
 //开启QQ网页授权需要
 //#import <QZoneConnection/ISSQZoneApp.h>
 
-#import "FMDeviceManager.h"
+//#import "FMDeviceManager.h"
 #import "ThirdPartLoginEngine.h"
 
 #import "NetworkUtil.h"
@@ -72,7 +72,7 @@
 //#import "UMessage.h"
 //个推推送
 //#import "GeTuiSdk.h"
-#import <GTSDK/GeTuiSdk.h>
+//#import <GTSDK/GeTuiSdk.h>
 #import "KoMovie-Swift.h"
 
 //#import "ShuWeiLocation.h"
@@ -115,7 +115,7 @@ float screentHeight, screentContentHeight, screentWith;
 
 KKZAppDelegate *appDelegate;
 
-@interface KKZAppDelegate () <GeTuiSdkDelegate, UNUserNotificationCenterDelegate>
+@interface KKZAppDelegate () <UNUserNotificationCenterDelegate>
 
 /**
  * 是否全屏
@@ -165,7 +165,7 @@ KKZAppDelegate *appDelegate;
     [StatisticsComponent initStatisticsComponent];
 
     [self loadNotification];
-    [self getFMDeviceManager];
+//    [self getFMDeviceManager];
     USER_LOGIN_HUANXIN_WRITE(NO);
     Need_ALERT_WRITE(YES);
 
@@ -267,29 +267,29 @@ KKZAppDelegate *appDelegate;
     // 启动SDK，注：该方法需要在主线程中调用
     
 
-    [GeTuiSdk startSdkWithAppId:kGtAppId
-                         appKey:kGtAppKey
-                      appSecret:kGtAppSecret
-                       delegate:self];
+//    [GeTuiSdk startSdkWithAppId:kGtAppId
+//                         appKey:kGtAppKey
+//                      appSecret:kGtAppSecret
+//                       delegate:self];
 //    [GeTuiSdk runBackgroundEnable:true];
 
 
     //    //初始化友盟推送
     //    [UMessageEngine applicationDidFinishLaunching:launchOptions];
-    NSDictionary *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    if (notification) {
-        NSString *payload = notification[@"payload"];
-        if (payload) {
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding]
-                                                                options:NSJSONReadingMutableContainers
-                                                                  error:nil];
-            
-            [[KKZRemoteNotificationCenter sharedInstance] collect:dic];
-            
-        }
-       
-        [GeTuiSdk clearAllNotificationForNotificationBar];
-    }
+//    NSDictionary *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+//    if (notification) {
+//        NSString *payload = notification[@"payload"];
+//        if (payload) {
+//            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding]
+//                                                                options:NSJSONReadingMutableContainers
+//                                                                  error:nil];
+//
+//            [[KKZRemoteNotificationCenter sharedInstance] collect:dic];
+//
+//        }
+//
+//        [GeTuiSdk clearAllNotificationForNotificationBar];
+//    }
 
     self.idfaUrl = @"";
 // TODO IM模块封装
@@ -474,7 +474,7 @@ KKZAppDelegate *appDelegate;
     DLog(@"\n>>>[DeviceToken Success]:%@\n\n", token);
 
     //向个推服务器注册deviceToken
-    [GeTuiSdk registerDeviceToken:token];
+//    [GeTuiSdk registerDeviceToken:token];
     
     
 }
@@ -489,7 +489,7 @@ KKZAppDelegate *appDelegate;
 fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     DLog(@"@#@#@#@%@didReceiveRemoteNotification",userInfo);
-    [GeTuiSdk handleRemoteNotification:userInfo];
+//    [GeTuiSdk handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
@@ -514,7 +514,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
     DLog(@"@#@#@#@didReceiveNotification：%@", response.notification.request.content.userInfo);
     
     // [ GTSdk ]：将收到的APNs信息传给个推统计
-    [GeTuiSdk handleRemoteNotification:response.notification.request.content.userInfo];
+//    [GeTuiSdk handleRemoteNotification:response.notification.request.content.userInfo];
     
     completionHandler();
 }
@@ -1412,35 +1412,6 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
                                                         object:nil];
 }
 
-- (void)getFMDeviceManager {
-
-    // 获取设备管理器实例
-    FMDeviceManager_t *manager = [FMDeviceManager sharedManager];
-
-    // 准备SDK初始化参数
-    NSMutableDictionary *options = [NSMutableDictionary dictionary];
-
-// SDK具有防调试功能，当使用xcode运行时，请取消此行注释，开启调试模式
-// 否则使用xcode运行会闪退，(但直接在设备上点APP图标可以正常运行)
-// 上线Appstore的版本，请记得删除此行，否则将失去防调试防护功能！
-//     [options setValue:@"allowd" forKey:@"allowd"];  // TODO
-
-#ifdef DEBUG
-    [options setValue:@"allowd"
-               forKey:@"allowd"]; // TODO
-#endif
-
-    // 指定对接同盾的测试环境，正式上线时，请删除或者注释掉此行代码，切换到同盾生产环境
-    //    [options setValue:@"sandbox" forKey:@"env"]; // TODO
-    //    [options setValue:@"sandbox" forKey:@"product"]; // 生产环境
-
-    // 指定合作方标识
-    [options setValue:@"kdy" forKey:@"partner"];
-
-    // 使用上述参数进行SDK初始化
-    manager->initWithOptions(options);
-}
-
 - (void)loadNotification {
     [[NSNotificationCenter defaultCenter]
             addObserver:self
@@ -1544,7 +1515,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
                          fromGtAppId:(NSString *)appId
 {
     
-    [GeTuiSdk sendFeedbackMessage:90001 andTaskId:taskId andMsgId:msgId];
+//    [GeTuiSdk sendFeedbackMessage:90001 andTaskId:taskId andMsgId:msgId];
 
     
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:payloadData
@@ -1557,7 +1528,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
         [[KKZRemoteNotificationCenter sharedInstance] handle:dic showAlert:NO];
     }
     
-    [GeTuiSdk clearAllNotificationForNotificationBar];
+//    [GeTuiSdk clearAllNotificationForNotificationBar];
 }
 
 @end

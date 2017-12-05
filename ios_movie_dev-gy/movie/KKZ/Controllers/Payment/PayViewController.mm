@@ -20,8 +20,8 @@
 #import "Order.h"
 #import "Ticket.h"
 
-#import "BestpayNativeModel.h"
-#import "BestpaySDK.h"
+//#import "BestpayNativeModel.h"
+//#import "BestpaySDK.h"
 #import "DataEngine.h"
 #import "ECardViewController.h"
 #import "NSStringExtra.h"
@@ -953,15 +953,6 @@
     } else if (selectedMethod == PayMethodUnionpay) {
         if (![self unionPayWithSign:sign spId:spId sysProvide:sysProvide]) {
         }
-    }
-    if (selectedMethod == PayMethodYiZhiFu) {
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-        NSString *orderStr = payUrl;
-        BestpayNativeModel *order = [[BestpayNativeModel alloc] init];
-        order.orderInfo = orderStr;
-        order.launchType = launchTypePay1; // launchTypePay1为支付，launchTypeRecharge1为充值
-        order.scheme = @"KoMovie";
-        [BestpaySDK payWithOrder:order fromViewController:self];
     }
 }
 

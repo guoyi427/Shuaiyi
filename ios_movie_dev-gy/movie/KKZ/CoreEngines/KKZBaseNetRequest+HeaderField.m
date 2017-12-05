@@ -72,13 +72,6 @@
     [head setValue:[[UIDevice currentDevice] systemVersion]
             forKey:@"os"]; // 系统版本号
 
-    // 获取设备管理器实例
-    //        FMDeviceManager_t *manager = [FMDeviceManager sharedManager];
-    // 获取设备指纹黑盒数据，请确保在应用开启时已经对SDK进行初始化，切勿在get的时候才初始化
-    //        NSString *blackBox = manager->getDeviceInfo();
-    // 将blackBox随业务请求提交到你的服务端，服务端调用同盾风险决策API时需要带上这个参数
-    //        [head setValue:blackBox forKey:@"black_box"]; // 系统版本号
-
     if ([USER_LATITUDE length]) {
       [head setValue:USER_LATITUDE forKey:@"latitude"];
     }

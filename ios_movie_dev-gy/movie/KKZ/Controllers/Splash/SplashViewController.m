@@ -97,6 +97,7 @@ static const NSInteger kPageDisplayDuration = 3;
         make.top.equalTo(@0);
     }];
     
+    /*
     UIButton *skipBtn = [UIButton buttonWithType:0];
     skipBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     [skipBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -114,8 +115,8 @@ static const NSInteger kPageDisplayDuration = 3;
     [skipBtn addTarget:self action:@selector(backFromSplashView) forControlEvents:UIControlEventTouchUpInside];
     self.skipBtn = skipBtn;
 
+    */
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerHandler) userInfo:nil repeats:YES];
-    
 }
 
 
@@ -151,7 +152,7 @@ static const NSInteger kPageDisplayDuration = 3;
     if (self.countdown <= 0) {
         [self backFromSplashView];
     }
-    [self.skipBtn setTitle:[NSString stringWithFormat:@"跳过 %@s", @(self.countdown)] forState:UIControlStateNormal];
+//    [self.skipBtn setTitle:[NSString stringWithFormat:@"跳过 %@s", @(self.countdown)] forState:UIControlStateNormal];
     
     self.countdown--;
 }

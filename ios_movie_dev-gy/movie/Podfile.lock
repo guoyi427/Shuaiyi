@@ -47,8 +47,6 @@ PODS:
     - Category_KKZ/UIColorExtra
   - DACircularProgress (2.3.1)
   - DateEngine_KKZ (1.0.9)
-  - EaseMobSDK (2.3.3)
-  - GTSDK (2.0.0.0)
   - HallView_KKZ (0.2.7):
     - HallView_KKZ/Default (= 0.2.7)
     - Mantle
@@ -128,8 +126,6 @@ DEPENDENCIES:
   - Category_KKZ/UINavigationBarExtra
   - Category_KKZ/UIViewControllerExtra
   - DateEngine_KKZ (~> 1.0.5)
-  - EaseMobSDK
-  - GTSDK
   - HallView_KKZ (~> 0.2.6)
   - HallView_KKZ/NavigatorView
   - HallView_KKZ/SeatHelper
@@ -177,8 +173,6 @@ SPEC CHECKSUMS:
   Category_KKZ: 7a12b58acb59d22a0191bd021ed2dfd0d8aa6a77
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   DateEngine_KKZ: 0c9c7f8433f3190b7b6273baa6948ecd648f77d2
-  EaseMobSDK: 1a80776c890dbd25423d8091696b23065ecbf3fe
-  GTSDK: 10882452fbd63e738334ea9463a7d59cbb172622
   HallView_KKZ: 670369415ef006ecf56c1d04c2db4891aac67afb
   Kingfisher: ed9707a409cc47fddafbcd12a43a9757e3600af5
   KKZExtension: 34826b8b7e3e0c93c8e8274fa5e5bebefbaa4220
@@ -204,6 +198,6 @@ SPEC CHECKSUMS:
   V8HorizontalPickerView: 6451e226ea7939c3499cefbbc0dcab85c941c28c
   ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: 6de26d2b472d9c8c5e793f03a5ceca34a249975c
+PODFILE CHECKSUM: 5d8533b3726e7c89cb6bb76f1b33938c1375c97a
 
 COCOAPODS: 1.4.0.beta.2

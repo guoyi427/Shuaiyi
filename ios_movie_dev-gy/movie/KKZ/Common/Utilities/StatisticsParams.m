@@ -6,7 +6,7 @@
 //  Copyright © 2016年 kokozu. All rights reserved.
 //
 
-#import "FMDeviceManager.h"
+//#import "FMDeviceManager.h"
 #import "LocationEngine.h"
 #import "StatisticsParams.h"
 #import "UIDeviceExtra.h"

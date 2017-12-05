@@ -462,9 +462,9 @@ typedef enum : NSUInteger {
                                  cinemaTitleHeight + cinemaTitleTop +
                                      rateViewTop,
                                  rateViewWidth, rateViewHeight)];
-    [_rateView setImagesDeselected:@"scoreUnstar"
-                    partlySelected:@"scoreHalfstar"
-                      fullSelected:@"scoreStar"
+    [_rateView setImagesDeselected:@"fav_star_no_yellow_match"
+                    partlySelected:@"fav_star_half_yellow"
+                      fullSelected:@"fav_star_full_yellow"
                           iconSize:CGSizeMake(14, 14)
                        marginWidth:4
                        andDelegate:nil];

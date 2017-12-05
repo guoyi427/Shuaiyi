@@ -230,7 +230,7 @@
  */
 - (void)avatarDoneWithImage:(UIImage *)image {
     
-    [appDelegate showIndicatorWithTitle:@"正在上传..." animated:true fullScreen:true overKeyboard:true andAutoHide:true];
+    [appDelegate showIndicatorWithTitle:@"正在上传..." animated:true fullScreen:true overKeyboard:false andAutoHide:true];
     UserRequest *request = [[UserRequest alloc] init];
     [request editHeadImage:image success:^{
         [appDelegate hideIndicator];

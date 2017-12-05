@@ -9,8 +9,8 @@
 
 
 //========第三方平台 + ShareSDK========
-//ShareSDK
-#define kShareSDKAppKey @"28192292cb6e"
+//ShareSDK  Appkey : 22c3f7594e140 | App Secret : f4a6fb7d3c6d91aa4740f81e70bc0bbd
+#define kShareSDKAppKey @"22c3f7594e140"
 
 //新浪微博
 #define kSinaKey @"1767451078"

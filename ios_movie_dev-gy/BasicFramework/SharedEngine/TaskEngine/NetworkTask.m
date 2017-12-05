@@ -24,7 +24,7 @@
 
 #import "Constants.h"
 #import "DataEngine.h"
-#import "FMDeviceManager.h"
+//#import "FMDeviceManager.h"
 #import "VerificationCodeController.h"
 #import <AdSupport/ASIdentifierManager.h>
 
@@ -503,16 +503,6 @@
         forHTTPHeaderField:@"deviceType"]; // 设备类型：iPhone/touch
     [theRequest setValue:[[UIDevice currentDevice] systemVersion]
         forHTTPHeaderField:@"os"]; // 系统版本号
-
-    // 获取设备管理器实例
-    FMDeviceManager_t *manager = [FMDeviceManager sharedManager];
-    // 获取设备指纹黑盒数据，请确保在应用开启时已经对SDK进行初始化，切勿在get的时候才初始化
-    NSString *blackBox = manager->getDeviceInfo();
-    // 将blackBox随业务请求提交到你的服务端，服务端调用同盾风险决策API时需要带上这个参数
-    [theRequest setValue:blackBox
-        forHTTPHeaderField:@"black_box"]; // 系统版本号
-
-    //        DLog(@"APP_UUID ===== %@",APP_UUID);
 
     if ([USER_LATITUDE length]) {
       [theRequest setValue:USER_LATITUDE forHTTPHeaderField:@"latitude"];
