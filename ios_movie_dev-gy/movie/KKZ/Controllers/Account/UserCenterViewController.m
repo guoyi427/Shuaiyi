@@ -246,20 +246,32 @@ static NSString *UserCenterCell_Identifier = @"userCenterCell";
         _vipView.hidden = true;
         _loginButton.hidden = false;
     }
-    [_tableView reloadData];
     
+    [_tableView reloadData];
     UserRequest *request = [[UserRequest alloc] init];
     [request requestUserDetail:^(User * _Nullable user) {
         [_userImageView sd_setImageWithURL:[NSURL URLWithString:user.headImg] placeholderImage:[UIImage imageNamed:@"avatarRImg"]];
-        if (user.nickName && user.nickName.length > 0) {
-            _nickNameLabel.text = user.nickName;
-        } else {
-            _nickNameLabel.text = [DataEngine sharedDataEngine].phoneNum;
-        }
-        _wantSeeCountLabel.text = [NSString stringWithFormat:@"%@", user.loveMovieCount];
-        _scoreCountLabel.text = [NSString stringWithFormat:@"%@", user.pointMovieCount];
-    } failure:^(NSError * _Nullable err) {
         
+        if ([UserManager shareInstance].isUserAuthorized) {
+            _vipView.hidden = false;
+            _loginButton.hidden = true;
+            if (user.nickName && user.nickName.length > 0) {
+                _nickNameLabel.text = user.nickName;
+            } else {
+                _nickNameLabel.text = [DataEngine sharedDataEngine].phoneNum;
+            }
+            _wantSeeCountLabel.text = [NSString stringWithFormat:@"%@", user.loveMovieCount];
+            _scoreCountLabel.text = [NSString stringWithFormat:@"%@", user.pointMovieCount];
+            
+        } else {
+            _vipView.hidden = true;
+            _loginButton.hidden = false;
+            _nickNameLabel.text = @"";
+            _wantSeeCountLabel.text = @"0";
+            _scoreCountLabel.text = @"0";
+        }
+    } failure:^(NSError * _Nullable err) {
+    
     }];
     /*
     MovieRequest *request2 = [[MovieRequest alloc] init];
