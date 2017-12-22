@@ -12,6 +12,7 @@
 #import "UserCenterMovieCell.h"
 #import "MJRefresh.h"
 #import "ZYMovieListCell.h"
+#import "NoDataViewY.h"
 
 //  Request
 #import "MovieRequest.h"
@@ -26,6 +27,7 @@
     
     //  UI
     UITableView *_tableView;
+    NoDataViewY *_emptyView;
     
     //  Data
     NSMutableArray *_modelList;
@@ -62,6 +64,9 @@ static NSString *UserCenterMovieCell2Identifier = @"userMovieCell2";
     [_tableView addHeaderWithCallback:^{
         [weakSelf loadMovieList];
     }];
+    
+    _emptyView = [[NoDataViewY alloc] initWithFrame:CGRectMake(0, screentHeight / 2.0f - 120, kAppScreenWidth, 120)];
+    _emptyView.alertLabelText = _type == UserCenterMovieType_WantSee ? @"想看列表为空" : @"评分列表为空";
 }
 
 - (BOOL)showBackButton {
@@ -82,6 +87,11 @@ static NSString *UserCenterMovieCell2Identifier = @"userMovieCell2";
             [_modelList removeAllObjects];
             [_modelList addObjectsFromArray:movieList];
             [_tableView reloadData];
+            if (_modelList.count == 0) {
+                [_tableView addSubview:_emptyView];
+            } else {
+                [_emptyView removeFromSuperview];
+            }
         } failure:^(NSError * _Nullable err) {
             [_tableView headerEndRefreshing];
         }];
@@ -91,6 +101,11 @@ static NSString *UserCenterMovieCell2Identifier = @"userMovieCell2";
             [_modelList removeAllObjects];
             [_modelList addObjectsFromArray:movieList];
             [_tableView reloadData];
+            if (_modelList.count == 0) {
+                [_tableView addSubview:_emptyView];
+            } else {
+                [_emptyView removeFromSuperview];
+            }
         } failure:^(NSError * _Nullable err) {
             [_tableView headerEndRefreshing];
         }];
