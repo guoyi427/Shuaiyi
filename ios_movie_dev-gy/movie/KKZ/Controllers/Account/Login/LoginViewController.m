@@ -22,6 +22,7 @@
 #import "PasswordFindViewController.h"
 #import "BindingMobileViewController.h"
 #import "UserRequest.h"
+#import "ProtocolViewController.h"
 
 #define kInputLineNormal HEX(@"#DDDDDD")
 #define kInputLineFocused HEX(@"#DDDDDD")//HEX(@"#008cff")
@@ -895,7 +896,8 @@ typedef enum : NSUInteger {
 }
 
 - (void)tapProtocolLabelGRAction {
-    
+    ProtocolViewController *vc = [[ProtocolViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:true];
 }
 
 - (void)tapRequestLabelGRAction {

@@ -927,6 +927,7 @@
 		5DB4714D1FB545F50068B8F4 /* OrderPay_Button@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DB471491FB545F50068B8F4 /* OrderPay_Button@3x.png */; };
 		5DB471501FB54F2B0068B8F4 /* tab_accountH@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DB4714E1FB54F290068B8F4 /* tab_accountH@3x.png */; };
 		5DB471511FB54F2B0068B8F4 /* tab_accountH@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DB4714F1FB54F290068B8F4 /* tab_accountH@2x.png */; };
+		5DB623B71FE75B7E0082B369 /* ProtocolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB623B61FE75B7E0082B369 /* ProtocolViewController.m */; };
 		5DB753C018CD9C11001A25FF /* AddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB753BF18CD9C11001A25FF /* AddressBook.m */; };
 		5DB753C318CD9E77001A25FF /* PlatformUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB753C218CD9E77001A25FF /* PlatformUser.m */; };
 		5DB763A31C7D567200CD1FAE /* UITableViewCell+JZExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB7639F1C7D567200CD1FAE /* UITableViewCell+JZExtension.m */; };
@@ -2630,6 +2631,8 @@
 		5DB471491FB545F50068B8F4 /* OrderPay_Button@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OrderPay_Button@3x.png"; sourceTree = "<group>"; };
 		5DB4714E1FB54F290068B8F4 /* tab_accountH@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_accountH@3x.png"; sourceTree = "<group>"; };
 		5DB4714F1FB54F290068B8F4 /* tab_accountH@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_accountH@2x.png"; sourceTree = "<group>"; };
+		5DB623B51FE75B7E0082B369 /* ProtocolViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProtocolViewController.h; sourceTree = "<group>"; };
+		5DB623B61FE75B7E0082B369 /* ProtocolViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProtocolViewController.m; sourceTree = "<group>"; };
 		5DB753BE18CD9C11001A25FF /* AddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBook.h; sourceTree = "<group>"; };
 		5DB753BF18CD9C11001A25FF /* AddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBook.m; sourceTree = "<group>"; };
 		5DB753C118CD9E77001A25FF /* PlatformUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformUser.h; sourceTree = "<group>"; };
@@ -5216,6 +5219,8 @@
 				5D166C991FA73CE90031E414 /* EditUserInfoViewController.m */,
 				5D166C9B1FA7444B0031E414 /* EditNickNameViewController.h */,
 				5D166C9C1FA7444B0031E414 /* EditNickNameViewController.m */,
+				5DB623B51FE75B7E0082B369 /* ProtocolViewController.h */,
+				5DB623B61FE75B7E0082B369 /* ProtocolViewController.m */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -7716,6 +7721,7 @@
 				5DCB96491F9EE2A0006A02BF /* RegisterValidCodeViewController.m in Sources */,
 				A465C6581C47C2F1005FD4A0 /* CustomAlertView.m in Sources */,
 				A406F7941C90457E0012B1D9 /* PaymentModel.m in Sources */,
+				5DB623B71FE75B7E0082B369 /* ProtocolViewController.m in Sources */,
 				187F88441569E39100CF997F /* TaskQueue.m in Sources */,
 				5D9E4AD51C16793F003FBC06 /* SegmentTabsControl.m in Sources */,
 				29BA61BA1D6743DD0070AB1C /* CustomImagePickerController.m in Sources */,
@@ -8426,9 +8432,9 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hanhai.zhangyu;
 				PRODUCT_NAME = KoMovie;
-				PROVISIONING_PROFILE = "8b900e62-032c-4505-b6f8-c4191567edcc";
+				PROVISIONING_PROFILE = "5a9aad6b-a705-406b-a7df-a62e8181d925";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				PROVISIONING_PROFILE_SPECIFIER = ZhangYu_Adhoc;
+				PROVISIONING_PROFILE_SPECIFIER = ZhangYu_AppStore;
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "KKZ/KoMovie-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

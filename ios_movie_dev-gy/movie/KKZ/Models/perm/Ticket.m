@@ -43,6 +43,7 @@ PlatForm KKZPlateform(NSNumber *platform)
                                           @"dealPrice": @"price",
                                           @"movieTime": @"featureTime",
                                           @"platformOrig":@"platform",
+                                          @"vipPrice": @"price"
                                           }];
     
     return dic;

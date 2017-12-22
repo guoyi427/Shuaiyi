@@ -454,12 +454,14 @@
     [movieRequest requestMoviesWithCityId:[NSString stringWithFormat:@"%tu", USER_CITY]
                                      page:1
                                   success:^(NSArray *_Nullable movieList) {
-                                      [_currentMovieList removeAllObjects];
-                                      [_currentMovieList addObjectsFromArray:movieList];
-                                      [_currentMovieCollectionView reloadData];
                                       [_contentView headerEndRefreshing];
-                                      [[DataEngine sharedDataEngine].currentMovieList removeAllObjects];
-                                      [[DataEngine sharedDataEngine].currentMovieList addObjectsFromArray:movieList];
+                                      if (movieList.count) {
+                                          [_currentMovieList removeAllObjects];
+                                          [_currentMovieList addObjectsFromArray:movieList];
+                                          [_currentMovieCollectionView reloadData];
+                                          [[DataEngine sharedDataEngine].currentMovieList removeAllObjects];
+                                          [[DataEngine sharedDataEngine].currentMovieList addObjectsFromArray:movieList];
+                                      }
                                   }
                                   failure:^(NSError *_Nullable err) {
                                       [_contentView headerEndRefreshing];
@@ -468,12 +470,14 @@
     [movieRequest requestInCommingMoviesWithCityId:[NSString stringWithFormat:@"%tu", USER_CITY]
                                               page:1
                                            success:^(NSArray *_Nullable movieList) {
-                                               [_futureMovieList removeAllObjects];
-                                               [_futureMovieList addObjectsFromArray:movieList];
-                                               [_futureMovieCollectionView reloadData];
                                                [_contentView headerEndRefreshing];
-                                               [[DataEngine sharedDataEngine].futureMovieList removeAllObjects];
-                                               [[DataEngine sharedDataEngine].futureMovieList addObjectsFromArray:movieList];
+                                               if (movieList.count) {
+                                                   [_futureMovieList removeAllObjects];
+                                                   [_futureMovieList addObjectsFromArray:movieList];
+                                                   [_futureMovieCollectionView reloadData];
+                                                   [[DataEngine sharedDataEngine].futureMovieList removeAllObjects];
+                                                   [[DataEngine sharedDataEngine].futureMovieList addObjectsFromArray:movieList];
+                                               }
                                            }
                                            failure:^(NSError *_Nullable err) {
                                                [_contentView headerEndRefreshing];

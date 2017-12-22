@@ -38,10 +38,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>ZhangYu</string>
-				<string>QQ05FCC15D</string>
-				<string>sinaweibosso.1767451078</string>
-				<string>wx21b7795f3c5cbde3</string>
-				<string>tencent100450653</string>
+				<string>sinaweibosso.</string>
 			</array>
 		</dict>
 		<dict>
@@ -52,6 +49,16 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>ZhangYu</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>wx</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wx21b7795f3c5cbde3</string>
 			</array>
 		</dict>
 	</array>
