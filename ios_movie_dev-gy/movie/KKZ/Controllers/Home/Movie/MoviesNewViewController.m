@@ -24,6 +24,10 @@
 #import "City.h"
 #import "HXUserInfo.h"
 #import "Movie.h"
+#import "UIImage+GIF.h"
+
+//  View
+#import "NoDataViewY.h"
 
 //正在上映和即将上映电影列表控制器
 //#import "InCommingMovieListVc.h"
@@ -54,6 +58,9 @@
     
     NSMutableArray *_currentMovieList;
     NSMutableArray *_futureMovieList;
+    
+    NoDataViewY *_currentListEmptyView;
+    NoDataViewY *_futureListEmptyView;
 }
 /**
  *  定位区域View
@@ -306,6 +313,18 @@
         make.width.equalTo(@(kCommonScreenWidth));
         make.height.equalTo(@(158+20));
     }];
+    
+    NSData *gifData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"home_loadImage@2x" ofType:@"gif"]];
+    UIImage *gifImage = [UIImage sd_animatedGIFWithData:gifData];
+    _currentListEmptyView = [[NoDataViewY alloc] initWithFrame:CGRectMake(0, 0, kAppScreenWidth, 178)];
+    _currentListEmptyView.alertLabelText = @"下拉可刷新一下";
+    _currentListEmptyView.alertView.image = gifImage;
+    [_currentMovieCollectionView addSubview:_currentListEmptyView];
+    
+    _futureListEmptyView = [[NoDataViewY alloc] initWithFrame:CGRectMake(0, 0, kAppScreenWidth, 178)];
+    _futureListEmptyView.alertLabelText = @"下拉可刷新一下";
+    _futureListEmptyView.alertView.image = gifImage;
+    [_futureMovieCollectionView addSubview:_futureListEmptyView];
 }
 
 #pragma mark 添加事件通知
@@ -449,7 +468,6 @@
 
 #pragma mark -  重新加载两个控制器的数据
 - (void)loadNewData {
-    WeakSelf
     MovieRequest *movieRequest = [[MovieRequest alloc] init];
     [movieRequest requestMoviesWithCityId:[NSString stringWithFormat:@"%tu", USER_CITY]
                                      page:1
@@ -462,12 +480,24 @@
                                           [[DataEngine sharedDataEngine].currentMovieList removeAllObjects];
                                           [[DataEngine sharedDataEngine].currentMovieList addObjectsFromArray:movieList];
                                       }
+                                      
+                                      if (_currentMovieList.count == 0) {
+                                          [_currentMovieCollectionView addSubview:_currentListEmptyView];
+                                      } else {
+                                          [_currentListEmptyView removeFromSuperview];
+                                      }
                                   }
                                   failure:^(NSError *_Nullable err) {
                                       [_contentView headerEndRefreshing];
+                                      if (_currentMovieList.count == 0) {
+                                          [_currentMovieCollectionView addSubview:_currentListEmptyView];
+                                      } else {
+                                          [_currentListEmptyView removeFromSuperview];
+                                      }
                                   }];
     
-    [movieRequest requestInCommingMoviesWithCityId:[NSString stringWithFormat:@"%tu", USER_CITY]
+    MovieRequest *movieReq2 = [[MovieRequest alloc] init];
+    [movieReq2 requestInCommingMoviesWithCityId:[NSString stringWithFormat:@"%tu", USER_CITY]
                                               page:1
                                            success:^(NSArray *_Nullable movieList) {
                                                [_contentView headerEndRefreshing];
@@ -478,9 +508,23 @@
                                                    [[DataEngine sharedDataEngine].futureMovieList removeAllObjects];
                                                    [[DataEngine sharedDataEngine].futureMovieList addObjectsFromArray:movieList];
                                                }
+                                               
+                                               if (_futureMovieList.count == 0) {
+                                                   [_futureMovieCollectionView addSubview:_futureListEmptyView];
+                                                   _futureListEmptyView.alertLabelText = @"数据为空";
+                                               } else {
+                                                   [_futureListEmptyView removeFromSuperview];
+                                               }
                                            }
                                            failure:^(NSError *_Nullable err) {
                                                [_contentView headerEndRefreshing];
+                                               if (_futureMovieList.count == 0) {
+                                                   [_futureMovieCollectionView addSubview:_futureListEmptyView];
+                                                   _futureListEmptyView.alertLabelText = @"返回错误";
+                                                   [appDelegate showAlertViewForRequestInfo:err.userInfo];
+                                               } else {
+                                                   [_futureListEmptyView removeFromSuperview];
+                                               }
                                            }];
 }
 

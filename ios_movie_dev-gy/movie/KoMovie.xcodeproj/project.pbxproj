@@ -943,6 +943,7 @@
 		5DBA0AFE1C88179F00925BCD /* PlatePostListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBA0AFD1C88179F00925BCD /* PlatePostListController.m */; };
 		5DBA0B0F1C89340D00925BCD /* ClubPostReportWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBA0B0E1C89340D00925BCD /* ClubPostReportWord.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5DBA0B121C893D2600925BCD /* ReportWordBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBA0B111C893D2600925BCD /* ReportWordBtn.m */; };
+		5DC067931FF0DD03001E0C7A /* home_loadImage@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5DC067921FF0DD03001E0C7A /* home_loadImage@2x.gif */; };
 		5DC201FD1C898DA30046BC62 /* FriendPublishedPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC201FC1C898DA30046BC62 /* FriendPublishedPostViewController.m */; };
 		5DC4C63B1C731D0F0044C83A /* PostInformViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC4C63A1C731D0F0044C83A /* PostInformViewController.m */; };
 		5DC5707A1A5CCE490008FCAB /* kotaSucceedInitiateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC570791A5CCE490008FCAB /* kotaSucceedInitiateViewController.m */; };
@@ -2654,6 +2655,7 @@
 		5DBA0B0E1C89340D00925BCD /* ClubPostReportWord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClubPostReportWord.m; sourceTree = "<group>"; };
 		5DBA0B101C893D2600925BCD /* ReportWordBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportWordBtn.h; sourceTree = "<group>"; };
 		5DBA0B111C893D2600925BCD /* ReportWordBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportWordBtn.m; sourceTree = "<group>"; };
+		5DC067921FF0DD03001E0C7A /* home_loadImage@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "home_loadImage@2x.gif"; sourceTree = "<group>"; };
 		5DC201FB1C898DA30046BC62 /* FriendPublishedPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendPublishedPostViewController.h; sourceTree = "<group>"; };
 		5DC201FC1C898DA30046BC62 /* FriendPublishedPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendPublishedPostViewController.m; sourceTree = "<group>"; };
 		5DC4C6391C731D0F0044C83A /* PostInformViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostInformViewController.h; sourceTree = "<group>"; };
@@ -3181,6 +3183,7 @@
 		181C8B72145C425A0085F7D3 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				5DC067921FF0DD03001E0C7A /* home_loadImage@2x.gif */,
 				5DD881F91FD15BEF0078220B /* movieComment_back@2x.png */,
 				5DD881F81FD15BEE0078220B /* movieComment_back@3x.png */,
 				5D8D87661FC3F3E600F8C518 /* NullImage@2x.png */,
@@ -7282,6 +7285,7 @@
 				5DD2D5BF1BCE7A66007C40FB /* fullScreenIcon@3x.png in Resources */,
 				5D98AC841B9E991500EBF0D1 /* redEcard.png in Resources */,
 				5DC83B521FBB3C5A002D2CF9 /* bind_coupon_button_unabled@3x.png in Resources */,
+				5DC067931FF0DD03001E0C7A /* home_loadImage@2x.gif in Resources */,
 				F71845181A2C02DC00DE4D5F /* coupon_select_icon.png in Resources */,
 				A423567D1C197EC00081A975 /* cinemaDetail_dianzan@2x.png in Resources */,
 				A45A39061C201CA200BA5950 /* Star_white@3x.png in Resources */,
@@ -8432,9 +8436,9 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hanhai.zhangyu;
 				PRODUCT_NAME = KoMovie;
-				PROVISIONING_PROFILE = "5a9aad6b-a705-406b-a7df-a62e8181d925";
+				PROVISIONING_PROFILE = "6af9d7d5-2c02-49ee-a98f-9c090803d2e9";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				PROVISIONING_PROFILE_SPECIFIER = ZhangYu_AppStore;
+				PROVISIONING_PROFILE_SPECIFIER = ZhangYu_Adhoc;
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "KKZ/KoMovie-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

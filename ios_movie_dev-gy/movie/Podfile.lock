@@ -141,6 +141,7 @@ DEPENDENCIES:
   - NSURL+QueryDictionary (~> 1.2)
   - ObjectiveSugar (~> 1.1.0)
   - Reachability (~> 3.2)
+  - SDWebImage
   - SDWebImage (~> 3.8.1)
   - ShareSDK_KKZ (~> 2.12.3)
   - ShareSDK_KKZ/Connection/WeChat
@@ -198,6 +199,6 @@ SPEC CHECKSUMS:
   V8HorizontalPickerView: 6451e226ea7939c3499cefbbc0dcab85c941c28c
   ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: 5d8533b3726e7c89cb6bb76f1b33938c1375c97a
+PODFILE CHECKSUM: a2d900c292888ad0894d26c20983b9a8b51b191e
 
 COCOAPODS: 1.4.0.beta.2

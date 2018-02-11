@@ -100,7 +100,7 @@ target 'KoMovieTests' do
     pod 'MBProgressHUD', '~> 0.9.2'
     pod 'ObjectiveSugar', '~> 1.1.0'
     pod 'MWPhotoBrowser', '~> 2.1.2'
-    pod 'SDWebImage', '~> 3.8.1'
+    pod 'SDWebImage'#, '~> 3.8.1'
     pod 'THProgressView', '~> 1.0'
     pod 'V8HorizontalPickerView', '~> 1.0.0'
     pod 'Reachability', '~> 3.2'

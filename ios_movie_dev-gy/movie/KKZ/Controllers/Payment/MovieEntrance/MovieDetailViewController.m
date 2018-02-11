@@ -470,7 +470,7 @@
     _tableFooterPostImageView.layer.cornerRadius = 15.0;
     _tableFooterPostImageView.layer.masksToBounds = true;
     _tableFooterPostImageView.contentMode = UIViewContentModeScaleAspectFill;
-    [_tableFooterPostImageView sd_setImageWithURL:[NSURL URLWithString:[DataEngine sharedDataEngine].headImg]];
+    [_tableFooterPostImageView sd_setImageWithURL:[NSURL URLWithString:[DataEngine sharedDataEngine].headImg] placeholderImage:[UIImage imageNamed:@"avatarRImg"]];
     [_tableFooterScoreView addSubview:_tableFooterPostImageView];
     [_tableFooterPostImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(scoreLabel);
@@ -1659,7 +1659,7 @@
             _tableFooterNullLabel.hidden = true;
             _tableFooterScoreView.hidden = false;
             [_scoreRatingView displayRating:[response[@"point"] floatValue]/2.0];
-            [_tableFooterPostImageView sd_setImageWithURL:[NSURL URLWithString:[DataEngine sharedDataEngine].headImg]];
+            [_tableFooterPostImageView sd_setImageWithURL:[NSURL URLWithString:[DataEngine sharedDataEngine].headImg] placeholderImage:[UIImage imageNamed:@"avatarRImg"]];
             _scoreNameLabel.text = [DataEngine sharedDataEngine].userName.length > 0 ? [DataEngine sharedDataEngine].userName : [DataEngine sharedDataEngine].phoneNum;
             NSLog(@"%@", [DataEngine sharedDataEngine].headImg);
             _scoreTimeLabel.text = [[DateEngine sharedDateEngine] stringFromDate:[NSDate dateWithTimeIntervalSince1970: [response[@"createTime"] doubleValue]/1000.0] withFormat:@"yyyy-MM-dd"];
