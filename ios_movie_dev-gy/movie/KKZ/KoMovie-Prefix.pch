@@ -23,6 +23,7 @@
     //Constants
     #import "Constants.h"
     #import "UIConstants.h"
+    #import "KKZHintView.h"
 
     #import "ObjectiveSugar.h"
     #import "UIImageVIew+WebURL.h"

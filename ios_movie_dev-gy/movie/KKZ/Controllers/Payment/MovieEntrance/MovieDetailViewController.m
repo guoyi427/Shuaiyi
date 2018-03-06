@@ -349,7 +349,8 @@
     MovieRequest *request = [[MovieRequest alloc] init];
     if (button.isSelected) {
         [request deleteRelationMovieId:[NSString stringWithFormat:@"%@", _movieId] relation:nil success:^{
-            [UIAlertView showAlertView:@"取消喜欢成功" buttonText:@"确定"];
+//            [UIAlertView showAlertView:@"取消喜欢成功" buttonText:@"确定"];
+            [KKZHintView showHint:@"取消喜欢成功" autoHide:true];
             button.selected = false;
             button.enabled = true;
         } failure:^(NSError * _Nullable err) {
@@ -358,7 +359,8 @@
         }];
     } else {
         [request addRelationMovieId:[NSString stringWithFormat:@"%@", _movieId] relation:[NSString stringWithFormat:@"%d", button.isSelected] success:^{
-            [UIAlertView showAlertView:@"喜欢成功" buttonText:@"确定"];
+//            [UIAlertView showAlertView:@"喜欢成功" buttonText:@"确定"];
+            [KKZHintView showHint:@"喜欢成功" autoHide:true];
             button.selected = true;
             button.enabled = true;
         } failure:^(NSError * _Nullable err) {
