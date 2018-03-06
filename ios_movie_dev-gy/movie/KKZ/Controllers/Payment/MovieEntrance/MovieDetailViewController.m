@@ -315,13 +315,15 @@
     
     _relationButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _relationButton.frame = CGRectMake(0, screentHeight - 50, 75, 50);
-    [_relationButton setTitle:@"想看" forState:UIControlStateNormal];
+    [_relationButton setTitle:@" 想看 " forState:UIControlStateNormal];
+    [_relationButton setTitle:@"已想看" forState:UIControlStateSelected];
+    _relationButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     [_relationButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    _relationButton.titleLabel.font = [UIFont systemFontOfSize:10];
-    [_relationButton setTitleEdgeInsets:UIEdgeInsetsMake(20, 0, 0, 20)];
+    _relationButton.titleLabel.font = [UIFont systemFontOfSize:8];
     [_relationButton setImage:[UIImage imageNamed:@"MovieDetail_Relation"] forState:UIControlStateNormal];
     [_relationButton setImage:[UIImage imageNamed:@"MovieDetail_Relation_select"] forState:UIControlStateSelected];
     [_relationButton setImage:[UIImage imageNamed:@"MovieDetail_Relation_select"] forState:UIControlStateHighlighted | UIControlStateSelected];
+    [_relationButton setTitleEdgeInsets:UIEdgeInsetsMake(20, 0, 0, 25)];
     [_relationButton setImageEdgeInsets:UIEdgeInsetsMake(0, 20, 15, 0)];
     [_relationButton addTarget:self action:@selector(relationButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_relationButton];

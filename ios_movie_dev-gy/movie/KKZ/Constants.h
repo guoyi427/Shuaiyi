@@ -18,8 +18,8 @@
 #define kSinaCallback @"http://m.kokozu.net/kologin/callback.php"
 
 //微信
-#define kWeixinKey @"wx21b7795f3c5cbde3"//@"wx74c15f9950ca03b1"
-#define kWeixinSecret @"36264510a8a236de086eb18c847d2572"//@"c57280b55fbd08f7d88491818326faa5"
+#define kWeixinKey @"wx906cbc69c4c9238c"//@"wx74c15f9950ca03b1"
+#define kWeixinSecret @"da01e4eb3cc6b55ce115ce94806f7838"//@"c57280b55fbd08f7d88491818326faa5"
 
 //QQ空间
 #define kQzoneAPIKey @"100450653"
