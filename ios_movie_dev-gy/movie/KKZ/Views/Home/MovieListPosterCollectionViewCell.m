@@ -143,8 +143,7 @@
         preSellLabel.hidden = NO;
 //        CGSize movieNameSize = [KKZTextUtility measureText:self.movieName font:[UIFont systemFontOfSize:13]];
         CGSize movieNameSize = [KKZTextUtility measureText:self.movieName size:CGSizeMake(MAXFLOAT, 15) font:[UIFont systemFontOfSize:13]];
-        preSellLabel.text = [NSString stringWithFormat:@"%@上映", [[DateEngine sharedDateEngine] stringFromDate:self.model.publishTime withFormat:@"MM-dd"]];
-        
+        preSellLabel.text = [NSString stringWithFormat:@"%@ %@ 上映", [[DateEngine sharedDateEngine] stringFromDate:self.model.publishTime withFormat:@"MM-dd"], [[DateEngine sharedDateEngine] weekDayFromDate:self.model.publishTime]];
     }else{
         movieNameLabel.textAlignment = NSTextAlignmentCenter;
 
