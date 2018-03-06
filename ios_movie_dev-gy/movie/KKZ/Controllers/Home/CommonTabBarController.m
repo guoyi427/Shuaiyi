@@ -145,6 +145,19 @@
 }
 
 - (void)setSelectedPage:(int)value {
+    
+//    如果点击的是订单页，判断登录，未登录不跳转
+    int orderPage = 2;
+    if (value == orderPage && !appDelegate.isAuthorized) {
+        __weak CommonTabBarController *weakSelf = self;
+        [[DataEngine sharedDataEngine] startLoginFinished:^(BOOL succeeded) {
+            if (succeeded) {
+                [weakSelf setSelectedPage:orderPage];
+            }
+        }];
+        return;
+    }
+    
     appDelegate.selectedTab = value;
 
     //统计事件：首页切换底部标签
