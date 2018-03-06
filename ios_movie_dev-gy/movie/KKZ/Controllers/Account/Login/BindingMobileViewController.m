@@ -38,6 +38,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+//  跳过按钮
+    UIButton *skipBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    skipBtn.frame = CGRectMake(kAppScreenWidth - 44, 20, 44, 44);
+    [skipBtn setTitle:@"跳过" forState:UIControlStateNormal];
+    [skipBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    skipBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [skipBtn addTarget:self action:@selector(skipButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.navBarView addSubview:skipBtn];
+    
     self.kkzTitleLabel.text = @"绑定手机";
     
     //  background view
@@ -240,6 +250,10 @@
 }
 
 #pragma mark - UIButton - Action
+
+- (void)skipButtonAction {
+    [self dismissViewControllerAnimated:true completion:nil];
+}
 
 - (void)cancelViewController {
     [super cancelViewController];
