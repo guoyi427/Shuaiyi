@@ -1040,8 +1040,6 @@
                                                                                  }
                                                                        context:nil].size.height;
             return commentHeight + 65 + 15;
-        } else {
-            return 0.01;
         }
     } else if (indexPath.section == 6) {
 
@@ -1079,10 +1077,8 @@
             }
         }
 
-    } else {
-        return 1;
     }
-    return 1;
+    return 0.1;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -1146,7 +1142,7 @@
         return 45;
     }
 
-    return 0.001f;
+    return 0.0f;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -1166,11 +1162,11 @@
     } else if (section == 4) {
         return 10;
     } else if (section == 5 && self.clubPosts.count) {
-        return 0.01;//10 + 45;
+        return 0.f;//10 + 45;
     } else if (section == 6 && self.clubBestPosts.count) {
         return 10 + 45;
     }
-    return 0.001f;
+    return 0.f;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
